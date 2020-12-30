@@ -1,0 +1,8 @@
+{
+ "PASSWORD": "simple",
+ "SECRET": "iUsMrn0sp0FwxoekanNCmibjd3HSx3fKqxQDPFiCYZxLcz2FutZgqoVFI3Q1kx6MOtSxCztDBSzxHFqRly55Pg==",
+ "SERVER_PORT": 5648,
+ "MAGIC_HOME_CONTROLLER": true,
+ "AUDIO_SERVER": true,
+ "ADDRESS": "192.168.0.18"
+}
