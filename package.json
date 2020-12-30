@@ -9,6 +9,7 @@
     "dev-build": "tsc -b -w src",
     "dev-client": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack-dev-server -w",
     "dev-server": "nodemon --inspect server.js",
+    "start:prod": "cross-env NODE_ENV=production node index.js",
     "dev-audio-server": "nodemon audio-server.js",
     "dev": "concurrently --prefix \"[{name}]\" --names \"SERVER-BUILDER,SERVER,CLIENT\" -c \"bgRed.bold,bgBlue.bold,bgGreen.bold\" \"npm run dev-build\" \"npm run dev-server\" \"npm run dev-client\"",
     "pretty": "prettier --write \"**/*.ts*\" prettier --write \"**/*.ts*\""    

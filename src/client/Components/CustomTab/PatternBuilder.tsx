@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { LedPattern, LedPatternItem, LightMode } from "../../../shared/interfaces";
 import { cloneDeep, removeFromArray } from "../../../shared/utils";
-import { PatternAnimator } from "../../../shared/patternAnimator";
+import { PatternAnimator } from "../../../shared/PatternAnimator";
 import { PreGenerateColourPickerPalette } from "../ColourPicker/ColourPickerDataImages";
 import { BACKGROUND_COLOUR, BORDER_RADIUS_HEIGHT, ITEM_HEIGHT, Pattern } from "./Pattern";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

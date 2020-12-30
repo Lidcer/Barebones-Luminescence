@@ -1,1 +1,1 @@
-require('./dist/server/audioServer/index');
+require("./dist/server/audioServer/index");
