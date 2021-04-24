@@ -4,6 +4,7 @@ import { EventEmitter, Listener } from "events";
 import { AudioAnalyser } from "../../shared/audioAnalyser";
 import { PatternService } from "./Patterns";
 import { ScheduleService } from "./ScheduleService";
+import { ControllerMode } from "../../shared/interfaces";
 
 export interface AudioUpdateResult {
   leftBuffer: Int16Array;
@@ -13,6 +14,7 @@ export interface AudioUpdateResult {
 }
 
 export type AudioUpdate = (AudioUpdate: AudioUpdateResult) => void;
+export type ModeUpdate = (mode: ControllerMode) => void;
 
 export class AudioLightSystem {
   private eventEmitter = new EventEmitter();
@@ -21,20 +23,24 @@ export class AudioLightSystem {
   private _lightSocket: LightSocket;
   private _scheduleService: ScheduleService;
   private _pattern: PatternService;
+  private _mode: ControllerMode = "Manual"; 
 
   constructor() {
     this._lightSocket = new LightSocket();
     this._lightSocket.clientSocket.on("pcm", this.onPCM);
+    this._lightSocket.clientSocket.on("mode-update", this.onModeUpdate);
     this._pattern = new PatternService(this._lightSocket);
     this._scheduleService = new ScheduleService(this._lightSocket, this._pattern);
   }
-  on(type: "audioUpdate" | number, listener: AudioUpdate): void;
-  on(type: string | number, listener: Listener) {
+  on(type: "mode-update", listener: ModeUpdate): void;
+  on(type: "audioUpdate", listener: AudioUpdate): void;
+  on(type: string, listener: Listener) {
     return this.eventEmitter.on(type, listener);
   }
 
-  off(type: "audioUpdate" | number, listener: AudioUpdate): void;
-  off(type: string | number, listener: Listener) {
+  off(type: "mode-update", listener: ModeUpdate): void;
+  off(type: "audioUpdate", listener: AudioUpdate): void;
+  off(type: string, listener: Listener) {
     return this.eventEmitter.off(type, listener);
   }
   destroy() {
@@ -54,6 +60,11 @@ export class AudioLightSystem {
     //this._audioAnalyser.update();
     this.eventEmitter.emit("audioUpdate", { leftBuffer, rightBuffer, mergedBuffer, rgbBuffer });
   };
+  private onModeUpdate = (mode:ControllerMode) => {
+    this._mode = mode;
+    this.eventEmitter.emit("mode-update", this._mode);
+  }
+
   get lightSocket() {
     return this._lightSocket;
   }
@@ -68,5 +79,8 @@ export class AudioLightSystem {
   }
   get scheduleService() {
     return this._scheduleService;
+  }
+  get mode() {
+    return this._mode;
   }
 }

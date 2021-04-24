@@ -26,23 +26,23 @@ export class ManualTab extends React.Component<ManualTabProps, ManualTabState> {
   private readonly DEFAULT_COLOR_HEX = "FF0000";
   private readonly BROWSER_KEY = "last-colour";
 
-  constructor(props) {
+  constructor(props: ManualTabProps) {
     super(props);
     this.state = {
       colourHex: BrowserStorage.getString(this.BROWSER_KEY) || this.DEFAULT_COLOR_HEX,
       vertical: isVertical(),
-      mode: "Manual",
+      mode: props.als.mode,
     };
   }
 
   componentDidMount() {
     window.addEventListener("resize", this.resize);
-    this.props.als.lightSocket.clientSocket.on("mode-update", this.onModeUpdate);
+    this.props.als.on("mode-update", this.onModeUpdate);
 
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.resize);
-    this.props.als.lightSocket.clientSocket.off("mode-update", this.onModeUpdate);
+    this.props.als.off("mode-update", this.onModeUpdate);
   }
 
   onModeUpdate = (mode: ControllerMode) => {
