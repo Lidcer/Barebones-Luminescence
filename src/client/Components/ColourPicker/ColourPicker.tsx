@@ -148,6 +148,7 @@ export class ColourPicker extends React.Component<ColourPickerProps, ColourPicke
   private ctxPreview: CanvasRenderingContext2D;
   private lastX = 0;
   private lastY = 0;
+  private userSelectState = false;
 
   private isTouch = false;
   private touch: MockTouch = {
@@ -207,6 +208,7 @@ export class ColourPicker extends React.Component<ColourPickerProps, ColourPicke
     window.removeEventListener("touchstart", this.onTouchStart);
     window.removeEventListener("touchend", this.onTouchEnd);
     window.removeEventListener("touchmove", this.onTouchMove);
+    this.userSelect(true);
   }
 
   private createMouseEventFromTouch(type: string, ev: TouchEvent) {
@@ -249,6 +251,7 @@ export class ColourPicker extends React.Component<ColourPickerProps, ColourPicke
       this.forceUpdate();
       this.emitColour();
     }
+    this.userSelect(true);
   };
 
   private onMouseMove = (ev: MouseEvent) => {
@@ -283,8 +286,10 @@ export class ColourPicker extends React.Component<ColourPickerProps, ColourPicke
 
     if (target === this.canvas) {
       this.mainPressed = true;
+      this.userSelect(false);
     } else if (target === this.canvasSide) {
       this.sidePressed = true;
+      this.userSelect(false);
     }
   };
 
@@ -459,6 +464,18 @@ export class ColourPicker extends React.Component<ColourPickerProps, ColourPicke
     this.setState({ inputs });
   }
 
+  private userSelect(enable: boolean) {
+    if (this.userSelectState === enable) {
+      return;
+    }
+    if (enable) {
+      document.body.style.userSelect = "";
+    } else {
+      document.body.style.userSelect = "none";
+    }
+
+    this.userSelectState = enable;
+  }
   private get isPickingColour() {
     return this.mainPressed || this.sidePressed;
   }
