@@ -69,7 +69,7 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
   private destroyed = false;
   private audioAnalyser: AudioAnalyser;
 
-  constructor(props) {
+  constructor(props: AudioTabProps) {
     super(props);
     this.state = {
       width: window.innerWidth,
@@ -77,13 +77,14 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
       deviceInfo: undefined,
       allDevices: undefined,
       change: undefined,
-      mode: "Manual"
+      mode: props.als.mode,
     };
   }
 
   async componentDidMount() {
     this.audioAnalyser = new AudioAnalyser(this.props.als.audioProcessor);
     window.addEventListener("resize", this.resize);
+    this.props.als.on("mode-update", this.onMode);
     this.props.als.lightSocket.clientSocket.on("audio-server-connected", this.fetchInfo);
     this.props.als.lightSocket.clientSocket.on("audio-server-disconnected", this.audioDisconnect);
 
@@ -101,6 +102,7 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
   componentWillUnmount() {
     this.destroyed = true;
     window.removeEventListener("resize", this.resize);
+    this.props.als.off("mode-update", this.onMode);
     this.props.als.lightSocket.clientSocket.off("audio-server-connected", this.fetchInfo);
     this.props.als.lightSocket.clientSocket.off("audio-server-disconnected", this.audioDisconnect);
     (async () => {
@@ -111,6 +113,10 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
       }
     })();
   }
+  onMode = (mode: ControllerMode) => {
+    this.setState({mode});
+  }
+
   updateDevices = async () => {
     const result = await this.props.als.lightSocket.emitPromiseIfPossible<boolean, []>("is-audio-server-connected");
     if (this.destroyed) {
