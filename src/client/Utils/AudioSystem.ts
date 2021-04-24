@@ -4,7 +4,7 @@ import { EventEmitter, Listener } from "events";
 import { AudioAnalyser } from "../../shared/audioAnalyser";
 import { PatternService } from "./Patterns";
 import { ScheduleService } from "./ScheduleService";
-import { ControllerMode } from "../../shared/interfaces";
+import { ControllerMode, Log } from "../../shared/interfaces";
 
 export interface AudioUpdateResult {
   leftBuffer: Int16Array;
@@ -13,6 +13,7 @@ export interface AudioUpdateResult {
   rgbBuffer: Int16Array;
 }
 
+export type LogUpdate = (log: Log) => void;
 export type AudioUpdate = (AudioUpdate: AudioUpdateResult) => void;
 export type ModeUpdate = (mode: ControllerMode) => void;
 
@@ -29,17 +30,20 @@ export class AudioLightSystem {
     this._lightSocket = new LightSocket();
     this._lightSocket.clientSocket.on("pcm", this.onPCM);
     this._lightSocket.clientSocket.on("mode-update", this.onModeUpdate);
+    this._lightSocket.clientSocket.on("socket-log", this.raiseNotification);
     this._pattern = new PatternService(this._lightSocket);
     this._scheduleService = new ScheduleService(this._lightSocket, this._pattern);
   }
   on(type: "mode-update", listener: ModeUpdate): void;
   on(type: "audioUpdate", listener: AudioUpdate): void;
+  on(type: "log", listener: LogUpdate): void;
   on(type: string, listener: Listener) {
     return this.eventEmitter.on(type, listener);
   }
 
   off(type: "mode-update", listener: ModeUpdate): void;
   off(type: "audioUpdate", listener: AudioUpdate): void;
+  off(type: "log", listener: LogUpdate): void;
   off(type: string, listener: Listener) {
     return this.eventEmitter.off(type, listener);
   }
@@ -64,7 +68,9 @@ export class AudioLightSystem {
     this._mode = mode;
     this.eventEmitter.emit("mode-update", this._mode);
   }
-
+  private raiseNotification = (log: Log) => {
+    this.eventEmitter.emit("log", log)
+  }
   get lightSocket() {
     return this._lightSocket;
   }
@@ -82,5 +88,10 @@ export class AudioLightSystem {
   }
   get mode() {
     return this._mode;
+  }
+  raiseError(error: Error) {
+    const title = error.name || "Unknown error";
+    const stack = error.stack || new Error().stack || "Unknown error has occurred";
+    this.raiseNotification({type:"error", title, description: stack});
   }
 }

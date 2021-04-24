@@ -1,21 +1,21 @@
 import React from "react";
 import { AudioLightSystem } from "../../Utils/AudioSystem";
-import { SocketLog } from "../../../shared/interfaces";
+import { Log } from "../../../shared/interfaces";
 import styled from "styled-components";
 import { SECOND } from "../../../shared/constants";
-import { removeFromArray } from "../../../shared/utils";
+import { pushUniqToArray, removeFromArray } from "../../../shared/utils";
 
 const Div = styled.div`
-  user-select: none;
   pointer-events: none;
+  touch-action: none;
   position: fixed;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   right: 0;
   top: 0;
-  margin: 10px;
-  padding: 10px;
-  background-color: rgb(42, 42, 42);
+  margin: 0;
+  padding: 0;
+  align-items: flex-end;
 `;
 
 const Toast = styled.div`
@@ -24,18 +24,33 @@ const Toast = styled.div`
   border-radius: 5px;
   min-width: 200px;
   min-height: 100px;
+  background-color: rgba(16, 16, 128, 0.5);
+  backdrop-filter: blur(10px);
+  transform-origin: right; 
+  overflow: hidden;
+  position: relative;
+  span {
+    white-space: pre;
+  }
 `;
 
 interface ToasterProps {
   als: AudioLightSystem;
 }
 
+interface DisplayError {
+  showing: boolean;
+  transition: boolean;
+  log: Log;
+}
+
 interface ToasterState {
-  socketErrors: SocketLog[];
+  socketErrors: DisplayError[];
 }
 
 export class Toaster extends React.Component<ToasterProps, ToasterState> {
   private readonly SHOW_TIME = SECOND * 10;
+  private readonly TRANSITION_TIME = 250;
   private timeouts: number[] = [];
 
   constructor(props) {
@@ -46,29 +61,79 @@ export class Toaster extends React.Component<ToasterProps, ToasterState> {
   }
 
   componentDidMount() {
-    this.props.als.lightSocket.clientSocket.on<[SocketLog]>("socket-log", this.onNotification);
+    this.props.als.on("log", this.onNotification);
   }
   componentWillUnmount() {
     for (const number of this.timeouts) {
       clearTimeout(number);
     }
+    this.props.als.off("log", this.onNotification);
   }
 
-  onNotification = (socketError: SocketLog) => {
+
+  onNotification = (socketError: Log) => {
     const socketErrors = [...this.state.socketErrors];
-    socketErrors.push(socketError);
-    const n = setTimeout(() => {
-      const socErrors = [...this.state.socketErrors];
-      removeFromArray(socErrors, socketError);
-      removeFromArray(this.timeouts, n);
-      this.setState({ socketErrors: socErrors });
-    }, this.SHOW_TIME);
+    const displayError = { log: socketError, showing: true, transition: true }
+    socketErrors.push(displayError);
     this.setState({ socketErrors });
+    
+    const getState = () => {
+      const state = { ...this.state };
+      const index = state.socketErrors.indexOf(displayError);
+      if (index === -1) {
+        return undefined;
+      }
+      const error = state.socketErrors[index];
+
+      return { state, index, error, update: () => {
+        this.setState(state);
+      } };
+    }
+
+    // Show
+    this.setTimeout(() => {
+      const obj = getState();
+      if (obj) {
+        obj.error.showing = false;
+        obj.error.transition = true;
+        obj.update();
+        this.setTimeout(() => {
+          const obj = getState();
+          if (obj) {
+            obj.error.transition = false;
+            obj.update();
+          }
+        }, this.TRANSITION_TIME)
+      }
+    }, 0);
+
+    // hide
+    this.setTimeout(() => {
+      const obj = getState();
+      if(obj) {
+        obj.error.transition = true;
+        obj.error.showing = true;
+        obj.update();
+        this.setTimeout(() => {
+          removeFromArray(obj.state.socketErrors, obj.error);
+          obj.update();
+        }, this.TRANSITION_TIME)
+
+      }
+    }, this.SHOW_TIME);
   };
 
-  getToast = (socketError: SocketLog, index: number) => {
+  setTimeout(fn: () => void, timeout: number) {
+    const number = setTimeout(() => {
+      fn();
+      removeFromArray(this.timeouts, number);
+    }, timeout);
+    pushUniqToArray(this.timeouts, number);
+  }
+
+  getToast = (socketError: DisplayError, index: number) => {
     const style: React.CSSProperties = {};
-    switch (socketError.type) {
+    switch (socketError.log.type) {
       case "fatal":
         style.border = "2px solid red";
         break;
@@ -83,10 +148,22 @@ export class Toaster extends React.Component<ToasterProps, ToasterState> {
         break;
     }
 
+    if (socketError.transition) {
+      style.transition = `transform ${this.TRANSITION_TIME / 1000}s`;
+    } else {
+      style.transition = "";
+    }
+
+    if (socketError.showing) {
+      style.transform = "scaleX(0)";
+    } else {
+      style.transform = "scaleX(1)";
+    }
+
     return (
       <Toast key={index} style={style}>
-        <span>{socketError.name}</span>
-        <span>{socketError.description || ""}</span>
+        <h2>{socketError.log.title}</h2>
+        <span>{socketError.log.description || ""}</span>
       </Toast>
     );
   };

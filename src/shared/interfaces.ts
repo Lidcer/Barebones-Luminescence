@@ -74,9 +74,9 @@ export interface LedPatternObject {
   [name: string]: LedPatternItem[];
 }
 
-export interface SocketLog {
+export interface Log {
   type: "log" | "info" | "error" | "fatal";
-  name: string;
+  title: string;
   description?: string;
 }
 

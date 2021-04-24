@@ -5,7 +5,7 @@ import { Client } from "./client";
 import { Logger } from "../../../shared/logger";
 import SocketIO from "socket.io";
 import { createSocketError } from "../../../shared/socketError";
-import { SocketLog } from "../../../shared/interfaces";
+import { Log } from "../../../shared/interfaces";
 import { EventEmitter } from "events";
 
 type WebsocketCallback = (client: Client, ...args: any[] | any) => void;
@@ -23,6 +23,15 @@ export class WebSocket {
   constructor(props: { server?: Server; onlyOne?: boolean }) {
     this.socketServer = new SocketIO.Server(props.server);
 
+    process.on("uncaughtException", err => {
+      console.error("uncaughtException", err);
+      this.broadcastLog("error", err);
+    })
+    process.on("unhandledRejection", () => {
+      const error = new Error("Unhandled promise rejection")
+      console.error("unhandledRejection", error);
+      this.broadcastLog("error", error);
+    })
     Logger.setNext((type, value, ...args) => {
       let string = "Unknown error";
       if (args.length === 1 || args.length === 0) {
@@ -32,20 +41,19 @@ export class WebSocket {
       }
       switch (type) {
         case "error":
-          this.broadcastError("error", value, string);
+          this.broadcastLog("error", value, string);
           break;
         case "fatal":
-          this.broadcastError("fatal", value, string);
+          this.broadcastLog("fatal", value, string);
           break;
         case "info":
-          this.broadcastError("info", value, string);
+          this.broadcastLog("info", value, string);
           break;
         case "log":
-          this.broadcastError("log", value, string);
+          this.broadcastLog("log", value, string);
           break;
       }
     });
-
     this.socketServer.on("connection", (c: SocketIO.Socket) => {
       const client = new Client(c);
       Logger.debug("[WebSocket]", "connected", client.id);
@@ -138,14 +146,14 @@ export class WebSocket {
   onPromise<A, T extends any[]>(value: string, callback: (client: Client, ...args: T) => Promise<A>) {
     if (!(callback instanceof (async () => {}).constructor)) {
       const err = new Error("Promise callback expected");
-      this.broadcastError("fatal", err);
+      this.broadcastLog("fatal", err);
       throw err;
     }
 
     const promiseFn = this.promiseCallback.get(value);
     if (promiseFn) {
       const err = new Error(`Used value: "${value}" Already exist!`);
-      this.broadcastError("fatal", err);
+      this.broadcastLog("fatal", err);
       throw err;
     }
     this.promiseCallback.set(value, callback);
@@ -161,7 +169,7 @@ export class WebSocket {
   getClients() {
     return this.clients;
   }
-  broadcastError(type: SocketLog["type"], name: string | Error, description?: string) {
+  broadcastLog(type: Log["type"], name: string | Error, description?: string) {
     let str = "";
     let des = "";
     if (name instanceof Error) {
@@ -172,7 +180,7 @@ export class WebSocket {
       des = description;
     }
 
-    const socketError: SocketLog = { type, name: str, description: des };
+    const socketError: Log = { type, title: str, description: des };
     this.broadcast("socket-log", socketError);
   }
 }
