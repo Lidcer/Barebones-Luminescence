@@ -161,3 +161,11 @@ export function getGWithoutAlpha(color: number) {
 export function getBWithoutAlpha(color: number) {
   return (color >> 0) & 0xff;
 }
+
+export function colorToRGBA(color: number): RGB {
+	return {
+		r: getR(color),
+		g: getG(color),
+		b: getB(color),
+	};
+}

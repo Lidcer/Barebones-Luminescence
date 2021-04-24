@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { ActiveDevice, DeviceUpdate, RtAudioDeviceInf } from "../../../shared/interfaces";
+import { ActiveDevice, ControllerMode, DeviceUpdate, RtAudioDeviceInf } from "../../../shared/interfaces";
 import { Logger } from "../../../shared/logger";
 import { AudioLightSystem } from "../../Utils/AudioSystem";
 import { AudioVisualizerLine } from "../AudioVisualizer/AudioLine";
 import { AudioAnalyser } from "../../../shared/audioAnalyser";
 import ReactLoading from "react-loading";
+import { CheckBox } from "../CheckBox/Checkbox";
 const Div = styled.div`
   width: 100%;
   padding: 4px;
@@ -62,6 +63,7 @@ interface AudioTabState {
   deviceInfo: ActiveDevice | undefined;
   allDevices: RtAudioDeviceInf[] | undefined;
   change: Selected;
+  mode: ControllerMode;
 }
 export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
   private destroyed = false;
@@ -75,6 +77,7 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
       deviceInfo: undefined,
       allDevices: undefined,
       change: undefined,
+      mode: "Manual"
     };
   }
 
@@ -312,6 +315,14 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
     );
   }
 
+  onModeUpdate = (mode: ControllerMode) => {
+    this.setState({mode});
+  }
+
+  changeMode = (mode:ControllerMode, on: boolean) => {
+    this.props.als.lightSocket.emitPromiseIfPossible('mode-set', mode);
+  }
+
   render() {
     if (this.state.connected === null) {
       return <ReactLoading className='m-2' type={"bars"} color={"#ffffff"} height={50} width={50} />;
@@ -323,6 +334,7 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
 
     return (
       <Tab>
+        <CheckBox text="Auto Pilot" enabled={this.state.mode === "AutoPilot"} onChange={(on) => { this.changeMode("AutoPilot", on)}}  />
         <MaxDiv>
           {this.activeDevice}
           {this.changeDevice}

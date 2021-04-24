@@ -71,11 +71,8 @@ export class Client {
     return this.client.conn.remoteAddress;
   }
   validateAuthentication() {
-    if (this.clientType === "client") {
+    if (this.clientType === "client" || this.clientType === "audio-server") {
       return;
-    } else if (this.clientType === "audio-server") {
-      Logger.error("Audio server should never ask for authentication!");
-      throw new Error("Audio server cannot be authenticated");
     }
     throw new Error("Unauthenticated");
   }

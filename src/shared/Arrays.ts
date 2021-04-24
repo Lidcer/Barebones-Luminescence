@@ -6,7 +6,7 @@ export class FixLengthArray<I = any> extends Array {
   push(...items: I[]) {
     super.push.apply(this, items);
     while (this.length > this._length) {
-      this.shift();
+      this.shift();//
     }
     return this.length - 1;
   }

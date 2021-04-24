@@ -13,6 +13,7 @@ const IS_DEV = process.env.NODE_ENV !== "production";
 
 interface IConfig {
   SERVER_PORT?: number;
+  PI_PORT?: number;
   PASSWORD: string;
   ADDRESS: string;
   MAGIC_HOME_CONTROLLER?: boolean;
@@ -24,6 +25,7 @@ let config: IConfig = {
   PASSWORD: "",
   SECRET: "",
   SERVER_PORT: 6849,
+  PI_PORT: 5447,
   ADDRESS: "localhost",
   MAGIC_HOME_CONTROLLER: false,
   AUDIO_SERVER: false,
@@ -54,6 +56,7 @@ const SECRET = config.SECRET;
 const ADDRESS = config.ADDRESS || "localhost";
 const MAGIC_HOME_CONTROLLER = config.MAGIC_HOME_CONTROLLER || false;
 const AUDIO_SERVER = config.AUDIO_SERVER || false;
+const PI_PORT = config.PI_PORT || false;
 
 export function regenerateConfig(shouldShutDownServer = false) {
   config.SECRET = randomBytes(64).toString("base64");
@@ -71,4 +74,4 @@ function updateConfig() {
   fs.writeFileSync(configJsonPath, JSON.stringify(config, undefined, 1));
 }
 
-export { IS_DEV, AUDIO_SERVER, ADDRESS, VERSION, PASSWORD, SERVER_PORT, WEBPACK_PORT, SECRET, MAGIC_HOME_CONTROLLER };
+export { IS_DEV, AUDIO_SERVER, ADDRESS, VERSION, PASSWORD, SERVER_PORT, WEBPACK_PORT, SECRET, MAGIC_HOME_CONTROLLER, PI_PORT };

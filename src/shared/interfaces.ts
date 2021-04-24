@@ -1,5 +1,5 @@
 import * as os from "os";
-export type ControllerMode = "Manual" | "AutoPilot" | "Pattern" | "Audio";
+export type ControllerMode = "Manual" | "ManualForce" | "ManualLocked" | "AutoPilot" | "Pattern" | "Audio" | "AudioRaw" | "Door";
 export type DayNames = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
 export type LightMode = "instant" | "fade";
 export type ScheduleType = "Pattern" | "RGB";
@@ -21,6 +21,8 @@ export interface ServerInfo {
   version: string;
   arch: string;
   cpuUsage: NodeJS.CpuUsage;
+  cpuUsageHistory: number[];
+  temperature: number[];
   uptime: number;
   os: {
     cpus: os.CpuInfo[];

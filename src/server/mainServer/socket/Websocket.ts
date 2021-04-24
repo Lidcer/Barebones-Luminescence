@@ -6,6 +6,7 @@ import { Logger } from "../../../shared/logger";
 import SocketIO from "socket.io";
 import { createSocketError } from "../../../shared/socketError";
 import { SocketLog } from "../../../shared/interfaces";
+import { EventEmitter } from "events";
 
 type WebsocketCallback = (client: Client, ...args: any[] | any) => void;
 type WebsocketCallbackPromise = (client: Client, ...args: any[] | any) => Promise<any>;
@@ -13,6 +14,7 @@ type WebsocketCallbackPromise = (client: Client, ...args: any[] | any) => Promis
 const ignoreEvents = ["connection", "disconnect"];
 
 export class WebSocket {
+  private event = new EventEmitter();
   private socketServer: SocketIO.Server;
   private clients: Client[] = [];
   private callbacks = new Map<string, WebsocketCallback[]>();
@@ -91,8 +93,16 @@ export class WebSocket {
       client.on("disconnect", () => {
         removeFromArray(this.clients, client);
         Logger.debug("[WebSocket]", "disconnected", client.id);
+        if (!this.clients.length) {
+          this.event.emit('all-clients-disconnected');
+        }
       });
     });
+  }
+
+  onSocketEvent(value: 'all-clients-disconnected', listener:() => void)
+  onSocketEvent(value:string, listener:(...args: any) => void) {
+    return this.event.on(value, listener);
   }
 
   getAudioServer() {

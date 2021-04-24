@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { ControllerMode } from "../../../shared/interfaces";
 import { AudioLightSystem } from "../../Utils/AudioSystem";
+import { CheckBox } from "../CheckBox/Checkbox";
 import { PreGenerateColourPickerPalette } from "../ColourPicker/ColourPickerDataImages";
 import { PatternBuilder } from "../CustomTab/PatternBuilder";
 import { ScheduleBuilder } from "../CustomTab/ScheduleBuilder";
@@ -36,6 +38,7 @@ interface AutoPilotProps {
 
 interface AutoPilotState {
   showPatternBuilder: boolean;
+  mode: ControllerMode;
 }
 
 export class AutoPilotTab extends React.Component<AutoPilotProps, AutoPilotState> {
@@ -43,12 +46,29 @@ export class AutoPilotTab extends React.Component<AutoPilotProps, AutoPilotState
     super(props);
     this.state = {
       showPatternBuilder: false,
+      mode: "Manual",
     };
+  }
+
+  componentDidMount() {
+    this.props.als.lightSocket.clientSocket.on("mode-update", this.onModeUpdate);
+  }
+  componentWillUnmount() {
+    this.props.als.lightSocket.clientSocket.off("mode-update", this.onModeUpdate);
+  }
+
+  onModeUpdate = (mode: ControllerMode) => {
+    this.setState({mode});
+  }
+
+  changeMode = (mode:ControllerMode, on: boolean) => {
+    this.props.als.lightSocket.emitPromiseIfPossible('mode-set', mode);
   }
 
   render() {
     return (
       <>
+        <CheckBox text="Auto Pilot" enabled={this.state.mode === "AutoPilot"} onChange={(on) => { this.changeMode("AutoPilot", on)}}  />
         <Button onClick={() => this.setState({ showPatternBuilder: false })} disabled={!this.state.showPatternBuilder}>
           Schedule builder
         </Button>

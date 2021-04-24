@@ -21,7 +21,16 @@ It currently only work with magic home controller.
  - Scheduler with custom patterns (WIP)
  - Motion sensor mode
 
+## up to 3 Servers?
+*This project* requires you to host 1-3 server.
+*First server* dedicated to LED processing webpage hosting includes scheduler and on server audio processing.
+Second server if entire thing is running on `PI mode` it is not needed if you have `Magic home mode`. 
+It should basically it should kill lag by running asynchronously as the original lib code handles pins synchronously 
+in my testing having everything under one server was creating lag. I've tried to put everything to tread but it turns out that it is limited and usually will throw error at the start.
+*Third server* Audio capture server. Only works on windows. It captures audio then sends PCM data to server to process and analyse the sound and convert to LED. It can use on server processing or on device processing. One may be faster than other.
+
 ### Running (currently only dev builds)
+Fullfil your config file carefully as that depends how many server it will initially start
 ```
 npm run dev # starts LED server
 npm run dev-audio-server # starts audio server
