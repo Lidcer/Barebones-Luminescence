@@ -48,7 +48,6 @@ export class PIController implements LightController {
       });
       this.socket.on("disconnect", () => {
         this._connected = false;
-        console.log('disconnect')
         this.eventEmitter.emit('disconnect');
       });
     });

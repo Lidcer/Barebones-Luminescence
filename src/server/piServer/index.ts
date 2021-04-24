@@ -27,7 +27,7 @@ let GpioObj: any;
                 time = timeNow;
                 this.mockInput = this.mockInput ? 0 : 1;
                 this.event.emit('alert', this.mockInput, delta)
-                setTimeout(() => e(), random(10000, 50000));
+                //setTimeout(() => e(), random(10000, 50000)); // random door open
               }
               e();
             }
