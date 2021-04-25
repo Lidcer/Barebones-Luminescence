@@ -290,6 +290,6 @@ export function dayDescriptionToArray(dayDescription: DayDescription) {
 }
 
 export function getDayString(date: Date) {
-  const dateString = `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`;
+  const dateString = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
   return dateString;
 }

@@ -15,6 +15,8 @@ import { DateAndTimePricker } from "../DatePicker/DateAndTimePicker";
 import { DayScheduleBuilder } from "../DayScheduleBuilder/DayScheduleBuilder";
 import { Button } from "../../styles";
 import DatePicker from "react-date-picker";
+import ReactTooltip from "react-tooltip";
+
 
 const DayButton = styled.button`
   user-select: none;
@@ -40,6 +42,9 @@ const Space = styled.div`
   display: inline-block;
 `;
 
+const Inline = styled.div`
+  display: inline-block;
+`
 
 const CustomDate = styled.div`
   position: absolute;
@@ -392,10 +397,25 @@ export class ScheduleBuilder extends React.Component<ScheduleTabProps, ScheduleT
     if (selected === "Custom") {
       const description = this.s.getFullSchedule();
       const times = Object.keys(description.custom);
+      times.sort((a,b) => new Date(a) > new Date(b) ? 1 : -1);
+
       const dayDescription = custom ? this.daySchedule : null
       return <>
         {times.map((t, i) => {
-          return <DayButton key={i} onClick={() => this.setState({customSelected: t, addNewCustom: undefined})} disabled={this.state.customSelected === t}>{t}</DayButton>
+          const m = new Date(t);
+          const check = new Date();
+          check.setDate(check.getDate() - 1);
+
+          const expired = m < check;
+          return <Inline key={i}>
+          <DayButton 
+            data-tip={expired ? "This date already happened" : ""}
+            className={ expired ? "warning-button" : ""}
+            onClick={() => this.setState({customSelected: t, addNewCustom: undefined})}
+            disabled={this.state.customSelected === t}>{m.toLocaleDateString()}
+          </DayButton>
+          <ReactTooltip place="top" type="info" effect="solid"/>
+          </Inline>
         })}
           <Space />
           { this.state.customSelected ? <DayButton onClick={() => {
