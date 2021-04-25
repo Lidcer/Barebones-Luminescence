@@ -7,10 +7,19 @@ import styled from "styled-components";
 import { isVertical } from "../../Utils/Utils";
 import { CheckBox } from "../CheckBox/Checkbox";
 import { ControllerMode } from "../../../shared/interfaces";
+import ReactTooltip from "react-tooltip";
 
 const Div = styled.div`
   margin: 10px;
 `;
+
+const CheckBoxDiv = styled.div`
+  display: inline-block;
+`;
+const CheckBoxFlex = styled.div`
+  display: flex;
+`;
+
 
 interface ManualTabProps {
   als: AudioLightSystem;
@@ -75,9 +84,19 @@ export class ManualTab extends React.Component<ManualTabProps, ManualTabState> {
   render() {
     return (
       <>
-        <CheckBox text="Manual" enabled={this.state.mode === "Manual"} onChange={(on) => { this.changeMode('Manual', on)}}  />
-        <CheckBox text="Manual Force" enabled={this.state.mode === "ManualForce"} onChange={(on) => { this.changeMode('ManualForce', on)}}  />
-        <CheckBox text="Manual Locked" enabled={this.state.mode === "ManualLocked"} onChange={(on) => { this.changeMode('ManualLocked', on)}}  />
+        <ReactTooltip place="top" type="info" effect="solid"/>
+
+        <CheckBoxFlex>
+          <CheckBoxDiv data-tip="LEDs will keep its state as long as this page is open then it will fall back to autopilot">
+            <CheckBox text="Manual" enabled={this.state.mode === "Manual"} onChange={(on) => { this.changeMode('Manual', on)}}  />
+          </CheckBoxDiv>
+          <CheckBoxDiv data-tip="LEDs will keep its state even when this page is closed. Can still be overwritten by door switch">
+            <CheckBox text="Manual Force" enabled={this.state.mode === "ManualForce"} onChange={(on) => { this.changeMode('ManualForce', on)}}  />
+          </CheckBoxDiv>
+          <CheckBoxDiv data-tip="LEDs will keep its state no matter what. Even door switch can't overwrite this">
+            <CheckBox text="Manual Locked" enabled={this.state.mode === "ManualLocked"} onChange={(on) => { this.changeMode('ManualLocked', on)}}  />
+          </CheckBoxDiv>
+        </CheckBoxFlex>
 
         <Div style={{ textAlign: this.state.vertical ? "center" : "left" }}>
           <ColourPicker
