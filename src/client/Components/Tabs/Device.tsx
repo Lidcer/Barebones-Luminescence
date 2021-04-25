@@ -25,18 +25,18 @@ const Div = styled.div`
 `;
 
 const CanvasDiv = styled.div`
-  width: 100%;
+  width: calc(100% - 21px);
   height: 100px;
   padding: 5pt;
-  margin: 5pt;
+  margin: 4px;
   display: flex;
+  align-content: stretch;
 `;
 
 const Canvas = styled.canvas`
   height: 100%;
-  width: calc(50% - 10pt);
+  width: 100%;
   border: 1px solid white;
-  padding: 2px;
 `;
 
 interface DeviceTabProps {
@@ -76,6 +76,13 @@ export class DeviceTab extends React.Component<DeviceTabProps, DeviceTabState> {
     }
     this.setState({ serverInfo });
 
+    const cpuRect = this.cpu.current.getBoundingClientRect();
+    this.cpu.current.width = cpuRect.width;
+    this.cpu.current.height = cpuRect.height;
+
+    const tempRect = this.temperature.current.getBoundingClientRect();
+    this.temperature.current.width = tempRect.width;
+    this.temperature.current.height = tempRect.height;
     this.ctxCpu = this.cpu.current.getContext('2d');
     this.ctxTemperature = this.temperature.current.getContext('2d');
 
@@ -86,10 +93,10 @@ export class DeviceTab extends React.Component<DeviceTabProps, DeviceTabState> {
   };
 
   draw(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, data: number[]) {
-    const { width, height } = canvas.getBoundingClientRect();
+    const { width, height } = canvas;
     ctx.clearRect(0, 0, width, height);
     const len = data.length;
-    const widthDraw = width / len;
+    const widthDraw = width / (len - 1);
     const max = 100
     ctx.strokeStyle = '#FFFFFF';
     ctx.fillStyle = '#FFFFFF';
@@ -118,6 +125,12 @@ export class DeviceTab extends React.Component<DeviceTabProps, DeviceTabState> {
 
   }
 
+  get temperatureDisplay() {
+    const data = this.state.serverInfo;
+    const temp = Math.round(data.temperature[data.temperature.length - 1]); 
+    return temp ? `${temp}°C` : "Unknown";
+  }
+
   render() {
     if (!this.state.serverInfo) {
       return <ReactLoading className='m-2' type={"bars"} color={"#ffffff"} height={50} width={50} />;
@@ -143,7 +156,7 @@ export class DeviceTab extends React.Component<DeviceTabProps, DeviceTabState> {
             Memory Usage
             <ul>
               <li>CPU: {Math.round(data.cpuUsageHistory[data.cpuUsageHistory.length - 1])}%</li>
-              <li>Temperature: {Math.round(data.cpuUsageHistory[data.cpuUsageHistory.length - 1])}°C</li>
+              <li>Temperature: {this.temperatureDisplay}</li>
             </ul>
           </Div>
           <Div>

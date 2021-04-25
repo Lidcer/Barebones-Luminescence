@@ -30,7 +30,7 @@ export class AudioLightSystem {
     this._lightSocket = new LightSocket();
     this._lightSocket.clientSocket.on("pcm", this.onPCM);
     this._lightSocket.clientSocket.on("mode-update", this.onModeUpdate);
-    this._lightSocket.clientSocket.on("socket-log", this.raiseNotification);
+    this._lightSocket.clientSocket.on("socket-log", this._raiseNotification);
     this._pattern = new PatternService(this._lightSocket);
     this._scheduleService = new ScheduleService(this._lightSocket, this._pattern);
   }
@@ -68,7 +68,7 @@ export class AudioLightSystem {
     this._mode = mode;
     this.eventEmitter.emit("mode-update", this._mode);
   }
-  private raiseNotification = (log: Log) => {
+  private _raiseNotification = (log: Log) => {
     this.eventEmitter.emit("log", log)
   }
   get lightSocket() {
@@ -92,6 +92,9 @@ export class AudioLightSystem {
   raiseError(error: Error) {
     const title = error.name || "Unknown error";
     const stack = error.stack || new Error().stack || "Unknown error has occurred";
-    this.raiseNotification({type:"error", title, description: stack});
+    this._raiseNotification({type:"error", title, description: stack});
+  }
+  raiseNotification(title: string, description?: string) {
+    this._raiseNotification({type:"info", title, description});
   }
 }

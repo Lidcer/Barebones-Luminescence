@@ -5,7 +5,7 @@ import { Gpio } from 'pigpio';
 import { PASSWORD, PI_PORT } from "../mainServer/main/config";
 import { StringifiedError, stringifyError } from "../sharedFiles/error";
 import { EventEmitter } from "events";
-import { random } from "lodash";
+
 let GpioObj: any;
 (() => {
   if (isPi()) {

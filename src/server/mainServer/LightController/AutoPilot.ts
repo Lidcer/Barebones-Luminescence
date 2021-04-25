@@ -39,6 +39,7 @@ export class AutoPilot {
         settings.schedule = scheduler;
         await saveSettings();
         websocket.broadcast("schedule-update", settings.schedule);
+        websocket.broadcastLog("info", "Schedule has been changed");
         return settings.schedule;
       },
     );

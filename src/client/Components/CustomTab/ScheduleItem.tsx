@@ -6,9 +6,9 @@ import { AudioLightSystem } from "../../Utils/AudioSystem";
 import { PreGenerateColourPickerPalette } from "../ColourPicker/ColourPickerDataImages";
 import { ColourSetter, OnChangeEventType } from "../ColourSetter/ColourSetter";
 import { PatternPreview } from "./PatternPreview";
-import { TimePicker } from "./../DatePicker/TimePicker";
 import { parseTime, TimeParser, TIME_SEPARATOR, TIME_SPLITTER } from "../../../shared/Scheduler";
 import styled from "styled-components";
+import TimePicker, { TimePickerValue } from 'react-time-picker';
 
 const Div = styled.div`
   display: flex;
@@ -33,11 +33,12 @@ const Button = styled.button`
   }
 `;
 
+
 interface ScheduleItemProps {
   als: AudioLightSystem;
   palette: PreGenerateColourPickerPalette;
   descriptor: HourDescriptor;
-  hour: string;
+  time: string;
 
   onDataChange: (type: ScheduleType, data: HourDescriptor["data"]) => void;
   onTypeChange: (type: ScheduleType) => void;
@@ -118,51 +119,20 @@ export class ScheduleHourDescriptor extends React.Component<ScheduleItemProps, S
     );
   }
 
-  get TimePickers() {
-    const onChange = (type: "start" | "end", d: "hour" | "minute" | "second", number: number) => {
-      const n = number.toString();
-      let index = 0;
-      switch (d) {
-        case "minute":
-          index = 1;
-          break;
-        case "second":
-          index = 2;
-          break;
-      }
-
-      const data = this.props.hour.split(TIME_SEPARATOR);
-      const sTime = data[0].split(TIME_SPLITTER);
-      const eTime = data[1].split(TIME_SPLITTER);
-      if (type === "start") {
-        sTime[index] = n;
-      } else {
-        eTime[index] = n;
-      }
-      const timeString = `${sTime.join(TIME_SPLITTER)}${TIME_SEPARATOR}${eTime.join(TIME_SPLITTER)}`;
-      this.props.onTimeChange(this.props.hour, timeString);
+  get timePickers() {
+    const onChange = (time: TimePickerValue, start: boolean) => {
+      const split = this.props.time.split("-");
+      const newTime = start ? `${time}-${split[1]}` : `${split[0]}-${time}`;
+      this.props.onTimeChange(this.props.time, newTime);
     };
-    const e = parseTime(this.props.hour);
+    const split = this.props.time.split("-");
+
     return (
       <>
-        Start:
-        <TimePicker
-          hours={e.sTime[0]}
-          minutes={e.sTime[1]}
-          seconds={e.sTime[2]}
-          onHourChange={h => onChange("start", "hour", h)}
-          onMinuteChange={m => onChange("start", "minute", m)}
-          onSecondChange={s => onChange("start", "second", s)}
-        />
-        End:
-        <TimePicker
-          hours={e.eTime[0]}
-          minutes={e.eTime[1]}
-          seconds={e.eTime[2]}
-          onHourChange={h => onChange("end", "hour", h)}
-          onMinuteChange={m => onChange("end", "minute", m)}
-          onSecondChange={s => onChange("end", "second", s)}
-        />
+        <span>Start:</span>
+          <TimePicker className="time-picker" value={split[0]} onChange={ev => onChange(ev, true)} maxDetail="second" disableClock={true} clearIcon={null}/>
+        <span>End:</span>
+        <TimePicker className="time-picker" value={split[1]} onChange={ev => onChange(ev, false)} maxDetail="second" disableClock={true}  clearIcon={null}/>
       </>
     );
   }
@@ -170,7 +140,7 @@ export class ScheduleHourDescriptor extends React.Component<ScheduleItemProps, S
   render() {
     return (
       <Div>
-        {this.TimePickers}
+        {this.timePickers}
         {this.typeSelector}
         {this.descriptor}
         <Button onClick={() => this.props.onRemove()}>Delete</Button>

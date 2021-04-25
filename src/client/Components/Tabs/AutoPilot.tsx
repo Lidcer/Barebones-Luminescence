@@ -8,11 +8,12 @@ import { PatternBuilder } from "../CustomTab/PatternBuilder";
 import { ScheduleBuilder } from "../CustomTab/ScheduleBuilder";
 
 const Div = styled.div`
-  width: 100%;
+  width: calc(100% - 10px);
+  margin: 5px;
   display: flex;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   user-select: none;
   background-color: rgb(42, 42, 42);
   color: white;
