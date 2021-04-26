@@ -6,7 +6,7 @@
   "scripts": {
     "build-server": "tsc -b src",
     "build-client": "cross-env NODE_ENV=production TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack -p",
-    "build": "npm run build-client && npm run build-server",
+    "build": " npm run build-server && npm run build-client",
     "dev-build": "tsc -b -w src",
     "dev-client": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack-dev-server -w",
     "dev-server": "nodemon --inspect server.js",

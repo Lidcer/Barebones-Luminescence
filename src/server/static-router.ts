@@ -17,7 +17,6 @@ export function staticsRouter() {
         //router.use('/statics', express.static(dataImages));
     } else {
         const staticsPath = path.join(process.cwd(), "dist", "statics");
-
         // All the assets are in "statics" folder (Done by Webpack during the build phase)
         router.use("/statics", express.static(staticsPath));
     }
