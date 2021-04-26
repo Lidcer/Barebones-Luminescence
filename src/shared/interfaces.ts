@@ -137,6 +137,7 @@ export interface FetchableServerConfig {
     doorSensor: boolean;
     magicController: boolean;
     version: string;
+    mode: ControllerMode;
 }
 
 export type DoorLog = { [dateString: string]: number };

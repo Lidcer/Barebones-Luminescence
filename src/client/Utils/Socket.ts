@@ -3,7 +3,7 @@ import { io, Socket } from "socket.io-client";
 import { BrowserStorage } from "./BrowserStorage";
 import { ClientSocket } from "../../shared/clientSocket";
 import { MINUTE } from "../../shared/constants";
-import { FetchableServerConfig, ServerSettings } from "../../shared/interfaces";
+import { ControllerMode, FetchableServerConfig, ServerSettings } from "../../shared/interfaces";
 
 interface Queue {
     promise: boolean;
@@ -12,6 +12,8 @@ interface Queue {
     resolve?: (...args: any) => void;
     reject?: (...args: any) => void;
 }
+
+export type ModeUpdate = (mode: ControllerMode) => void;
 
 export class LightSocket {
     private readonly TIMEOUT = MINUTE;
@@ -23,11 +25,13 @@ export class LightSocket {
     private _settings: ServerSettings;
     private _magicHome = false;
     private _doorSensor = false;
+    private _mode: ControllerMode = "Manual";
 
     constructor(private version: string, private raiseNotification: (title: string, description?: string) => void) {
         this._socket = io();
 
         this._clientSocket = new ClientSocket(this._socket);
+        this._clientSocket.on("mode-update", this.onModeUpdate);
         this._clientSocket.on("connect", async msg => {
             this.eventEmitter.emit("connect");
             this.authenticate();
@@ -39,20 +43,24 @@ export class LightSocket {
             this.emptyQueue();
         });
     }
-
+    on(type: "mode-update", listener: ModeUpdate): void;
     on(value: "auth", listener: Listener): void;
     on(value: "disconnect", listener: Listener): void;
     on(value: "connect", listener: Listener): void;
     on(value: string, listener: Listener) {
         this.eventEmitter.on(value, listener);
     }
+    off(type: "mode-update", listener: ModeUpdate): void;
     off(value: "auth", listener: Listener): void;
     off(value: "disconnect", listener: Listener): void;
     off(value: "connect", listener: Listener): void;
     off(value: string, listener: Listener) {
         this.eventEmitter.off(value, listener);
     }
-
+    private onModeUpdate = (mode: ControllerMode) => {
+        this._mode = mode;
+        this.eventEmitter.emit("mode-update", this._mode);
+    };
     async authenticate(password?: string): Promise<boolean> {
         const storageKey = "socket-password";
         this._authenticated = await this._clientSocket.emitPromise("has-auth");
@@ -68,6 +76,11 @@ export class LightSocket {
                 const result = await this._clientSocket.emitPromise<FetchableServerConfig, []>("server-config-get");
                 this._magicHome = result.magicController;
                 this._doorSensor = result.doorSensor;
+                if (this._mode !== result.mode) {
+                    this._mode = result.mode;
+                    this.onModeUpdate(this._mode);
+                }
+
                 if (this.version !== result.version) {
                     this.raiseNotification("Invalid app version", `Expected ${result.version}v using ${this.version}v`);
                 }
@@ -94,6 +107,9 @@ export class LightSocket {
     }
     get clientSocket() {
         return this._clientSocket;
+    }
+    get mode() {
+        return this._mode;
     }
     emitIfPossible<T extends any[]>(event: string, ...args: T) {
         if (this.authenticated) {

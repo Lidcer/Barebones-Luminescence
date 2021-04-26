@@ -1,6 +1,13 @@
 import { array, cloneDeep, getDayString } from "../../../shared/utils";
 import { getStorage, setStorage, storageFolder } from "../../sharedFiles/settingsStore";
-import { DoorLog, FetchableServerConfig, LedPattern, LedPatternItem, ServerSettings } from "../../../shared/interfaces";
+import {
+    ControllerMode,
+    DoorLog,
+    FetchableServerConfig,
+    LedPattern,
+    LedPatternItem,
+    ServerSettings,
+} from "../../../shared/interfaces";
 import { WebSocket } from "../socket/Websocket";
 import { hsv2rgb } from "../../../shared/colour";
 import { Lights } from "../LightController/Devices/Controller";
@@ -58,7 +65,7 @@ export async function saveSettings() {
     }
 }
 
-export function setupServerSocket(websocket: WebSocket, lights: Lights) {
+export function setupServerSocket(websocket: WebSocket, lights: Lights, getMode: () => ControllerMode) {
     const isMagicHome = () => {
         return lights.getInstance() instanceof MagicHomeController;
     };
@@ -73,6 +80,7 @@ export function setupServerSocket(websocket: WebSocket, lights: Lights) {
             doorSensor: DOOR_SENSOR,
             magicController: isMagicHome(),
             version: VERSION,
+            mode: getMode(),
         };
     });
     websocket.onPromise<DoorLog, []>("get-door-log", async client => {

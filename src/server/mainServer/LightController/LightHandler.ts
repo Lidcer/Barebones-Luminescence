@@ -235,5 +235,10 @@ export function setupLightHandler(websocket: WebSocket, light: Lights, audioProc
         }
     });
 
-    return { destroy };
+    return {
+        destroy,
+        getMode: () => {
+            return lightMode;
+        },
+    };
 }

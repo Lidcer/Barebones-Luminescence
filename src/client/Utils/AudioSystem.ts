@@ -15,7 +15,6 @@ export interface AudioUpdateResult {
 
 export type LogUpdate = (log: Log) => void;
 export type AudioUpdate = (AudioUpdate: AudioUpdateResult) => void;
-export type ModeUpdate = (mode: ControllerMode) => void;
 
 export class AudioLightSystem {
     private eventEmitter = new EventEmitter();
@@ -24,26 +23,22 @@ export class AudioLightSystem {
     private _lightSocket: LightSocket;
     private _scheduleService: ScheduleService;
     private _pattern: PatternService;
-    private _mode: ControllerMode = "Manual";
     private version = "Unknown";
     constructor() {
         const script = document.getElementById("version") as HTMLScriptElement;
         this.version = script.textContent.trim();
         this._lightSocket = new LightSocket(this.version, this.raiseNotification);
         this._lightSocket.clientSocket.on("pcm", this.onPCM);
-        this._lightSocket.clientSocket.on("mode-update", this.onModeUpdate);
         this._lightSocket.clientSocket.on("socket-log", this._raiseNotification);
         this._pattern = new PatternService(this._lightSocket);
         this._scheduleService = new ScheduleService(this._lightSocket, this._pattern);
     }
-    on(type: "mode-update", listener: ModeUpdate): void;
     on(type: "audioUpdate", listener: AudioUpdate): void;
     on(type: "log", listener: LogUpdate): void;
     on(type: string, listener: Listener) {
         return this.eventEmitter.on(type, listener);
     }
 
-    off(type: "mode-update", listener: ModeUpdate): void;
     off(type: "audioUpdate", listener: AudioUpdate): void;
     off(type: "log", listener: LogUpdate): void;
     off(type: string, listener: Listener) {
@@ -66,10 +61,6 @@ export class AudioLightSystem {
         //this._audioAnalyser.update();
         this.eventEmitter.emit("audioUpdate", { leftBuffer, rightBuffer, mergedBuffer, rgbBuffer });
     };
-    private onModeUpdate = (mode: ControllerMode) => {
-        this._mode = mode;
-        this.eventEmitter.emit("mode-update", this._mode);
-    };
     private _raiseNotification = (log: Log) => {
         this.eventEmitter.emit("log", log);
     };
@@ -87,9 +78,6 @@ export class AudioLightSystem {
     }
     get scheduleService() {
         return this._scheduleService;
-    }
-    get mode() {
-        return this._mode;
     }
     raiseError(error: Error) {
         const title = error.name || "Unknown error";

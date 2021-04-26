@@ -77,14 +77,14 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
             deviceInfo: undefined,
             allDevices: undefined,
             change: undefined,
-            mode: props.als.mode,
+            mode: props.als.lightSocket.mode,
         };
     }
 
     async componentDidMount() {
         this.audioAnalyser = new AudioAnalyser(this.props.als.audioProcessor);
         window.addEventListener("resize", this.resize);
-        this.props.als.on("mode-update", this.onMode);
+        this.props.als.lightSocket.on("mode-update", this.onMode);
         this.props.als.lightSocket.clientSocket.on("audio-server-connected", this.fetchInfo);
         this.props.als.lightSocket.clientSocket.on("audio-server-disconnected", this.audioDisconnect);
 
@@ -102,7 +102,7 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
     componentWillUnmount() {
         this.destroyed = true;
         window.removeEventListener("resize", this.resize);
-        this.props.als.off("mode-update", this.onMode);
+        this.props.als.lightSocket.off("mode-update", this.onMode);
         this.props.als.lightSocket.clientSocket.off("audio-server-connected", this.fetchInfo);
         this.props.als.lightSocket.clientSocket.off("audio-server-disconnected", this.audioDisconnect);
         (async () => {

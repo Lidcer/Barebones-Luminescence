@@ -34,11 +34,11 @@ export class AutoPilot {
         });
         websocket.onPromise<SchedulerDescriptionVague, [SchedulerDescriptionVague]>(
             "schedule-set",
-            async (client, scheduler) => {
+            async (client, schedule) => {
                 client.validateAuthentication();
-                const s = convertSchedulerDescription(settings.schedule, settings.patterns);
+                const s = convertSchedulerDescription(schedule, settings.patterns);
                 this._scheduler.loadSchedule(s);
-                settings.schedule = scheduler;
+                settings.schedule = schedule;
                 await saveSettings();
                 websocket.broadcast("schedule-update", settings.schedule);
                 websocket.broadcastLog("info", "Schedule has been changed");

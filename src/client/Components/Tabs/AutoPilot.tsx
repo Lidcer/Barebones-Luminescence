@@ -72,15 +72,15 @@ export class AutoPilotTab extends React.Component<AutoPilotProps, AutoPilotState
         super(props);
         this.state = {
             tabState: TabState.Schedule,
-            mode: props.als.mode,
+            mode: props.als.lightSocket.mode,
         };
     }
 
     componentDidMount() {
-        this.props.als.on("mode-update", this.onModeUpdate);
+        this.props.als.lightSocket.on("mode-update", this.onModeUpdate);
     }
     componentWillUnmount() {
-        this.props.als.off("mode-update", this.onModeUpdate);
+        this.props.als.lightSocket.off("mode-update", this.onModeUpdate);
     }
 
     onModeUpdate = (mode: ControllerMode) => {

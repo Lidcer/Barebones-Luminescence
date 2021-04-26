@@ -32,10 +32,10 @@ async function start() {
 
     const webSocket = new WebSocket({ server });
     setupAuthenticate(webSocket);
-    setupServerSocket(webSocket, lights);
+    const { getMode } = setupLightHandler(webSocket, lights, audioProcessor);
+    setupServerSocket(webSocket, lights, getMode);
     setupDeviceInfo(webSocket);
     setupCommunicationToAudioServer(webSocket, audioProcessor);
-    setupLightHandler(webSocket, lights, audioProcessor);
 
     if (AUDIO_SERVER) {
         setTimeout(() => {
