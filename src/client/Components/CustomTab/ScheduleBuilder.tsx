@@ -1,7 +1,6 @@
 import React from "react";
 import { PreGenerateColourPickerPalette } from "../ColourPicker/ColourPickerDataImages";
 import {
-  getDayString,
   Scheduler,
   TimeParser,
 } from "../../../shared/Scheduler";
@@ -16,6 +15,7 @@ import { DayScheduleBuilder } from "../DayScheduleBuilder/DayScheduleBuilder";
 import { Button } from "../../styles";
 import DatePicker from "react-date-picker";
 import ReactTooltip from "react-tooltip";
+import { getDayString } from "../../../shared/utils";
 
 
 const DayButton = styled.button`
@@ -156,198 +156,6 @@ export class ScheduleBuilder extends React.Component<ScheduleTabProps, ScheduleT
       </div>
     );
   }
-  // renderDescription(desc: DayDescription) {
-  //   const onColourChange = (key: string, type: HourDescriptor["type"], data: HourDescriptor["data"]) => {
-  //     const description = this.props.als.scheduleService.getFullSchedule()
-  //     if (this.state.selected === "Custom") {
-  //       description.custom[this.state.customSelected][key].data = data;
-  //       description.custom[this.state.customSelected][key].type = type;
-  //     } else {
-  //       description[this.state.selected][key].data = data;
-  //       description[this.state.selected][key].type = type;
-  //     }
-  //   };
-  //   const onTypeChange = (key: string, type: HourDescriptor["type"]) => {
-  //     if (this.state.selected === "Custom") {
-  //       const description = this.props.als.scheduleService.getFullSchedule()
-  //       if (description.custom[this.state.customSelected][key].type === type) {
-  //         return;
-  //       }
-  //     } else {
-  //       const description = this.props.als.scheduleService.getFullSchedule()
-  //       if (description[this.state.selected][key].type === type) {
-  //         return;
-  //       }
-  //     }
-
-  //     const description = this.props.als.scheduleService.getFullSchedule()
-  //     if (this.state.selected === "Custom") {
-  //       description.custom[this.state.customSelected][key].type = type;
-  //     } else {
-  //       description[this.state.selected][key].type = type;
-  //     }
-
-  //     if (type === "Pattern") {
-  //       let pattern = this.props.als.patternService.patterns[0];
-  //       if (!pattern) {
-  //         pattern = this.props.als.patternService.newPattern();
-  //         this.props.als.patternService.setPattern(pattern);
-  //         this.props.als.patternService.sendPatterns().catch(err => Logger.debug("Schedule Builder", err));
-  //       }
-  //       if (this.state.selected === "Custom") {
-  //         description.custom[this.state.customSelected][key].data = pattern;
-  //       } else {
-  //         description[this.state.selected][key].data = pattern;
-  //       }
-  //     } else if (type === "RGB") {
-  //       const rgb: RGB = { r: random(0, 255), g: random(0, 255), b: random(0, 255) };
-  //       if (this.state.selected === "Custom") {
-  //         description.custom[this.state.customSelected][key].data = rgb;
-  //       } else {
-  //         description[this.state.selected][key].data = rgb;
-  //       }
-  //     } else {
-  //       Logger.debug("Pattern Builder", `Unknown value ${type}`);
-  //     }
-  //     this.forceUpdate();
-  //   };
-  //   const onTimeChange = (key: string, newTime: string) => {
-  //     const description = this.props.als.scheduleService.getFullSchedule()
-  //     if (this.state.selected === "Custom") {
-  //       const backup = description.custom[this.state.customSelected][key];
-  //       delete description.custom[this.state.customSelected][key];
-  //       description.custom[this.state.customSelected][newTime] = backup;
-  //     } else {
-  //       const backup = description[this.state.selected][key];
-  //       delete description[this.state.selected][key];
-  //       description[this.state.selected][newTime] = backup;
-  //     }
-  //     this.sort();
-  //   };
-
-  //   const onRemove = (key: string) => {
-  //     const description = this.props.als.scheduleService.getFullSchedule()
-  //     if (this.state.selected === "Custom") {
-  //       delete description.custom[this.state.customSelected][key];
-  //     } else {
-  //       delete description[this.state.selected][key];
-  //     }
-  //   };
-
-  //   const onAdd = () => {
-
-  //     const description = this.props.als.scheduleService.getFullSchedule()
-  //     const key = this.getRandomTime();
-  //     let des: HourDescriptor;
-  //     if (this.state.selected === "Custom") {
-  //       description.custom[this.state.customSelected][key] = {} as any;
-  //       des = description.custom[this.state.customSelected][key] as HourDescriptor;
-  //     } else {
-  //       description[this.state.selected][key] = {} as any;
-  //       des = description[this.state.selected][key] as HourDescriptor;
-  //     }
-
-  //     des.type = "RGB";
-  //     des.data = { r: random(0, 255), g: random(0, 255), b: random(0, 255) };
-  //     this.props.als.scheduleService.setPattern(description);
-
-  //     this.sortForce();
-  //   };
-  //   return (
-  //     <>
-  //       {this.state.dayTimes.map((obj, i) => {
-  //         const k = Object.keys(obj)[0];
-  //         return (
-  //           <ScheduleHourDescriptor
-  //             key={i}
-  //             als={this.props.als}
-  //             palette={this.props.palette}
-  //             descriptor={desc[k]}
-  //             time={k}
-  //             onTimeChange={(_oldTime, newTime) => onTimeChange(k, newTime)}
-  //             onDataChange={(type, data) => onColourChange(k, type, data)}
-  //             onTypeChange={type => onTypeChange(k, type)}
-  //             onRemove={() => onRemove(k)}
-  //           />
-  //         );
-  //       })}
-  //       <Button onClick={onAdd}>Add</Button>
-  //     </>
-  //   );
-  // }
-
-  // get daySchedule() {
-  //   const description = this.props.als.scheduleService.getFullSchedule();
-  //   if (this.state.selected === "Custom") {
-  //   } else {
-  //     const desc = description[this.state.selected];
-  //     return this.renderDescription(desc);
-  //   }
-
-  //   if (!description) {
-  //     return null;
-  //   }
-
-  //   const onToggle = () => {
-  //     const addNewCustom = this.state.addNewCustom ? undefined : new Date();
-  //     this.setState({ addNewCustom });
-  //   };
-
-  //   const c = this.state.addNewCustom;
-  //   const Dtn = c ? (
-  //     <>
-  //       <DatePicker
-  //         date={{ day: c.getDate(), month: c.getMonth(), year: c.getFullYear() }}
-  //         onChange={(day, month, year) => {
-  //           this.state.addNewCustom.setMonth(month);
-  //           this.state.addNewCustom.setDate(day);
-  //           this.state.addNewCustom.setFullYear(year);
-  //         }}
-  //       />
-  //       <Button
-  //         onClick={() => {
-  //           const description = this.props.als.scheduleService.getFullSchedule();
-  //           const index = getDayString(this.state.addNewCustom);
-  //           description.custom[index] = {};
-  //           const time = this.getRandomTime();
-  //           description.custom[index][time] = {
-  //             type: "RGB",
-  //             data: { r: random(0, 255), g: random(0, 255), b: random(0, 255) },
-  //           };
-  //           this.setState({ addNewCustom: undefined, customSelected: time });
-  //         }}
-  //       >
-  //         Confirm
-  //       </Button>
-  //     </>
-  //   ) : null;
-  //   const Btn = <Button onClick={onToggle}>{this.state.addNewCustom ? "Delete" : "Add"}</Button>;
-
-  //   const ccc = description.custom;
-  //   const keys = Object.keys(description.custom);
-
-  //   return (
-  //     <span>
-  //       {keys.map((m, i) => {
-  //         return (
-  //           <Button
-  //             key={i}
-  //             onClick={e => this.setState({ customSelected: m })}
-  //             disabled={this.state.customSelected === m}
-  //           >
-  //             {m}
-  //           </Button>
-  //         );
-  //       })}
-  //       {Dtn}
-  //       {Btn}
-  //       {this.state.customSelected && ccc[this.state.customSelected]
-  //         ? this.renderDescription(ccc[this.state.customSelected])
-  //         : null}
-  //     </span>
-  //   );
-  // }
-
   private get daySchedule() {
     const description = this.s.getFullSchedule();
     const selected = this.state.selected;

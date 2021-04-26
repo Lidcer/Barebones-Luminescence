@@ -1,6 +1,6 @@
 import { Logger } from "./logger";
 import { PatternAnimator } from "./PatternAnimator";
-import { cloneDeep, toInt } from "./utils";
+import { cloneDeep, getDayString, toInt } from "./utils";
 import {
   DayDescription,
   DayDescriptionVague,
@@ -287,9 +287,4 @@ export function dayDescriptionToArray(dayDescription: DayDescription) {
     descArray.push(obj);
   }
   return descArray;
-}
-
-export function getDayString(date: Date) {
-  const dateString = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
-  return dateString;
 }

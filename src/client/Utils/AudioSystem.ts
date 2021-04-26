@@ -25,9 +25,11 @@ export class AudioLightSystem {
   private _scheduleService: ScheduleService;
   private _pattern: PatternService;
   private _mode: ControllerMode = "Manual"; 
-
+  private version = "Unknown"; 
   constructor() {
-    this._lightSocket = new LightSocket();
+    const script = document.getElementById("version") as HTMLScriptElement;
+    this.version = script.textContent.trim();
+    this._lightSocket = new LightSocket(this.version, this.raiseNotification);
     this._lightSocket.clientSocket.on("pcm", this.onPCM);
     this._lightSocket.clientSocket.on("mode-update", this.onModeUpdate);
     this._lightSocket.clientSocket.on("socket-log", this._raiseNotification);

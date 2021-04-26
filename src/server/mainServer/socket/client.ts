@@ -76,15 +76,12 @@ export class Client {
     }
     throw new Error("Unauthenticated");
   }
-
   get clientType() {
     return this.type;
   }
-
   set sendPCM(value: boolean) {
     this._sendPCM = value;
   }
-
   get sendPCM() {
     return this._sendPCM;
   }

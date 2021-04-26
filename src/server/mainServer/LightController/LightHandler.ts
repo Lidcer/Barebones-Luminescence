@@ -6,7 +6,7 @@ import { AudioProcessor } from "../../../shared/audioProcessor";
 import { AudioAnalyser } from "../../../shared/audioAnalyser";
 import { AutoPilot } from "./AutoPilot";
 import { Lights } from "./Devices/Controller";
-import { saveSettings, settings } from "../main/storage";
+import { increaseDoor, saveSettings, settings } from "../main/storage";
 import { sleep } from "../../../shared/utils";
 
 export function setupLightHandler(websocket: WebSocket, light: Lights, audioProcessor: AudioProcessor) {
@@ -183,7 +183,7 @@ export function setupLightHandler(websocket: WebSocket, light: Lights, audioProc
     websocket.broadcast("rgb-update", rgb || RGB);
   } 
 
-  light.on('door', async (level) => {
+  light.on("door", async (level) => {
     if (lightMode === "ManualLocked") {
       return;
     }
@@ -194,8 +194,9 @@ export function setupLightHandler(websocket: WebSocket, light: Lights, audioProc
     }
 
     if (level) {
+      increaseDoor();
       de.cancel();
-      lightMode = 'Door';
+      lightMode = "Door";
       await light.setRGB(255, 255, 255);
     } else {
       de();

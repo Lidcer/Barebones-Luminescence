@@ -125,3 +125,10 @@ export interface ServerSettings {
   controllerMode: ControllerMode;
   patterns: LedPattern[];
 }
+export interface FetchableServerConfig { 
+  doorSensor: boolean;
+  magicController: boolean;
+  version: string; 
+}
+
+export type DoorLog = { [dateString: string]: number };

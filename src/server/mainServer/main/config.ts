@@ -6,6 +6,7 @@ import fs from "fs";
 import { Logger as Log } from "../../../shared/logger";
 import { randomBytes } from "crypto";
 
+
 const IS_DEV = process.env.NODE_ENV !== "production";
 
 (global as any).DEV = IS_DEV;
@@ -19,6 +20,7 @@ interface IConfig {
   MAGIC_HOME_CONTROLLER?: boolean;
   AUDIO_SERVER?: boolean;
   SECRET?: string;
+  DOOR_SENSOR?: boolean,
 }
 
 let config: IConfig = {
@@ -29,6 +31,7 @@ let config: IConfig = {
   ADDRESS: "localhost",
   MAGIC_HOME_CONTROLLER: false,
   AUDIO_SERVER: false,
+  DOOR_SENSOR: false,
 };
 
 const packageJsonPath = path.join(process.cwd(), "package.json");
@@ -57,6 +60,7 @@ const ADDRESS = config.ADDRESS || "localhost";
 const MAGIC_HOME_CONTROLLER = config.MAGIC_HOME_CONTROLLER || false;
 const AUDIO_SERVER = config.AUDIO_SERVER || false;
 const PI_PORT = config.PI_PORT || false;
+const DOOR_SENSOR = config.DOOR_SENSOR || false;
 
 export function regenerateConfig(shouldShutDownServer = false) {
   config.SECRET = randomBytes(64).toString("base64");
@@ -74,4 +78,4 @@ function updateConfig() {
   fs.writeFileSync(configJsonPath, JSON.stringify(config, undefined, 1));
 }
 
-export { IS_DEV, AUDIO_SERVER, ADDRESS, VERSION, PASSWORD, SERVER_PORT, WEBPACK_PORT, SECRET, MAGIC_HOME_CONTROLLER, PI_PORT };
+export { IS_DEV, AUDIO_SERVER, ADDRESS, VERSION, PASSWORD, SERVER_PORT, WEBPACK_PORT, SECRET, MAGIC_HOME_CONTROLLER, PI_PORT, DOOR_SENSOR };

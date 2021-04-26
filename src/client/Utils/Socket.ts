@@ -3,7 +3,7 @@ import { io, Socket } from "socket.io-client";
 import { BrowserStorage } from "./BrowserStorage";
 import { ClientSocket } from "../../shared/clientSocket";
 import { MINUTE } from "../../shared/constants";
-import { ServerSettings } from "../../shared/interfaces";
+import { FetchableServerConfig, ServerSettings } from "../../shared/interfaces";
 
 interface Queue {
   promise: boolean;
@@ -22,8 +22,9 @@ export class LightSocket {
   private queue: Queue[] = [];
   private _settings: ServerSettings;
   private _magicHome = false;
+  private _doorSensor = false;
 
-  constructor() {
+  constructor(private version: string, private raiseNotification: (title: string, description?: string) => void) {
     this._socket = io();
 
     this._clientSocket = new ClientSocket(this._socket);
@@ -64,10 +65,16 @@ export class LightSocket {
       this._authenticated = true;
       this._settings = await this._clientSocket.emitPromise<ServerSettings, []>("server-settings-get");
       try {
-        const result = await this._clientSocket.emitPromise<boolean, []>("is-magic-active");
-        this._magicHome = !!result;
+        const result = await this._clientSocket.emitPromise<FetchableServerConfig, []>("server-config-get");
+        this._magicHome = result.magicController;
+        this._doorSensor = result.doorSensor;
+        if (this.version !== result.version) {
+          this.raiseNotification("Invalid app version", `Expected ${result.version}v using ${this.version}v`);
+        }
+
       } catch (_error) {
         this._magicHome = false;
+        this._doorSensor = false;
       }
       this.eventEmitter.emit("auth");
       this.sendQueue();
@@ -151,6 +158,9 @@ export class LightSocket {
   }
   get isMagicHome() {
     return this._magicHome;
+  }
+  get doorSensorConnected() {
+    return this._doorSensor;
   }
 
   get settings(): ServerSettings {

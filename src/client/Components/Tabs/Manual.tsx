@@ -20,6 +20,9 @@ const CheckBoxFlex = styled.div`
   display: flex;
 `;
 
+const Warper = styled.div`
+  overflow: auto;
+`;
 
 interface ManualTabProps {
   als: AudioLightSystem;
@@ -83,7 +86,7 @@ export class ManualTab extends React.Component<ManualTabProps, ManualTabState> {
 
   render() {
     return (
-      <>
+      <Warper>
         <ReactTooltip place="top" type="info" effect="solid"/>
 
         <CheckBoxFlex>
@@ -106,7 +109,7 @@ export class ManualTab extends React.Component<ManualTabProps, ManualTabState> {
             colour={this.state.colourHex}
           />
         </Div>
-      </>
+      </Warper>
     );
   }
 }

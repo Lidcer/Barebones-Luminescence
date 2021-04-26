@@ -154,3 +154,8 @@ export function sleep(ms: number) {
     }, ms);
   });
 }
+
+export function getDayString(date: Date) {
+  const dateString = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
+  return dateString;
+}

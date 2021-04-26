@@ -53,15 +53,15 @@ export class PIController implements LightController {
     });
   }
 
-  off(value: 'disconnect', callback: () => void): void
-  off(value: 'connect', callback: () => void): void
-  off(value: 'door', callback: (level: number, tick: number) => void): void
+  off(value: "disconnect", callback: () => void): void
+  off(value: "connect", callback: () => void): void
+  off(value: "door", callback: (level: number, tick: number) => void): void
   off(value: string, callback: (...args: any) => void) {
     this.eventEmitter.off(value, callback);
   }
-  on(value: 'disconnect', callback: () => void): void
-  on(value: 'connect', callback: () => void): void
-  on(value: 'door', callback: (level: number, tick: number) => void): void
+  on(value: "disconnect", callback: () => void): void
+  on(value: "connect", callback: () => void): void
+  on(value: "door", callback: (level: number, tick: number) => void): void
   on(value: string, callback: (...args: any) => void) {
     this.eventEmitter.on(value, callback);
   }

@@ -11,7 +11,6 @@ import { AudioProcessor } from "../../../shared/audioProcessor";
 import { setupDeviceInfo } from "../socket/DeviceInfo";
 import { Lights } from "../LightController/Devices/Controller";
 import { initStorage, setupServerSocket } from "./storage";
-import { setupMagicWebsocket } from "../LightController/Devices/MagicHome";
 import { SECOND } from "../../../shared/constants";
 
 const app = express();
@@ -33,9 +32,8 @@ async function start() {
 
   const webSocket = new WebSocket({ server });
   setupAuthenticate(webSocket);
-  setupServerSocket(webSocket);
+  setupServerSocket(webSocket, lights);
   setupDeviceInfo(webSocket);
-  setupMagicWebsocket(webSocket, lights);
   setupCommunicationToAudioServer(webSocket, audioProcessor);
   setupLightHandler(webSocket, lights, audioProcessor);
 

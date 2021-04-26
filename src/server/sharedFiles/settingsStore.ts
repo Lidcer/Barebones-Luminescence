@@ -1,7 +1,7 @@
 import { cloneDeep } from "../../shared/utils";
 import { createDirIfDoesNoExist, exist, readJson, writeJson } from "./fileSystemUtils";
 
-const storageFolder = "storage";
+export const storageFolder = "storage";
 let initialized = false;
 
 async function init() {
