@@ -35,3 +35,7 @@ Fullfil your config file carefully as that depends how many server it will initi
 npm run dev # starts LED server
 npm run dev-audio-server # starts audio server
 ```
+
+# Raspberry pi note!
+modules audify and pigpio are not compatible together on linux machine. You have to run `npm install` wait for everything to install which will probably yeet with a bunch of errors in console then you need to uninstall audify `npm uninstall audify` then reinstall `npm install gpio`. After that is should start without any problem. 
+
