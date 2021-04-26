@@ -91,15 +91,12 @@ export async function increaseDoor() {
     const string = getDayString(date);
 
     const existingData = await readDoorLog();
+
     if (!existingData[string]) {
         existingData[string] = 0;
     }
     existingData[string] += 1;
-
-    const presenceOfFile = await exist([storageFolder, doorLog], "file");
-    if (!presenceOfFile) {
-        await writeJson([storageFolder, doorLog], JSON.stringify(existingData), true);
-    }
+    await writeJson([storageFolder, doorLog], existingData, true);
 }
 
 export async function readDoorLog(): Promise<DoorLog> {
@@ -111,8 +108,5 @@ export async function readDoorLog(): Promise<DoorLog> {
 }
 
 export async function clearDoorLog() {
-    const presenceOfFile = await exist([storageFolder, doorLog], "file");
-    if (!presenceOfFile) {
-        await writeJson([storageFolder, doorLog], JSON.stringify({}), true);
-    }
+    await writeJson([storageFolder, doorLog], {}, true);
 }

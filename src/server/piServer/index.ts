@@ -5,6 +5,7 @@ import { Gpio } from "pigpio";
 import { PASSWORD, PI_PORT } from "../mainServer/main/config";
 import { StringifiedError, stringifyError } from "../sharedFiles/error";
 import { EventEmitter } from "events";
+import { random } from "lodash";
 
 let GpioObj: any;
 (() => {
@@ -27,7 +28,7 @@ let GpioObj: any;
                         time = timeNow;
                         this.mockInput = this.mockInput ? 0 : 1;
                         this.event.emit("alert", this.mockInput, delta);
-                        //setTimeout(() => e(), random(10000, 50000)); // random door open
+                        //setTimeout(() => e(), random(1000, 2000)); // random door open
                     };
                     e();
                 }
@@ -124,7 +125,6 @@ function setRgb(red: number, green: number, blue: number) {
 }
 
 socket.on("connection", (c: SocketIO.Socket) => {
-    console.log("Client connecting");
     if (client) {
         console.error("Client exist");
         c.disconnect();
