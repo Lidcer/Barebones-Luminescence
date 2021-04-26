@@ -4,85 +4,85 @@ import { SocketError } from "../../../shared/socketError";
 
 type ClientType = "unknown" | "client" | "audio-server";
 export class Client {
-  private type: ClientType = "unknown";
-  private _sendPCM = false;
+    private type: ClientType = "unknown";
+    private _sendPCM = false;
 
-  constructor(private client: SocketIO.Socket) {}
+    constructor(private client: SocketIO.Socket) {}
 
-  onAny(listener: (...args: any[]) => void) {
-    this.client.onAny(listener);
-    return this;
-  }
+    onAny(listener: (...args: any[]) => void) {
+        this.client.onAny(listener);
+        return this;
+    }
 
-  on(event: string, listener: (...args: any[]) => void) {
-    this.client.on(event, listener);
-    return this;
-  }
-  emit(event: string, ...args: any[]) {
-    return this.client.emit.apply(this.client, [event, ...args]);
-  }
-  emitPromise<R = any>(value: string, ...args: any[]) {
-    return new Promise<R>(async (resolve, reject) => {
-      const rejectTimeout = setTimeout(() => {
-        reject(new Error("Connection timed out"));
-      }, SECOND * 5);
+    on(event: string, listener: (...args: any[]) => void) {
+        this.client.on(event, listener);
+        return this;
+    }
+    emit(event: string, ...args: any[]) {
+        return this.client.emit.apply(this.client, [event, ...args]);
+    }
+    emitPromise<R = any>(value: string, ...args: any[]) {
+        return new Promise<R>(async (resolve, reject) => {
+            const rejectTimeout = setTimeout(() => {
+                reject(new Error("Connection timed out"));
+            }, SECOND * 5);
 
-      const fun = (value?: R, error?: SocketError) => {
-        clearTimeout(rejectTimeout);
-        if (error) {
-          const objectError = new Error(error.message);
-          if (error.stack) {
-            objectError.stack = error.stack;
-          }
-          return reject(objectError);
-        } else {
-          resolve(value);
+            const fun = (value?: R, error?: SocketError) => {
+                clearTimeout(rejectTimeout);
+                if (error) {
+                    const objectError = new Error(error.message);
+                    if (error.stack) {
+                        objectError.stack = error.stack;
+                    }
+                    return reject(objectError);
+                } else {
+                    resolve(value);
+                }
+            };
+            const emitArgs = [value, ...args, fun];
+            this.client.emit.apply(this.client, emitArgs);
+        });
+    }
+    disconnect() {
+        return this.client.disconnect();
+    }
+    setClient() {
+        if (this.type !== "unknown") {
+            throw new Error("client has already been set");
         }
-      };
-      const emitArgs = [value, ...args, fun];
-      this.client.emit.apply(this.client, emitArgs);
-    });
-  }
-  disconnect() {
-    return this.client.disconnect();
-  }
-  setClient() {
-    if (this.type !== "unknown") {
-      throw new Error("client has already been set");
+        this.type = "client";
     }
-    this.type = "client";
-  }
-  setAudioProcessor() {
-    if (this.type !== "unknown") {
-      throw new Error("client has already been set");
+    setAudioProcessor() {
+        if (this.type !== "unknown") {
+            throw new Error("client has already been set");
+        }
+        this.type = "audio-server";
     }
-    this.type = "audio-server";
-  }
-  get id() {
-    return this.client.id;
-  }
-  get connected() {
-    return this.client.connected;
-  }
-  get disconnected() {
-    return this.client.disconnected;
-  }
-  get remoteAddress() {
-    return this.client.conn.remoteAddress;
-  }
-  validateAuthentication() {
-    if (this.clientType === "client" || this.clientType === "audio-server") {
-      return;
+    get id() {
+        return this.client.id;
     }
-    throw new Error("Unauthenticated");
-  }
-  get clientType() {
-    return this.type;
-  }
-  set sendPCM(value: boolean) {
-    this._sendPCM = value;
-  }
-  get sendPCM() {
-    return this._sendPCM;
-  }
+    get connected() {
+        return this.client.connected;
+    }
+    get disconnected() {
+        return this.client.disconnected;
+    }
+    get remoteAddress() {
+        return this.client.conn.remoteAddress;
+    }
+    validateAuthentication() {
+        if (this.clientType === "client" || this.clientType === "audio-server") {
+            return;
+        }
+        throw new Error("Unauthenticated");
+    }
+    get clientType() {
+        return this.type;
+    }
+    set sendPCM(value: boolean) {
+        this._sendPCM = value;
+    }
+    get sendPCM() {
+        return this._sendPCM;
+    }
 }

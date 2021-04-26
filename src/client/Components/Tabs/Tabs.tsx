@@ -9,27 +9,27 @@ import { DeviceTab } from "./Device";
 import { MagicTab } from "./MagicHome";
 import { ManualTab } from "./Manual";
 interface TabsProps {
-  tab: Tabs;
-  als: AudioLightSystem;
-  palette: PreGenerateColourPickerPalette;
+    tab: Tabs;
+    als: AudioLightSystem;
+    palette: PreGenerateColourPickerPalette;
 }
 
 interface TabsState {}
 
 export class Tab extends React.Component<TabsProps, TabsState> {
-  render() {
-    const tab = this.props.tab;
-    switch (tab) {
-      case "Device":
-        return <DeviceTab als={this.props.als} />;
-      case "AutoPilot":
-        return <AutoPilotTab als={this.props.als} palette={this.props.palette} />;
-      case "Audio":
-        return <AudioTab als={this.props.als} />;
-      case "MagicHome":
-        return <MagicTab als={this.props.als} />;
-      default:
-        return <ManualTab als={this.props.als} palette={this.props.palette} />;
+    render() {
+        const tab = this.props.tab;
+        switch (tab) {
+            case "Device":
+                return <DeviceTab als={this.props.als} />;
+            case "AutoPilot":
+                return <AutoPilotTab als={this.props.als} palette={this.props.palette} />;
+            case "Audio":
+                return <AudioTab als={this.props.als} />;
+            case "MagicHome":
+                return <MagicTab als={this.props.als} />;
+            default:
+                return <ManualTab als={this.props.als} palette={this.props.palette} />;
+        }
     }
-  }
 }

@@ -6,32 +6,31 @@ import fs from "fs";
 import { Logger as Log } from "../../../shared/logger";
 import { randomBytes } from "crypto";
 
-
 const IS_DEV = process.env.NODE_ENV !== "production";
 
 (global as any).DEV = IS_DEV;
 (global as any).Logger = Log;
 
 interface IConfig {
-  SERVER_PORT?: number;
-  PI_PORT?: number;
-  PASSWORD: string;
-  ADDRESS: string;
-  MAGIC_HOME_CONTROLLER?: boolean;
-  AUDIO_SERVER?: boolean;
-  SECRET?: string;
-  DOOR_SENSOR?: boolean,
+    SERVER_PORT?: number;
+    PI_PORT?: number;
+    PASSWORD: string;
+    ADDRESS: string;
+    MAGIC_HOME_CONTROLLER?: boolean;
+    AUDIO_SERVER?: boolean;
+    SECRET?: string;
+    DOOR_SENSOR?: boolean;
 }
 
 let config: IConfig = {
-  PASSWORD: "",
-  SECRET: "",
-  SERVER_PORT: 6849,
-  PI_PORT: 5447,
-  ADDRESS: "localhost",
-  MAGIC_HOME_CONTROLLER: false,
-  AUDIO_SERVER: false,
-  DOOR_SENSOR: false,
+    PASSWORD: "",
+    SECRET: "",
+    SERVER_PORT: 6849,
+    PI_PORT: 5447,
+    ADDRESS: "localhost",
+    MAGIC_HOME_CONTROLLER: false,
+    AUDIO_SERVER: false,
+    DOOR_SENSOR: false,
 };
 
 const packageJsonPath = path.join(process.cwd(), "package.json");
@@ -41,14 +40,14 @@ const PackageJson = JSON.parse(rawPackageJson);
 const { version: VERSION } = PackageJson;
 
 try {
-  const rawConfigJson = fs.readFileSync(configJsonPath).toString();
-  config = JSON.parse(rawConfigJson);
+    const rawConfigJson = fs.readFileSync(configJsonPath).toString();
+    config = JSON.parse(rawConfigJson);
 } catch (error) {
-  /* ignored */
+    /* ignored */
 }
 
 if (!config.PASSWORD || !config.SECRET) {
-  regenerateConfig();
+    regenerateConfig();
 }
 
 // server
@@ -63,19 +62,31 @@ const PI_PORT = config.PI_PORT || false;
 const DOOR_SENSOR = config.DOOR_SENSOR || false;
 
 export function regenerateConfig(shouldShutDownServer = false) {
-  config.SECRET = randomBytes(64).toString("base64");
-  updateConfig();
-  if (shouldShutDownServer) {
-    Logger.log("\n\n\n\n");
-    Logger.log("========================");
-    Logger.warn("SHUTING DOWN SERVER");
-    Logger.log("========================");
-    process.exit(0);
-  }
+    config.SECRET = randomBytes(64).toString("base64");
+    updateConfig();
+    if (shouldShutDownServer) {
+        Logger.log("\n\n\n\n");
+        Logger.log("========================");
+        Logger.warn("SHUTING DOWN SERVER");
+        Logger.log("========================");
+        process.exit(0);
+    }
 }
 
 function updateConfig() {
-  fs.writeFileSync(configJsonPath, JSON.stringify(config, undefined, 1));
+    fs.writeFileSync(configJsonPath, JSON.stringify(config, undefined, 1));
 }
 
-export { IS_DEV, AUDIO_SERVER, ADDRESS, VERSION, PASSWORD, SERVER_PORT, WEBPACK_PORT, SECRET, MAGIC_HOME_CONTROLLER, PI_PORT, DOOR_SENSOR };
+export {
+    IS_DEV,
+    AUDIO_SERVER,
+    ADDRESS,
+    VERSION,
+    PASSWORD,
+    SERVER_PORT,
+    WEBPACK_PORT,
+    SECRET,
+    MAGIC_HOME_CONTROLLER,
+    PI_PORT,
+    DOOR_SENSOR,
+};

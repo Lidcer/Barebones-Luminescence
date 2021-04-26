@@ -21,29 +21,29 @@ app.use(staticsRouter());
 app.use(pagesRouter());
 
 async function start() {
-  await initStorage();
+    await initStorage();
 
-  const lights = new Lights();
-  const audioProcessor = new AudioProcessor();
+    const lights = new Lights();
+    const audioProcessor = new AudioProcessor();
 
-  const server = app.listen(SERVER_PORT, () => {
-    Logger.info(`App listening on port ${SERVER_PORT}!`);
-  });
+    const server = app.listen(SERVER_PORT, () => {
+        Logger.info(`App listening on port ${SERVER_PORT}!`);
+    });
 
-  const webSocket = new WebSocket({ server });
-  setupAuthenticate(webSocket);
-  setupServerSocket(webSocket, lights);
-  setupDeviceInfo(webSocket);
-  setupCommunicationToAudioServer(webSocket, audioProcessor);
-  setupLightHandler(webSocket, lights, audioProcessor);
+    const webSocket = new WebSocket({ server });
+    setupAuthenticate(webSocket);
+    setupServerSocket(webSocket, lights);
+    setupDeviceInfo(webSocket);
+    setupCommunicationToAudioServer(webSocket, audioProcessor);
+    setupLightHandler(webSocket, lights, audioProcessor);
 
-  if (AUDIO_SERVER) {
-    setTimeout(() => {
-      require("../../audioServer/index");
-    }, SECOND * 5);
-  }
-  (global as any).socket = lights;
-  (global as any).webSocket = webSocket;
+    if (AUDIO_SERVER) {
+        setTimeout(() => {
+            require("../../audioServer/index");
+        }, SECOND * 5);
+    }
+    (global as any).socket = lights;
+    (global as any).webSocket = webSocket;
 }
 
 start();

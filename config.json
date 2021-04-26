@@ -5,5 +5,6 @@
  "PI_PORT": 6857,
  "MAGIC_HOME_CONTROLLER": false,
  "AUDIO_SERVER": false,
- "ADDRESS": "192.168.0.12"
+ "ADDRESS": "192.168.0.30",
+ "DOOR_SENSOR": true
 }
