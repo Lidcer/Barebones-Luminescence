@@ -1,0 +1,15 @@
+# example file 
+# note that pi server should run as administrator because it needs access to onboard pins 
+# change working directory to your needs  
+[Unit]
+Description=LED pi Server
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/pi/The-prefect-LED-controller
+ExecStart=/usr/local/bin/npm run piserver:prod
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,14 @@
+# example file 
+# change working directory to your needs
+[Unit]
+Description=LED web Server
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/The-prefect-LED-controller
+ExecStart=/usr/local/bin/npm run webserver:prod
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
