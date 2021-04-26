@@ -13,7 +13,7 @@
     "dev-pi-server": "nodemon piServer.js",
     "webserver:prod": "cross-env NODE_ENV=production node server.js",
     "piserver:prod": "cross-env NODE_ENV=production node piServer.js",
-    "start:prod": "concurrently --prefix \"[{name}]\" --names \"PI-SERVER,SERVER\" -c \"bgRed.bold,bgBlue.bold\" \"npm run webserver:prod\" \"npm run piserver:prod\"",
+    "start:prod": "concurrently --prefix \"[{name}]\" --names \"PI-SERVER,SERVER\" -c \"bgRed.bold,bgBlue.bold\" \"npm run piserver:prod\" \"npm run webserver:prod\"",
     "dev-audio-server": "nodemon audio-server.js",
     "dev": "concurrently --prefix \"[{name}]\" --names \"SERVER-BUILDER,PI-SERVER,SERVER,CLIENT\" -c \"bgRed.bold,bgBlue.bold,bgBlue.bold,bgGreen.bold\" \"npm run dev-build\" \"npm run dev-pi-server\"  \"npm run dev-server\" \"npm run dev-client\"",
     "pretty": "prettier --write \"**/*.ts*\" prettier --write \"**/*.ts*\"",
