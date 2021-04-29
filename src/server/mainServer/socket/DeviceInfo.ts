@@ -3,11 +3,12 @@ import * as os from "os";
 import * as osUtils from "os-utils";
 import { ServerInfo } from "../../../shared/interfaces";
 import { execute } from "../../sharedFiles/terminal";
-import { SECOND } from "../../../shared/constants";
+import { MINUTE, SECOND } from "../../../shared/constants";
 import { FixLengthArray } from "../../../shared/Arrays";
 
 const HISTORY = 25;
 const MONITOR_TIME = SECOND * 0.5;
+const MONITOR_TEMP_TIME = MINUTE * 1;
 const temperatureHistory = new FixLengthArray<number>(HISTORY);
 const cpuHistory = new FixLengthArray<number>(HISTORY);
 
@@ -68,7 +69,7 @@ async function monitorTemp(first?: boolean) {
     }
     const now = Date.now();
     const diff = now - lastTemp;
-    const time = MONITOR_TIME - diff;
+    const time = MONITOR_TEMP_TIME - diff;
 
     setTimeout(monitorTemp, time);
 }
