@@ -8,6 +8,7 @@ export type ControllerMode =
     | "Audio"
     | "AudioRaw"
     | "Door";
+
 export type DayNames = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
 export type LightMode = "instant" | "fade";
 export type ScheduleType = "Pattern" | "RGB";
@@ -61,12 +62,27 @@ export interface ActiveDevice {
     frameSize: number;
 }
 
-export interface DeviceUpdate {
-    name: string;
-    id: number;
-    frameSize: number;
-    sampleRate: number;
+export interface AudioDeviceUpdate {
+    type: "audio-device-update";
+    data: {
+        name: string;
+        id: number;
+        frameSize: number;
+        sampleRate: number;
+    };
 }
+
+export interface AudioApiUpdate {
+    type: "audio-api-update";
+    data: number;
+}
+
+export interface AudioUpdateInternalProcessing {
+    type: "audi-internal-processing";
+    data: boolean;
+}
+
+export type AudioUpdate = AudioDeviceUpdate | AudioApiUpdate | AudioUpdateInternalProcessing;
 
 export interface LedPatternItem {
     rgb: RGB;

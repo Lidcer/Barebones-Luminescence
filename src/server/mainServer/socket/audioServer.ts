@@ -1,7 +1,7 @@
 import { WebSocket } from "./Websocket";
 import { default as convert } from "pcm-convert";
 import { AudioProcessor } from "../../../shared/audioProcessor";
-import { ActiveDevice, DeviceUpdate, RtAudioDeviceInf } from "../../../shared/interfaces";
+import { ActiveDevice, RtAudioDeviceInf, AudioUpdate } from "../../../shared/interfaces";
 //@ts-ignore
 import { RtAudioDeviceInfo } from "audify";
 
@@ -59,14 +59,30 @@ export function setupCommunicationToAudioServer(websocket: WebSocket, audioProce
         const result = await audioServer.emitPromise("all-devices");
         return result;
     });
-    websocket.onPromise<boolean, [DeviceUpdate]>("update-device", async (client, device) => {
+    websocket.onPromise<boolean, [AudioUpdate]>("audio-settings-update", async (client, device) => {
+        client.validateAuthentication();
+        const audioServer = websocket.getAudioServer();
+        if (!audioServer) {
+            throw new Error("Audio server does not exist");
+        }
+        return audioServer.emitPromise("audio-settings-update", device);
+    });
+    websocket.onPromise<boolean, [{ [key: string]: number }]>("audio-apis", async client => {
         client.validateAuthentication();
         const audioServer = websocket.getAudioServer();
         if (!audioServer) {
             throw new Error("Audio server does not exist");
         }
 
-        const result = await audioServer.emitPromise("update-device", device);
-        return result;
+        return audioServer.emitPromise("audio-apis");
+    });
+    websocket.onPromise<boolean, []>("is-internal-audio-processing", async client => {
+        client.validateAuthentication();
+        const audioServer = websocket.getAudioServer();
+        if (!audioServer) {
+            throw new Error("Audio server does not exist");
+        }
+
+        return audioServer.emitPromise("is-internal-audio-processing");
     });
 }

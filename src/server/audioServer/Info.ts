@@ -1,5 +1,5 @@
 import { ClientSocket } from "../../shared/clientSocket";
-import { ActiveDevice, DeviceUpdate, RtAudioDeviceInf } from "../../shared/interfaces";
+import { ActiveDevice, RtAudioDeviceInf, AudioUpdate } from "../../shared/interfaces";
 import { AudioCapture } from "./audioCapture";
 import * as os from "os";
 
@@ -16,8 +16,22 @@ export function setupInfo(clientSocket: ClientSocket, audioCapture: AudioCapture
     clientSocket.onPromise<RtAudioDeviceInf[], []>("all-devices", async () => {
         return audioCapture.devices;
     });
+    clientSocket.onPromise<boolean, []>("is-internal-audio-processing", async () => {
+        return audioCapture.internalProcessing;
+    });
+    clientSocket.onPromise<{ [key: string]: number }, []>("audio-apis", async () => {
+        return audioCapture.audioApis;
+    });
 
-    clientSocket.onPromise<boolean, [DeviceUpdate]>("update-device", async device => {
-        return audioCapture.update(device);
+    clientSocket.onPromise<boolean, [AudioUpdate]>("audio-settings-update", async update => {
+        switch (update.type) {
+            case "audio-device-update":
+                return audioCapture.update(update);
+            case "audi-internal-processing":
+                return audioCapture.setInternalProcessing(update.data);
+            case "audio-api-update":
+                return audioCapture.apiUpdate(update);
+        }
+        throw new Error(`Invalid update${typeof update === "object" ? ` ${(update as any).type}` || "" : ""}`);
     });
 }

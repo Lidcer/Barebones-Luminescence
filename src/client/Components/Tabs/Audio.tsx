@@ -1,6 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { ActiveDevice, ControllerMode, DeviceUpdate, RtAudioDeviceInf } from "../../../shared/interfaces";
+import {
+    ActiveDevice,
+    ControllerMode,
+    RtAudioDeviceInf,
+    AudioDeviceUpdate,
+    AudioUpdateInternalProcessing,
+    AudioApiUpdate,
+} from "../../../shared/interfaces";
 import { Logger } from "../../../shared/logger";
 import { AudioLightSystem } from "../../Utils/AudioSystem";
 import { AudioVisualizerLine } from "../AudioVisualizer/AudioLine";
@@ -64,6 +71,8 @@ interface AudioTabState {
     allDevices: RtAudioDeviceInf[] | undefined;
     change: Selected;
     mode: ControllerMode;
+    onDeviceProcessing: boolean | undefined;
+    apis: [string, number][];
 }
 export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
     private destroyed = false;
@@ -78,16 +87,20 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
             allDevices: undefined,
             change: undefined,
             mode: props.als.lightSocket.mode,
+            apis: [],
+            onDeviceProcessing: false,
         };
     }
 
     async componentDidMount() {
         this.audioAnalyser = new AudioAnalyser(this.props.als.audioProcessor);
         window.addEventListener("resize", this.resize);
-        this.props.als.lightSocket.on("mode-update", this.onMode);
-        this.props.als.lightSocket.clientSocket.on("audio-server-connected", this.fetchInfo);
-        this.props.als.lightSocket.clientSocket.on("audio-server-disconnected", this.audioDisconnect);
-
+        this.socket.on("mode-update", this.onMode);
+        this.socket.clientSocket.on("audio-server-connected", this.fetchInfo);
+        this.socket.clientSocket.on("audio-server-disconnected", this.audioDisconnect);
+        if (this.socket.connected) {
+            this.fetchInfo();
+        }
         (async () => {
             try {
                 this.updateDevices();
@@ -105,6 +118,7 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
         this.props.als.lightSocket.off("mode-update", this.onMode);
         this.props.als.lightSocket.clientSocket.off("audio-server-connected", this.fetchInfo);
         this.props.als.lightSocket.clientSocket.off("audio-server-disconnected", this.audioDisconnect);
+
         (async () => {
             try {
                 this.props.als.lightSocket.emitPromiseIfPossible<boolean, [boolean]>("pcm-report", false);
@@ -140,17 +154,22 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
             this.setState({ allDevices });
         }
     };
-
     audioDisconnect = () => {
         this.setState({ connected: false, deviceInfo: undefined });
     };
     fetchInfo = async () => {
         this.setState({ connected: true });
-        const deviceInfo = await this.props.als.lightSocket.emitPromiseIfPossible<ActiveDevice, []>("active-device");
+        const ls = this.props.als.lightSocket;
+        const deviceInfo = await ls.emitPromiseIfPossible<ActiveDevice, []>("active-device");
+        const onDeviceProcessing = await ls.emitPromiseIfPossible<boolean, []>("is-internal-audio-processing");
+        const apis = await ls.emitPromiseIfPossible<{ [key: string]: number }, []>("audio-apis");
         if (this.destroyed) {
             return;
         }
-        this.setState({ deviceInfo });
+
+        const values = Object.entries(apis);
+
+        this.setState({ deviceInfo, onDeviceProcessing, apis: values });
         this.updateDevices();
     };
     resize = () => {
@@ -161,14 +180,17 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
         c.updating = true;
         this.setState({ change: c });
 
-        const deviceUpdate: DeviceUpdate = {
-            frameSize: c.frameSize,
-            id: c.id,
-            name: c.name,
-            sampleRate: c.preferredSampleRate,
+        const deviceUpdate: AudioDeviceUpdate = {
+            type: "audio-device-update",
+            data: {
+                frameSize: c.frameSize,
+                id: c.id,
+                name: c.name,
+                sampleRate: c.preferredSampleRate,
+            },
         };
         try {
-            await this.props.als.lightSocket.emitPromiseIfPossible("update-device", deviceUpdate);
+            await this.props.als.lightSocket.emitPromiseIfPossible("audio-settings-update", deviceUpdate);
             this.setState({ change: undefined });
             this.fetchInfo();
         } catch (error) {
@@ -179,6 +201,9 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
             this.setState({ change: c });
         }
     };
+    get socket() {
+        return this.props.als.lightSocket;
+    }
 
     get activeDevice() {
         if (!this.state.deviceInfo) {
@@ -197,6 +222,37 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
                     }}
                 >
                     Change
+                </Button>
+            ) : null;
+        const updateInterProcessing =
+            s.allDevices && !s.change && s.onDeviceProcessing !== undefined && this ? (
+                <Button
+                    style={{ backgroundColor: this.state.onDeviceProcessing ? "green" : "gray" }}
+                    onClick={async () => {
+                        if (this.socket.connected) {
+                            const b = this.state.onDeviceProcessing;
+                            this.setState({ onDeviceProcessing: undefined });
+                            try {
+                                const result = await this.socket.emitPromiseIfPossible<
+                                    boolean,
+                                    [AudioUpdateInternalProcessing]
+                                >("audio-settings-update", {
+                                    type: "audi-internal-processing",
+                                    data: !b,
+                                });
+                                if (!this.destroyed) {
+                                    this.setState({ onDeviceProcessing: result });
+                                }
+                            } catch (error) {
+                                console.error(error);
+                                if (!this.destroyed) {
+                                    this.setState({ onDeviceProcessing: b });
+                                }
+                            }
+                        }
+                    }}
+                >
+                    on device processing
                 </Button>
             ) : null;
 
@@ -248,8 +304,7 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
                 <span>
                     samplingRate: <b>{e.samplingRate}</b>
                 </span>
-
-                {change}
+                {change} {updateInterProcessing}
             </Div>
         );
     }
@@ -316,6 +371,35 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
 
         return (
             <Div>
+                <div>
+                    APIs
+                    {this.state.apis.map((a, i) => {
+                        return (
+                            <Button
+                                key={i}
+                                onClick={async () => {
+                                    try {
+                                        await this.socket.emitPromiseIfPossible<boolean, [AudioApiUpdate]>(
+                                            "audio-settings-update",
+                                            {
+                                                type: "audio-api-update",
+                                                data: a[1],
+                                            },
+                                        );
+                                        if (!this.destroyed) {
+                                            this.fetchInfo();
+                                        }
+                                    } catch (error) {
+                                        console.error(error);
+                                    }
+                                }}
+                            >
+                                {a[0]}
+                            </Button>
+                        );
+                    })}
+                </div>
+
                 <span>name: {deviceDropDown}</span>
                 <span>Sample rate: {sampleDropDown}</span>
                 <span>
@@ -347,10 +431,10 @@ export class AudioTab extends React.Component<AudioTabProps, AudioTabState> {
         return (
             <Tab>
                 <CheckBox
-                    text='Auto Pilot'
-                    enabled={this.state.mode === "AutoPilot"}
+                    text='Audio'
+                    enabled={this.state.mode === "AudioRaw" || this.state.mode === "Audio"}
                     onChange={on => {
-                        this.changeMode("AutoPilot", on);
+                        this.changeMode(this.state.onDeviceProcessing ? "Audio" : "AudioRaw", on);
                     }}
                 />
                 <MaxDiv>

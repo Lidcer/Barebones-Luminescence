@@ -93,7 +93,6 @@
     "request": "^2.88.2",
     "sass": "^1.32.11",
     "sass-loader": "^10.1.1",
-    "screen-avg-color": "^1.0.2",
     "socket.io": "^3.0.3",
     "socket.io-client": "^3.0.3",
     "style-loader": "^2.0.0",

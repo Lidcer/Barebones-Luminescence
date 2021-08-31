@@ -130,7 +130,6 @@ export class LightSocket {
             });
         }
     }
-
     private async sendQueue() {
         if (!this.queue.length) {
             return;
@@ -177,7 +176,9 @@ export class LightSocket {
     get doorSensorConnected() {
         return this._doorSensor;
     }
-
+    get connected() {
+        return this._clientSocket.connected && this.authenticated;
+    }
     get settings(): ServerSettings {
         return this._settings;
     }

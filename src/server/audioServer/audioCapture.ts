@@ -1,22 +1,23 @@
 /// <reference path="./notify.d.ts" />
 import notifier from "node-notifier";
-import { DeviceUpdate, RtAudioDeviceInf } from "../../shared/interfaces";
+import { AudioApiUpdate, AudioDeviceUpdate, RtAudioDeviceInf } from "../../shared/interfaces";
 import { getClosest } from "../../shared/utils";
 import { AudioCaptureInterface, saveSettings, settings } from "./settings";
 //@ts-ignore
-import { RtAudio, RtAudioFormat } from "audify";
+import { RtAudio, RtAudioFormat, RtAudioApi } from "audify";
+import { cloneDeep } from "lodash";
 type ONPCM = (buffer: Buffer) => void;
 
 export class AudioCapture {
     private readonly notificationName = "Audio capture";
-    private rtAudio = new RtAudio();
+    private rtAudio: RtAudio;
     private active = false;
     private _activeDevice: RtAudioDeviceInf;
     private _activeSamplingRate = -1;
     private _activeFrameSize = -1;
     private streamOpen = false;
-
     constructor(private onPCM: ONPCM) {
+        this.rtAudio = new RtAudio(settings.audioApi);
         this.openSteam();
     }
     closeSteam() {
@@ -49,7 +50,7 @@ export class AudioCapture {
     }
 
     getValidSettings() {
-        let id = settings.defaultOutputDevice || this.rtAudio.getDefaultOutputDevice();
+        let id = settings.device.defaultOutputDevice || this.rtAudio.getDefaultOutputDevice();
         let device = this.devices[id];
         if (!device) {
             Logger.error("Audio device not found!");
@@ -57,13 +58,13 @@ export class AudioCapture {
             device = this.devices[id];
         }
 
-        let samplingRate = settings.samplingRate || device.preferredSampleRate;
+        let samplingRate = settings.device.samplingRate || device.preferredSampleRate;
         if (!device.sampleRates.includes(samplingRate)) {
             const temp = samplingRate;
             samplingRate = getClosest(device.sampleRates, samplingRate);
             Logger.warn(`Unsupported sampling rate ${temp}! Using the closed one ${samplingRate}`);
         }
-        const frameSize = settings.frameSize || 960;
+        const frameSize = settings.device.frameSize || 960;
         if (frameSize < 100) {
             Logger.warn("Frame could too low");
         } else if (frameSize < 100000) {
@@ -91,16 +92,35 @@ export class AudioCapture {
         return this._activeFrameSize;
     }
 
-    async update(update: DeviceUpdate) {
+    async apiUpdate(apiUpdate: AudioApiUpdate) {
+        const copy = cloneDeep(settings);
+        try {
+            this.closeSteam();
+            settings.device.defaultInputDevice = null;
+            settings.device.defaultOutputDevice = null;
+            const initAudio = new RtAudio(apiUpdate.data);
+            this.rtAudio = initAudio;
+            settings.audioApi = apiUpdate.data;
+            this.openSteam();
+            await saveSettings();
+            return true;
+        } catch (error) {
+            settings.device = copy.device;
+            this.openSteam();
+            throw new Error(error);
+        }
+    }
+
+    async update(update: AudioDeviceUpdate) {
         if (!this.active) {
             return false;
         }
         this.rtAudio.stop();
 
         const backupSettings: AudioCaptureInterface = { ...settings };
-        settings.defaultOutputDevice = update.id;
-        settings.frameSize = update.frameSize;
-        settings.samplingRate = update.sampleRate;
+        settings.device.defaultOutputDevice = update.data.id;
+        settings.device.frameSize = update.data.frameSize;
+        settings.device.samplingRate = update.data.sampleRate;
         try {
             this.openSteam();
             this.rtAudio.start();
@@ -112,9 +132,9 @@ export class AudioCapture {
             await saveSettings();
             return true;
         } catch (error) {
-            settings.defaultOutputDevice = backupSettings.defaultOutputDevice;
-            settings.frameSize = backupSettings.frameSize;
-            settings.samplingRate = backupSettings.samplingRate;
+            settings.device.defaultOutputDevice = backupSettings.device.defaultOutputDevice;
+            settings.device.frameSize = backupSettings.device.frameSize;
+            settings.device.samplingRate = backupSettings.device.samplingRate;
             Logger.error(error);
             notifier.notify({
                 title: this.notificationName,
@@ -122,6 +142,28 @@ export class AudioCapture {
             });
         }
         return false;
+    }
+    async setInternalProcessing(value: boolean) {
+        settings.internalProcessing = value;
+        await saveSettings();
+        return settings.internalProcessing;
+    }
+    get internalProcessing() {
+        return settings.internalProcessing;
+    }
+    get audioApis() {
+        return {
+            LINUX_ALSA: RtAudioApi.LINUX_ALSA,
+            LINUX_OSS: RtAudioApi.LINUX_OSS,
+            LINUX_PULSE: RtAudioApi.LINUX_PULSE,
+            MACOSX_CORE: RtAudioApi.MACOSX_CORE,
+            RTAUDIO_DUMMY: RtAudioApi.RTAUDIO_DUMMY,
+            UNIX_JACK: RtAudioApi.UNIX_JACK,
+            UNSPECIFIED: RtAudioApi.UNSPECIFIED,
+            WINDOWS_ASIO: RtAudioApi.WINDOWS_ASIO,
+            WINDOWS_DS: RtAudioApi.WINDOWS_DS,
+            WINDOWS_WASAPI: RtAudioApi.WINDOWS_WASAPI,
+        };
     }
 
     start() {

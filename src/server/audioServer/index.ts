@@ -14,8 +14,6 @@ import { default as convert } from "pcm-convert";
 const connectionUrl = `http://${ADDRESS}:${SERVER_PORT}`;
 Logger.debug("Connection string", `Connecting to ${connectionUrl}`);
 
-const processingOnDevice = true;
-
 async function checkForServer() {
     try {
         await axios.get(connectionUrl);
@@ -67,7 +65,7 @@ async function connectToSocket() {
 
     const audioProcessor = new AudioProcessor();
     const audio = new AudioAnalyser(audioProcessor);
-    const onPCM = (buffer: Buffer) => {
+    const onPCM = (buffer: Buffer, audioCapture: AudioCapture) => {
         if (socket.connected && auth) {
             const arrayBuffer = convert(buffer, "arraybuffer stereo") as ArrayBuffer;
             const intArray = new Int16Array(arrayBuffer);
@@ -76,8 +74,9 @@ async function connectToSocket() {
             rgb.r = Math.round(rgb.r);
             rgb.g = Math.round(rgb.g);
             rgb.b = Math.round(rgb.b);
-            console.log(rgb.r, rgb.g, rgb.b);
-            if (processingOnDevice) {
+            const a = audioCapture.internalProcessing ? "i" : "d";
+            console.log(a, rgb.r, rgb.g, rgb.b);
+            if (audioCapture.internalProcessing) {
                 socket.emit("rgb-set", rgb.r, rgb.g, rgb.b);
             } else {
                 socket.emit("pcm", buffer);
@@ -85,7 +84,7 @@ async function connectToSocket() {
         }
     };
 
-    const audioCapture = new AudioCapture(onPCM);
+    const audioCapture = new AudioCapture(buffer => onPCM(buffer, audioCapture));
     setupInfo(client, audioCapture);
     audioCapture.start();
 }
