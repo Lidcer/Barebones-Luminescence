@@ -28,6 +28,10 @@ export class ClientSocket {
         });
 
         this.socket = socket;
+        const fns = this.callbacks.get("connect") || [];
+        for (const fn of fns) {
+            fn();
+        }
     }
 
     handlePacket = async (...args: any) => {
