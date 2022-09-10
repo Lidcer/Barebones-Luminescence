@@ -5,7 +5,7 @@ import { Client } from "./client";
 import { Logger } from "../../../shared/logger";
 import SocketIO from "socket.io";
 import { createSocketError } from "../../../shared/socketError";
-import { Log } from "../../../shared/interfaces";
+import { ClientType, Log } from "../../../shared/interfaces";
 import { EventEmitter } from "events";
 import { userClients } from "../../../shared/constants";
 
@@ -105,7 +105,9 @@ export class WebSocket {
             client.on("disconnect", () => {
                 removeFromArray(this.clients, client);
                 Logger.debug("[WebSocket]", "disconnected", client.id);
-                if (!this.clients.length) {
+                const allowedClients: ClientType[] = ["android-app", "android-app-background", "browser-client"];
+                const clients = this.clients.filter(c => allowedClients.includes(c.clientType));
+                if (!clients.length) {
                     this.event.emit("all-clients-disconnected");
                 }
             });
