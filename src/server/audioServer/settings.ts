@@ -1,5 +1,6 @@
 import { cloneDeep } from "../../shared/utils";
 import { getStorage, setStorage } from "../sharedFiles/settingsStore";
+// @ts-ignore
 import { RtAudioApi } from "audify";
 
 const fileName = "audioServerSettings.json";
