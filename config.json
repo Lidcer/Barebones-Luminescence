@@ -1,6 +1,6 @@
 {
- "PASSWORD": "keyboard",
- "SECRET": "iUsMrn0sp0FwxoekanNCmibjd3HSx3fKqxQDPFiCYZxLcz2FutZgqoVFI3Q1kx6MOtSxCztDBSzxHFqRly55Pg==",
+ "PASSWORD": "password",
+ "SECRET": "",
  "SERVER_PORT": 5648,
  "PI_PORT": 6857,
  "MAGIC_HOME_CONTROLLER": false,
