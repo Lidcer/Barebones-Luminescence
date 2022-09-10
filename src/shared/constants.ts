@@ -11,4 +11,6 @@ export const DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
 
 export const MODES: LightMode[] = ["fade", "instant"];
 export const SCHEDULE_TYPE: ScheduleType[] = ["Pattern", "RGB"];
-export const userClients: ClientType[] = ["browser-client", "android-app"];
+export const userClients: ClientType[] = ["browser-client", "android-app", "android-app-background"];
+
+export const SUNRISE_SUNSET_API = "https://api.sunrise-sunset.org/json";

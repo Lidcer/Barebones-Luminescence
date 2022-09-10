@@ -1,3 +1,4 @@
+import { StringNullableChain } from "lodash";
 import * as os from "os";
 export type ControllerMode =
     | "Manual"
@@ -13,7 +14,7 @@ export type DayNames = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday
 export type LightMode = "instant" | "fade";
 export type ScheduleType = "Pattern" | "RGB";
 
-export type ClientType = "audio-server" | "browser-client" | "android-app" | "unknown";
+export type ClientType = "audio-server" | "browser-client" | "android-app" | "android-app-background" | "unknown";
 
 export interface SocketAuth {
     password: string;
@@ -169,3 +170,16 @@ export interface LoginData {
 }
 
 export type DoorLog = { [dateString: string]: number };
+
+export interface SunSetApi {
+    sunrise: string;
+    sunset: string;
+    solar_noon: string;
+    day_length: string;
+    civil_twilight_begin: string;
+    civil_twilight_end: string;
+    nautical_twilight_begin: string;
+    nautical_twilight_end: string;
+    astronomical_twilight_begin: string;
+    astronomical_twilight_end: string;
+}

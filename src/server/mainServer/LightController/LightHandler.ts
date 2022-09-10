@@ -1,18 +1,55 @@
 import { WebSocket } from "../socket/Websocket";
-import { ControllerMode, RGB } from "../../../shared/interfaces";
-import { MINUTE, MODES, SECOND, userClients } from "../../../shared/constants";
-import { clamp, debounce } from "lodash";
+import { ControllerMode, RGB, SunSetApi } from "../../../shared/interfaces";
+import { DAY, MINUTE, MODES, SECOND, SUNRISE_SUNSET_API, userClients } from "../../../shared/constants";
+import { clamp, debounce, noop } from "lodash";
 import { AudioProcessor } from "../../../shared/audioProcessor";
 import { AudioAnalyser } from "../../../shared/audioAnalyser";
 import { AutoPilot } from "./AutoPilot";
 import { Lights } from "./Devices/Controller";
 import { increaseDoor, saveSettings, settings } from "../main/storage";
 import { sleep } from "../../../shared/utils";
+import { isPastMidnight, dateMerger } from "../../../shared/timeUtils";
+import axios, { AxiosResponse } from "axios";
 
 export function setupLightHandler(websocket: WebSocket, light: Lights, audioProcessor: AudioProcessor) {
     const autoPilot = new AutoPilot(websocket);
     let doorFrameLoop: NodeJS.Timeout;
     const SERVER_FPS = SECOND * 0.05;
+    let sunSetData: SunSetApi;
+    const pollSunsetSunRise = async () => {
+        const res = await axios.get<any, AxiosResponse<{ results: SunSetApi; status: string }>>(SUNRISE_SUNSET_API);
+        if (
+            typeof res.data === "object" &&
+            !Array.isArray(res.data) &&
+            res.data.status === "OK" &&
+            typeof res.data.results === "object" &&
+            !Array.isArray(res.data.results)
+        ) {
+            const validators = [
+                "sunrise",
+                "sunset",
+                "solar_noon",
+                "day_length",
+                "civil_twilight_begin",
+                "civil_twilight_end",
+                "nautical_twilight_begin",
+                "nautical_twilight_end",
+                "astronomical_twilight_begin",
+                "astronomical_twilight_end",
+            ];
+            for (const validater of validators) {
+                if (typeof res.data.results[validater] !== "string") {
+                    console.error(`API validation error ${validater} was not found`, res.data);
+                }
+            }
+            sunSetData = res.data.results;
+        } else {
+            console.error(`API did not receive object from server`);
+        }
+    };
+    setInterval(pollSunsetSunRise, DAY);
+    setTimeout(pollSunsetSunRise, MINUTE * 10);
+    pollSunsetSunRise().catch(noop);
 
     let lightMode: ControllerMode = settings.controllerMode;
     let lastMode: ControllerMode = lightMode;
@@ -86,7 +123,9 @@ export function setupLightHandler(websocket: WebSocket, light: Lights, audioProc
     websocket.on<[number, number, number]>("rgb-set", (client, red, green, blue) => {
         client.validateAuthentication();
         if (userClients.includes(client.clientType)) {
-            setMode("Manual");
+            if (lastMode !== "ManualForce" && lastMode !== "ManualLocked") {
+                setMode("Manual");
+            }
         } else {
             setMode("AudioRaw");
         }
@@ -110,7 +149,8 @@ export function setupLightHandler(websocket: WebSocket, light: Lights, audioProc
     });
 
     websocket.onSocketEvent("all-clients-disconnected", () => {
-        if (lightMode === "Manual" || lightMode === "ManualForce") {
+        const blockMods: ControllerMode[] = ["ManualForce", "ManualLocked", "AudioRaw", "Audio"];
+        if (!blockMods.includes(lightMode)) {
             setMode("AutoPilot");
         }
     });
@@ -184,6 +224,31 @@ export function setupLightHandler(websocket: WebSocket, light: Lights, audioProc
         if (lightMode === "ManualLocked") {
             return;
         }
+        const date = (global as any).dd || new Date();
+
+        let instantOff = false;
+        const color = [255, 255, 255]; //RGB
+        if (isPastMidnight(date)) {
+            color[0] = color[2] = 0;
+            instantOff = true;
+            if (sunSetData) {
+                const compare = dateMerger(sunSetData.civil_twilight_begin); // end of the night
+                if (date < compare) {
+                    color[1] = color[2] = 0;
+                    color[0] = 255; // red
+                    instantOff = false;
+                }
+            }
+        } else {
+            if (sunSetData) {
+                const compare = dateMerger(sunSetData.nautical_twilight_end); // start of the night
+                if (date < compare) {
+                    instantOff = true;
+                    color[0] = color[2] = 0;
+                    color[1] = 255;
+                }
+            }
+        }
 
         if (doorFrameLoop) {
             clearTimeout(doorFrameLoop);
@@ -194,11 +259,18 @@ export function setupLightHandler(websocket: WebSocket, light: Lights, audioProc
             increaseDoor();
             de.cancel();
             lightMode = "Door";
-            await light.setRGB(255, 255, 255);
+            await light.setRGB(color[0], color[1], color[2]);
+            updateModeAndLight({ r: color[0], g: color[1], b: color[2] });
         } else {
-            de();
+            if (instantOff) {
+                de.cancel();
+                await light.setRGB(0, 0, 0);
+                updateModeAndLight({ r: 0, g: 0, b: 0 });
+            } else {
+                de();
+                updateModeAndLight({ r: color[0], g: color[1], b: color[2] });
+            }
         }
-        updateModeAndLight({ r: 255, g: 255, b: 255 });
     });
 
     const destroy = () => {
