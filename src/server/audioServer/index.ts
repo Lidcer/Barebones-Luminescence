@@ -10,6 +10,7 @@ import { saveSettings } from "../mainServer/main/storage";
 import { AudioAnalyser } from "../../shared/audioAnalyser";
 import { AudioProcessor } from "../../shared/audioProcessor";
 import { default as convert } from "pcm-convert";
+import { LoginData, SocketAuth } from "../../shared/interfaces";
 
 const connectionUrl = `http://${ADDRESS}:${SERVER_PORT}`;
 Logger.debug("Connection string", `Connecting to ${connectionUrl}`);
@@ -29,30 +30,29 @@ async function connectToSocket() {
     await initStorage();
     await saveSettings();
     Logger.debug("Connecting to socket");
-    const socket = io(connectionUrl, { timeout: 50000 });
-    const client = new ClientSocket(socket);
+    const socket = io(connectionUrl, {
+        timeout: 50000,
+        auth: {
+            password: PASSWORD,
+            clientType: "audio-server",
+        } as SocketAuth,
+    });
+    const client = new ClientSocket();
+    client.setSocket(socket);
 
-    let auth = false;
-    const authenticate = async () => {
-        const result = await client.emitPromise("has-auth");
-        if (!result) {
-            try {
-                const date = Date.now();
-                await client.emitPromise("auth", PASSWORD, "audio");
-                const ping = Date.now() - date;
-                console.log(`Socket ping ${ping}ms`);
-                auth = true;
-                Logger.debug("Authentication succeeded");
-            } catch (error) {
-                Logger.error("Authentication failed", error);
+    let auth = true;
+
+    socket.on("connection-login", (data: LoginData) => {
+        if(data.status === "ok") {
+            auth = true;
+        } else {
+            auth = false;
+            if(data.message) {
+                console.error(data.message)
             }
         }
-    };
+    });
 
-    if (socket.connected) {
-        authenticate();
-    }
-    socket.on("connect", authenticate);
     socket.on("disconnect", () => {
         auth = false;
     });

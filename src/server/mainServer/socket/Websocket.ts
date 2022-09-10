@@ -7,6 +7,7 @@ import SocketIO from "socket.io";
 import { createSocketError } from "../../../shared/socketError";
 import { Log } from "../../../shared/interfaces";
 import { EventEmitter } from "events";
+import { userClients } from "../../../shared/constants";
 
 type WebsocketCallback = (client: Client, ...args: any[] | any) => void;
 type WebsocketCallbackPromise = (client: Client, ...args: any[] | any) => Promise<any>;
@@ -27,9 +28,9 @@ export class WebSocket {
             console.error("uncaughtException", err);
             this.broadcastLog("error", err);
         });
-        process.on("unhandledRejection", () => {
+        process.on("unhandledRejection", err => {
             const error = new Error("Unhandled promise rejection");
-            console.error("unhandledRejection", error);
+            console.error("unhandledRejection", err, error);
             this.broadcastLog("error", error);
         });
         Logger.setNext((type, value, ...args) => {
@@ -56,6 +57,9 @@ export class WebSocket {
         });
         this.socketServer.on("connection", (c: SocketIO.Socket) => {
             const client = new Client(c);
+            if (!client.auth()) {
+                return;
+            }
             Logger.debug("[WebSocket]", "connected", client.id);
             this.clients.push(client);
 
@@ -126,7 +130,7 @@ export class WebSocket {
             throw new Error("Cannot broadcast empty message");
         }
         for (const client of this.clients) {
-            if (client.clientType === "client") {
+            if (userClients.includes(client.clientType)) {
                 client.emit.apply(client, [message, ...args]);
             }
         }

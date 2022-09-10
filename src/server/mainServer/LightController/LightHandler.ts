@@ -1,6 +1,6 @@
 import { WebSocket } from "../socket/Websocket";
 import { ControllerMode, RGB } from "../../../shared/interfaces";
-import { MINUTE, MODES, SECOND } from "../../../shared/constants";
+import { MINUTE, MODES, SECOND, userClients } from "../../../shared/constants";
 import { clamp, debounce } from "lodash";
 import { AudioProcessor } from "../../../shared/audioProcessor";
 import { AudioAnalyser } from "../../../shared/audioAnalyser";
@@ -85,7 +85,7 @@ export function setupLightHandler(websocket: WebSocket, light: Lights, audioProc
 
     websocket.on<[number, number, number]>("rgb-set", (client, red, green, blue) => {
         client.validateAuthentication();
-        if (client.clientType === "client") {
+        if (userClients.includes(client.clientType)) {
             setMode("Manual");
         } else {
             setMode("AudioRaw");

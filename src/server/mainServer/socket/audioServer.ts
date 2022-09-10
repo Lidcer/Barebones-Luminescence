@@ -4,6 +4,7 @@ import { AudioProcessor } from "../../../shared/audioProcessor";
 import { ActiveDevice, RtAudioDeviceInf, AudioUpdate } from "../../../shared/interfaces";
 //@ts-ignore
 import { RtAudioDeviceInfo } from "audify";
+import { userClients } from "../../../shared/constants";
 
 export function setupCommunicationToAudioServer(websocket: WebSocket, audioProcessor: AudioProcessor) {
     websocket.onPromise<boolean, []>("is-audio-server-connected", async client => {
@@ -29,7 +30,7 @@ export function setupCommunicationToAudioServer(websocket: WebSocket, audioProce
 
         const clients = websocket.getAllClients();
         for (const client of clients) {
-            if (client.clientType === "client" && client.sendPCM) {
+            if (userClients.includes(client.clientType) && client.sendPCM) {
                 client.emit("pcm", intArray);
             }
         }

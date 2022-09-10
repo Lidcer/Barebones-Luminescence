@@ -4,7 +4,6 @@ import path from "path";
 import { WebSocket } from "../socket/Websocket";
 import { pagesRouter } from "../../pageRouter";
 import { staticsRouter } from "../../static-router";
-import { setupAuthenticate } from "../socket/authenticate";
 import { setupCommunicationToAudioServer } from "../socket/audioServer";
 import { setupLightHandler } from "../LightController/LightHandler";
 import { AudioProcessor } from "../../../shared/audioProcessor";
@@ -31,7 +30,6 @@ async function start() {
     });
 
     const webSocket = new WebSocket({ server });
-    setupAuthenticate(webSocket);
     const { getMode } = setupLightHandler(webSocket, lights, audioProcessor);
     setupServerSocket(webSocket, lights, getMode);
     setupDeviceInfo(webSocket);

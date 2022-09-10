@@ -3,7 +3,7 @@ import { io, Socket } from "socket.io-client";
 import { BrowserStorage } from "./BrowserStorage";
 import { ClientSocket } from "../../shared/clientSocket";
 import { MINUTE } from "../../shared/constants";
-import { ControllerMode, FetchableServerConfig, ServerSettings } from "../../shared/interfaces";
+import { ControllerMode, FetchableServerConfig, LoginData, ServerSettings, SocketAuth } from "../../shared/interfaces";
 
 interface Queue {
     promise: boolean;
@@ -14,7 +14,6 @@ interface Queue {
 }
 
 export type ModeUpdate = (mode: ControllerMode) => void;
-
 export class LightSocket {
     private readonly TIMEOUT = MINUTE;
     private eventEmitter = new EventEmitter();
@@ -28,11 +27,10 @@ export class LightSocket {
     private _mode: ControllerMode = "Manual";
 
     constructor(private version: string, private raiseNotification: (title: string, description?: string) => void) {
-        this._socket = io();
-
-        this._clientSocket = new ClientSocket(this._socket);
+        this._clientSocket = new ClientSocket();
         this._clientSocket.on("mode-update", this.onModeUpdate);
         this._clientSocket.on("connect", async msg => {
+            this.getSettings();
             this.eventEmitter.emit("connect");
             this.authenticate();
         });
@@ -43,6 +41,7 @@ export class LightSocket {
             this.emptyQueue();
         });
     }
+
     on(type: "mode-update", listener: ModeUpdate): void;
     on(value: "auth", listener: Listener): void;
     on(value: "disconnect", listener: Listener): void;
@@ -61,40 +60,67 @@ export class LightSocket {
         this._mode = mode;
         this.eventEmitter.emit("mode-update", this._mode);
     };
-    async authenticate(password?: string): Promise<boolean> {
-        const storageKey = "socket-password";
-        this._authenticated = await this._clientSocket.emitPromise("has-auth");
-        if (this.authenticated) return true;
-        const pass = password || BrowserStorage.getString(storageKey);
-        if (!pass) return false;
+    private async getSettings() {
+        this._settings = await this._clientSocket.emitPromise<ServerSettings, []>("server-settings-get");
         try {
-            await this._clientSocket.emitPromise("auth", pass);
-            BrowserStorage.setString(storageKey, pass);
-            this._authenticated = true;
-            this._settings = await this._clientSocket.emitPromise<ServerSettings, []>("server-settings-get");
-            try {
-                const result = await this._clientSocket.emitPromise<FetchableServerConfig, []>("server-config-get");
-                this._magicHome = result.magicController;
-                this._doorSensor = result.doorSensor;
-                if (this._mode !== result.mode) {
-                    this._mode = result.mode;
-                    this.onModeUpdate(this._mode);
-                }
-
-                if (this.version !== result.version) {
-                    this.raiseNotification("Invalid app version", `Expected ${result.version}v using ${this.version}v`);
-                }
-            } catch (_error) {
-                this._magicHome = false;
-                this._doorSensor = false;
+            const result = await this._clientSocket.emitPromise<FetchableServerConfig, []>("server-config-get");
+            this._magicHome = result.magicController;
+            this._doorSensor = result.doorSensor;
+            if (this._mode !== result.mode) {
+                this._mode = result.mode;
+                this.onModeUpdate(this._mode);
             }
-            this.eventEmitter.emit("auth");
-            this.sendQueue();
-            return true;
-        } catch (error) {
-            BrowserStorage.removeItem(storageKey);
-            return false;
+
+            if (this.version !== result.version) {
+                this.raiseNotification("Invalid app version", `Expected ${result.version}v using ${this.version}v`);
+            }
+        } catch (_error) {
+            this._magicHome = false;
+            this._doorSensor = false;
         }
+    }
+
+    async authenticate(password?: string) {
+        return new Promise<void>((resolve, reject) => {
+            const storageKey = "socket-password";
+
+            if (this.socket) {
+                resolve();
+            } else {
+                const pass = password || BrowserStorage.getString(storageKey);
+                if (!pass) {
+                    reject(new Error("No password provided"));
+                    return;
+                }
+                const socket = io({
+                    auth: {
+                        password,
+                        clientType: "browser-client",
+                    } as SocketAuth,
+                });
+                socket.on("connection-login", (data: LoginData) => {
+                    if (data.status === "ok") {
+                        this._socket = socket;
+                        this._authenticated = true;
+                        this.clientSocket.setSocket(socket);
+                        socket.on("connection", () => {
+                            this.clientSocket.emit("connection");
+                        });
+                        socket.on("disconnect", () => {
+                            this.clientSocket.emit("disconnect");
+                        });
+                        resolve();
+                    } else {
+                        if (data.message) {
+                            reject(new Error(data.message));
+                        } else {
+                            reject(new Error("Unknown error"));
+                        }
+                    }
+                });
+                this.sendQueue();
+            }
+        });
     }
     setColor(red: number, green: number, blue: number) {
         return this._clientSocket.emitPromise("rgb", red, green, blue);
@@ -177,7 +203,7 @@ export class LightSocket {
         return this._doorSensor;
     }
     get connected() {
-        return this._clientSocket.connected && this.authenticated;
+        return this._clientSocket && this._clientSocket.connected && this.authenticated;
     }
     get settings(): ServerSettings {
         return this._settings;

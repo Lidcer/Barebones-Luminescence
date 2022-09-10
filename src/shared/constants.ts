@@ -1,4 +1,4 @@
-import { LightMode, ScheduleType } from "./interfaces";
+import { ClientType, LightMode, ScheduleType } from "./interfaces";
 
 export const SECOND = 1000;
 export const MINUTE = SECOND * 60;
@@ -11,3 +11,4 @@ export const DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
 
 export const MODES: LightMode[] = ["fade", "instant"];
 export const SCHEDULE_TYPE: ScheduleType[] = ["Pattern", "RGB"];
+export const userClients: ClientType[] = ["browser-client", "android-app"];

@@ -1,13 +1,29 @@
-import { SECOND } from "../../../shared/constants";
+import { SECOND, userClients } from "../../../shared/constants";
 import SocketIO from "socket.io";
 import { SocketError } from "../../../shared/socketError";
+import { ClientType, LoginData, SocketAuth } from "../../../shared/interfaces";
+import { PASSWORD } from "../main/config";
 
-type ClientType = "unknown" | "client" | "audio-server";
 export class Client {
     private type: ClientType = "unknown";
     private _sendPCM = false;
 
     constructor(private client: SocketIO.Socket) {}
+
+    auth() {
+        const auth = this.client.handshake.auth as SocketAuth;
+        if (auth.password !== PASSWORD) {
+            console.error("wrong pass rejecting");
+            this.client.emit("connection-login", { status: "failed", message: "wrong password" } as LoginData);
+            this.client.disconnect();
+            return false;
+        } else {
+            this.type = auth.clientType;
+            this.client.emit("connection-login", { status: "ok" } as LoginData);
+        }
+
+        return true;
+    }
 
     onAny(listener: (...args: any[]) => void) {
         this.client.onAny(listener);
@@ -46,12 +62,6 @@ export class Client {
     disconnect() {
         return this.client.disconnect();
     }
-    setClient() {
-        if (this.type !== "unknown") {
-            throw new Error("client has already been set");
-        }
-        this.type = "client";
-    }
     setAudioProcessor() {
         if (this.type !== "unknown") {
             throw new Error("client has already been set");
@@ -71,7 +81,7 @@ export class Client {
         return this.client.conn.remoteAddress;
     }
     validateAuthentication() {
-        if (this.clientType === "client" || this.clientType === "audio-server") {
+        if (userClients.includes(this.clientType) || this.clientType === "audio-server") {
             return;
         }
         throw new Error("Unauthenticated");

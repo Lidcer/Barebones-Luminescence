@@ -1,10 +1,11 @@
 import { AudioProcessor } from "../../shared/audioProcessor";
 import { LightSocket } from "./Socket";
-import { EventEmitter, Listener } from "events";
+import { EventEmitter } from "events";
 import { AudioAnalyser } from "../../shared/audioAnalyser";
 import { PatternService } from "./Patterns";
 import { ScheduleService } from "./ScheduleService";
-import { ControllerMode, Log } from "../../shared/interfaces";
+import { Log } from "../../shared/interfaces";
+import { Listener } from "events";
 
 export interface AudioUpdateResult {
     leftBuffer: Int16Array;

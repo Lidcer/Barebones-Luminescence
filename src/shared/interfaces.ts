@@ -13,6 +13,13 @@ export type DayNames = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday
 export type LightMode = "instant" | "fade";
 export type ScheduleType = "Pattern" | "RGB";
 
+export type ClientType = "audio-server" | "browser-client" | "android-app" | "unknown";
+
+export interface SocketAuth {
+    password: string;
+    clientType: ClientType;
+}
+
 export interface RGB {
     r: number;
     g: number;
@@ -154,6 +161,11 @@ export interface FetchableServerConfig {
     magicController: boolean;
     version: string;
     mode: ControllerMode;
+}
+
+export interface LoginData {
+    status: "ok" | "failed";
+    message?: string;
 }
 
 export type DoorLog = { [dateString: string]: number };

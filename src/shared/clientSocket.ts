@@ -1,4 +1,5 @@
 //mport { Socket } from "socket.io-client";
+import e from "express";
 import { SECOND } from "./constants";
 import { Logger } from "./logger";
 import { createSocketError, SocketError } from "./socketError";
@@ -10,7 +11,24 @@ type EventPromiseCallbackFunction = (...args: [any]) => Promise<any>;
 export class ClientSocket {
     private callbacks = new Map<string, EventCallbackFunction[]>();
     private promiseCallback = new Map<string, EventPromiseCallbackFunction>();
-    constructor(private socket: any /* */) {}
+    private socket: any;
+    constructor() {}
+
+    setSocket(socket: any) {
+        [this.callbacks, this.promiseCallback].forEach(it => {
+            it.forEach((value: EventCallbackFunction[] | EventCallbackFunction, key: string) => {
+                const iterableValues = Array.isArray(value) ? value : [value];
+                for (const fn of iterableValues) {
+                    if (this.socket) {
+                        this.socket.off(key, fn);
+                    }
+                    socket.on(key, fn);
+                }
+            });
+        });
+
+        this.socket = socket;
+    }
 
     handlePacket = async (...args: any) => {
         const value = args[0];
@@ -51,18 +69,26 @@ export class ClientSocket {
         const fns = this.callbacks.get(event) || [];
         pushUniqToArray(fns, fn);
         this.callbacks.set(event, fns);
-        this.socket.on(event, (...args) => this.handlePacket.apply(this, [event, ...args]));
+        if (this.socket) {
+            this.socket.on(event, (...args) => this.handlePacket.apply(this, [event, ...args]));
+        }
     }
     off(event: string, fn: EventCallbackFunction) {
         const fns = this.callbacks.get(event) || [];
         removeFromArray(fns, fn);
         if (!fns.length) {
-            this.socket.off(event);
+            if (this.socket) {
+                this.socket.off(event);
+            }
         }
     }
 
     emit<T extends any[]>(value: string, ...args: T) {
-        this.socket.emit.apply(this.socket, [value, ...args]);
+        if (this.socket) {
+            this.socket.emit.apply(this.socket, [value, ...args]);
+        } else {
+            throw new Error("Sending data to uninitialized socket");
+        }
     }
 
     onPromise<A, T extends any[]>(event: string, fn: (...args: T) => Promise<A>) {
@@ -71,7 +97,9 @@ export class ClientSocket {
         }
         const fns = this.promiseCallback.get(event);
         if (fns) throw new Error(`value ${event} already exist!`);
-        this.socket.on(event, (...args) => this.handlePacket.apply(this, [event, ...args]));
+        if (this.socket) {
+            this.socket.on(event, (...args) => this.handlePacket.apply(this, [event, ...args]));
+        }
         this.promiseCallback.set(event, fn as any);
     }
 
@@ -98,12 +126,19 @@ export class ClientSocket {
                 }
             };
             const emitArgs = [value, ...args, fun];
-            this.socket.emit.apply(this.socket, emitArgs);
+            if (this.socket) {
+                this.socket.emit.apply(this.socket, emitArgs);
+            } else {
+                fun(undefined, new Error("Socket not connected"));
+            }
         });
     }
 
     get connected() {
-        return this.socket.connected;
+        if (this.socket) {
+            return this.socket.connected;
+        }
+        return false;
     }
 
     destroy() {

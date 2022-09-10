@@ -132,7 +132,7 @@ export class App extends React.Component<AppProps, AppState> {
 
     get socketWindow() {
         const soc = this.audioLightSystem.lightSocket;
-        if (!soc.socket.connected) {
+        if (soc.socket && !soc.socket.connected) {
             return (
                 <Authenticate>
                     <h1>Not connected</h1>
@@ -142,11 +142,11 @@ export class App extends React.Component<AppProps, AppState> {
 
         const auth = async () => {
             this.setState({ error: "" });
-            const result = await this.audioLightSystem.lightSocket.authenticate(this.state.password);
-            if (result) {
-                this.setState({ error: "Wrong password" });
-            } else {
+            try {
+                await this.audioLightSystem.lightSocket.authenticate(this.state.password);
                 this.setState({ password: "" });
+            } catch (error) {
+                this.setState({ error: error.message });
             }
         };
 
