@@ -36,6 +36,23 @@ export class ColourTitle extends React.Component<ColourTitleProps, ColourTitleSt
         document.head.append(this.favIconReference);
         this.favIconReference.rel = "shortcut icon";
 
+        if (this.props.als.lightSocket.clientSocket.connected) {
+            this.onSocketConnect();
+        } else {
+            this.props.als.lightSocket.clientSocket.on("connect", this.onSocketConnect);
+        }
+    }
+
+    componentWillUnmount() {
+        this.destroyed = true;
+        this.props.als.lightSocket.clientSocket.off("rgb-update", this.onRGBUpdate);
+        this.props.als.lightSocket.clientSocket.off("mode-update", this.onModeUpdate);
+        this.props.als.lightSocket.clientSocket.off("connect", this.onSocketConnect);
+        document.head.removeChild(this.favIconReference);
+    }
+
+    onSocketConnect = async () => {
+        const lightSocket = this.props.als.lightSocket;
         try {
             const mode = await lightSocket.emitPromiseIfPossible<ControllerMode, []>("mode-get");
             const rgb = await lightSocket.emitPromiseIfPossible<RGB, []>("rgb-status");
@@ -47,12 +64,6 @@ export class ColourTitle extends React.Component<ColourTitleProps, ColourTitleSt
         } catch (error) {
             Logger.debug("Socket error", error);
         }
-    }
-    componentWillUnmount() {
-        this.destroyed = true;
-        this.props.als.lightSocket.clientSocket.off("rgb-update", this.onRGBUpdate);
-        this.props.als.lightSocket.clientSocket.off("mode-update", this.onModeUpdate);
-        document.head.removeChild(this.favIconReference);
     }
 
     onModeUpdate = (mode: ControllerMode) => {
