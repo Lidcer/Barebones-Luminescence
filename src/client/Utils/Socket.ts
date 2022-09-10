@@ -4,6 +4,7 @@ import { BrowserStorage } from "./BrowserStorage";
 import { ClientSocket } from "../../shared/clientSocket";
 import { MINUTE } from "../../shared/constants";
 import { ControllerMode, FetchableServerConfig, LoginData, ServerSettings, SocketAuth } from "../../shared/interfaces";
+import { noop } from "lodash";
 
 interface Queue {
     promise: boolean;
@@ -32,7 +33,6 @@ export class LightSocket {
         this._clientSocket.on("connect", async msg => {
             this.getSettings();
             this.eventEmitter.emit("connect");
-            this.authenticate();
         });
         this._clientSocket.on("disconnect", msg => {
             this.eventEmitter.emit("disconnect");
@@ -40,6 +40,7 @@ export class LightSocket {
             this._magicHome = false;
             this.emptyQueue();
         });
+        this.authenticate().catch(noop);
     }
 
     on(type: "mode-update", listener: ModeUpdate): void;
@@ -88,13 +89,14 @@ export class LightSocket {
                 resolve();
             } else {
                 const pass = password || BrowserStorage.getString(storageKey);
+
                 if (!pass) {
                     reject(new Error("No password provided"));
                     return;
                 }
                 const socket = io({
                     auth: {
-                        password,
+                        password: pass,
                         clientType: "browser-client",
                     } as SocketAuth,
                 });
@@ -103,12 +105,7 @@ export class LightSocket {
                         this._socket = socket;
                         this._authenticated = true;
                         this.clientSocket.setSocket(socket);
-                        socket.on("connection", () => {
-                            this.clientSocket.emit("connection");
-                        });
-                        socket.on("disconnect", () => {
-                            this.clientSocket.emit("disconnect");
-                        });
+                        BrowserStorage.setString(storageKey, pass);
                         resolve();
                     } else {
                         if (data.message) {
