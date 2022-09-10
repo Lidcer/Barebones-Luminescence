@@ -30,6 +30,16 @@ export class Lights implements LightController {
             piController.on("disconnect", () => this.eventEmitter.emit("disconnect"));
             piController.on("connect", () => this.eventEmitter.emit("connect"));
             piController.on("door", (level, tick) => this.eventEmitter.emit("door", level, tick));
+
+            if (DEV) {
+                (global as any).Light = this;
+                (global as any).openDoor = () => {
+                    this.eventEmitter.emit("door", 1, Date.now());
+                };
+                (global as any).closeDoor = () => {
+                    this.eventEmitter.emit("door", 0, Date.now());
+                };
+            }
         }
     }
     setRGB(red: number, green: number, blue: number): Promise<void> {
