@@ -220,6 +220,7 @@ export function setupLightHandler(websocket: WebSocket, light: Lights, audioProc
         websocket.broadcast("rgb-update", rgb || RGB);
     };
 
+    let lastDoorState = false;
     light.on("door", async level => {
         if (lightMode === "ManualLocked") {
             return;
@@ -254,6 +255,11 @@ export function setupLightHandler(websocket: WebSocket, light: Lights, audioProc
             clearTimeout(doorFrameLoop);
             doorFrameLoop = undefined;
         }
+
+        if (lastDoorState !== !!level && level) {
+            websocket.broadcast("door-open");
+        }
+        lastDoorState = !!level;
 
         if (level) {
             increaseDoor();
