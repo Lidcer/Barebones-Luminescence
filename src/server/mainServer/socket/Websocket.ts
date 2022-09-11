@@ -60,8 +60,8 @@ export class WebSocket {
             if (!client.auth()) {
                 return;
             }
-            Logger.debug("[WebSocket]", "connected", client.id);
             this.clients.push(client);
+            Logger.debug("[WebSocket]", "connected", client.id, this.getSocketInfo());
 
             client.onAny(async (...args) => {
                 const value = args[0];
@@ -104,7 +104,7 @@ export class WebSocket {
 
             client.on("disconnect", () => {
                 removeFromArray(this.clients, client);
-                Logger.debug("[WebSocket]", "disconnected", client.id);
+                Logger.debug("[WebSocket]", "disconnected", client.id, this.getSocketInfo());
                 const allowedClients: ClientType[] = ["android-app", "android-app-background", "browser-client"];
                 const clients = this.clients.filter(c => allowedClients.includes(c.clientType));
                 if (!clients.length) {
@@ -112,6 +112,12 @@ export class WebSocket {
                 }
             });
         });
+    }
+    private getSocketInfo() {
+        const ap = this.clients.filter(e => e.clientType === "android-app").length;
+        const apb = this.clients.filter(e => e.clientType === "android-app-background").length;
+        const bc = this.clients.filter(e => e.clientType === "browser-client").length;
+        return `browser-client: ${bc}, android-app: ${ap}, android-app-background: ${apb}`;
     }
 
     onSocketEvent(value: "all-clients-disconnected", listener: () => void);
