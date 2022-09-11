@@ -39,6 +39,13 @@ export class Lights implements LightController {
                 (global as any).closeDoor = () => {
                     this.eventEmitter.emit("door", 0, Date.now());
                 };
+
+                (global as any).door = () => {
+                    this.eventEmitter.emit("door", 1, Date.now());
+                    setTimeout(() => {
+                        this.eventEmitter.emit("door", 0, Date.now());
+                    }, 1000);
+                };
             }
         }
     }
