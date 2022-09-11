@@ -43,6 +43,7 @@ export function setupLightHandler(websocket: WebSocket, light: Lights, audioProc
                 }
             }
             sunSetData = res.data.results;
+            console.log(`Sunrise ${sunSetData.sunrise} | Sunset ${sunSetData.sunset}`);
         } else {
             console.error(`API did not receive object from server`);
         }
@@ -225,15 +226,17 @@ export function setupLightHandler(websocket: WebSocket, light: Lights, audioProc
         if (lightMode === "ManualLocked") {
             return;
         }
-        const date = (global as any).dd || new Date();
+        const date = new Date();
 
         let instantOff = false;
+        const greenish = 64;
         const color = [255, 255, 255]; //RGB
         if (isPastMidnight(date)) {
             color[0] = color[2] = 0;
+            color[1] = greenish;
             instantOff = true;
             if (sunSetData) {
-                const compare = dateMerger(sunSetData.civil_twilight_begin); // end of the night
+                const compare = dateMerger(sunSetData.sunrise); // end of the night
                 if (date < compare) {
                     color[1] = color[2] = 0;
                     color[0] = 255; // red
@@ -242,11 +245,11 @@ export function setupLightHandler(websocket: WebSocket, light: Lights, audioProc
             }
         } else {
             if (sunSetData) {
-                const compare = dateMerger(sunSetData.nautical_twilight_end); // start of the night
+                const compare = dateMerger(sunSetData.sunset); // start of the night
                 if (date < compare) {
                     instantOff = true;
                     color[0] = color[2] = 0;
-                    color[1] = 255;
+                    color[1] = greenish;
                 }
             }
         }
