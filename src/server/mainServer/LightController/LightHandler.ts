@@ -66,15 +66,15 @@ export function setupLightHandler(websocket: WebSocket, light: Lights, audioProc
     };
     const audioAnalyser = new AudioAnalyser(audioProcessor);
 
-    const de = debounce(async () => {
+    const de = debounce<(color: number[]) => void>(async (color: number[]) => {
         if (doorFrameLoop) {
             clearInterval(doorFrameLoop);
             doorFrameLoop = undefined;
         }
 
-        let r = 255;
-        let g = 255;
-        let b = 255;
+        let r = color[0];
+        let g = color[1];
+        let b = color[2];
 
         doorFrameLoop = setInterval(() => {
             if (r > RGB.r) r--;
@@ -273,7 +273,7 @@ export function setupLightHandler(websocket: WebSocket, light: Lights, audioProc
                 await light.setRGB(0, 0, 0);
                 updateModeAndLight({ r: 0, g: 0, b: 0 });
             } else {
-                de();
+                de(color);
                 updateModeAndLight({ r: color[0], g: color[1], b: color[2] });
             }
         }
