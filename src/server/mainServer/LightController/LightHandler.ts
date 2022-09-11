@@ -39,13 +39,13 @@ export function setupLightHandler(websocket: WebSocket, light: Lights, audioProc
             ];
             for (const validater of validators) {
                 if (typeof res.data.results[validater] !== "string") {
-                    console.error(`API validation error ${validater} was not found`, res.data);
+                    Logger.error(`API validation error ${validater} was not found`, res.data);
                 }
             }
             sunSetData = res.data.results;
-            console.log(`Sunrise ${sunSetData.sunrise} | Sunset ${sunSetData.sunset}`);
+            Logger.info(`Sunrise ${sunSetData.sunrise} | Sunset ${sunSetData.sunset}`);
         } else {
-            console.error(`API did not receive object from server`);
+            Logger.error(`API did not receive object from server`);
         }
     };
     setInterval(pollSunsetSunRise, DAY);
