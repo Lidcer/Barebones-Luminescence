@@ -15,6 +15,13 @@ export type LightMode = "instant" | "fade";
 export type ScheduleType = "Pattern" | "RGB";
 
 export type ClientType = "audio-server" | "browser-client" | "android-app" | "android-app-background" | "unknown";
+export const clientKeys: ClientType[] = [
+    "audio-server",
+    "browser-client",
+    "android-app",
+    "android-app-background",
+    "unknown",
+];
 
 export interface SocketAuth {
     password: string;
@@ -32,8 +39,12 @@ export interface HSV {
     s: number;
     v: number;
 }
+export type SocketInfoTypes = {
+    [key in ClientType]: number;
+};
 
 export interface ServerInfo {
+    socketInfo: SocketInfoTypes;
     memoryUsage: NodeJS.MemoryUsage;
     version: string;
     arch: string;

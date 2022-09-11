@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { AudioLightSystem } from "../../Utils/AudioSystem";
-import { ServerInfo } from "../../../shared/interfaces";
+import { clientKeys, ServerInfo } from "../../../shared/interfaces";
 import * as pretty from "prettysize";
 import ReactLoading from "react-loading";
 import moment from "moment";
@@ -127,6 +127,15 @@ export class DeviceTab extends React.Component<DeviceTabProps, DeviceTabState> {
         const temp = Math.round(data.temperature[data.temperature.length - 1]);
         return temp ? `${temp}°C` : "Unknown";
     }
+    renderConnectedDevices() {
+        return clientKeys.map((c, i) => {
+            return (
+                <li key={i}>
+                    {c}: {this.state.serverInfo.socketInfo[c]}{" "}
+                </li>
+            );
+        });
+    }
 
     render() {
         if (!this.state.serverInfo) {
@@ -140,6 +149,10 @@ export class DeviceTab extends React.Component<DeviceTabProps, DeviceTabState> {
                     <Canvas ref={this.cpu} />
                     <Canvas ref={this.temperature} />
                 </CanvasDiv>
+                <Div className='m-2 p-2 border border-terminal'>
+                    Websocket data
+                    <ul>{this.renderConnectedDevices()}</ul>
+                </Div>
                 <Div className='m-2 p-2 border border-terminal'>
                     <Div>Arch: {data?.arch}</Div>
                     <Div>

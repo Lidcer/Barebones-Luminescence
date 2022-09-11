@@ -1,7 +1,7 @@
 import { WebSocket } from "./Websocket";
 import * as os from "os";
 import * as osUtils from "os-utils";
-import { ServerInfo } from "../../../shared/interfaces";
+import { ServerInfo, SocketInfoTypes, clientKeys } from "../../../shared/interfaces";
 import { execute } from "../../sharedFiles/terminal";
 import { MINUTE, SECOND } from "../../../shared/constants";
 import { FixLengthArray } from "../../../shared/Arrays";
@@ -17,6 +17,7 @@ export function setupDeviceInfo(websocket: WebSocket) {
         client.validateAuthentication();
 
         const result: ServerInfo = {
+            socketInfo: socketInfo(websocket),
             memoryUsage: process.memoryUsage(),
             version: process.version,
             arch: process.arch,
@@ -35,6 +36,15 @@ export function setupDeviceInfo(websocket: WebSocket) {
         };
         return result;
     });
+}
+
+function socketInfo(websocket: WebSocket): SocketInfoTypes {
+    const builder = {} as SocketInfoTypes;
+    const clients = websocket.getAllClients();
+    for (const key of clientKeys) {
+        builder[key] = clients.filter(c => c.clientType === key).length;
+    }
+    return builder;
 }
 
 async function monitorCpu() {
