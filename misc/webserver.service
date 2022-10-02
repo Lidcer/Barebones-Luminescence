@@ -6,8 +6,9 @@ Description=LED web Server
 [Service]
 Type=simple
 User=pi
-WorkingDirectory=/home/pi/The-prefect-LED-controller
-ExecStart=/usr/local/bin/npm run webserver:prod
+WorkingDirectory=/home/pi/The-perfect-LED-controller
+# ExecStart=/usr/bin/local/npm run webserver:prod
+ExecStart=/usr/bin/npm run webserver:prod
 Restart=on-failure
 
 [Install]
