@@ -1,8 +1,20 @@
-import { SECOND, userClients } from "../../../shared/constants";
+import { MINUTE, SECOND, userClients } from "../../../shared/constants";
 import SocketIO from "socket.io";
 import { SocketError } from "../../../shared/socketError";
 import { ClientType, LoginData, SocketAuth } from "../../../shared/interfaces";
 import { PASSWORD } from "../main/config";
+
+const wrongPass = new Map<string, number>();
+
+function toString(data: string | string[]) {
+    if (Array.isArray(data)) {
+        return data.join(" ");
+    }
+    return data;
+}
+function checkIp(socket: SocketIO.Socket) {
+    return socket.request.connection.remoteAddress || toString(socket.request.headers["x-forwarded-for"]);
+}
 
 export class Client {
     private type: ClientType = "unknown";
@@ -11,15 +23,34 @@ export class Client {
     constructor(private client: SocketIO.Socket) {}
 
     auth() {
+        const ip = checkIp(this.client);
+        if (!ip) {
+            this.client.disconnect();
+            return;
+        }
         const auth = this.client.handshake.auth as SocketAuth;
         if (auth.password !== PASSWORD) {
-            console.error("wrong pass rejecting");
-            this.client.emit("connection-login", { status: "failed", message: "wrong password" } as LoginData);
+            let count = wrongPass.get(ip) || 0;
+            count++;
+            if (count > 10) {
+                count = 10;
+            }
+            if (count > 3) {
+                this.client.emit("connection-login", {
+                    status: "failed",
+                    message: "Too many attempts. Self defending mode activated",
+                } as LoginData);
+            } else {
+                this.client.emit("connection-login", { status: "failed", message: "Wrong password" } as LoginData);
+            }
             this.client.disconnect();
+            wrongPass.set(ip, count);
+            Logger.warn(checkIp(this.client), "Failed to connect!");
             return false;
         } else {
             this.type = auth.clientType;
             this.client.emit("connection-login", { status: "ok" } as LoginData);
+            Logger.log(checkIp(this.client), "Connected");
         }
 
         return true;
@@ -96,3 +127,12 @@ export class Client {
         return this._sendPCM;
     }
 }
+
+setTimeout(() => {
+    wrongPass.forEach((value, key) => {
+        value--;
+        if (value === 0) {
+            wrongPass.delete(key);
+        }
+    });
+}, MINUTE);
