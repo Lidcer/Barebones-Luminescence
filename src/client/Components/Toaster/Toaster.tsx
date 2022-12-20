@@ -71,6 +71,10 @@ export class Toaster extends React.Component<ToasterProps, ToasterState> {
     }
 
     onNotification = (socketError: Log) => {
+        if (socketError.type === "log") {
+            console.log("Server", socketError.title, socketError.description);
+            return;
+        }
         const socketErrors = [...this.state.socketErrors];
         const displayError = { log: socketError, showing: true, transition: true };
         socketErrors.push(displayError);
@@ -143,7 +147,7 @@ export class Toaster extends React.Component<ToasterProps, ToasterState> {
             case "error":
                 style.border = "2px solid #bf0000";
                 break;
-            case "info":
+            case "warn":
                 style.border = "2px solid #26c100";
                 break;
             case "info":

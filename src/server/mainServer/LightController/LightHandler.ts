@@ -10,8 +10,15 @@ import { increaseDoor, saveSettings, settings } from "../main/storage";
 import { sleep } from "../../../shared/utils";
 import { isPastMidnight, dateMerger } from "../../../shared/timeUtils";
 import axios, { AxiosResponse } from "axios";
+import { ImageCapture } from "../main/ImageCapture";
+import { DoorLog } from "../main/doorLog";
 
-export function setupLightHandler(websocket: WebSocket, light: Lights, audioProcessor: AudioProcessor) {
+export function setupLightHandler(
+    websocket: WebSocket,
+    light: Lights,
+    audioProcessor: AudioProcessor,
+    doorLog: DoorLog,
+) {
     const autoPilot = new AutoPilot(websocket);
     let doorFrameLoop: NodeJS.Timeout;
     const SERVER_FPS = SECOND * 0.05;
@@ -261,6 +268,11 @@ export function setupLightHandler(websocket: WebSocket, light: Lights, audioProc
 
         if (lastDoorState !== !!level && level) {
             websocket.broadcast("door-open");
+            if (doorLog) {
+                doorLog.log().then(() => {
+                    websocket.broadcast("door-image-available");
+                });
+            }
         }
         lastDoorState = !!level;
 

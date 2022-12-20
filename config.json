@@ -1,6 +1,7 @@
 {
  "PASSWORD": "password",
- "SECRET": "",
+ "SECRET": "XtneoXZwyRI52XcaB/W2WJmUtzuq3fdmBYfwnVr2jCPQJRfowQKkEnUFTHBfU9vkD1NIXhJhEd6xs7iiUL1rBw==",
+ "CAM_INSTALLED": true,
  "SERVER_PORT": 5648,
  "PI_PORT": 6857,
  "MAGIC_HOME_CONTROLLER": false,

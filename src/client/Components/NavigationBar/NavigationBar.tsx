@@ -27,7 +27,7 @@ const Button = styled.button`
         background-color: rgba(64, 64, 64, 1);
     }
 `;
-export type Tabs = "Manual" | "Audio" | "AutoPilot" | "Device" | "MagicHome";
+export type Tabs = "Manual" | "Audio" | "AutoPilot" | "Device" | "MagicHome" | "Camera";
 
 interface NavigationBarProps {
     als: AudioLightSystem;
@@ -63,6 +63,11 @@ export class NavigationBar extends React.Component<NavigationBarProps, Navigatio
                 {this.props.als.lightSocket.isMagicHome ? (
                     <Button onClick={() => this.onClick("MagicHome")} disabled={this.isDisabled("MagicHome")}>
                         MagicHome
+                    </Button>
+                ) : null}
+                {this.props.als.lightSocket.hasActiveCamera ? (
+                    <Button onClick={() => this.onClick("Camera")} disabled={this.isDisabled("Camera")}>
+                        Camera
                     </Button>
                 ) : null}
             </Div>

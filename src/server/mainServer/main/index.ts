@@ -1,5 +1,5 @@
 import express from "express";
-import { AUDIO_SERVER, SERVER_PORT } from "./config";
+import { AUDIO_SERVER, CAM_INSTALLED, IS_DEV, SERVER_PORT } from "./config";
 import path from "path";
 import { WebSocket } from "../socket/Websocket";
 import { pagesRouter } from "../../pageRouter";
@@ -10,14 +10,19 @@ import { AudioProcessor } from "../../../shared/audioProcessor";
 import { setupDeviceInfo } from "../socket/DeviceInfo";
 import { Lights } from "../LightController/Devices/Controller";
 import { initStorage, setupServerSocket } from "./storage";
-import { SECOND } from "../../../shared/constants";
+import { DAY, MINUTE, SECOND } from "../../../shared/constants";
+import { ImageCapture } from "./ImageCapture";
+import { DoorLog } from "./doorLog";
+import { Tokenizer } from "./Tokenizer";
+import { TokenData } from "../../../shared/interfaces";
 
 const app = express();
 app.disable("x-powered-by");
 app.set("view engine", "ejs");
 app.use("/assets", express.static(path.join(process.cwd(), "assets")));
 app.use(staticsRouter());
-app.use(pagesRouter());
+
+const imageTokenizer = new Tokenizer<TokenData>(MINUTE);
 
 async function start() {
     await initStorage();
@@ -25,13 +30,18 @@ async function start() {
     const lights = new Lights();
     const audioProcessor = new AudioProcessor();
 
+    const imageCapture = CAM_INSTALLED ? new ImageCapture(IS_DEV ? MINUTE : DAY) : undefined;
+    const doorLog = imageCapture ? new DoorLog(imageCapture) : undefined;
+
     const server = app.listen(SERVER_PORT, () => {
         Logger.info(`App listening on port ${SERVER_PORT}!`);
     });
 
     const webSocket = new WebSocket({ server });
-    const { getMode } = setupLightHandler(webSocket, lights, audioProcessor);
-    setupServerSocket(webSocket, lights, getMode);
+    app.use(pagesRouter(webSocket, imageTokenizer));
+
+    const { getMode } = setupLightHandler(webSocket, lights, audioProcessor, doorLog);
+    setupServerSocket(webSocket, lights, imageTokenizer, imageCapture, doorLog, getMode);
     setupDeviceInfo(webSocket);
     setupCommunicationToAudioServer(webSocket, audioProcessor);
 

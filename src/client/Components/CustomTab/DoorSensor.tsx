@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { SECOND } from "../../../shared/constants";
-import { DayNames, DoorLog } from "../../../shared/interfaces";
+import { DayNames, DoorLogData } from "../../../shared/interfaces";
 import { Button } from "../../styles";
 import { AudioLightSystem } from "../../Utils/AudioSystem";
 
@@ -36,7 +36,7 @@ interface DoorSensorTabProps {
 }
 
 interface DoorSensorTabState {
-    doorLog: DoorLog;
+    doorLog: DoorLogData;
 }
 const daysName: DayNames[] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 export class DoorSensor extends React.Component<DoorSensorTabProps, DoorSensorTabState> {
@@ -63,7 +63,7 @@ export class DoorSensor extends React.Component<DoorSensorTabProps, DoorSensorTa
 
     refresh = async () => {
         try {
-            const result = await this.props.als.lightSocket.emitPromiseIfPossible<DoorLog, []>("get-door-log");
+            const result = await this.props.als.lightSocket.emitPromiseIfPossible<DoorLogData, []>("get-door-log");
             if (!this.destroyed) {
                 this.setState({ doorLog: result });
             }

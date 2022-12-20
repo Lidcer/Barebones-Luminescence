@@ -1,4 +1,4 @@
-export class FixLengthArray<I = any> extends Array {
+export class FixLengthArray<I = any> extends Array<I> {
     constructor(private _length: number) {
         super();
     }

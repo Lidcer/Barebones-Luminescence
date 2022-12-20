@@ -56,7 +56,6 @@ let GpioObj: any;
                 console.log(`glitchFilter set: ${number}`);
             }
             on(value: string, callback: () => void) {
-                console.log(`gon set: ${value}`);
                 this.event.on(value, callback);
             }
             static get OUTPUT() {

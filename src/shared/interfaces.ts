@@ -118,7 +118,7 @@ export interface LedPatternObject {
 }
 
 export interface Log {
-    type: "log" | "info" | "error" | "fatal";
+    type: "log" | "info" | "error" | "fatal" | "warn";
     title: string;
     description?: string;
 }
@@ -170,6 +170,7 @@ export interface ServerSettings {
 }
 export interface FetchableServerConfig {
     doorSensor: boolean;
+    activeCamera: boolean;
     magicController: boolean;
     version: string;
     mode: ControllerMode;
@@ -180,7 +181,7 @@ export interface LoginData {
     message?: string;
 }
 
-export type DoorLog = { [dateString: string]: number };
+export type DoorLogData = { [dateString: string]: number };
 
 export interface SunSetApi {
     sunrise: string;
@@ -193,4 +194,25 @@ export interface SunSetApi {
     nautical_twilight_end: string;
     astronomical_twilight_begin: string;
     astronomical_twilight_end: string;
+}
+
+export interface RawImageLocation {
+    date: string;
+    name: string;
+    token?: string;
+}
+export interface RawDoorLogData {
+    date: string;
+    image?: RawImageLocation;
+}
+
+export interface CameraImageLocation {
+    lastImage?: RawImageLocation;
+    doorOpens: RawImageLocation[];
+    images: RawImageLocation[];
+}
+
+export interface TokenData {
+    id: string;
+    path: string;
 }

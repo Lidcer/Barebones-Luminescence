@@ -5,6 +5,7 @@ import { PreGenerateColourPickerPalette } from "../ColourPicker/ColourPickerData
 import { Tabs } from "../NavigationBar/NavigationBar";
 import { AudioTab } from "./Audio";
 import { AutoPilotTab as AutoPilotTab } from "./AutoPilot";
+import { CameraTab } from "./Camera";
 import { DeviceTab } from "./Device";
 import { MagicTab } from "./MagicHome";
 import { ManualTab } from "./Manual";
@@ -28,6 +29,8 @@ export class Tab extends React.Component<TabsProps, TabsState> {
                 return <AudioTab als={this.props.als} />;
             case "MagicHome":
                 return <MagicTab als={this.props.als} />;
+            case "Camera":
+                return <CameraTab als={this.props.als} />;
             default:
                 return <ManualTab als={this.props.als} palette={this.props.palette} />;
         }

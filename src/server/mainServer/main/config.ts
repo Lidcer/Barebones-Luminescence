@@ -20,6 +20,7 @@ interface IConfig {
     AUDIO_SERVER?: boolean;
     SECRET?: string;
     DOOR_SENSOR?: boolean;
+    CAM_INSTALLED?: boolean;
 }
 
 let config: IConfig = {
@@ -31,6 +32,7 @@ let config: IConfig = {
     MAGIC_HOME_CONTROLLER: false,
     AUDIO_SERVER: false,
     DOOR_SENSOR: false,
+    CAM_INSTALLED: false,
 };
 
 const packageJsonPath = path.join(process.cwd(), "package.json");
@@ -60,6 +62,7 @@ const MAGIC_HOME_CONTROLLER = config.MAGIC_HOME_CONTROLLER || false;
 const AUDIO_SERVER = config.AUDIO_SERVER || false;
 const PI_PORT = config.PI_PORT || false;
 const DOOR_SENSOR = config.DOOR_SENSOR || false;
+const CAM_INSTALLED = config.CAM_INSTALLED || false;
 
 export function regenerateConfig(shouldShutDownServer = false) {
     config.SECRET = randomBytes(64).toString("base64");
@@ -88,5 +91,6 @@ export {
     SECRET,
     MAGIC_HOME_CONTROLLER,
     PI_PORT,
+    CAM_INSTALLED,
     DOOR_SENSOR,
 };

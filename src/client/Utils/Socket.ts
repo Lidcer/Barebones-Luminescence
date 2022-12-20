@@ -24,6 +24,7 @@ export class LightSocket {
     private queue: Queue[] = [];
     private _settings: ServerSettings;
     private _magicHome = false;
+    private _activeCamera = false;
     private _doorSensor = false;
     private _mode: ControllerMode = "Manual";
 
@@ -67,6 +68,7 @@ export class LightSocket {
             const result = await this._clientSocket.emitPromise<FetchableServerConfig, []>("server-config-get");
             this._magicHome = result.magicController;
             this._doorSensor = result.doorSensor;
+            this._activeCamera = result.activeCamera;
             if (this._mode !== result.mode) {
                 this._mode = result.mode;
                 this.onModeUpdate(this._mode);
@@ -195,6 +197,9 @@ export class LightSocket {
     }
     get isMagicHome() {
         return this._magicHome;
+    }
+    get hasActiveCamera() {
+        return this._activeCamera;
     }
     get doorSensorConnected() {
         return this._doorSensor;

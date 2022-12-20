@@ -1,19 +1,24 @@
 import { array, cloneDeep, getDayString } from "../../../shared/utils";
 import { getStorage, setStorage, storageFolder } from "../../sharedFiles/settingsStore";
 import {
+    CameraImageLocation,
     ControllerMode,
-    DoorLog,
+    DoorLogData,
     FetchableServerConfig,
     LedPattern,
     LedPatternItem,
     ServerSettings,
+    TokenData,
 } from "../../../shared/interfaces";
 import { WebSocket } from "../socket/Websocket";
 import { hsv2rgb } from "../../../shared/colour";
 import { Lights } from "../LightController/Devices/Controller";
 import { MagicHomeController } from "../LightController/Devices/MagicHome";
-import { DOOR_SENSOR, VERSION } from "./config";
+import { CAM_INSTALLED, DOOR_SENSOR, VERSION } from "./config";
 import { exist, readJson, writeJson } from "../../sharedFiles/fileSystemUtils";
+import { DoorLog } from "./doorLog";
+import { ImageCapture } from "./ImageCapture";
+import { Tokenizer } from "./Tokenizer";
 
 const fileName = "serverSettings.json";
 const doorLog = "log.json";
@@ -65,7 +70,14 @@ export async function saveSettings() {
     }
 }
 
-export function setupServerSocket(websocket: WebSocket, lights: Lights, getMode: () => ControllerMode) {
+export function setupServerSocket(
+    websocket: WebSocket,
+    lights: Lights,
+    imageTokenizer: Tokenizer<TokenData>,
+    imageCapture: ImageCapture,
+    doorLog: DoorLog,
+    getMode: () => ControllerMode,
+) {
     const isMagicHome = () => {
         return lights.getInstance() instanceof MagicHomeController;
     };
@@ -78,12 +90,13 @@ export function setupServerSocket(websocket: WebSocket, lights: Lights, getMode:
         client.validateAuthentication();
         return {
             doorSensor: DOOR_SENSOR,
+            activeCamera: CAM_INSTALLED,
             magicController: isMagicHome(),
             version: VERSION,
             mode: getMode(),
         };
     });
-    websocket.onPromise<DoorLog, []>("get-door-log", async client => {
+    websocket.onPromise<DoorLogData, []>("get-door-log", async client => {
         client.validateAuthentication();
         const logs = await readDoorLog();
         return logs;
@@ -92,6 +105,34 @@ export function setupServerSocket(websocket: WebSocket, lights: Lights, getMode:
         client.validateAuthentication();
         await clearDoorLog();
     });
+
+    if (CAM_INSTALLED) {
+        websocket.onPromise<CameraImageLocation, []>("get-cam-data", async client => {
+            client.validateAuthentication();
+            const imagesS = await imageCapture.getImages();
+            const id = client.id;
+            const doorOpens = doorLog.getDoorRawLogs(id, imageTokenizer);
+            const images = imagesS.map(img => imageCapture.convertToRaw(img, id, imageTokenizer));
+            return {
+                lastImage: imageCapture.last
+                    ? imageCapture.convertToRaw(imageCapture.last, id, imageTokenizer)
+                    : undefined,
+                images,
+                doorOpens,
+            };
+        });
+
+        websocket.onPromise<boolean, []>("take-cam-image", async client => {
+            client.validateAuthentication();
+            try {
+                await imageCapture.capture();
+                return true;
+            } catch (error) {
+                Logger.error(error);
+                return false;
+            }
+        });
+    }
 }
 
 export async function increaseDoor() {
@@ -107,7 +148,7 @@ export async function increaseDoor() {
     await writeJson([storageFolder, doorLog], existingData, true);
 }
 
-export async function readDoorLog(): Promise<DoorLog> {
+export async function readDoorLog(): Promise<DoorLogData> {
     const presenceOfFile = await exist([storageFolder, doorLog], "file");
     if (!presenceOfFile) {
         return {};
