@@ -137,6 +137,56 @@ export class DeviceTab extends React.Component<DeviceTabProps, DeviceTabState> {
         });
     }
 
+    renderSunsetSunrise() {
+        const sunsetSunrise = this.state.serverInfo.sunsetSunrise;
+        if (this.state.serverInfo.sunsetSunrise) {
+            return (
+                <div>
+                    <div>
+                        <b>Sunrise:</b> {sunsetSunrise.sunrise}
+                    </div>
+                    <div>
+                        <b>Sunset:</b> {sunsetSunrise.sunset}
+                    </div>
+                    <div>
+                        <b>Solar noon:</b> {sunsetSunrise.solar_noon}
+                    </div>
+                    <div>
+                        <b>Day length:</b> {sunsetSunrise.day_length}
+                    </div>
+                    <div>
+                        <b>Civil twilight begin:</b> {sunsetSunrise.civil_twilight_begin}
+                    </div>
+                    <div>
+                        <b>Civil twilight end:</b> {sunsetSunrise.civil_twilight_end}
+                    </div>
+                    <div>
+                        <b>Nautical twilight begin:</b> {sunsetSunrise.nautical_twilight_begin}
+                    </div>
+                    <div>
+                        <b>Nautical twilight end:</b> {sunsetSunrise.nautical_twilight_end}
+                    </div>
+                    <div>
+                        <b>Astronomical twilight begin:</b> {sunsetSunrise.astronomical_twilight_begin}
+                    </div>
+                    <div>
+                        <b>Astronomical twilight end:</b> {sunsetSunrise.astronomical_twilight_end}
+                    </div>
+                </div>
+            );
+        }
+        return null;
+    }
+
+    renderTime() {
+        return (
+            <div>
+                <b>Server time:</b> {this.state.serverInfo.time}
+                {this.renderSunsetSunrise()}
+            </div>
+        );
+    }
+
     render() {
         if (!this.state.serverInfo) {
             return <ReactLoading className='m-2' type={"bars"} color={"#ffffff"} height={50} width={50} />;
@@ -149,6 +199,11 @@ export class DeviceTab extends React.Component<DeviceTabProps, DeviceTabState> {
                     <Canvas ref={this.cpu} />
                     <Canvas ref={this.temperature} />
                 </CanvasDiv>
+                <Div className='m-2 p-2 border border-terminal'>
+                    Time
+                    {this.renderTime()}
+                </Div>
+
                 <Div className='m-2 p-2 border border-terminal'>
                     Websocket data
                     <ul>{this.renderConnectedDevices()}</ul>

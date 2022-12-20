@@ -5,6 +5,7 @@ import { ServerInfo, SocketInfoTypes, clientKeys } from "../../../shared/interfa
 import { execute } from "../../sharedFiles/terminal";
 import { MINUTE, SECOND } from "../../../shared/constants";
 import { FixLengthArray } from "../../../shared/Arrays";
+import { getSunsetSunriseData } from "../LightController/SunsetSunrise";
 
 const HISTORY = 25;
 const MONITOR_TIME = SECOND * 0.5;
@@ -15,8 +16,10 @@ const cpuHistory = new FixLengthArray<number>(HISTORY);
 export function setupDeviceInfo(websocket: WebSocket) {
     websocket.onPromise<ServerInfo, []>("device-info", async client => {
         client.validateAuthentication();
-
+        const d = new Date();
         const result: ServerInfo = {
+            time: `${d.toDateString()} ${d.toLocaleTimeString()}`,
+            sunsetSunrise: getSunsetSunriseData(),
             socketInfo: socketInfo(websocket),
             memoryUsage: process.memoryUsage(),
             version: process.version,

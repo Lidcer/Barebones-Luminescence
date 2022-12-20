@@ -44,6 +44,9 @@ export type SocketInfoTypes = {
 };
 
 export interface ServerInfo {
+    time: string;
+    sunsetSunrise?: SunSetApi;
+
     socketInfo: SocketInfoTypes;
     memoryUsage: NodeJS.MemoryUsage;
     version: string;

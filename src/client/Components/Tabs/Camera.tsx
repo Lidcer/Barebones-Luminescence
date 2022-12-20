@@ -158,8 +158,6 @@ export class CameraTab extends React.Component<CameraTabProps, CameraTabState> {
             </div>
         );
     }
-
-
     renderLastImage() {
         if (this.state.data.lastImage) {
             return (
