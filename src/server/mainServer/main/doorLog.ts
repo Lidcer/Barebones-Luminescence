@@ -12,7 +12,7 @@ interface DoorLogData {
 
 export class DoorLog {
     private lastLogs = new FixLengthArray<DoorLogData>(100);
-    private readonly IMAGE_DELAY = SECOND * 3;
+    private readonly IMAGE_DELAY = SECOND * 2;
     constructor(private imageCapture?: ImageCapture) {}
 
     log() {
