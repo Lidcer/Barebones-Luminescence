@@ -14,7 +14,7 @@ export interface ImageLocation {
 
 export class ImageCapture {
     readonly camDirectory = path.join(process.cwd(), "cam");
-    readonly resolution = [1280, 720];
+    readonly resolution = [1920, 1080];
     readonly device = "/dev/video0";
     private _last?: ImageLocation;
 
@@ -44,7 +44,7 @@ export class ImageCapture {
                     if (this.hasImage(img)) {
                         Logger.debug(`Captured ${pathS}`);
                         this._last = img;
-                        resolve(this.mapImage(pathS));
+                        resolve(img);
                     } else {
                         Logger.debug(`An error has occurred ${pathS}`);
                         reject(new Error(stdError || "Unable to capture image"));

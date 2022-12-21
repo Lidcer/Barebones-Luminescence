@@ -204,9 +204,8 @@ export interface RawImageLocation {
     name: string;
     token?: string;
 }
-export interface RawDoorLogData {
-    date: string;
-    image?: RawImageLocation;
+export interface RawDoorLogData extends RawImageLocation {
+    doorData: string;
 }
 
 export interface CameraImageLocation {

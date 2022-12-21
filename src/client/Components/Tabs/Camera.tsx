@@ -1,19 +1,23 @@
 import React from "react";
 import { AudioLightSystem } from "../../Utils/AudioSystem";
-import { AudioAnalyser } from "../../../shared/audioAnalyser";
 import ReactLoading from "react-loading";
 import { RawImageLocation } from "../../../shared/interfaces";
 import moment from "moment";
 import styled from "styled-components";
 
 const Container = styled.div`
-    margin: auto;
+    margin: 10px;
 `;
 
 const Overlay = styled.div`
     position: absolute;
     margin-left: 5px;
     margin-top: 5px;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+`;
+
+const Img = styled.img`
+    max-width: 100%;
 `;
 
 const Btn = styled.button`
@@ -138,7 +142,8 @@ export class CameraTab extends React.Component<CameraTabProps, CameraTabState> {
             "get-cam-data",
         );
 
-        data.images = data.images.filter(i => !data.images.find(e => e.name === i.name));
+        data.images = data.images.filter(i => !data.doorOpens.some(e => e.name === i.name));
+
         this.preload(data.lastImage);
         data.images.forEach(this.preload);
         data.doorOpens.forEach(this.preload);
@@ -154,7 +159,7 @@ export class CameraTab extends React.Component<CameraTabProps, CameraTabState> {
                 <Overlay>
                     {suffix} {moment(image.date).format("DD/MM/YYYY HH:mm:ss")}
                 </Overlay>
-                <img src={`${image.cachedBlobUrl || this.loadingPlaceHolder}`} alt={image.name} />
+                <Img src={`${image.cachedBlobUrl || this.loadingPlaceHolder}`} alt={image.name} />
             </div>
         );
     }
