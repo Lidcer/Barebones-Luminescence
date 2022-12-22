@@ -58,7 +58,6 @@ export class CameraTab extends React.Component<CameraTabProps, CameraTabState> {
     }
 
     preload = async (img?: RawImageLocationEx) => {
-        console.log("called", img.name);
         if (img) {
             if (img.token) {
                 const id = this.props.als.lightSocket.socket.id;
@@ -143,6 +142,9 @@ export class CameraTab extends React.Component<CameraTabProps, CameraTabState> {
         );
 
         data.images = data.images.filter(i => !data.doorOpens.some(e => e.name === i.name));
+
+        data.images.sort((a, b) => (parseInt(a.date, 10) > parseInt(b.date, 10) ? 1 : -1));
+        data.doorOpens.sort((a, b) => (parseInt(a.date, 10) > parseInt(b.date, 10) ? 1 : -1));
 
         this.preload(data.lastImage);
         data.images.forEach(this.preload);

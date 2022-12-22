@@ -13,14 +13,15 @@ export interface ImageLocation {
 }
 
 export class ImageCapture {
-    readonly camDirectory = path.join(process.cwd(), "cam");
-    readonly resolution = [1920, 1080];
-    readonly device = "/dev/video0";
+    private readonly CAM_DIRECTORY = path.join(process.cwd(), "cam");
+    private readonly RESOLUTION = [1920, 1080];
+    private readonly DEVICE = "/dev/video0";
+    private readonly MAX_IMAGES = 20;
     private _last?: ImageLocation;
 
     constructor(private lifetime = SECOND) {
-        if (!fs.existsSync(this.camDirectory)) {
-            fs.mkdirSync(this.camDirectory);
+        if (!fs.existsSync(this.CAM_DIRECTORY)) {
+            fs.mkdirSync(this.CAM_DIRECTORY);
         }
         this.gc();
         setInterval(() => {
@@ -33,8 +34,8 @@ export class ImageCapture {
             const name = Date.now().toString();
             const aName = `${name}.png`;
 
-            const pathS = path.join(this.camDirectory, aName);
-            const cmd = `fswebcam --no-banner --png --device ${this.device} --resolution ${this.resolution[0]}x${this.resolution[1]} ${pathS}`;
+            const pathS = path.join(this.CAM_DIRECTORY, aName);
+            const cmd = `fswebcam --no-banner --png --device ${this.DEVICE} --resolution ${this.RESOLUTION[0]}x${this.RESOLUTION[1]} ${pathS}`;
             Logger.debug(`exec "${cmd}"`);
             exec(cmd, (error, _, stdError) => {
                 if (error) {
@@ -67,13 +68,13 @@ export class ImageCapture {
         };
     }
     hasImage(image: ImageLocation) {
-        const pathS = path.join(this.camDirectory, image.name);
+        const pathS = path.join(this.CAM_DIRECTORY, image.name);
         return fs.existsSync(pathS);
     }
 
     async getImages() {
         try {
-            const files = await fs.promises.readdir(this.camDirectory);
+            const files = await fs.promises.readdir(this.CAM_DIRECTORY);
             const filesSorted = files.map(this.mapImage).sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1));
             return filesSorted;
         } catch (error) {
@@ -83,7 +84,7 @@ export class ImageCapture {
     }
     async removeImage(image: ImageLocation): Promise<boolean> {
         try {
-            const pathS = path.join(this.camDirectory, image.name);
+            const pathS = path.join(this.CAM_DIRECTORY, image.name);
             await fs.promises.unlink(pathS);
             return true;
         } catch (error) {
@@ -96,10 +97,17 @@ export class ImageCapture {
             console.info("Running gc");
             const images = await this.getImages();
             const now = Date.now();
+            const exist: ImageLocation[] = [];
             for (const image of images) {
                 if (image.timestamp + this.lifetime < now) {
                     await this.removeImage(image);
+                } else {
+                    exist.push(image);
                 }
+            }
+            exist.sort((a, b) => (a.date > b.date ? -1 : 1));
+            for (let i = this.MAX_IMAGES; i < exist.length; i++) {
+                this.removeImage(exist[i]);
             }
         } catch (error) {
             Logger.error("Unable to garbage collect images", error);
@@ -112,7 +120,7 @@ export class ImageCapture {
             token: tokenizer
                 ? tokenizer.createToken({
                       id: socketId,
-                      path: path.join(this.camDirectory, image.name),
+                      path: path.join(this.CAM_DIRECTORY, image.name),
                   })
                 : undefined,
         };
