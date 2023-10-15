@@ -17,6 +17,7 @@ export class ImageCapture {
     private readonly RESOLUTION = [1920, 1080];
     private readonly DEVICE = "/dev/video0";
     private readonly MAX_IMAGES = 20;
+    private onRemove = new Map<string, () => void>();
     private _last?: ImageLocation;
 
     constructor(private lifetime = SECOND) {
@@ -29,7 +30,7 @@ export class ImageCapture {
         }, HOUR);
     }
 
-    capture() {
+    capture(onRemove: () => void) {
         return new Promise<ImageLocation>((resolve, reject) => {
             const name = Date.now().toString();
             const aName = `${name}.png`;
@@ -42,6 +43,7 @@ export class ImageCapture {
                     reject(error);
                 } else {
                     const img = this.mapImage(aName);
+                    this.onRemove.set(img.date.toString(), onRemove);
                     if (this.hasImage(img)) {
                         Logger.debug(`Captured ${pathS}`);
                         this._last = img;
@@ -86,6 +88,11 @@ export class ImageCapture {
         try {
             const pathS = path.join(this.CAM_DIRECTORY, image.name);
             await fs.promises.unlink(pathS);
+            const remove = this.onRemove.get(image.date.toString());
+            if (remove) {
+                remove();
+                this.onRemove.delete(image.date.toString());
+            }
             return true;
         } catch (error) {
             Logger.error("Unable to delete image", error);

@@ -24,7 +24,12 @@ export class DoorLog {
             if (this.imageCapture) {
                 setTimeout(async () => {
                     try {
-                        const image = await this.imageCapture.capture();
+                        const image = await this.imageCapture.capture(() => {
+                            const index = this.lastLogs.indexOf(data);
+                            if (index !== -1) {
+                                this.lastLogs.splice(index, 1);
+                            }
+                        });
                         data.image = image;
                     } catch (error) {
                         Logger.error("Unable to capture image", error);
