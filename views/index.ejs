@@ -41,6 +41,26 @@
     ::-webkit-scrollbar-thumb:hover {
       background: rgb(36, 36, 36); 
     }
+    .time-picker, .react-time-picker, .react-time-picker__wrapper {
+        background-color: white;
+        color: black;
+      }
+      .date-picker {
+          background-color: white;
+          color: black;
+      }
+
+      .warning-button {
+        animation-name: warning;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+      }
+
+      @keyframes warning {
+        0% {background-color: none;}
+        50% {background-color: red;}
+        100% {background-color: none;}
+      }
   </style>
 
 
@@ -56,7 +76,6 @@
       <%= version %>
   </script>
   
-  <script type="text/javascript" src="<%- manifest["vendors.js"] %>"></script>
-  <script type="text/javascript" src="<%- manifest["main.js"] %>"></script>
+  <script type="text/javascript" src="/script-<%= hash %>.js"></script>
 </body>
 </html>

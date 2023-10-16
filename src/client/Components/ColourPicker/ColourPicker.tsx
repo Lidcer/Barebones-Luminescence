@@ -7,8 +7,8 @@ import { clamp } from "lodash";
 import { cloneDeep } from "../../../shared/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import namer from "color-namer-sdk";
 
-import * as namer from "color-namer-sdk";
 const Div = styled.div`
     background: rgb(32, 32, 32);
     border-radius: 5px;

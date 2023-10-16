@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { AudioLightSystem } from "../../Utils/AudioSystem";
 import { clientKeys, ServerInfo } from "../../../shared/interfaces";
-import * as pretty from "prettysize";
+import pretty from "prettysize";
 import ReactLoading from "react-loading";
 import moment from "moment";
 

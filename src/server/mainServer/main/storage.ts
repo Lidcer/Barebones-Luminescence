@@ -1,4 +1,4 @@
-import { array, cloneDeep, getDayString } from "../../../shared/utils";
+import { array, cloneDeep, getDayString, removeFromArray } from "../../../shared/utils";
 import { getStorage, setStorage, storageFolder } from "../../sharedFiles/settingsStore";
 import {
     CameraImageLocation,
@@ -125,7 +125,7 @@ export function setupServerSocket(
         websocket.onPromise<boolean, []>("take-cam-image", async client => {
             client.validateAuthentication();
             try {
-                await imageCapture.capture();
+                await imageCapture.capture(() => {});
                 return true;
             } catch (error) {
                 Logger.error(error);

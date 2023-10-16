@@ -2,9 +2,9 @@ import { Router, Request } from "express";
 import { VERSION } from "./mainServer/main/config";
 import { Tokenizer } from "./mainServer/main/Tokenizer";
 import { WebSocket } from "./mainServer/socket/Websocket";
-import { getManifest } from "./manifest-manager";
 import * as path from "path";
 import { TokenData } from "../shared/interfaces";
+import { HASH } from "../shared/constants";
 
 function getIp(req: Request) {
     return req.ip || req.headers["x-forwarded-for"] || req.connection.remoteAddress;
@@ -35,8 +35,8 @@ export function pagesRouter(socket: WebSocket, imageTokenizer: Tokenizer<TokenDa
         res.status(404).end();
     });
     router.get(`/**`, async (req, res) => {
-        const manifest = await getManifest();
-        res.render("index", { manifest, version: VERSION });
+
+        res.render("index", { hash: HASH, version: VERSION });
     });
 
     return router;

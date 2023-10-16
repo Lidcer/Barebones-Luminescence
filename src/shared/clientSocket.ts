@@ -1,5 +1,4 @@
 //mport { Socket } from "socket.io-client";
-import e from "express";
 import { SECOND } from "./constants";
 import { Logger } from "./logger";
 import { createSocketError, SocketError } from "./socketError";

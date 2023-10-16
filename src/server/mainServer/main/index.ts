@@ -15,6 +15,7 @@ import { ImageCapture } from "./ImageCapture";
 import { DoorLog } from "./doorLog";
 import { Tokenizer } from "./Tokenizer";
 import { TokenData } from "../../../shared/interfaces";
+import * as esbuild from 'esbuild'
 
 const app = express();
 app.disable("x-powered-by");
@@ -25,6 +26,18 @@ app.use(staticsRouter());
 const imageTokenizer = new Tokenizer<TokenData>(MINUTE);
 
 async function start() {
+    if (DEV) {
+        await esbuild.build({
+            entryPoints: ['./src/client/index.jsx'],
+            plugins: [],
+            define: {
+                DEV: JSON.stringify(true),
+            },
+            bundle: true,
+            outfile: './statics/bundle.js',
+          })
+    }
+
     await initStorage();
 
     const lights = new Lights();

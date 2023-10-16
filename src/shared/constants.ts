@@ -1,4 +1,5 @@
 import { ClientType, LightMode, ScheduleType } from "./interfaces";
+import { randomString } from "./utils";
 
 export const SECOND = 1000;
 export const MINUTE = SECOND * 60;
@@ -14,3 +15,5 @@ export const SCHEDULE_TYPE: ScheduleType[] = ["Pattern", "RGB"];
 export const userClients: ClientType[] = ["browser-client", "android-app", "android-app-background"];
 
 export const SUNRISE_SUNSET_API = "https://api.sunrise-sunset.org/json";
+
+export const HASH = randomString(16);
