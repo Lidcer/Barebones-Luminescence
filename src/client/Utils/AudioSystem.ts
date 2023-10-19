@@ -6,6 +6,8 @@ import { PatternService } from "./Patterns";
 import { ScheduleService } from "./ScheduleService";
 import { Log } from "../../shared/interfaces";
 import { Listener } from "events";
+import { ClientMessagesRaw, SpecialEvents } from "../../shared/Messages";
+import { BinaryBuffer } from "../../shared/messages/BinaryBuffer";
 
 export interface AudioUpdateResult {
     leftBuffer: Int16Array;
@@ -29,8 +31,8 @@ export class AudioLightSystem {
         const script = document.getElementById("version") as HTMLScriptElement;
         this.version = script.textContent.trim();
         this._lightSocket = new LightSocket(this.version, this.raiseNotification);
-        this._lightSocket.clientSocket.on("pcm", this.onPCM);
-        this._lightSocket.clientSocket.on("socket-log", this._raiseNotification);
+        //this._lightSocket.clientSocket.clientHandle.on("pcm", this.onPCM);
+        this._lightSocket.clientSocket.clientHandle.on(ClientMessagesRaw.SocketLog, this._raiseNotificationBin);
         this._pattern = new PatternService(this._lightSocket);
         this._scheduleService = new ScheduleService(this._lightSocket, this._pattern);
     }
@@ -47,7 +49,7 @@ export class AudioLightSystem {
     }
     destroy() {
         this.eventEmitter.removeAllListeners();
-        this._lightSocket.socket.disconnect();
+        this._lightSocket.socket.handle.disconnect();
     }
     get connected() {
         return this._lightSocket.socket.connected;
@@ -61,6 +63,13 @@ export class AudioLightSystem {
         const rgbBuffer = this._audioProcessor.rgbBuffer;
         //this._audioAnalyser.update();
         this.eventEmitter.emit("audioUpdate", { leftBuffer, rightBuffer, mergedBuffer, rgbBuffer });
+    };
+    private _raiseNotificationBin = (client, binary: BinaryBuffer) => {
+        const type = binary.getUtf8String() as any;
+        const str = binary.getUtf8String();
+        const des = binary.getUtf8String();
+        const log: Log = { title: str, type, description:des };
+        this._raiseNotification(log);
     };
     private _raiseNotification = (log: Log) => {
         this.eventEmitter.emit("log", log);

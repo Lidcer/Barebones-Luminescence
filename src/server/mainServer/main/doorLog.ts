@@ -39,11 +39,11 @@ export class DoorLog {
             }
         });
     }
-    getDoorRawLogs(socketId: string, tokenizer: Tokenizer<TokenData>) {
+    getDoorRawLogs(tokenizer: Tokenizer<TokenData>) {
         return this.lastLogs
             .filter(e => !!e.image)
             .map(data => {
-                const cData = this.imageCapture.convertToRaw(data.image, socketId, tokenizer) as RawDoorLogData;
+                const cData = this.imageCapture.convertToRaw(data.image, tokenizer) as RawDoorLogData;
                 cData.doorData = data.date.toUTCString();
                 return cData;
             });

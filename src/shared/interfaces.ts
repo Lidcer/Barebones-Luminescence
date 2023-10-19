@@ -1,14 +1,30 @@
-import { StringNullableChain } from "lodash";
+
 import * as os from "os";
-export type ControllerMode =
-    | "Manual"
-    | "ManualForce"
-    | "ManualLocked"
-    | "AutoPilot"
-    | "Pattern"
-    | "Audio"
-    | "AudioRaw"
-    | "Door";
+export enum ControllerMode {
+    Manual,
+    ManualForce,
+    ManualLocked,
+    AutoPilot,
+    Pattern,
+    Audio,
+    AudioRaw,
+    Door,
+}
+
+function modeToString(mode:ControllerMode) {
+ switch (mode) {
+    case ControllerMode.Manual: return 'manual'; 
+    case ControllerMode.ManualForce: return 'manualForce'; 
+    case ControllerMode.ManualLocked: return 'manualLocked'; 
+    case ControllerMode.AutoPilot: return 'autoPilot'; 
+    case ControllerMode.Pattern: return 'pattern'; 
+    case ControllerMode.Audio: return 'audio'; 
+    case ControllerMode.AudioRaw: return 'audioRaw'; 
+    case ControllerMode.Door: return 'door'; 
+    default:
+        break;
+ }   
+}
 
 export type DayNames = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
 export type LightMode = "instant" | "fade";
@@ -48,10 +64,10 @@ export interface ServerInfo {
     sunsetSunrise?: SunSetApi;
 
     socketInfo: SocketInfoTypes;
-    memoryUsage: NodeJS.MemoryUsage;
+    memoryUsage: any; //NodeJS.MemoryUsage;
     version: string;
     arch: string;
-    cpuUsage: NodeJS.CpuUsage;
+    cpuUsage: any; //NodeJS.CpuUsage;
     cpuUsageHistory: number[];
     temperature: number[];
     uptime: number;
@@ -215,6 +231,13 @@ export interface CameraImageLocation {
 }
 
 export interface TokenData {
-    id: string;
+    //id: string;
     path: string;
+}
+
+
+export interface Deffered<A = any> {
+    promise: Promise<A>;
+    resolve: (data: A) => void;
+    reject: (err?: any) => void;
 }

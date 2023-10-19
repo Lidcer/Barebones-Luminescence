@@ -12,6 +12,7 @@
       "isolatedModules": true,
       "outDir": "../../dist/shared",
       "lib": ["ES2019"],
+      "types": ["bun-types"],
       "composite": true
     },
     "include": ["./**/*.ts"],

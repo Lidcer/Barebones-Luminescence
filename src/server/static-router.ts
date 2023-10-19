@@ -1,15 +1,25 @@
 import path from "path";
-import express from "express";
-import { Router } from "express";
+import { BunServer } from "./sharedFiles/bun-server";
+import fs from "fs";
 
-export function staticsRouter() {
-    const router = Router();
-
-    router.get("/script-*.js", (req, res) => {
-        res.sendFile(path.join(process.cwd(), "statics", "bundle.js"));
+export function staticsRouter(app: BunServer) {
+    let scriptCache = "";
+    const getScript = () => {
+        if (!scriptCache || DEV) {
+            scriptCache = fs.readFileSync(path.join(process.cwd(), "statics", "bundle.js"), "utf-8");
+        }
+        return scriptCache;
+    };
+    
+    app.get("/script-*.js", (req, res) => {
+        return new Response(getScript(), {
+            headers: {
+                "Content-Type": "Application/javascript"
+            }
+        })
     })
 
-    const staticsPath = path.join(process.cwd(), "dist", "statics");
-    router.use("/statics", express.static(staticsPath));
-    return router;
+    //const staticsPath = path.join(process.cwd(), "dist", "statics");
+    //router.use("/statics", express.static(staticsPath));
+
 }

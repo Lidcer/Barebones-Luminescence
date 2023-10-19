@@ -12,7 +12,7 @@ export class PatternService {
     private eventEmitter = new EventEmitter();
 
     constructor(private lightSocket: LightSocket) {
-        lightSocket.clientSocket.on("patterns-update", this.patternUpdate);
+        //lightSocket.clientSocket.on("patterns-update", this.patternUpdate);
     }
 
     async fetchPattern(force = false) {
@@ -111,6 +111,6 @@ export class PatternService {
         ledPattern.name = name;
     }
     destroy() {
-        this.lightSocket.clientSocket.off("patterns-update", this.patternUpdate);
+        //this.lightSocket.clientSocket.off("patterns-update", this.patternUpdate);
     }
 }

@@ -120,13 +120,12 @@ export class ImageCapture {
             Logger.error("Unable to garbage collect images", error);
         }
     }
-    convertToRaw(image: ImageLocation, socketId: string, tokenizer: Tokenizer<TokenData>): RawImageLocation {
+    convertToRaw(image: ImageLocation, tokenizer: Tokenizer<TokenData>): RawImageLocation {
         return {
             date: image.date.toUTCString(),
             name: image.name,
             token: tokenizer
                 ? tokenizer.createToken({
-                      id: socketId,
                       path: path.join(this.CAM_DIRECTORY, image.name),
                   })
                 : undefined,

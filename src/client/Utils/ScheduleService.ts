@@ -22,7 +22,7 @@ export class ScheduleService {
     private _updated = true;
 
     constructor(private lightSocket: LightSocket, private patternService: PatternService) {
-        lightSocket.clientSocket.on("schedule-update", this.scheduleUpdate);
+        //lightSocket.clientSocket.on("schedule-update", this.scheduleUpdate);
     }
     async fetchSchedule(force = false) {
         if (this.fetched && !force) {
@@ -78,7 +78,7 @@ export class ScheduleService {
         this.setUpdate(false);
     }
     destroy() {
-        this.lightSocket.clientSocket.off("schedule-update", this.scheduleUpdate);
+        //this.lightSocket.clientSocket.off("schedule-update", this.scheduleUpdate);
     }
     get updated() {
         return this._updated;

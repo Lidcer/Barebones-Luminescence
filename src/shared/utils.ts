@@ -1,3 +1,5 @@
+import { Deffered } from "./interfaces";
+
 export function cloneDeep<A>(object: A) {
     return JSON.parse(JSON.stringify(object)) as A;
 }
@@ -158,4 +160,19 @@ export function sleep(ms: number) {
 export function getDayString(date: Date) {
     const dateString = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
     return dateString;
+}
+
+export function deffer<A = any>(): Deffered<A> {
+    let resolve: Deffered['resolve'];
+    let reject: Deffered['reject'];
+    const promise: Deffered['promise'] = new Promise((_resolve, _reject) => {
+        resolve =_resolve;
+        reject =_reject;
+    });
+
+    return {
+        promise,
+        reject,
+        resolve,
+    }
 }

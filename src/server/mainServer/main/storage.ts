@@ -19,6 +19,8 @@ import { exist, readJson, writeJson } from "../../sharedFiles/fileSystemUtils";
 import { DoorLog } from "./doorLog";
 import { ImageCapture } from "./ImageCapture";
 import { Tokenizer } from "./Tokenizer";
+import { ClientMessagesRaw, ServerMessagesRaw } from "../../../shared/Messages";
+import { BinaryBuffer, utf8StringLen } from "../../../shared/messages/BinaryBuffer";
 
 const fileName = "serverSettings.json";
 const doorLog = "log.json";
@@ -51,7 +53,7 @@ const defaultSettings: ServerSettings = {
         custom: {},
         mode: "fade",
     },
-    controllerMode: "Manual",
+    controllerMode: ControllerMode.Manual,
     patterns: [PATTERN_RAINBOW],
 };
 
@@ -65,8 +67,9 @@ export async function initStorage() {
 
 export async function saveSettings() {
     await setStorage(fileName, settings);
+    const json = JSON.stringify(settings);
     if (socket) {
-        socket.broadcast("server-settings-update", settings);
+        socket.broadcast(ClientMessagesRaw.SettingsUpdate, new BinaryBuffer(utf8StringLen(json)).setUtf8String(json).getBuffer());
     }
 }
 
@@ -82,54 +85,60 @@ export function setupServerSocket(
         return lights.getInstance() instanceof MagicHomeController;
     };
     socket = websocket;
-    websocket.onPromise<ServerSettings, []>("server-settings-get", async client => {
+    websocket.onPromise<ServerSettings, []>(ServerMessagesRaw.Settings, async client => {
         client.validateAuthentication();
-        return settings;
+        const json = JSON.stringify(settings);
+
+        return new BinaryBuffer(utf8StringLen(json)).setUtf8String(json).getBuffer();
     });
-    websocket.onPromise<FetchableServerConfig, []>("server-config-get", async client => {
+    websocket.onPromise<FetchableServerConfig, []>(ServerMessagesRaw.Config, async client => {
         client.validateAuthentication();
-        return {
-            doorSensor: DOOR_SENSOR,
-            activeCamera: CAM_INSTALLED,
-            magicController: isMagicHome(),
-            version: VERSION,
-            mode: getMode(),
-        };
+        const binary = new BinaryBuffer(4 + utf8StringLen(VERSION));
+        return binary.setUint8(getMode())
+            .setBool(DOOR_SENSOR)
+            .setBool(CAM_INSTALLED)
+            .setBool(isMagicHome())
+            .setUtf8String(VERSION)
+            .getBuffer();
     });
-    websocket.onPromise<DoorLogData, []>("get-door-log", async client => {
+    websocket.onPromise<DoorLogData, []>(ServerMessagesRaw.DoorLog, async client => {
         client.validateAuthentication();
-        const logs = await readDoorLog();
-        return logs;
+        const logs = JSON.stringify(await readDoorLog());
+        
+        return new BinaryBuffer(utf8StringLen(logs)).setUtf8String(logs).getBuffer();
     });
-    websocket.onPromise<void, []>("clear-door-log", async client => {
+    websocket.onPromise<void, []>(ServerMessagesRaw.DoorClear, async client => {
         client.validateAuthentication();
         await clearDoorLog();
+        return new Uint8Array();
     });
 
     if (CAM_INSTALLED) {
-        websocket.onPromise<CameraImageLocation, []>("get-cam-data", async client => {
+        websocket.onPromise<CameraImageLocation, []>(ServerMessagesRaw.CamGet, async client => {
             client.validateAuthentication();
             const imagesS = await imageCapture.getImages();
-            const id = client.id;
-            const doorOpens = doorLog.getDoorRawLogs(id, imageTokenizer);
-            const images = imagesS.map(img => imageCapture.convertToRaw(img, id, imageTokenizer));
-            return {
+            const doorOpens = doorLog.getDoorRawLogs(imageTokenizer);
+            const images = imagesS.map(img => imageCapture.convertToRaw(img, imageTokenizer));
+            const data = {
                 lastImage: imageCapture.last
-                    ? imageCapture.convertToRaw(imageCapture.last, id, imageTokenizer)
+                    ? imageCapture.convertToRaw(imageCapture.last, imageTokenizer)
                     : undefined,
                 images,
                 doorOpens,
             };
+
+            const json = JSON.stringify(data);
+            return new BinaryBuffer(utf8StringLen(json)).setUtf8String(json).getBuffer();
         });
 
-        websocket.onPromise<boolean, []>("take-cam-image", async client => {
+        websocket.onPromise<boolean, []>(ServerMessagesRaw.CamTake, async client => {
             client.validateAuthentication();
             try {
                 await imageCapture.capture(() => {});
-                return true;
+                return new BinaryBuffer(1).setBool(true).getBuffer();
             } catch (error) {
                 Logger.error(error);
-                return false;
+                return new BinaryBuffer(1).setBool(false).getBuffer();
             }
         });
     }

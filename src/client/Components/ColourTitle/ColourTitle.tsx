@@ -4,6 +4,7 @@ import { rgb2hex } from "../../../shared/colour";
 import { AudioLightSystem } from "../../Utils/AudioSystem";
 import { ControllerMode, RGB } from "../../../shared/interfaces";
 import { Logger } from "../../../shared/logger";
+import { SpecialEvents } from "../../../shared/Messages";
 
 const H1 = styled.h1`
     display: inline-block;
@@ -30,8 +31,8 @@ export class ColourTitle extends React.Component<ColourTitleProps, ColourTitleSt
     async componentDidMount() {
         const lightSocket = this.props.als.lightSocket;
         this.crx = this.canvas.getContext("2d");
-        lightSocket.clientSocket.on("rgb-update", this.onRGBUpdate);
-        lightSocket.clientSocket.on("mode-update", this.onModeUpdate);
+        //lightSocket.clientSocket.on("rgb-update", this.onRGBUpdate);
+        //lightSocket.clientSocket.on("mode-update", this.onModeUpdate);
         this.favIconReference = document.createElement("link");
         document.head.append(this.favIconReference);
         this.favIconReference.rel = "shortcut icon";
@@ -39,15 +40,15 @@ export class ColourTitle extends React.Component<ColourTitleProps, ColourTitleSt
         if (this.props.als.lightSocket.clientSocket.connected) {
             this.onSocketConnect();
         } else {
-            this.props.als.lightSocket.clientSocket.on("connect", this.onSocketConnect);
+            this.props.als.lightSocket.clientSocket.clientHandle.on(SpecialEvents.Connect, this.onSocketConnect);
         }
     }
 
     componentWillUnmount() {
         this.destroyed = true;
-        this.props.als.lightSocket.clientSocket.off("rgb-update", this.onRGBUpdate);
-        this.props.als.lightSocket.clientSocket.off("mode-update", this.onModeUpdate);
-        this.props.als.lightSocket.clientSocket.off("connect", this.onSocketConnect);
+        //this.props.als.lightSocket.clientSocket.off("rgb-update", this.onRGBUpdate);
+        //this.props.als.lightSocket.clientSocket.off("mode-update", this.onModeUpdate);
+        //this.props.als.lightSocket.clientSocket.off("connect", this.onSocketConnect);
         document.head.removeChild(this.favIconReference);
     }
 

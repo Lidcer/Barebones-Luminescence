@@ -6,6 +6,8 @@ import { execute } from "../../sharedFiles/terminal";
 import { MINUTE, SECOND } from "../../../shared/constants";
 import { FixLengthArray } from "../../../shared/Arrays";
 import { getSunsetSunriseData } from "../LightController/SunsetSunrise";
+import { ServerMessagesRaw } from "../../../shared/Messages";
+import { BinaryBuffer, utf8StringLen } from "../../../shared/messages/BinaryBuffer";
 
 const HISTORY = 25;
 const MONITOR_TIME = SECOND * 0.5;
@@ -14,7 +16,7 @@ const temperatureHistory = new FixLengthArray<number>(HISTORY);
 const cpuHistory = new FixLengthArray<number>(HISTORY);
 
 export function setupDeviceInfo(websocket: WebSocket) {
-    websocket.onPromise<ServerInfo, []>("device-info", async client => {
+    websocket.onPromise<ServerInfo, []>(ServerMessagesRaw.DeviceInfo, async client => {
         client.validateAuthentication();
         const d = new Date();
         const result: ServerInfo = {
@@ -37,7 +39,8 @@ export function setupDeviceInfo(websocket: WebSocket) {
                 uptime: os.uptime(),
             },
         };
-        return result;
+        const json = JSON.stringify(result);
+        return new BinaryBuffer(utf8StringLen(json)).setUtf8String(json).getBuffer();
     });
 }
 

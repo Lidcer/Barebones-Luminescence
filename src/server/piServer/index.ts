@@ -1,11 +1,8 @@
-import express from "express";
-import SocketIO from "socket.io";
 import { default as isPi } from "detect-rpi";
 import { Gpio } from "pigpio";
 import { PASSWORD, PI_PORT } from "../mainServer/main/config";
 import { StringifiedError, stringifyError } from "../sharedFiles/error";
 import { EventEmitter } from "events";
-import { random } from "lodash";
 
 let GpioObj: any;
 (() => {
@@ -68,12 +65,12 @@ let GpioObj: any;
     }
 })();
 
-const app = express();
-const server = app.listen(PI_PORT, () => {
-    Logger.info(`PI listening on port ${PI_PORT}!`);
-});
+//const app = express();
+// const server = app.listen(PI_PORT, () => {
+//     Logger.info(`PI listening on port ${PI_PORT}!`);
+// });
 
-const socket = new SocketIO.Server(server);
+//const socket = new SocketIO.Server(server);
 
 let client: SocketIO.Socket;
 
@@ -123,55 +120,55 @@ function setRgb(red: number, green: number, blue: number) {
     }
 }
 
-socket.on("connection", (c: SocketIO.Socket) => {
-    if (client) {
-        console.error("Client exist");
-        c.disconnect();
-    }
-    const auth = c.handshake.auth as any;
-    if (!auth || !auth.token) {
-        console.error("Token not provided");
-        c.disconnect();
-        return;
-    }
-    if (typeof auth.token === "string" && auth.token === PASSWORD) {
-        client = c;
+// socket.on("connection", (c: SocketIO.Socket) => {
+//     if (client) {
+//         console.error("Client exist");
+//         c.disconnect();
+//     }
+//     const auth = c.handshake.auth as any;
+//     if (!auth || !auth.token) {
+//         console.error("Token not provided");
+//         c.disconnect();
+//         return;
+//     }
+//     if (typeof auth.token === "string" && auth.token === PASSWORD) {
+//         client = c;
 
-        client.on("disconnect", () => {
-            client = undefined;
-        });
+//         client.on("disconnect", () => {
+//             client = undefined;
+//         });
 
-        client.on(
-            "init",
-            (
-                red: number,
-                green: number,
-                blue: number,
-                doorPin: number,
-                callback: (error?: StringifiedError) => void,
-            ) => {
-                try {
-                    initialize(red, green, blue, doorPin);
-                    callback();
-                } catch (error) {
-                    callback(stringifyError(error));
-                }
-            },
-        );
+//         client.on(
+//             "init",
+//             (
+//                 red: number,
+//                 green: number,
+//                 blue: number,
+//                 doorPin: number,
+//                 callback: (error?: StringifiedError) => void,
+//             ) => {
+//                 try {
+//                     initialize(red, green, blue, doorPin);
+//                     callback();
+//                 } catch (error) {
+//                     callback(stringifyError(error));
+//                 }
+//             },
+//         );
 
-        client.on(
-            "set-rgb",
-            (red: number, green: number, blue: number, callback: (error?: StringifiedError) => void) => {
-                try {
-                    setRgb(red, green, blue);
-                    callback();
-                } catch (error) {
-                    callback(stringifyError(error));
-                }
-            },
-        );
-        return;
-    }
-    c.disconnect();
-    console.error("disconnected");
-});
+//         client.on(
+//             "set-rgb",
+//             (red: number, green: number, blue: number, callback: (error?: StringifiedError) => void) => {
+//                 try {
+//                     setRgb(red, green, blue);
+//                     callback();
+//                 } catch (error) {
+//                     callback(stringifyError(error));
+//                 }
+//             },
+//         );
+//         return;
+//     }
+//     c.disconnect();
+//     console.error("disconnected");
+// });

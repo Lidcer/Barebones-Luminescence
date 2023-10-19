@@ -1,8 +1,6 @@
 import { LightController } from "./Controller";
 import { RGB } from "../../../../shared/interfaces";
-import * as path from "path";
-import { ADDRESS, PASSWORD, PI_PORT } from "../../main/config";
-import { io, Socket } from "socket.io-client";
+import {  PASSWORD, PI_PORT } from "../../main/config";
 import { StringifiedError } from "../../../sharedFiles/error";
 import { EventEmitter } from "events";
 
@@ -29,28 +27,28 @@ export class PIController implements LightController {
     constructor() {
         Logger.info("Starting connection");
 
-        this.socket = io(this.connectionUrl, { auth: { token: PASSWORD } });
-        this.socket.on("connect", () => {
-            this.socket.emit("init", this.RED, this.GREEN, this.BLUE, this.DOOR_PIN, (error: StringifiedError) => {
-                if (error) {
-                    const actualError = new Error(error.message);
-                    actualError.stack = error.stack;
-                    console.error(actualError);
-                    process.exit(1);
-                }
-                this._connected = true;
-                this.tick();
-                this.eventEmitter.emit("connect");
-                Logger.info("Connected");
-            });
-            this.socket.on("door", (level: number, tick: number) => {
-                this.eventEmitter.emit("door", level, tick);
-            });
-            this.socket.on("disconnect", () => {
-                this._connected = false;
-                this.eventEmitter.emit("disconnect");
-            });
-        });
+        // this.socket = io(this.connectionUrl, { auth: { token: PASSWORD } });
+        // this.socket.on("connect", () => {
+        //     this.socket.emit("init", this.RED, this.GREEN, this.BLUE, this.DOOR_PIN, (error: StringifiedError) => {
+        //         if (error) {
+        //             const actualError = new Error(error.message);
+        //             actualError.stack = error.stack;
+        //             console.error(actualError);
+        //             process.exit(1);
+        //         }
+        //         this._connected = true;
+        //         this.tick();
+        //         this.eventEmitter.emit("connect");
+        //         Logger.info("Connected");
+        //     });
+        //     this.socket.on("door", (level: number, tick: number) => {
+        //         this.eventEmitter.emit("door", level, tick);
+        //     });
+        //     this.socket.on("disconnect", () => {
+        //         this._connected = false;
+        //         this.eventEmitter.emit("disconnect");
+        //     });
+        // });
     }
 
     off(value: "disconnect", callback: () => void): void;

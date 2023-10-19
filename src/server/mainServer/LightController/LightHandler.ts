@@ -9,10 +9,10 @@ import { Lights } from "./Devices/Controller";
 import { increaseDoor, saveSettings, settings } from "../main/storage";
 import { sleep } from "../../../shared/utils";
 import { isPastMidnight, dateMerger } from "../../../shared/timeUtils";
-import axios, { AxiosResponse } from "axios";
-import { ImageCapture } from "../main/ImageCapture";
 import { DoorLog } from "../main/doorLog";
 import { getSunsetSunriseData } from "./SunsetSunrise";
+import { ClientMessagesRaw, ServerMessages, ServerMessagesRaw } from "../../../shared/Messages";
+import { BinaryBuffer } from "../../../shared/messages/BinaryBuffer";
 
 export function setupLightHandler(
     websocket: WebSocket,
@@ -21,12 +21,12 @@ export function setupLightHandler(
     doorLog: DoorLog,
 ) {
     const autoPilot = new AutoPilot(websocket);
-    let doorFrameLoop: NodeJS.Timeout;
+    let doorFrameLoop: Timer;
     const SERVER_FPS = SECOND * 0.05;
 
     let lightMode: ControllerMode = settings.controllerMode;
     let lastMode: ControllerMode = lightMode;
-    let timeout: NodeJS.Timeout;
+    let timeout: Timer;
     const RGB: RGB = {
         r: 0,
         b: 0,
@@ -67,16 +67,16 @@ export function setupLightHandler(
 
     const setMode = async (mode: ControllerMode) => {
         switch (mode) {
-            case "AutoPilot":
-            case "Manual":
-            case "Pattern":
-            case "Audio":
-            case "AudioRaw":
-            case "ManualForce":
-            case "ManualLocked":
+            case ControllerMode.AutoPilot:
+            case ControllerMode.Manual:
+            case ControllerMode.Pattern:
+            case ControllerMode.Audio:
+            case ControllerMode.AudioRaw:
+            case ControllerMode.ManualForce:
+            case ControllerMode.ManualLocked:
                 const diff = lightMode !== mode;
                 lastMode = settings.controllerMode = lightMode = mode;
-                websocket.broadcast("mode-update", lightMode);
+                websocket.broadcast(ClientMessagesRaw.ModeUpdate, new BinaryBuffer(1).setUint8(lightMode).getBuffer());
 
                 if (doorFrameLoop) {
                     clearTimeout(doorFrameLoop);
@@ -93,53 +93,60 @@ export function setupLightHandler(
         }
     };
 
-    websocket.on<[number, number, number]>("rgb-set", (client, red, green, blue) => {
+    websocket.on(ServerMessagesRaw.RGBSet, (client, buffer) => {
         client.validateAuthentication();
         if (userClients.includes(client.clientType)) {
-            if (lastMode !== "ManualForce" && lastMode !== "ManualLocked") {
-                setMode("Manual");
+            if (lastMode !== ControllerMode.ManualForce && lastMode !== ControllerMode.ManualLocked) {
+                setMode(ControllerMode.Manual);
             }
         } else {
-            setMode("AudioRaw");
+            setMode(ControllerMode.AudioRaw);
         }
-        RGB.r = clamp(red, 0, 255);
-        RGB.b = clamp(blue, 0, 255);
-        RGB.g = clamp(green, 0, 255);
+        RGB.r = clamp(buffer.getUint8(), 0, 255);
+        RGB.b = clamp(buffer.getUint8(), 0, 255);
+        RGB.g = clamp(buffer.getUint8(), 0, 255);
     });
 
-    websocket.onPromise<void, [ControllerMode]>("mode-set", async (client, mode) => {
+    websocket.onPromise<void, [ControllerMode]>(ServerMessagesRaw.ModeSet, async (client, buffer) => {
         client.validateAuthentication();
-        setMode(mode);
+        setMode(buffer.getUint8());
+        return new Uint8Array(0);
     });
-    websocket.onPromise<ControllerMode, []>("mode-get", async client => {
+    websocket.onPromise<ControllerMode, []>(ServerMessagesRaw.ModeGet, async client => {
         client.validateAuthentication();
-        return lightMode;
+        const arr = new Uint8Array(1);
+        arr[0] = lightMode;
+        return arr;
     });
 
-    websocket.onPromise<RGB, []>("rgb-status", async client => {
+    websocket.onPromise<RGB, []>(ServerMessagesRaw.RGBGet, async client => {
         client.validateAuthentication();
-        return RGB;
+        const buffer = new BinaryBuffer(3);
+        buffer.setUint8(RGB.r);
+        buffer.setUint8(RGB.g);
+        buffer.setUint8(RGB.b);
+        return buffer.getBuffer();
     });
 
     websocket.onSocketEvent("all-clients-disconnected", () => {
-        const blockMods: ControllerMode[] = ["ManualForce", "ManualLocked", "AudioRaw", "Audio"];
+        const blockMods: ControllerMode[] = [ControllerMode.ManualForce, ControllerMode.ManualLocked, ControllerMode.AudioRaw, ControllerMode.Audio];
         if (!blockMods.includes(lightMode)) {
-            setMode("AutoPilot");
+            setMode(ControllerMode.AutoPilot);
         }
     });
 
     const isStateChanged = () => {
         switch (lightMode) {
-            case "Audio":
-            case "AudioRaw":
+            case ControllerMode.Audio:
+            case ControllerMode.AudioRaw:
                 return true;
         }
 
-        if (lightMode === "Door") {
+        if (lightMode === ControllerMode.Door) {
             return false;
         }
 
-        if (lightMode === "AutoPilot") {
+        if (lightMode === ControllerMode.AutoPilot) {
             const { r, g, b } = autoPilot.scheduler.state;
             RGB.r = r;
             RGB.b = b;
@@ -153,14 +160,15 @@ export function setupLightHandler(
     };
 
     const changeState = async () => {
-        if (lightMode === "Audio") {
+        if (lightMode === ControllerMode.Audio) {
             const { r, b, g } = audioAnalyser.getRGB();
             const value = light.setIfPossible(r, g, b);
             if (value) {
                 RGB.r = lastRGB.r = r;
                 RGB.g = lastRGB.g = g;
                 RGB.b = lastRGB.b = b;
-                websocket.broadcast("rgb-update", RGB);
+                const data = new BinaryBuffer(3).setUint8(r).setUint8(g).setUint8(b).getBuffer();
+                websocket.broadcast(ClientMessagesRaw.RGBUpdate, data);
             }
             return;
         }
@@ -168,7 +176,8 @@ export function setupLightHandler(
         lastRGB.g = RGB.g;
         lastRGB.b = RGB.b;
         await light.setRGB(RGB.r, RGB.g, RGB.b);
-        websocket.broadcast("rgb-update", RGB);
+        const data = new BinaryBuffer(3).setUint8(RGB.r).setUint8(RGB.g).setUint8(RGB.b).getBuffer();
+        websocket.broadcast(ClientMessagesRaw.RGBUpdate, data);
     };
 
     const tick = async () => {
@@ -183,19 +192,20 @@ export function setupLightHandler(
             Logger.debug("Server is lagging!");
             timeout = setTimeout(tick, 0);
         } else {
-            const next = lightMode === "Audio" || lightMode === "AudioRaw" ? 0 : SERVER_FPS - diff;
+            const next = lightMode === ControllerMode.Audio || lightMode === ControllerMode.AudioRaw ? 0 : SERVER_FPS - diff;
             timeout = setTimeout(tick, next);
         }
     };
 
     const updateModeAndLight = (rgb?: RGB) => {
-        websocket.broadcast("mode-update", lightMode);
-        websocket.broadcast("rgb-update", rgb || RGB);
+        websocket.broadcast(ClientMessagesRaw.ModeUpdate, new BinaryBuffer(1).setUint8(lightMode).getBuffer());
+        rgb = rgb || RGB
+        websocket.broadcast(ClientMessagesRaw.RGBUpdate, new BinaryBuffer(3).setUint8(RGB.r).setUint8(RGB.g).setUint8(RGB.b).getBuffer());
     };
 
     let lastDoorState = false;
     light.on("door", async level => {
-        if (lightMode === "ManualLocked") {
+        if (lightMode === ControllerMode.ManualLocked) {
             return;
         }
         const date = new Date();
@@ -233,10 +243,10 @@ export function setupLightHandler(
         }
 
         if (lastDoorState !== !!level && level) {
-            websocket.broadcast("door-open");
+            websocket.broadcast(ClientMessagesRaw.DoorOpen, new Uint8Array(0));
             if (doorLog) {
                 doorLog.log().then(() => {
-                    websocket.broadcast("door-image-available");
+                    websocket.broadcast(ClientMessagesRaw.DoorImageAvailable, new Uint8Array(0));
                 });
             }
         }
@@ -245,7 +255,7 @@ export function setupLightHandler(
         if (level) {
             increaseDoor();
             de.cancel();
-            lightMode = "Door";
+            lightMode = ControllerMode.Door;
             await light.setRGB(color[0], color[1], color[2]);
             updateModeAndLight({ r: color[0], g: color[1], b: color[2] });
         } else {

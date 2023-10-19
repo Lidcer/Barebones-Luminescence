@@ -2,7 +2,7 @@ import { LedPattern, LedPatternItem, RGB } from "./interfaces";
 import { cloneDeep } from "../shared/utils";
 
 export class PatternAnimator {
-    private frame: NodeJS.Timeout | undefined;
+    private frame: Timer | undefined;
     private patternReference: LedPattern = {
         ledPattern: [],
         name: "empty pattern",

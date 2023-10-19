@@ -29,7 +29,7 @@ export interface SortedDayDescription {
 // 00-00
 export class Scheduler {
     private readonly DAYS: DayNames[] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    private frame: NodeJS.Timeout;
+    private frame: Timer;
     private schedulerDescription: SchedulerDescription;
     private patternAnimator = new PatternAnimator();
     private map = new Map<DayDescription, TimeParser[]>();

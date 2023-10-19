@@ -8875,10 +8875,10 @@
           function getOwnerDocumentFromRootContainer(rootContainerElement) {
             return rootContainerElement.nodeType === DOCUMENT_NODE ? rootContainerElement : rootContainerElement.ownerDocument;
           }
-          function noop6() {
+          function noop7() {
           }
           function trapClickOnNonInteractiveElement(node) {
-            node.onclick = noop6;
+            node.onclick = noop7;
           }
           function setInitialDOMProperties(tag, domElement, rootContainerElement, nextProps, isCustomComponentTag) {
             for (var propKey in nextProps) {
@@ -21823,10 +21823,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           }();
           var ctxClearTimeout = context.clearTimeout !== root.clearTimeout && context.clearTimeout, ctxNow = Date2 && Date2.now !== root.Date.now && Date2.now, ctxSetTimeout = context.setTimeout !== root.setTimeout && context.setTimeout;
           var nativeCeil = Math2.ceil, nativeFloor = Math2.floor, nativeGetSymbols = Object2.getOwnPropertySymbols, nativeIsBuffer = Buffer2 ? Buffer2.isBuffer : undefined2, nativeIsFinite = context.isFinite, nativeJoin = arrayProto.join, nativeKeys = overArg(Object2.keys, Object2), nativeMax = Math2.max, nativeMin = Math2.min, nativeNow = Date2.now, nativeParseInt = context.parseInt, nativeRandom = Math2.random, nativeReverse = arrayProto.reverse;
-          var DataView = getNative(context, "DataView"), Map2 = getNative(context, "Map"), Promise2 = getNative(context, "Promise"), Set2 = getNative(context, "Set"), WeakMap3 = getNative(context, "WeakMap"), nativeCreate = getNative(Object2, "create");
+          var DataView2 = getNative(context, "DataView"), Map2 = getNative(context, "Map"), Promise2 = getNative(context, "Promise"), Set2 = getNative(context, "Set"), WeakMap3 = getNative(context, "WeakMap"), nativeCreate = getNative(Object2, "create");
           var metaMap = WeakMap3 && new WeakMap3();
           var realNames = {};
-          var dataViewCtorString = toSource(DataView), mapCtorString = toSource(Map2), promiseCtorString = toSource(Promise2), setCtorString = toSource(Set2), weakMapCtorString = toSource(WeakMap3);
+          var dataViewCtorString = toSource(DataView2), mapCtorString = toSource(Map2), promiseCtorString = toSource(Promise2), setCtorString = toSource(Set2), weakMapCtorString = toSource(WeakMap3);
           var symbolProto = Symbol2 ? Symbol2.prototype : undefined2, symbolValueOf = symbolProto ? symbolProto.valueOf : undefined2, symbolToString = symbolProto ? symbolProto.toString : undefined2;
           function lodash(value) {
             if (isObjectLike(value) && !isArray3(value) && !(value instanceof LazyWrapper)) {
@@ -23580,7 +23580,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               return func(number);
             };
           }
-          var createSet = !(Set2 && 1 / setToArray(new Set2([, -0]))[1] == INFINITY) ? noop6 : function(values2) {
+          var createSet = !(Set2 && 1 / setToArray(new Set2([, -0]))[1] == INFINITY) ? noop7 : function(values2) {
             return new Set2(values2);
           };
           function createToPairs(keysFunc) {
@@ -23807,7 +23807,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           function getAllKeysIn(object) {
             return baseGetAllKeys(object, keysIn, getSymbolsIn);
           }
-          var getData = !metaMap ? noop6 : function(func) {
+          var getData = !metaMap ? noop7 : function(func) {
             return metaMap.get(func);
           };
           function getFuncName(func) {
@@ -23880,7 +23880,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             return result2;
           };
           var getTag = baseGetTag;
-          if (DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag || Map2 && getTag(new Map2()) != mapTag || Promise2 && getTag(Promise2.resolve()) != promiseTag || Set2 && getTag(new Set2()) != setTag || WeakMap3 && getTag(new WeakMap3()) != weakMapTag) {
+          if (DataView2 && getTag(new DataView2(new ArrayBuffer(1))) != dataViewTag || Map2 && getTag(new Map2()) != mapTag || Promise2 && getTag(Promise2.resolve()) != promiseTag || Set2 && getTag(new Set2()) != setTag || WeakMap3 && getTag(new WeakMap3()) != weakMapTag) {
             getTag = function(value) {
               var result2 = baseGetTag(value), Ctor = result2 == objectTag ? value.constructor : undefined2, ctorString = Ctor ? toSource(Ctor) : "";
               if (ctorString) {
@@ -25995,7 +25995,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             }
             return this;
           }
-          function noop6() {
+          function noop7() {
           }
           function nthArg(n2) {
             n2 = toInteger(n2);
@@ -26350,7 +26350,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           lodash.multiply = multiply;
           lodash.nth = nth;
           lodash.noConflict = noConflict;
-          lodash.noop = noop6;
+          lodash.noop = noop7;
           lodash.now = now;
           lodash.pad = pad;
           lodash.padEnd = padEnd;
@@ -31984,22 +31984,22 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       var NumberIsNaN = Number.isNaN || function NumberIsNaN2(value) {
         return value !== value;
       };
-      function EventEmitter5() {
-        EventEmitter5.init.call(this);
+      function EventEmitter6() {
+        EventEmitter6.init.call(this);
       }
-      module.exports = EventEmitter5;
+      module.exports = EventEmitter6;
       module.exports.once = once;
-      EventEmitter5.EventEmitter = EventEmitter5;
-      EventEmitter5.prototype._events = void 0;
-      EventEmitter5.prototype._eventsCount = 0;
-      EventEmitter5.prototype._maxListeners = void 0;
+      EventEmitter6.EventEmitter = EventEmitter6;
+      EventEmitter6.prototype._events = void 0;
+      EventEmitter6.prototype._eventsCount = 0;
+      EventEmitter6.prototype._maxListeners = void 0;
       var defaultMaxListeners = 10;
       function checkListener(listener3) {
         if (typeof listener3 !== "function") {
           throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener3);
         }
       }
-      Object.defineProperty(EventEmitter5, "defaultMaxListeners", {
+      Object.defineProperty(EventEmitter6, "defaultMaxListeners", {
         enumerable: true,
         get: function() {
           return defaultMaxListeners;
@@ -32011,14 +32011,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           defaultMaxListeners = arg;
         }
       });
-      EventEmitter5.init = function() {
+      EventEmitter6.init = function() {
         if (this._events === void 0 || this._events === Object.getPrototypeOf(this)._events) {
           this._events = /* @__PURE__ */ Object.create(null);
           this._eventsCount = 0;
         }
         this._maxListeners = this._maxListeners || void 0;
       };
-      EventEmitter5.prototype.setMaxListeners = function setMaxListeners(n2) {
+      EventEmitter6.prototype.setMaxListeners = function setMaxListeners(n2) {
         if (typeof n2 !== "number" || n2 < 0 || NumberIsNaN(n2)) {
           throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + n2 + ".");
         }
@@ -32027,13 +32027,13 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       };
       function _getMaxListeners(that) {
         if (that._maxListeners === void 0)
-          return EventEmitter5.defaultMaxListeners;
+          return EventEmitter6.defaultMaxListeners;
         return that._maxListeners;
       }
-      EventEmitter5.prototype.getMaxListeners = function getMaxListeners() {
+      EventEmitter6.prototype.getMaxListeners = function getMaxListeners() {
         return _getMaxListeners(this);
       };
-      EventEmitter5.prototype.emit = function emit(type) {
+      EventEmitter6.prototype.emit = function emit(type) {
         var args = [];
         for (var i2 = 1; i2 < arguments.length; i2++)
           args.push(arguments[i2]);
@@ -32111,11 +32111,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }
         return target;
       }
-      EventEmitter5.prototype.addListener = function addListener(type, listener3) {
+      EventEmitter6.prototype.addListener = function addListener(type, listener3) {
         return _addListener(this, type, listener3, false);
       };
-      EventEmitter5.prototype.on = EventEmitter5.prototype.addListener;
-      EventEmitter5.prototype.prependListener = function prependListener(type, listener3) {
+      EventEmitter6.prototype.on = EventEmitter6.prototype.addListener;
+      EventEmitter6.prototype.prependListener = function prependListener(type, listener3) {
         return _addListener(this, type, listener3, true);
       };
       function onceWrapper() {
@@ -32134,17 +32134,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         state.wrapFn = wrapped;
         return wrapped;
       }
-      EventEmitter5.prototype.once = function once2(type, listener3) {
+      EventEmitter6.prototype.once = function once2(type, listener3) {
         checkListener(listener3);
         this.on(type, _onceWrap(this, type, listener3));
         return this;
       };
-      EventEmitter5.prototype.prependOnceListener = function prependOnceListener(type, listener3) {
+      EventEmitter6.prototype.prependOnceListener = function prependOnceListener(type, listener3) {
         checkListener(listener3);
         this.prependListener(type, _onceWrap(this, type, listener3));
         return this;
       };
-      EventEmitter5.prototype.removeListener = function removeListener(type, listener3) {
+      EventEmitter6.prototype.removeListener = function removeListener(type, listener3) {
         var list, events, position, i2, originalListener;
         checkListener(listener3);
         events = this._events;
@@ -32184,8 +32184,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }
         return this;
       };
-      EventEmitter5.prototype.off = EventEmitter5.prototype.removeListener;
-      EventEmitter5.prototype.removeAllListeners = function removeAllListeners(type) {
+      EventEmitter6.prototype.off = EventEmitter6.prototype.removeListener;
+      EventEmitter6.prototype.removeAllListeners = function removeAllListeners(type) {
         var listeners, events, i2;
         events = this._events;
         if (events === void 0)
@@ -32237,20 +32237,20 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           return unwrap ? [evlistener.listener || evlistener] : [evlistener];
         return unwrap ? unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
       }
-      EventEmitter5.prototype.listeners = function listeners(type) {
+      EventEmitter6.prototype.listeners = function listeners(type) {
         return _listeners(this, type, true);
       };
-      EventEmitter5.prototype.rawListeners = function rawListeners(type) {
+      EventEmitter6.prototype.rawListeners = function rawListeners(type) {
         return _listeners(this, type, false);
       };
-      EventEmitter5.listenerCount = function(emitter, type) {
+      EventEmitter6.listenerCount = function(emitter, type) {
         if (typeof emitter.listenerCount === "function") {
           return emitter.listenerCount(type);
         } else {
           return listenerCount.call(emitter, type);
         }
       };
-      EventEmitter5.prototype.listenerCount = listenerCount;
+      EventEmitter6.prototype.listenerCount = listenerCount;
       function listenerCount(type) {
         var events = this._events;
         if (events !== void 0) {
@@ -32263,7 +32263,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }
         return 0;
       }
-      EventEmitter5.prototype.eventNames = function eventNames() {
+      EventEmitter6.prototype.eventNames = function eventNames() {
         return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
       };
       function arrayClone(arr, n2) {
@@ -32326,3762 +32326,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof emitter);
         }
       }
-    }
-  });
-
-  // node_modules/parseuri/index.js
-  var require_parseuri = __commonJS({
-    "node_modules/parseuri/index.js"(exports, module) {
-      var re2 = /^(?:(?![^:@]+:[^:@\/]*@)(http|https|ws|wss):\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?((?:[a-f0-9]{0,4}:){2,7}[a-f0-9]{0,4}|[^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/;
-      var parts = [
-        "source",
-        "protocol",
-        "authority",
-        "userInfo",
-        "user",
-        "password",
-        "host",
-        "port",
-        "relative",
-        "path",
-        "directory",
-        "file",
-        "query",
-        "anchor"
-      ];
-      module.exports = function parseuri(str) {
-        var src = str, b2 = str.indexOf("["), e2 = str.indexOf("]");
-        if (b2 != -1 && e2 != -1) {
-          str = str.substring(0, b2) + str.substring(b2, e2).replace(/:/g, ";") + str.substring(e2, str.length);
-        }
-        var m2 = re2.exec(str || ""), uri = {}, i2 = 14;
-        while (i2--) {
-          uri[parts[i2]] = m2[i2] || "";
-        }
-        if (b2 != -1 && e2 != -1) {
-          uri.source = src;
-          uri.host = uri.host.substring(1, uri.host.length - 1).replace(/;/g, ":");
-          uri.authority = uri.authority.replace("[", "").replace("]", "").replace(/;/g, ":");
-          uri.ipv6uri = true;
-        }
-        uri.pathNames = pathNames(uri, uri["path"]);
-        uri.queryKey = queryKey(uri, uri["query"]);
-        return uri;
-      };
-      function pathNames(obj, path) {
-        var regx = /\/{2,9}/g, names = path.replace(regx, "/").split("/");
-        if (path.substr(0, 1) == "/" || path.length === 0) {
-          names.splice(0, 1);
-        }
-        if (path.substr(path.length - 1, 1) == "/") {
-          names.splice(names.length - 1, 1);
-        }
-        return names;
-      }
-      function queryKey(uri, query) {
-        var data2 = {};
-        query.replace(/(?:^|&)([^&=]*)=?([^&]*)/g, function($0, $1, $22) {
-          if ($1) {
-            data2[$1] = $22;
-          }
-        });
-        return data2;
-      }
-    }
-  });
-
-  // node_modules/ms/index.js
-  var require_ms = __commonJS({
-    "node_modules/ms/index.js"(exports, module) {
-      var s2 = 1e3;
-      var m2 = s2 * 60;
-      var h = m2 * 60;
-      var d2 = h * 24;
-      var w3 = d2 * 7;
-      var y2 = d2 * 365.25;
-      module.exports = function(val, options) {
-        options = options || {};
-        var type = typeof val;
-        if (type === "string" && val.length > 0) {
-          return parse2(val);
-        } else if (type === "number" && isFinite(val)) {
-          return options.long ? fmtLong(val) : fmtShort(val);
-        }
-        throw new Error(
-          "val is not a non-empty string or a valid number. val=" + JSON.stringify(val)
-        );
-      };
-      function parse2(str) {
-        str = String(str);
-        if (str.length > 100) {
-          return;
-        }
-        var match2 = /^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
-          str
-        );
-        if (!match2) {
-          return;
-        }
-        var n2 = parseFloat(match2[1]);
-        var type = (match2[2] || "ms").toLowerCase();
-        switch (type) {
-          case "years":
-          case "year":
-          case "yrs":
-          case "yr":
-          case "y":
-            return n2 * y2;
-          case "weeks":
-          case "week":
-          case "w":
-            return n2 * w3;
-          case "days":
-          case "day":
-          case "d":
-            return n2 * d2;
-          case "hours":
-          case "hour":
-          case "hrs":
-          case "hr":
-          case "h":
-            return n2 * h;
-          case "minutes":
-          case "minute":
-          case "mins":
-          case "min":
-          case "m":
-            return n2 * m2;
-          case "seconds":
-          case "second":
-          case "secs":
-          case "sec":
-          case "s":
-            return n2 * s2;
-          case "milliseconds":
-          case "millisecond":
-          case "msecs":
-          case "msec":
-          case "ms":
-            return n2;
-          default:
-            return void 0;
-        }
-      }
-      function fmtShort(ms) {
-        var msAbs = Math.abs(ms);
-        if (msAbs >= d2) {
-          return Math.round(ms / d2) + "d";
-        }
-        if (msAbs >= h) {
-          return Math.round(ms / h) + "h";
-        }
-        if (msAbs >= m2) {
-          return Math.round(ms / m2) + "m";
-        }
-        if (msAbs >= s2) {
-          return Math.round(ms / s2) + "s";
-        }
-        return ms + "ms";
-      }
-      function fmtLong(ms) {
-        var msAbs = Math.abs(ms);
-        if (msAbs >= d2) {
-          return plural(ms, msAbs, d2, "day");
-        }
-        if (msAbs >= h) {
-          return plural(ms, msAbs, h, "hour");
-        }
-        if (msAbs >= m2) {
-          return plural(ms, msAbs, m2, "minute");
-        }
-        if (msAbs >= s2) {
-          return plural(ms, msAbs, s2, "second");
-        }
-        return ms + " ms";
-      }
-      function plural(ms, msAbs, n2, name) {
-        var isPlural = msAbs >= n2 * 1.5;
-        return Math.round(ms / n2) + " " + name + (isPlural ? "s" : "");
-      }
-    }
-  });
-
-  // node_modules/debug/src/common.js
-  var require_common = __commonJS({
-    "node_modules/debug/src/common.js"(exports, module) {
-      function setup(env) {
-        createDebug.debug = createDebug;
-        createDebug.default = createDebug;
-        createDebug.coerce = coerce2;
-        createDebug.disable = disable;
-        createDebug.enable = enable;
-        createDebug.enabled = enabled;
-        createDebug.humanize = require_ms();
-        createDebug.destroy = destroy;
-        Object.keys(env).forEach((key) => {
-          createDebug[key] = env[key];
-        });
-        createDebug.names = [];
-        createDebug.skips = [];
-        createDebug.formatters = {};
-        function selectColor(namespace2) {
-          let hash = 0;
-          for (let i2 = 0; i2 < namespace2.length; i2++) {
-            hash = (hash << 5) - hash + namespace2.charCodeAt(i2);
-            hash |= 0;
-          }
-          return createDebug.colors[Math.abs(hash) % createDebug.colors.length];
-        }
-        createDebug.selectColor = selectColor;
-        function createDebug(namespace2) {
-          let prevTime;
-          let enableOverride = null;
-          let namespacesCache;
-          let enabledCache;
-          function debug(...args) {
-            if (!debug.enabled) {
-              return;
-            }
-            const self2 = debug;
-            const curr = Number(/* @__PURE__ */ new Date());
-            const ms = curr - (prevTime || curr);
-            self2.diff = ms;
-            self2.prev = prevTime;
-            self2.curr = curr;
-            prevTime = curr;
-            args[0] = createDebug.coerce(args[0]);
-            if (typeof args[0] !== "string") {
-              args.unshift("%O");
-            }
-            let index = 0;
-            args[0] = args[0].replace(/%([a-zA-Z%])/g, (match2, format) => {
-              if (match2 === "%%") {
-                return "%";
-              }
-              index++;
-              const formatter = createDebug.formatters[format];
-              if (typeof formatter === "function") {
-                const val = args[index];
-                match2 = formatter.call(self2, val);
-                args.splice(index, 1);
-                index--;
-              }
-              return match2;
-            });
-            createDebug.formatArgs.call(self2, args);
-            const logFn = self2.log || createDebug.log;
-            logFn.apply(self2, args);
-          }
-          debug.namespace = namespace2;
-          debug.useColors = createDebug.useColors();
-          debug.color = createDebug.selectColor(namespace2);
-          debug.extend = extend;
-          debug.destroy = createDebug.destroy;
-          Object.defineProperty(debug, "enabled", {
-            enumerable: true,
-            configurable: false,
-            get: () => {
-              if (enableOverride !== null) {
-                return enableOverride;
-              }
-              if (namespacesCache !== createDebug.namespaces) {
-                namespacesCache = createDebug.namespaces;
-                enabledCache = createDebug.enabled(namespace2);
-              }
-              return enabledCache;
-            },
-            set: (v2) => {
-              enableOverride = v2;
-            }
-          });
-          if (typeof createDebug.init === "function") {
-            createDebug.init(debug);
-          }
-          return debug;
-        }
-        function extend(namespace2, delimiter) {
-          const newDebug = createDebug(this.namespace + (typeof delimiter === "undefined" ? ":" : delimiter) + namespace2);
-          newDebug.log = this.log;
-          return newDebug;
-        }
-        function enable(namespaces) {
-          createDebug.save(namespaces);
-          createDebug.namespaces = namespaces;
-          createDebug.names = [];
-          createDebug.skips = [];
-          let i2;
-          const split2 = (typeof namespaces === "string" ? namespaces : "").split(/[\s,]+/);
-          const len = split2.length;
-          for (i2 = 0; i2 < len; i2++) {
-            if (!split2[i2]) {
-              continue;
-            }
-            namespaces = split2[i2].replace(/\*/g, ".*?");
-            if (namespaces[0] === "-") {
-              createDebug.skips.push(new RegExp("^" + namespaces.slice(1) + "$"));
-            } else {
-              createDebug.names.push(new RegExp("^" + namespaces + "$"));
-            }
-          }
-        }
-        function disable() {
-          const namespaces = [
-            ...createDebug.names.map(toNamespace),
-            ...createDebug.skips.map(toNamespace).map((namespace2) => "-" + namespace2)
-          ].join(",");
-          createDebug.enable("");
-          return namespaces;
-        }
-        function enabled(name) {
-          if (name[name.length - 1] === "*") {
-            return true;
-          }
-          let i2;
-          let len;
-          for (i2 = 0, len = createDebug.skips.length; i2 < len; i2++) {
-            if (createDebug.skips[i2].test(name)) {
-              return false;
-            }
-          }
-          for (i2 = 0, len = createDebug.names.length; i2 < len; i2++) {
-            if (createDebug.names[i2].test(name)) {
-              return true;
-            }
-          }
-          return false;
-        }
-        function toNamespace(regexp) {
-          return regexp.toString().substring(2, regexp.toString().length - 2).replace(/\.\*\?$/, "*");
-        }
-        function coerce2(val) {
-          if (val instanceof Error) {
-            return val.stack || val.message;
-          }
-          return val;
-        }
-        function destroy() {
-          console.warn("Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.");
-        }
-        createDebug.enable(createDebug.load());
-        return createDebug;
-      }
-      module.exports = setup;
-    }
-  });
-
-  // node_modules/debug/src/browser.js
-  var require_browser2 = __commonJS({
-    "node_modules/debug/src/browser.js"(exports, module) {
-      exports.formatArgs = formatArgs;
-      exports.save = save;
-      exports.load = load;
-      exports.useColors = useColors;
-      exports.storage = localstorage();
-      exports.destroy = (() => {
-        let warned = false;
-        return () => {
-          if (!warned) {
-            warned = true;
-            console.warn("Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.");
-          }
-        };
-      })();
-      exports.colors = [
-        "#0000CC",
-        "#0000FF",
-        "#0033CC",
-        "#0033FF",
-        "#0066CC",
-        "#0066FF",
-        "#0099CC",
-        "#0099FF",
-        "#00CC00",
-        "#00CC33",
-        "#00CC66",
-        "#00CC99",
-        "#00CCCC",
-        "#00CCFF",
-        "#3300CC",
-        "#3300FF",
-        "#3333CC",
-        "#3333FF",
-        "#3366CC",
-        "#3366FF",
-        "#3399CC",
-        "#3399FF",
-        "#33CC00",
-        "#33CC33",
-        "#33CC66",
-        "#33CC99",
-        "#33CCCC",
-        "#33CCFF",
-        "#6600CC",
-        "#6600FF",
-        "#6633CC",
-        "#6633FF",
-        "#66CC00",
-        "#66CC33",
-        "#9900CC",
-        "#9900FF",
-        "#9933CC",
-        "#9933FF",
-        "#99CC00",
-        "#99CC33",
-        "#CC0000",
-        "#CC0033",
-        "#CC0066",
-        "#CC0099",
-        "#CC00CC",
-        "#CC00FF",
-        "#CC3300",
-        "#CC3333",
-        "#CC3366",
-        "#CC3399",
-        "#CC33CC",
-        "#CC33FF",
-        "#CC6600",
-        "#CC6633",
-        "#CC9900",
-        "#CC9933",
-        "#CCCC00",
-        "#CCCC33",
-        "#FF0000",
-        "#FF0033",
-        "#FF0066",
-        "#FF0099",
-        "#FF00CC",
-        "#FF00FF",
-        "#FF3300",
-        "#FF3333",
-        "#FF3366",
-        "#FF3399",
-        "#FF33CC",
-        "#FF33FF",
-        "#FF6600",
-        "#FF6633",
-        "#FF9900",
-        "#FF9933",
-        "#FFCC00",
-        "#FFCC33"
-      ];
-      function useColors() {
-        if (typeof window !== "undefined" && window.process && (window.process.type === "renderer" || window.process.__nwjs)) {
-          return true;
-        }
-        if (typeof navigator !== "undefined" && navigator.userAgent && navigator.userAgent.toLowerCase().match(/(edge|trident)\/(\d+)/)) {
-          return false;
-        }
-        return typeof document !== "undefined" && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance || // Is firebug? http://stackoverflow.com/a/398120/376773
-        typeof window !== "undefined" && window.console && (window.console.firebug || window.console.exception && window.console.table) || // Is firefox >= v31?
-        // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
-        typeof navigator !== "undefined" && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31 || // Double check webkit in userAgent just in case we are in a worker
-        typeof navigator !== "undefined" && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/);
-      }
-      function formatArgs(args) {
-        args[0] = (this.useColors ? "%c" : "") + this.namespace + (this.useColors ? " %c" : " ") + args[0] + (this.useColors ? "%c " : " ") + "+" + module.exports.humanize(this.diff);
-        if (!this.useColors) {
-          return;
-        }
-        const c2 = "color: " + this.color;
-        args.splice(1, 0, c2, "color: inherit");
-        let index = 0;
-        let lastC = 0;
-        args[0].replace(/%[a-zA-Z%]/g, (match2) => {
-          if (match2 === "%%") {
-            return;
-          }
-          index++;
-          if (match2 === "%c") {
-            lastC = index;
-          }
-        });
-        args.splice(lastC, 0, c2);
-      }
-      exports.log = console.debug || console.log || (() => {
-      });
-      function save(namespaces) {
-        try {
-          if (namespaces) {
-            exports.storage.setItem("debug", namespaces);
-          } else {
-            exports.storage.removeItem("debug");
-          }
-        } catch (error) {
-        }
-      }
-      function load() {
-        let r2;
-        try {
-          r2 = exports.storage.getItem("debug");
-        } catch (error) {
-        }
-        if (!r2 && typeof process !== "undefined" && "env" in process) {
-          r2 = process.env.DEBUG;
-        }
-        return r2;
-      }
-      function localstorage() {
-        try {
-          return localStorage;
-        } catch (error) {
-        }
-      }
-      module.exports = require_common()(exports);
-      var { formatters } = module.exports;
-      formatters.j = function(v2) {
-        try {
-          return JSON.stringify(v2);
-        } catch (error) {
-          return "[UnexpectedJSONParseError]: " + error.message;
-        }
-      };
-    }
-  });
-
-  // node_modules/socket.io-client/build/url.js
-  var require_url = __commonJS({
-    "node_modules/socket.io-client/build/url.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.url = void 0;
-      var parseuri = require_parseuri();
-      var debug = require_browser2()("socket.io-client:url");
-      function url(uri, path = "", loc) {
-        let obj = uri;
-        loc = loc || typeof location !== "undefined" && location;
-        if (null == uri)
-          uri = loc.protocol + "//" + loc.host;
-        if (typeof uri === "string") {
-          if ("/" === uri.charAt(0)) {
-            if ("/" === uri.charAt(1)) {
-              uri = loc.protocol + uri;
-            } else {
-              uri = loc.host + uri;
-            }
-          }
-          if (!/^(https?|wss?):\/\//.test(uri)) {
-            debug("protocol-less url %s", uri);
-            if ("undefined" !== typeof loc) {
-              uri = loc.protocol + "//" + uri;
-            } else {
-              uri = "https://" + uri;
-            }
-          }
-          debug("parse %s", uri);
-          obj = parseuri(uri);
-        }
-        if (!obj.port) {
-          if (/^(http|ws)$/.test(obj.protocol)) {
-            obj.port = "80";
-          } else if (/^(http|ws)s$/.test(obj.protocol)) {
-            obj.port = "443";
-          }
-        }
-        obj.path = obj.path || "/";
-        const ipv6 = obj.host.indexOf(":") !== -1;
-        const host = ipv6 ? "[" + obj.host + "]" : obj.host;
-        obj.id = obj.protocol + "://" + host + ":" + obj.port + path;
-        obj.href = obj.protocol + "://" + host + (loc && loc.port === obj.port ? "" : ":" + obj.port);
-        return obj;
-      }
-      exports.url = url;
-    }
-  });
-
-  // node_modules/has-cors/index.js
-  var require_has_cors = __commonJS({
-    "node_modules/has-cors/index.js"(exports, module) {
-      try {
-        module.exports = typeof XMLHttpRequest !== "undefined" && "withCredentials" in new XMLHttpRequest();
-      } catch (err) {
-        module.exports = false;
-      }
-    }
-  });
-
-  // node_modules/engine.io-client/lib/globalThis.browser.js
-  var require_globalThis_browser = __commonJS({
-    "node_modules/engine.io-client/lib/globalThis.browser.js"(exports, module) {
-      module.exports = (() => {
-        if (typeof self !== "undefined") {
-          return self;
-        } else if (typeof window !== "undefined") {
-          return window;
-        } else {
-          return Function("return this")();
-        }
-      })();
-    }
-  });
-
-  // node_modules/engine.io-client/lib/xmlhttprequest.js
-  var require_xmlhttprequest = __commonJS({
-    "node_modules/engine.io-client/lib/xmlhttprequest.js"(exports, module) {
-      var hasCORS = require_has_cors();
-      var globalThis2 = require_globalThis_browser();
-      module.exports = function(opts) {
-        const xdomain = opts.xdomain;
-        const xscheme = opts.xscheme;
-        const enablesXDR = opts.enablesXDR;
-        try {
-          if ("undefined" !== typeof XMLHttpRequest && (!xdomain || hasCORS)) {
-            return new XMLHttpRequest();
-          }
-        } catch (e2) {
-        }
-        try {
-          if ("undefined" !== typeof XDomainRequest && !xscheme && enablesXDR) {
-            return new XDomainRequest();
-          }
-        } catch (e2) {
-        }
-        if (!xdomain) {
-          try {
-            return new globalThis2[["Active"].concat("Object").join("X")](
-              "Microsoft.XMLHTTP"
-            );
-          } catch (e2) {
-          }
-        }
-      };
-    }
-  });
-
-  // node_modules/engine.io-parser/lib/commons.js
-  var require_commons = __commonJS({
-    "node_modules/engine.io-parser/lib/commons.js"(exports, module) {
-      var PACKET_TYPES = /* @__PURE__ */ Object.create(null);
-      PACKET_TYPES["open"] = "0";
-      PACKET_TYPES["close"] = "1";
-      PACKET_TYPES["ping"] = "2";
-      PACKET_TYPES["pong"] = "3";
-      PACKET_TYPES["message"] = "4";
-      PACKET_TYPES["upgrade"] = "5";
-      PACKET_TYPES["noop"] = "6";
-      var PACKET_TYPES_REVERSE = /* @__PURE__ */ Object.create(null);
-      Object.keys(PACKET_TYPES).forEach((key) => {
-        PACKET_TYPES_REVERSE[PACKET_TYPES[key]] = key;
-      });
-      var ERROR_PACKET = { type: "error", data: "parser error" };
-      module.exports = {
-        PACKET_TYPES,
-        PACKET_TYPES_REVERSE,
-        ERROR_PACKET
-      };
-    }
-  });
-
-  // node_modules/engine.io-parser/lib/encodePacket.browser.js
-  var require_encodePacket_browser = __commonJS({
-    "node_modules/engine.io-parser/lib/encodePacket.browser.js"(exports, module) {
-      var { PACKET_TYPES } = require_commons();
-      var withNativeBlob = typeof Blob === "function" || typeof Blob !== "undefined" && Object.prototype.toString.call(Blob) === "[object BlobConstructor]";
-      var withNativeArrayBuffer = typeof ArrayBuffer === "function";
-      var isView = (obj) => {
-        return typeof ArrayBuffer.isView === "function" ? ArrayBuffer.isView(obj) : obj && obj.buffer instanceof ArrayBuffer;
-      };
-      var encodePacket = ({ type, data: data2 }, supportsBinary, callback) => {
-        if (withNativeBlob && data2 instanceof Blob) {
-          if (supportsBinary) {
-            return callback(data2);
-          } else {
-            return encodeBlobAsBase64(data2, callback);
-          }
-        } else if (withNativeArrayBuffer && (data2 instanceof ArrayBuffer || isView(data2))) {
-          if (supportsBinary) {
-            return callback(data2);
-          } else {
-            return encodeBlobAsBase64(new Blob([data2]), callback);
-          }
-        }
-        return callback(PACKET_TYPES[type] + (data2 || ""));
-      };
-      var encodeBlobAsBase64 = (data2, callback) => {
-        const fileReader = new FileReader();
-        fileReader.onload = function() {
-          const content = fileReader.result.split(",")[1];
-          callback("b" + content);
-        };
-        return fileReader.readAsDataURL(data2);
-      };
-      module.exports = encodePacket;
-    }
-  });
-
-  // node_modules/base64-arraybuffer/lib/base64-arraybuffer.js
-  var require_base64_arraybuffer = __commonJS({
-    "node_modules/base64-arraybuffer/lib/base64-arraybuffer.js"(exports) {
-      (function(chars) {
-        "use strict";
-        exports.encode = function(arraybuffer) {
-          var bytes = new Uint8Array(arraybuffer), i2, len = bytes.length, base64 = "";
-          for (i2 = 0; i2 < len; i2 += 3) {
-            base64 += chars[bytes[i2] >> 2];
-            base64 += chars[(bytes[i2] & 3) << 4 | bytes[i2 + 1] >> 4];
-            base64 += chars[(bytes[i2 + 1] & 15) << 2 | bytes[i2 + 2] >> 6];
-            base64 += chars[bytes[i2 + 2] & 63];
-          }
-          if (len % 3 === 2) {
-            base64 = base64.substring(0, base64.length - 1) + "=";
-          } else if (len % 3 === 1) {
-            base64 = base64.substring(0, base64.length - 2) + "==";
-          }
-          return base64;
-        };
-        exports.decode = function(base64) {
-          var bufferLength = base64.length * 0.75, len = base64.length, i2, p2 = 0, encoded1, encoded2, encoded3, encoded4;
-          if (base64[base64.length - 1] === "=") {
-            bufferLength--;
-            if (base64[base64.length - 2] === "=") {
-              bufferLength--;
-            }
-          }
-          var arraybuffer = new ArrayBuffer(bufferLength), bytes = new Uint8Array(arraybuffer);
-          for (i2 = 0; i2 < len; i2 += 4) {
-            encoded1 = chars.indexOf(base64[i2]);
-            encoded2 = chars.indexOf(base64[i2 + 1]);
-            encoded3 = chars.indexOf(base64[i2 + 2]);
-            encoded4 = chars.indexOf(base64[i2 + 3]);
-            bytes[p2++] = encoded1 << 2 | encoded2 >> 4;
-            bytes[p2++] = (encoded2 & 15) << 4 | encoded3 >> 2;
-            bytes[p2++] = (encoded3 & 3) << 6 | encoded4 & 63;
-          }
-          return arraybuffer;
-        };
-      })("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/");
-    }
-  });
-
-  // node_modules/engine.io-parser/lib/decodePacket.browser.js
-  var require_decodePacket_browser = __commonJS({
-    "node_modules/engine.io-parser/lib/decodePacket.browser.js"(exports, module) {
-      var { PACKET_TYPES_REVERSE, ERROR_PACKET } = require_commons();
-      var withNativeArrayBuffer = typeof ArrayBuffer === "function";
-      var base64decoder;
-      if (withNativeArrayBuffer) {
-        base64decoder = require_base64_arraybuffer();
-      }
-      var decodePacket = (encodedPacket, binaryType) => {
-        if (typeof encodedPacket !== "string") {
-          return {
-            type: "message",
-            data: mapBinary(encodedPacket, binaryType)
-          };
-        }
-        const type = encodedPacket.charAt(0);
-        if (type === "b") {
-          return {
-            type: "message",
-            data: decodeBase64Packet(encodedPacket.substring(1), binaryType)
-          };
-        }
-        const packetType = PACKET_TYPES_REVERSE[type];
-        if (!packetType) {
-          return ERROR_PACKET;
-        }
-        return encodedPacket.length > 1 ? {
-          type: PACKET_TYPES_REVERSE[type],
-          data: encodedPacket.substring(1)
-        } : {
-          type: PACKET_TYPES_REVERSE[type]
-        };
-      };
-      var decodeBase64Packet = (data2, binaryType) => {
-        if (base64decoder) {
-          const decoded = base64decoder.decode(data2);
-          return mapBinary(decoded, binaryType);
-        } else {
-          return { base64: true, data: data2 };
-        }
-      };
-      var mapBinary = (data2, binaryType) => {
-        switch (binaryType) {
-          case "blob":
-            return data2 instanceof ArrayBuffer ? new Blob([data2]) : data2;
-          case "arraybuffer":
-          default:
-            return data2;
-        }
-      };
-      module.exports = decodePacket;
-    }
-  });
-
-  // node_modules/engine.io-parser/lib/index.js
-  var require_lib = __commonJS({
-    "node_modules/engine.io-parser/lib/index.js"(exports, module) {
-      var encodePacket = require_encodePacket_browser();
-      var decodePacket = require_decodePacket_browser();
-      var SEPARATOR = String.fromCharCode(30);
-      var encodePayload = (packets, callback) => {
-        const length = packets.length;
-        const encodedPackets = new Array(length);
-        let count = 0;
-        packets.forEach((packet, i2) => {
-          encodePacket(packet, false, (encodedPacket) => {
-            encodedPackets[i2] = encodedPacket;
-            if (++count === length) {
-              callback(encodedPackets.join(SEPARATOR));
-            }
-          });
-        });
-      };
-      var decodePayload = (encodedPayload, binaryType) => {
-        const encodedPackets = encodedPayload.split(SEPARATOR);
-        const packets = [];
-        for (let i2 = 0; i2 < encodedPackets.length; i2++) {
-          const decodedPacket = decodePacket(encodedPackets[i2], binaryType);
-          packets.push(decodedPacket);
-          if (decodedPacket.type === "error") {
-            break;
-          }
-        }
-        return packets;
-      };
-      module.exports = {
-        protocol: 4,
-        encodePacket,
-        encodePayload,
-        decodePacket,
-        decodePayload
-      };
-    }
-  });
-
-  // node_modules/component-emitter/index.js
-  var require_component_emitter = __commonJS({
-    "node_modules/component-emitter/index.js"(exports, module) {
-      if (typeof module !== "undefined") {
-        module.exports = Emitter;
-      }
-      function Emitter(obj) {
-        if (obj)
-          return mixin(obj);
-      }
-      function mixin(obj) {
-        for (var key in Emitter.prototype) {
-          obj[key] = Emitter.prototype[key];
-        }
-        return obj;
-      }
-      Emitter.prototype.on = Emitter.prototype.addEventListener = function(event, fn) {
-        this._callbacks = this._callbacks || {};
-        (this._callbacks["$" + event] = this._callbacks["$" + event] || []).push(fn);
-        return this;
-      };
-      Emitter.prototype.once = function(event, fn) {
-        function on() {
-          this.off(event, on);
-          fn.apply(this, arguments);
-        }
-        on.fn = fn;
-        this.on(event, on);
-        return this;
-      };
-      Emitter.prototype.off = Emitter.prototype.removeListener = Emitter.prototype.removeAllListeners = Emitter.prototype.removeEventListener = function(event, fn) {
-        this._callbacks = this._callbacks || {};
-        if (0 == arguments.length) {
-          this._callbacks = {};
-          return this;
-        }
-        var callbacks = this._callbacks["$" + event];
-        if (!callbacks)
-          return this;
-        if (1 == arguments.length) {
-          delete this._callbacks["$" + event];
-          return this;
-        }
-        var cb;
-        for (var i2 = 0; i2 < callbacks.length; i2++) {
-          cb = callbacks[i2];
-          if (cb === fn || cb.fn === fn) {
-            callbacks.splice(i2, 1);
-            break;
-          }
-        }
-        if (callbacks.length === 0) {
-          delete this._callbacks["$" + event];
-        }
-        return this;
-      };
-      Emitter.prototype.emit = function(event) {
-        this._callbacks = this._callbacks || {};
-        var args = new Array(arguments.length - 1), callbacks = this._callbacks["$" + event];
-        for (var i2 = 1; i2 < arguments.length; i2++) {
-          args[i2 - 1] = arguments[i2];
-        }
-        if (callbacks) {
-          callbacks = callbacks.slice(0);
-          for (var i2 = 0, len = callbacks.length; i2 < len; ++i2) {
-            callbacks[i2].apply(this, args);
-          }
-        }
-        return this;
-      };
-      Emitter.prototype.listeners = function(event) {
-        this._callbacks = this._callbacks || {};
-        return this._callbacks["$" + event] || [];
-      };
-      Emitter.prototype.hasListeners = function(event) {
-        return !!this.listeners(event).length;
-      };
-    }
-  });
-
-  // node_modules/engine.io-client/lib/transport.js
-  var require_transport = __commonJS({
-    "node_modules/engine.io-client/lib/transport.js"(exports, module) {
-      var parser = require_lib();
-      var Emitter = require_component_emitter();
-      var debug = require_browser2()("engine.io-client:transport");
-      var Transport = class extends Emitter {
-        /**
-         * Transport abstract constructor.
-         *
-         * @param {Object} options.
-         * @api private
-         */
-        constructor(opts) {
-          super();
-          this.opts = opts;
-          this.query = opts.query;
-          this.readyState = "";
-          this.socket = opts.socket;
-        }
-        /**
-         * Emits an error.
-         *
-         * @param {String} str
-         * @return {Transport} for chaining
-         * @api public
-         */
-        onError(msg, desc) {
-          const err = new Error(msg);
-          err.type = "TransportError";
-          err.description = desc;
-          this.emit("error", err);
-          return this;
-        }
-        /**
-         * Opens the transport.
-         *
-         * @api public
-         */
-        open() {
-          if ("closed" === this.readyState || "" === this.readyState) {
-            this.readyState = "opening";
-            this.doOpen();
-          }
-          return this;
-        }
-        /**
-         * Closes the transport.
-         *
-         * @api private
-         */
-        close() {
-          if ("opening" === this.readyState || "open" === this.readyState) {
-            this.doClose();
-            this.onClose();
-          }
-          return this;
-        }
-        /**
-         * Sends multiple packets.
-         *
-         * @param {Array} packets
-         * @api private
-         */
-        send(packets) {
-          if ("open" === this.readyState) {
-            this.write(packets);
-          } else {
-            debug("transport is not open, discarding packets");
-          }
-        }
-        /**
-         * Called upon open
-         *
-         * @api private
-         */
-        onOpen() {
-          this.readyState = "open";
-          this.writable = true;
-          this.emit("open");
-        }
-        /**
-         * Called with data.
-         *
-         * @param {String} data
-         * @api private
-         */
-        onData(data2) {
-          const packet = parser.decodePacket(data2, this.socket.binaryType);
-          this.onPacket(packet);
-        }
-        /**
-         * Called with a decoded packet.
-         */
-        onPacket(packet) {
-          this.emit("packet", packet);
-        }
-        /**
-         * Called upon close.
-         *
-         * @api private
-         */
-        onClose() {
-          this.readyState = "closed";
-          this.emit("close");
-        }
-      };
-      module.exports = Transport;
-    }
-  });
-
-  // node_modules/parseqs/index.js
-  var require_parseqs = __commonJS({
-    "node_modules/parseqs/index.js"(exports) {
-      exports.encode = function(obj) {
-        var str = "";
-        for (var i2 in obj) {
-          if (obj.hasOwnProperty(i2)) {
-            if (str.length)
-              str += "&";
-            str += encodeURIComponent(i2) + "=" + encodeURIComponent(obj[i2]);
-          }
-        }
-        return str;
-      };
-      exports.decode = function(qs) {
-        var qry = {};
-        var pairs = qs.split("&");
-        for (var i2 = 0, l2 = pairs.length; i2 < l2; i2++) {
-          var pair = pairs[i2].split("=");
-          qry[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
-        }
-        return qry;
-      };
-    }
-  });
-
-  // node_modules/yeast/index.js
-  var require_yeast = __commonJS({
-    "node_modules/yeast/index.js"(exports, module) {
-      "use strict";
-      var alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_".split("");
-      var length = 64;
-      var map = {};
-      var seed = 0;
-      var i2 = 0;
-      var prev;
-      function encode(num) {
-        var encoded = "";
-        do {
-          encoded = alphabet[num % length] + encoded;
-          num = Math.floor(num / length);
-        } while (num > 0);
-        return encoded;
-      }
-      function decode(str) {
-        var decoded = 0;
-        for (i2 = 0; i2 < str.length; i2++) {
-          decoded = decoded * length + map[str.charAt(i2)];
-        }
-        return decoded;
-      }
-      function yeast() {
-        var now = encode(+/* @__PURE__ */ new Date());
-        if (now !== prev)
-          return seed = 0, prev = now;
-        return now + "." + encode(seed++);
-      }
-      for (; i2 < length; i2++)
-        map[alphabet[i2]] = i2;
-      yeast.encode = encode;
-      yeast.decode = decode;
-      module.exports = yeast;
-    }
-  });
-
-  // node_modules/engine.io-client/lib/transports/polling.js
-  var require_polling = __commonJS({
-    "node_modules/engine.io-client/lib/transports/polling.js"(exports, module) {
-      var Transport = require_transport();
-      var parseqs = require_parseqs();
-      var parser = require_lib();
-      var yeast = require_yeast();
-      var debug = require_browser2()("engine.io-client:polling");
-      var Polling = class extends Transport {
-        /**
-         * Transport name.
-         */
-        get name() {
-          return "polling";
-        }
-        /**
-         * Opens the socket (triggers polling). We write a PING message to determine
-         * when the transport is open.
-         *
-         * @api private
-         */
-        doOpen() {
-          this.poll();
-        }
-        /**
-         * Pauses polling.
-         *
-         * @param {Function} callback upon buffers are flushed and transport is paused
-         * @api private
-         */
-        pause(onPause) {
-          const self2 = this;
-          this.readyState = "pausing";
-          function pause() {
-            debug("paused");
-            self2.readyState = "paused";
-            onPause();
-          }
-          if (this.polling || !this.writable) {
-            let total = 0;
-            if (this.polling) {
-              debug("we are currently polling - waiting to pause");
-              total++;
-              this.once("pollComplete", function() {
-                debug("pre-pause polling complete");
-                --total || pause();
-              });
-            }
-            if (!this.writable) {
-              debug("we are currently writing - waiting to pause");
-              total++;
-              this.once("drain", function() {
-                debug("pre-pause writing complete");
-                --total || pause();
-              });
-            }
-          } else {
-            pause();
-          }
-        }
-        /**
-         * Starts polling cycle.
-         *
-         * @api public
-         */
-        poll() {
-          debug("polling");
-          this.polling = true;
-          this.doPoll();
-          this.emit("poll");
-        }
-        /**
-         * Overloads onData to detect payloads.
-         *
-         * @api private
-         */
-        onData(data2) {
-          const self2 = this;
-          debug("polling got data %s", data2);
-          const callback = function(packet, index, total) {
-            if ("opening" === self2.readyState && packet.type === "open") {
-              self2.onOpen();
-            }
-            if ("close" === packet.type) {
-              self2.onClose();
-              return false;
-            }
-            self2.onPacket(packet);
-          };
-          parser.decodePayload(data2, this.socket.binaryType).forEach(callback);
-          if ("closed" !== this.readyState) {
-            this.polling = false;
-            this.emit("pollComplete");
-            if ("open" === this.readyState) {
-              this.poll();
-            } else {
-              debug('ignoring poll - transport state "%s"', this.readyState);
-            }
-          }
-        }
-        /**
-         * For polling, send a close packet.
-         *
-         * @api private
-         */
-        doClose() {
-          const self2 = this;
-          function close() {
-            debug("writing close packet");
-            self2.write([{ type: "close" }]);
-          }
-          if ("open" === this.readyState) {
-            debug("transport open - closing");
-            close();
-          } else {
-            debug("transport not open - deferring close");
-            this.once("open", close);
-          }
-        }
-        /**
-         * Writes a packets payload.
-         *
-         * @param {Array} data packets
-         * @param {Function} drain callback
-         * @api private
-         */
-        write(packets) {
-          this.writable = false;
-          parser.encodePayload(packets, (data2) => {
-            this.doWrite(data2, () => {
-              this.writable = true;
-              this.emit("drain");
-            });
-          });
-        }
-        /**
-         * Generates uri for connection.
-         *
-         * @api private
-         */
-        uri() {
-          let query = this.query || {};
-          const schema = this.opts.secure ? "https" : "http";
-          let port = "";
-          if (false !== this.opts.timestampRequests) {
-            query[this.opts.timestampParam] = yeast();
-          }
-          if (!this.supportsBinary && !query.sid) {
-            query.b64 = 1;
-          }
-          query = parseqs.encode(query);
-          if (this.opts.port && ("https" === schema && Number(this.opts.port) !== 443 || "http" === schema && Number(this.opts.port) !== 80)) {
-            port = ":" + this.opts.port;
-          }
-          if (query.length) {
-            query = "?" + query;
-          }
-          const ipv6 = this.opts.hostname.indexOf(":") !== -1;
-          return schema + "://" + (ipv6 ? "[" + this.opts.hostname + "]" : this.opts.hostname) + port + this.opts.path + query;
-        }
-      };
-      module.exports = Polling;
-    }
-  });
-
-  // node_modules/engine.io-client/lib/util.js
-  var require_util2 = __commonJS({
-    "node_modules/engine.io-client/lib/util.js"(exports, module) {
-      module.exports.pick = (obj, ...attr) => {
-        return attr.reduce((acc, k2) => {
-          if (obj.hasOwnProperty(k2)) {
-            acc[k2] = obj[k2];
-          }
-          return acc;
-        }, {});
-      };
-    }
-  });
-
-  // node_modules/engine.io-client/lib/transports/polling-xhr.js
-  var require_polling_xhr = __commonJS({
-    "node_modules/engine.io-client/lib/transports/polling-xhr.js"(exports, module) {
-      var XMLHttpRequest2 = require_xmlhttprequest();
-      var Polling = require_polling();
-      var Emitter = require_component_emitter();
-      var { pick } = require_util2();
-      var globalThis2 = require_globalThis_browser();
-      var debug = require_browser2()("engine.io-client:polling-xhr");
-      function empty2() {
-      }
-      var hasXHR2 = function() {
-        const xhr = new XMLHttpRequest2({ xdomain: false });
-        return null != xhr.responseType;
-      }();
-      var XHR = class extends Polling {
-        /**
-         * XHR Polling constructor.
-         *
-         * @param {Object} opts
-         * @api public
-         */
-        constructor(opts) {
-          super(opts);
-          if (typeof location !== "undefined") {
-            const isSSL = "https:" === location.protocol;
-            let port = location.port;
-            if (!port) {
-              port = isSSL ? 443 : 80;
-            }
-            this.xd = typeof location !== "undefined" && opts.hostname !== location.hostname || port !== opts.port;
-            this.xs = opts.secure !== isSSL;
-          }
-          const forceBase64 = opts && opts.forceBase64;
-          this.supportsBinary = hasXHR2 && !forceBase64;
-        }
-        /**
-         * Creates a request.
-         *
-         * @param {String} method
-         * @api private
-         */
-        request(opts = {}) {
-          Object.assign(opts, { xd: this.xd, xs: this.xs }, this.opts);
-          return new Request(this.uri(), opts);
-        }
-        /**
-         * Sends data.
-         *
-         * @param {String} data to send.
-         * @param {Function} called upon flush.
-         * @api private
-         */
-        doWrite(data2, fn) {
-          const req = this.request({
-            method: "POST",
-            data: data2
-          });
-          const self2 = this;
-          req.on("success", fn);
-          req.on("error", function(err) {
-            self2.onError("xhr post error", err);
-          });
-        }
-        /**
-         * Starts a poll cycle.
-         *
-         * @api private
-         */
-        doPoll() {
-          debug("xhr poll");
-          const req = this.request();
-          const self2 = this;
-          req.on("data", function(data2) {
-            self2.onData(data2);
-          });
-          req.on("error", function(err) {
-            self2.onError("xhr poll error", err);
-          });
-          this.pollXhr = req;
-        }
-      };
-      var Request = class _Request extends Emitter {
-        /**
-         * Request constructor
-         *
-         * @param {Object} options
-         * @api public
-         */
-        constructor(uri, opts) {
-          super();
-          this.opts = opts;
-          this.method = opts.method || "GET";
-          this.uri = uri;
-          this.async = false !== opts.async;
-          this.data = void 0 !== opts.data ? opts.data : null;
-          this.create();
-        }
-        /**
-         * Creates the XHR object and sends the request.
-         *
-         * @api private
-         */
-        create() {
-          const opts = pick(
-            this.opts,
-            "agent",
-            "enablesXDR",
-            "pfx",
-            "key",
-            "passphrase",
-            "cert",
-            "ca",
-            "ciphers",
-            "rejectUnauthorized"
-          );
-          opts.xdomain = !!this.opts.xd;
-          opts.xscheme = !!this.opts.xs;
-          const xhr = this.xhr = new XMLHttpRequest2(opts);
-          const self2 = this;
-          try {
-            debug("xhr open %s: %s", this.method, this.uri);
-            xhr.open(this.method, this.uri, this.async);
-            try {
-              if (this.opts.extraHeaders) {
-                xhr.setDisableHeaderCheck && xhr.setDisableHeaderCheck(true);
-                for (let i2 in this.opts.extraHeaders) {
-                  if (this.opts.extraHeaders.hasOwnProperty(i2)) {
-                    xhr.setRequestHeader(i2, this.opts.extraHeaders[i2]);
-                  }
-                }
-              }
-            } catch (e2) {
-            }
-            if ("POST" === this.method) {
-              try {
-                xhr.setRequestHeader("Content-type", "text/plain;charset=UTF-8");
-              } catch (e2) {
-              }
-            }
-            try {
-              xhr.setRequestHeader("Accept", "*/*");
-            } catch (e2) {
-            }
-            if ("withCredentials" in xhr) {
-              xhr.withCredentials = this.opts.withCredentials;
-            }
-            if (this.opts.requestTimeout) {
-              xhr.timeout = this.opts.requestTimeout;
-            }
-            if (this.hasXDR()) {
-              xhr.onload = function() {
-                self2.onLoad();
-              };
-              xhr.onerror = function() {
-                self2.onError(xhr.responseText);
-              };
-            } else {
-              xhr.onreadystatechange = function() {
-                if (4 !== xhr.readyState)
-                  return;
-                if (200 === xhr.status || 1223 === xhr.status) {
-                  self2.onLoad();
-                } else {
-                  setTimeout(function() {
-                    self2.onError(typeof xhr.status === "number" ? xhr.status : 0);
-                  }, 0);
-                }
-              };
-            }
-            debug("xhr data %s", this.data);
-            xhr.send(this.data);
-          } catch (e2) {
-            setTimeout(function() {
-              self2.onError(e2);
-            }, 0);
-            return;
-          }
-          if (typeof document !== "undefined") {
-            this.index = _Request.requestsCount++;
-            _Request.requests[this.index] = this;
-          }
-        }
-        /**
-         * Called upon successful response.
-         *
-         * @api private
-         */
-        onSuccess() {
-          this.emit("success");
-          this.cleanup();
-        }
-        /**
-         * Called if we have data.
-         *
-         * @api private
-         */
-        onData(data2) {
-          this.emit("data", data2);
-          this.onSuccess();
-        }
-        /**
-         * Called upon error.
-         *
-         * @api private
-         */
-        onError(err) {
-          this.emit("error", err);
-          this.cleanup(true);
-        }
-        /**
-         * Cleans up house.
-         *
-         * @api private
-         */
-        cleanup(fromError) {
-          if ("undefined" === typeof this.xhr || null === this.xhr) {
-            return;
-          }
-          if (this.hasXDR()) {
-            this.xhr.onload = this.xhr.onerror = empty2;
-          } else {
-            this.xhr.onreadystatechange = empty2;
-          }
-          if (fromError) {
-            try {
-              this.xhr.abort();
-            } catch (e2) {
-            }
-          }
-          if (typeof document !== "undefined") {
-            delete _Request.requests[this.index];
-          }
-          this.xhr = null;
-        }
-        /**
-         * Called upon load.
-         *
-         * @api private
-         */
-        onLoad() {
-          const data2 = this.xhr.responseText;
-          if (data2 !== null) {
-            this.onData(data2);
-          }
-        }
-        /**
-         * Check if it has XDomainRequest.
-         *
-         * @api private
-         */
-        hasXDR() {
-          return typeof XDomainRequest !== "undefined" && !this.xs && this.enablesXDR;
-        }
-        /**
-         * Aborts the request.
-         *
-         * @api public
-         */
-        abort() {
-          this.cleanup();
-        }
-      };
-      Request.requestsCount = 0;
-      Request.requests = {};
-      if (typeof document !== "undefined") {
-        if (typeof attachEvent === "function") {
-          attachEvent("onunload", unloadHandler);
-        } else if (typeof addEventListener === "function") {
-          const terminationEvent = "onpagehide" in globalThis2 ? "pagehide" : "unload";
-          addEventListener(terminationEvent, unloadHandler, false);
-        }
-      }
-      function unloadHandler() {
-        for (let i2 in Request.requests) {
-          if (Request.requests.hasOwnProperty(i2)) {
-            Request.requests[i2].abort();
-          }
-        }
-      }
-      module.exports = XHR;
-      module.exports.Request = Request;
-    }
-  });
-
-  // node_modules/engine.io-client/lib/transports/polling-jsonp.js
-  var require_polling_jsonp = __commonJS({
-    "node_modules/engine.io-client/lib/transports/polling-jsonp.js"(exports, module) {
-      var Polling = require_polling();
-      var globalThis2 = require_globalThis_browser();
-      var rNewline = /\n/g;
-      var rEscapedNewline = /\\n/g;
-      var callbacks;
-      var JSONPPolling = class extends Polling {
-        /**
-         * JSONP Polling constructor.
-         *
-         * @param {Object} opts.
-         * @api public
-         */
-        constructor(opts) {
-          super(opts);
-          this.query = this.query || {};
-          if (!callbacks) {
-            callbacks = globalThis2.___eio = globalThis2.___eio || [];
-          }
-          this.index = callbacks.length;
-          const self2 = this;
-          callbacks.push(function(msg) {
-            self2.onData(msg);
-          });
-          this.query.j = this.index;
-        }
-        /**
-         * JSONP only supports binary as base64 encoded strings
-         */
-        get supportsBinary() {
-          return false;
-        }
-        /**
-         * Closes the socket.
-         *
-         * @api private
-         */
-        doClose() {
-          if (this.script) {
-            this.script.onerror = () => {
-            };
-            this.script.parentNode.removeChild(this.script);
-            this.script = null;
-          }
-          if (this.form) {
-            this.form.parentNode.removeChild(this.form);
-            this.form = null;
-            this.iframe = null;
-          }
-          super.doClose();
-        }
-        /**
-         * Starts a poll cycle.
-         *
-         * @api private
-         */
-        doPoll() {
-          const self2 = this;
-          const script = document.createElement("script");
-          if (this.script) {
-            this.script.parentNode.removeChild(this.script);
-            this.script = null;
-          }
-          script.async = true;
-          script.src = this.uri();
-          script.onerror = function(e2) {
-            self2.onError("jsonp poll error", e2);
-          };
-          const insertAt = document.getElementsByTagName("script")[0];
-          if (insertAt) {
-            insertAt.parentNode.insertBefore(script, insertAt);
-          } else {
-            (document.head || document.body).appendChild(script);
-          }
-          this.script = script;
-          const isUAgecko = "undefined" !== typeof navigator && /gecko/i.test(navigator.userAgent);
-          if (isUAgecko) {
-            setTimeout(function() {
-              const iframe = document.createElement("iframe");
-              document.body.appendChild(iframe);
-              document.body.removeChild(iframe);
-            }, 100);
-          }
-        }
-        /**
-         * Writes with a hidden iframe.
-         *
-         * @param {String} data to send
-         * @param {Function} called upon flush.
-         * @api private
-         */
-        doWrite(data2, fn) {
-          const self2 = this;
-          let iframe;
-          if (!this.form) {
-            const form = document.createElement("form");
-            const area = document.createElement("textarea");
-            const id2 = this.iframeId = "eio_iframe_" + this.index;
-            form.className = "socketio";
-            form.style.position = "absolute";
-            form.style.top = "-1000px";
-            form.style.left = "-1000px";
-            form.target = id2;
-            form.method = "POST";
-            form.setAttribute("accept-charset", "utf-8");
-            area.name = "d";
-            form.appendChild(area);
-            document.body.appendChild(form);
-            this.form = form;
-            this.area = area;
-          }
-          this.form.action = this.uri();
-          function complete() {
-            initIframe();
-            fn();
-          }
-          function initIframe() {
-            if (self2.iframe) {
-              try {
-                self2.form.removeChild(self2.iframe);
-              } catch (e2) {
-                self2.onError("jsonp polling iframe removal error", e2);
-              }
-            }
-            try {
-              const html2 = '<iframe src="javascript:0" name="' + self2.iframeId + '">';
-              iframe = document.createElement(html2);
-            } catch (e2) {
-              iframe = document.createElement("iframe");
-              iframe.name = self2.iframeId;
-              iframe.src = "javascript:0";
-            }
-            iframe.id = self2.iframeId;
-            self2.form.appendChild(iframe);
-            self2.iframe = iframe;
-          }
-          initIframe();
-          data2 = data2.replace(rEscapedNewline, "\\\n");
-          this.area.value = data2.replace(rNewline, "\\n");
-          try {
-            this.form.submit();
-          } catch (e2) {
-          }
-          if (this.iframe.attachEvent) {
-            this.iframe.onreadystatechange = function() {
-              if (self2.iframe.readyState === "complete") {
-                complete();
-              }
-            };
-          } else {
-            this.iframe.onload = complete;
-          }
-        }
-      };
-      module.exports = JSONPPolling;
-    }
-  });
-
-  // node_modules/engine.io-client/lib/transports/websocket-constructor.browser.js
-  var require_websocket_constructor_browser = __commonJS({
-    "node_modules/engine.io-client/lib/transports/websocket-constructor.browser.js"(exports, module) {
-      var globalThis2 = require_globalThis_browser();
-      module.exports = {
-        WebSocket: globalThis2.WebSocket || globalThis2.MozWebSocket,
-        usingBrowserWebSocket: true,
-        defaultBinaryType: "arraybuffer"
-      };
-    }
-  });
-
-  // node_modules/engine.io-client/lib/transports/websocket.js
-  var require_websocket = __commonJS({
-    "node_modules/engine.io-client/lib/transports/websocket.js"(exports, module) {
-      var Transport = require_transport();
-      var parser = require_lib();
-      var parseqs = require_parseqs();
-      var yeast = require_yeast();
-      var { pick } = require_util2();
-      var {
-        WebSocket,
-        usingBrowserWebSocket,
-        defaultBinaryType
-      } = require_websocket_constructor_browser();
-      var debug = require_browser2()("engine.io-client:websocket");
-      var isReactNative = typeof navigator !== "undefined" && typeof navigator.product === "string" && navigator.product.toLowerCase() === "reactnative";
-      var WS = class _WS extends Transport {
-        /**
-         * WebSocket transport constructor.
-         *
-         * @api {Object} connection options
-         * @api public
-         */
-        constructor(opts) {
-          super(opts);
-          this.supportsBinary = !opts.forceBase64;
-        }
-        /**
-         * Transport name.
-         *
-         * @api public
-         */
-        get name() {
-          return "websocket";
-        }
-        /**
-         * Opens socket.
-         *
-         * @api private
-         */
-        doOpen() {
-          if (!this.check()) {
-            return;
-          }
-          const uri = this.uri();
-          const protocols = this.opts.protocols;
-          const opts = isReactNative ? {} : pick(
-            this.opts,
-            "agent",
-            "perMessageDeflate",
-            "pfx",
-            "key",
-            "passphrase",
-            "cert",
-            "ca",
-            "ciphers",
-            "rejectUnauthorized",
-            "localAddress",
-            "protocolVersion",
-            "origin",
-            "maxPayload",
-            "family",
-            "checkServerIdentity"
-          );
-          if (this.opts.extraHeaders) {
-            opts.headers = this.opts.extraHeaders;
-          }
-          try {
-            this.ws = usingBrowserWebSocket && !isReactNative ? protocols ? new WebSocket(uri, protocols) : new WebSocket(uri) : new WebSocket(uri, protocols, opts);
-          } catch (err) {
-            return this.emit("error", err);
-          }
-          this.ws.binaryType = this.socket.binaryType || defaultBinaryType;
-          this.addEventListeners();
-        }
-        /**
-         * Adds event listeners to the socket
-         *
-         * @api private
-         */
-        addEventListeners() {
-          const self2 = this;
-          this.ws.onopen = function() {
-            self2.onOpen();
-          };
-          this.ws.onclose = function() {
-            self2.onClose();
-          };
-          this.ws.onmessage = function(ev) {
-            self2.onData(ev.data);
-          };
-          this.ws.onerror = function(e2) {
-            self2.onError("websocket error", e2);
-          };
-        }
-        /**
-         * Writes data to socket.
-         *
-         * @param {Array} array of packets.
-         * @api private
-         */
-        write(packets) {
-          const self2 = this;
-          this.writable = false;
-          let total = packets.length;
-          let i2 = 0;
-          const l2 = total;
-          for (; i2 < l2; i2++) {
-            (function(packet) {
-              parser.encodePacket(packet, self2.supportsBinary, function(data2) {
-                const opts = {};
-                if (!usingBrowserWebSocket) {
-                  if (packet.options) {
-                    opts.compress = packet.options.compress;
-                  }
-                  if (self2.opts.perMessageDeflate) {
-                    const len = "string" === typeof data2 ? Buffer.byteLength(data2) : data2.length;
-                    if (len < self2.opts.perMessageDeflate.threshold) {
-                      opts.compress = false;
-                    }
-                  }
-                }
-                try {
-                  if (usingBrowserWebSocket) {
-                    self2.ws.send(data2);
-                  } else {
-                    self2.ws.send(data2, opts);
-                  }
-                } catch (e2) {
-                  debug("websocket closed before onclose event");
-                }
-                --total || done();
-              });
-            })(packets[i2]);
-          }
-          function done() {
-            self2.emit("flush");
-            setTimeout(function() {
-              self2.writable = true;
-              self2.emit("drain");
-            }, 0);
-          }
-        }
-        /**
-         * Called upon close
-         *
-         * @api private
-         */
-        onClose() {
-          Transport.prototype.onClose.call(this);
-        }
-        /**
-         * Closes socket.
-         *
-         * @api private
-         */
-        doClose() {
-          if (typeof this.ws !== "undefined") {
-            this.ws.close();
-            this.ws = null;
-          }
-        }
-        /**
-         * Generates uri for connection.
-         *
-         * @api private
-         */
-        uri() {
-          let query = this.query || {};
-          const schema = this.opts.secure ? "wss" : "ws";
-          let port = "";
-          if (this.opts.port && ("wss" === schema && Number(this.opts.port) !== 443 || "ws" === schema && Number(this.opts.port) !== 80)) {
-            port = ":" + this.opts.port;
-          }
-          if (this.opts.timestampRequests) {
-            query[this.opts.timestampParam] = yeast();
-          }
-          if (!this.supportsBinary) {
-            query.b64 = 1;
-          }
-          query = parseqs.encode(query);
-          if (query.length) {
-            query = "?" + query;
-          }
-          const ipv6 = this.opts.hostname.indexOf(":") !== -1;
-          return schema + "://" + (ipv6 ? "[" + this.opts.hostname + "]" : this.opts.hostname) + port + this.opts.path + query;
-        }
-        /**
-         * Feature detection for WebSocket.
-         *
-         * @return {Boolean} whether this transport is available.
-         * @api public
-         */
-        check() {
-          return !!WebSocket && !("__initialize" in WebSocket && this.name === _WS.prototype.name);
-        }
-      };
-      module.exports = WS;
-    }
-  });
-
-  // node_modules/engine.io-client/lib/transports/index.js
-  var require_transports = __commonJS({
-    "node_modules/engine.io-client/lib/transports/index.js"(exports) {
-      var XMLHttpRequest2 = require_xmlhttprequest();
-      var XHR = require_polling_xhr();
-      var JSONP = require_polling_jsonp();
-      var websocket = require_websocket();
-      exports.polling = polling;
-      exports.websocket = websocket;
-      function polling(opts) {
-        let xhr;
-        let xd = false;
-        let xs = false;
-        const jsonp = false !== opts.jsonp;
-        if (typeof location !== "undefined") {
-          const isSSL = "https:" === location.protocol;
-          let port = location.port;
-          if (!port) {
-            port = isSSL ? 443 : 80;
-          }
-          xd = opts.hostname !== location.hostname || port !== opts.port;
-          xs = opts.secure !== isSSL;
-        }
-        opts.xdomain = xd;
-        opts.xscheme = xs;
-        xhr = new XMLHttpRequest2(opts);
-        if ("open" in xhr && !opts.forceJSONP) {
-          return new XHR(opts);
-        } else {
-          if (!jsonp)
-            throw new Error("JSONP disabled");
-          return new JSONP(opts);
-        }
-      }
-    }
-  });
-
-  // node_modules/engine.io-client/lib/socket.js
-  var require_socket = __commonJS({
-    "node_modules/engine.io-client/lib/socket.js"(exports, module) {
-      var transports = require_transports();
-      var Emitter = require_component_emitter();
-      var debug = require_browser2()("engine.io-client:socket");
-      var parser = require_lib();
-      var parseuri = require_parseuri();
-      var parseqs = require_parseqs();
-      var Socket2 = class _Socket extends Emitter {
-        /**
-         * Socket constructor.
-         *
-         * @param {String|Object} uri or options
-         * @param {Object} options
-         * @api public
-         */
-        constructor(uri, opts = {}) {
-          super();
-          if (uri && "object" === typeof uri) {
-            opts = uri;
-            uri = null;
-          }
-          if (uri) {
-            uri = parseuri(uri);
-            opts.hostname = uri.host;
-            opts.secure = uri.protocol === "https" || uri.protocol === "wss";
-            opts.port = uri.port;
-            if (uri.query)
-              opts.query = uri.query;
-          } else if (opts.host) {
-            opts.hostname = parseuri(opts.host).host;
-          }
-          this.secure = null != opts.secure ? opts.secure : typeof location !== "undefined" && "https:" === location.protocol;
-          if (opts.hostname && !opts.port) {
-            opts.port = this.secure ? "443" : "80";
-          }
-          this.hostname = opts.hostname || (typeof location !== "undefined" ? location.hostname : "localhost");
-          this.port = opts.port || (typeof location !== "undefined" && location.port ? location.port : this.secure ? 443 : 80);
-          this.transports = opts.transports || ["polling", "websocket"];
-          this.readyState = "";
-          this.writeBuffer = [];
-          this.prevBufferLen = 0;
-          this.opts = Object.assign(
-            {
-              path: "/engine.io",
-              agent: false,
-              withCredentials: false,
-              upgrade: true,
-              jsonp: true,
-              timestampParam: "t",
-              rememberUpgrade: false,
-              rejectUnauthorized: true,
-              perMessageDeflate: {
-                threshold: 1024
-              },
-              transportOptions: {}
-            },
-            opts
-          );
-          this.opts.path = this.opts.path.replace(/\/$/, "") + "/";
-          if (typeof this.opts.query === "string") {
-            this.opts.query = parseqs.decode(this.opts.query);
-          }
-          this.id = null;
-          this.upgrades = null;
-          this.pingInterval = null;
-          this.pingTimeout = null;
-          this.pingTimeoutTimer = null;
-          if (typeof addEventListener === "function") {
-            addEventListener(
-              "beforeunload",
-              () => {
-                if (this.transport) {
-                  this.transport.removeAllListeners();
-                  this.transport.close();
-                }
-              },
-              false
-            );
-          }
-          this.open();
-        }
-        /**
-         * Creates transport of the given type.
-         *
-         * @param {String} transport name
-         * @return {Transport}
-         * @api private
-         */
-        createTransport(name) {
-          debug('creating transport "%s"', name);
-          const query = clone(this.opts.query);
-          query.EIO = parser.protocol;
-          query.transport = name;
-          if (this.id)
-            query.sid = this.id;
-          const opts = Object.assign(
-            {},
-            this.opts.transportOptions[name],
-            this.opts,
-            {
-              query,
-              socket: this,
-              hostname: this.hostname,
-              secure: this.secure,
-              port: this.port
-            }
-          );
-          debug("options: %j", opts);
-          return new transports[name](opts);
-        }
-        /**
-         * Initializes transport to use and starts probe.
-         *
-         * @api private
-         */
-        open() {
-          let transport;
-          if (this.opts.rememberUpgrade && _Socket.priorWebsocketSuccess && this.transports.indexOf("websocket") !== -1) {
-            transport = "websocket";
-          } else if (0 === this.transports.length) {
-            const self2 = this;
-            setTimeout(function() {
-              self2.emit("error", "No transports available");
-            }, 0);
-            return;
-          } else {
-            transport = this.transports[0];
-          }
-          this.readyState = "opening";
-          try {
-            transport = this.createTransport(transport);
-          } catch (e2) {
-            debug("error while creating transport: %s", e2);
-            this.transports.shift();
-            this.open();
-            return;
-          }
-          transport.open();
-          this.setTransport(transport);
-        }
-        /**
-         * Sets the current transport. Disables the existing one (if any).
-         *
-         * @api private
-         */
-        setTransport(transport) {
-          debug("setting transport %s", transport.name);
-          const self2 = this;
-          if (this.transport) {
-            debug("clearing existing transport %s", this.transport.name);
-            this.transport.removeAllListeners();
-          }
-          this.transport = transport;
-          transport.on("drain", function() {
-            self2.onDrain();
-          }).on("packet", function(packet) {
-            self2.onPacket(packet);
-          }).on("error", function(e2) {
-            self2.onError(e2);
-          }).on("close", function() {
-            self2.onClose("transport close");
-          });
-        }
-        /**
-         * Probes a transport.
-         *
-         * @param {String} transport name
-         * @api private
-         */
-        probe(name) {
-          debug('probing transport "%s"', name);
-          let transport = this.createTransport(name, { probe: 1 });
-          let failed = false;
-          const self2 = this;
-          _Socket.priorWebsocketSuccess = false;
-          function onTransportOpen() {
-            if (self2.onlyBinaryUpgrades) {
-              const upgradeLosesBinary = !this.supportsBinary && self2.transport.supportsBinary;
-              failed = failed || upgradeLosesBinary;
-            }
-            if (failed)
-              return;
-            debug('probe transport "%s" opened', name);
-            transport.send([{ type: "ping", data: "probe" }]);
-            transport.once("packet", function(msg) {
-              if (failed)
-                return;
-              if ("pong" === msg.type && "probe" === msg.data) {
-                debug('probe transport "%s" pong', name);
-                self2.upgrading = true;
-                self2.emit("upgrading", transport);
-                if (!transport)
-                  return;
-                _Socket.priorWebsocketSuccess = "websocket" === transport.name;
-                debug('pausing current transport "%s"', self2.transport.name);
-                self2.transport.pause(function() {
-                  if (failed)
-                    return;
-                  if ("closed" === self2.readyState)
-                    return;
-                  debug("changing transport and sending upgrade packet");
-                  cleanup();
-                  self2.setTransport(transport);
-                  transport.send([{ type: "upgrade" }]);
-                  self2.emit("upgrade", transport);
-                  transport = null;
-                  self2.upgrading = false;
-                  self2.flush();
-                });
-              } else {
-                debug('probe transport "%s" failed', name);
-                const err = new Error("probe error");
-                err.transport = transport.name;
-                self2.emit("upgradeError", err);
-              }
-            });
-          }
-          function freezeTransport() {
-            if (failed)
-              return;
-            failed = true;
-            cleanup();
-            transport.close();
-            transport = null;
-          }
-          function onerror(err) {
-            const error = new Error("probe error: " + err);
-            error.transport = transport.name;
-            freezeTransport();
-            debug('probe transport "%s" failed because of error: %s', name, err);
-            self2.emit("upgradeError", error);
-          }
-          function onTransportClose() {
-            onerror("transport closed");
-          }
-          function onclose() {
-            onerror("socket closed");
-          }
-          function onupgrade(to) {
-            if (transport && to.name !== transport.name) {
-              debug('"%s" works - aborting "%s"', to.name, transport.name);
-              freezeTransport();
-            }
-          }
-          function cleanup() {
-            transport.removeListener("open", onTransportOpen);
-            transport.removeListener("error", onerror);
-            transport.removeListener("close", onTransportClose);
-            self2.removeListener("close", onclose);
-            self2.removeListener("upgrading", onupgrade);
-          }
-          transport.once("open", onTransportOpen);
-          transport.once("error", onerror);
-          transport.once("close", onTransportClose);
-          this.once("close", onclose);
-          this.once("upgrading", onupgrade);
-          transport.open();
-        }
-        /**
-         * Called when connection is deemed open.
-         *
-         * @api public
-         */
-        onOpen() {
-          debug("socket open");
-          this.readyState = "open";
-          _Socket.priorWebsocketSuccess = "websocket" === this.transport.name;
-          this.emit("open");
-          this.flush();
-          if ("open" === this.readyState && this.opts.upgrade && this.transport.pause) {
-            debug("starting upgrade probes");
-            let i2 = 0;
-            const l2 = this.upgrades.length;
-            for (; i2 < l2; i2++) {
-              this.probe(this.upgrades[i2]);
-            }
-          }
-        }
-        /**
-         * Handles a packet.
-         *
-         * @api private
-         */
-        onPacket(packet) {
-          if ("opening" === this.readyState || "open" === this.readyState || "closing" === this.readyState) {
-            debug('socket receive: type "%s", data "%s"', packet.type, packet.data);
-            this.emit("packet", packet);
-            this.emit("heartbeat");
-            switch (packet.type) {
-              case "open":
-                this.onHandshake(JSON.parse(packet.data));
-                break;
-              case "ping":
-                this.resetPingTimeout();
-                this.sendPacket("pong");
-                this.emit("pong");
-                break;
-              case "error":
-                const err = new Error("server error");
-                err.code = packet.data;
-                this.onError(err);
-                break;
-              case "message":
-                this.emit("data", packet.data);
-                this.emit("message", packet.data);
-                break;
-            }
-          } else {
-            debug('packet received with socket readyState "%s"', this.readyState);
-          }
-        }
-        /**
-         * Called upon handshake completion.
-         *
-         * @param {Object} handshake obj
-         * @api private
-         */
-        onHandshake(data2) {
-          this.emit("handshake", data2);
-          this.id = data2.sid;
-          this.transport.query.sid = data2.sid;
-          this.upgrades = this.filterUpgrades(data2.upgrades);
-          this.pingInterval = data2.pingInterval;
-          this.pingTimeout = data2.pingTimeout;
-          this.onOpen();
-          if ("closed" === this.readyState)
-            return;
-          this.resetPingTimeout();
-        }
-        /**
-         * Sets and resets ping timeout timer based on server pings.
-         *
-         * @api private
-         */
-        resetPingTimeout() {
-          clearTimeout(this.pingTimeoutTimer);
-          this.pingTimeoutTimer = setTimeout(() => {
-            this.onClose("ping timeout");
-          }, this.pingInterval + this.pingTimeout);
-        }
-        /**
-         * Called on `drain` event
-         *
-         * @api private
-         */
-        onDrain() {
-          this.writeBuffer.splice(0, this.prevBufferLen);
-          this.prevBufferLen = 0;
-          if (0 === this.writeBuffer.length) {
-            this.emit("drain");
-          } else {
-            this.flush();
-          }
-        }
-        /**
-         * Flush write buffers.
-         *
-         * @api private
-         */
-        flush() {
-          if ("closed" !== this.readyState && this.transport.writable && !this.upgrading && this.writeBuffer.length) {
-            debug("flushing %d packets in socket", this.writeBuffer.length);
-            this.transport.send(this.writeBuffer);
-            this.prevBufferLen = this.writeBuffer.length;
-            this.emit("flush");
-          }
-        }
-        /**
-         * Sends a message.
-         *
-         * @param {String} message.
-         * @param {Function} callback function.
-         * @param {Object} options.
-         * @return {Socket} for chaining.
-         * @api public
-         */
-        write(msg, options, fn) {
-          this.sendPacket("message", msg, options, fn);
-          return this;
-        }
-        send(msg, options, fn) {
-          this.sendPacket("message", msg, options, fn);
-          return this;
-        }
-        /**
-         * Sends a packet.
-         *
-         * @param {String} packet type.
-         * @param {String} data.
-         * @param {Object} options.
-         * @param {Function} callback function.
-         * @api private
-         */
-        sendPacket(type, data2, options, fn) {
-          if ("function" === typeof data2) {
-            fn = data2;
-            data2 = void 0;
-          }
-          if ("function" === typeof options) {
-            fn = options;
-            options = null;
-          }
-          if ("closing" === this.readyState || "closed" === this.readyState) {
-            return;
-          }
-          options = options || {};
-          options.compress = false !== options.compress;
-          const packet = {
-            type,
-            data: data2,
-            options
-          };
-          this.emit("packetCreate", packet);
-          this.writeBuffer.push(packet);
-          if (fn)
-            this.once("flush", fn);
-          this.flush();
-        }
-        /**
-         * Closes the connection.
-         *
-         * @api private
-         */
-        close() {
-          const self2 = this;
-          if ("opening" === this.readyState || "open" === this.readyState) {
-            this.readyState = "closing";
-            if (this.writeBuffer.length) {
-              this.once("drain", function() {
-                if (this.upgrading) {
-                  waitForUpgrade();
-                } else {
-                  close();
-                }
-              });
-            } else if (this.upgrading) {
-              waitForUpgrade();
-            } else {
-              close();
-            }
-          }
-          function close() {
-            self2.onClose("forced close");
-            debug("socket closing - telling transport to close");
-            self2.transport.close();
-          }
-          function cleanupAndClose() {
-            self2.removeListener("upgrade", cleanupAndClose);
-            self2.removeListener("upgradeError", cleanupAndClose);
-            close();
-          }
-          function waitForUpgrade() {
-            self2.once("upgrade", cleanupAndClose);
-            self2.once("upgradeError", cleanupAndClose);
-          }
-          return this;
-        }
-        /**
-         * Called upon transport error
-         *
-         * @api private
-         */
-        onError(err) {
-          debug("socket error %j", err);
-          _Socket.priorWebsocketSuccess = false;
-          this.emit("error", err);
-          this.onClose("transport error", err);
-        }
-        /**
-         * Called upon transport close.
-         *
-         * @api private
-         */
-        onClose(reason, desc) {
-          if ("opening" === this.readyState || "open" === this.readyState || "closing" === this.readyState) {
-            debug('socket close with reason: "%s"', reason);
-            const self2 = this;
-            clearTimeout(this.pingIntervalTimer);
-            clearTimeout(this.pingTimeoutTimer);
-            this.transport.removeAllListeners("close");
-            this.transport.close();
-            this.transport.removeAllListeners();
-            this.readyState = "closed";
-            this.id = null;
-            this.emit("close", reason, desc);
-            self2.writeBuffer = [];
-            self2.prevBufferLen = 0;
-          }
-        }
-        /**
-         * Filters upgrades, returning only those matching client transports.
-         *
-         * @param {Array} server upgrades
-         * @api private
-         *
-         */
-        filterUpgrades(upgrades) {
-          const filteredUpgrades = [];
-          let i2 = 0;
-          const j2 = upgrades.length;
-          for (; i2 < j2; i2++) {
-            if (~this.transports.indexOf(upgrades[i2]))
-              filteredUpgrades.push(upgrades[i2]);
-          }
-          return filteredUpgrades;
-        }
-      };
-      Socket2.priorWebsocketSuccess = false;
-      Socket2.protocol = parser.protocol;
-      function clone(obj) {
-        const o2 = {};
-        for (let i2 in obj) {
-          if (obj.hasOwnProperty(i2)) {
-            o2[i2] = obj[i2];
-          }
-        }
-        return o2;
-      }
-      module.exports = Socket2;
-    }
-  });
-
-  // node_modules/engine.io-client/lib/index.js
-  var require_lib2 = __commonJS({
-    "node_modules/engine.io-client/lib/index.js"(exports, module) {
-      var Socket2 = require_socket();
-      module.exports = (uri, opts) => new Socket2(uri, opts);
-      module.exports.Socket = Socket2;
-      module.exports.protocol = Socket2.protocol;
-      module.exports.Transport = require_transport();
-      module.exports.transports = require_transports();
-      module.exports.parser = require_lib();
-    }
-  });
-
-  // node_modules/socket.io-client/node_modules/socket.io-parser/dist/is-binary.js
-  var require_is_binary = __commonJS({
-    "node_modules/socket.io-client/node_modules/socket.io-parser/dist/is-binary.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.hasBinary = exports.isBinary = void 0;
-      var withNativeArrayBuffer = typeof ArrayBuffer === "function";
-      var isView = (obj) => {
-        return typeof ArrayBuffer.isView === "function" ? ArrayBuffer.isView(obj) : obj.buffer instanceof ArrayBuffer;
-      };
-      var toString3 = Object.prototype.toString;
-      var withNativeBlob = typeof Blob === "function" || typeof Blob !== "undefined" && toString3.call(Blob) === "[object BlobConstructor]";
-      var withNativeFile = typeof File === "function" || typeof File !== "undefined" && toString3.call(File) === "[object FileConstructor]";
-      function isBinary(obj) {
-        return withNativeArrayBuffer && (obj instanceof ArrayBuffer || isView(obj)) || withNativeBlob && obj instanceof Blob || withNativeFile && obj instanceof File;
-      }
-      exports.isBinary = isBinary;
-      function hasBinary(obj, toJSON) {
-        if (!obj || typeof obj !== "object") {
-          return false;
-        }
-        if (Array.isArray(obj)) {
-          for (let i2 = 0, l2 = obj.length; i2 < l2; i2++) {
-            if (hasBinary(obj[i2])) {
-              return true;
-            }
-          }
-          return false;
-        }
-        if (isBinary(obj)) {
-          return true;
-        }
-        if (obj.toJSON && typeof obj.toJSON === "function" && arguments.length === 1) {
-          return hasBinary(obj.toJSON(), true);
-        }
-        for (const key in obj) {
-          if (Object.prototype.hasOwnProperty.call(obj, key) && hasBinary(obj[key])) {
-            return true;
-          }
-        }
-        return false;
-      }
-      exports.hasBinary = hasBinary;
-    }
-  });
-
-  // node_modules/socket.io-client/node_modules/socket.io-parser/dist/binary.js
-  var require_binary = __commonJS({
-    "node_modules/socket.io-client/node_modules/socket.io-parser/dist/binary.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.reconstructPacket = exports.deconstructPacket = void 0;
-      var is_binary_1 = require_is_binary();
-      function deconstructPacket(packet) {
-        const buffers = [];
-        const packetData = packet.data;
-        const pack = packet;
-        pack.data = _deconstructPacket(packetData, buffers);
-        pack.attachments = buffers.length;
-        return { packet: pack, buffers };
-      }
-      exports.deconstructPacket = deconstructPacket;
-      function _deconstructPacket(data2, buffers) {
-        if (!data2)
-          return data2;
-        if (is_binary_1.isBinary(data2)) {
-          const placeholder = { _placeholder: true, num: buffers.length };
-          buffers.push(data2);
-          return placeholder;
-        } else if (Array.isArray(data2)) {
-          const newData = new Array(data2.length);
-          for (let i2 = 0; i2 < data2.length; i2++) {
-            newData[i2] = _deconstructPacket(data2[i2], buffers);
-          }
-          return newData;
-        } else if (typeof data2 === "object" && !(data2 instanceof Date)) {
-          const newData = {};
-          for (const key in data2) {
-            if (data2.hasOwnProperty(key)) {
-              newData[key] = _deconstructPacket(data2[key], buffers);
-            }
-          }
-          return newData;
-        }
-        return data2;
-      }
-      function reconstructPacket(packet, buffers) {
-        packet.data = _reconstructPacket(packet.data, buffers);
-        packet.attachments = void 0;
-        return packet;
-      }
-      exports.reconstructPacket = reconstructPacket;
-      function _reconstructPacket(data2, buffers) {
-        if (!data2)
-          return data2;
-        if (data2 && data2._placeholder === true) {
-          const isIndexValid = typeof data2.num === "number" && data2.num >= 0 && data2.num < buffers.length;
-          if (isIndexValid) {
-            return buffers[data2.num];
-          } else {
-            throw new Error("illegal attachments");
-          }
-        } else if (Array.isArray(data2)) {
-          for (let i2 = 0; i2 < data2.length; i2++) {
-            data2[i2] = _reconstructPacket(data2[i2], buffers);
-          }
-        } else if (typeof data2 === "object") {
-          for (const key in data2) {
-            if (data2.hasOwnProperty(key)) {
-              data2[key] = _reconstructPacket(data2[key], buffers);
-            }
-          }
-        }
-        return data2;
-      }
-    }
-  });
-
-  // node_modules/socket.io-client/node_modules/socket.io-parser/dist/index.js
-  var require_dist = __commonJS({
-    "node_modules/socket.io-client/node_modules/socket.io-parser/dist/index.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.Decoder = exports.Encoder = exports.PacketType = exports.protocol = void 0;
-      var Emitter = require_component_emitter();
-      var binary_1 = require_binary();
-      var is_binary_1 = require_is_binary();
-      var debug = require_browser2()("socket.io-parser");
-      exports.protocol = 5;
-      var PacketType;
-      (function(PacketType2) {
-        PacketType2[PacketType2["CONNECT"] = 0] = "CONNECT";
-        PacketType2[PacketType2["DISCONNECT"] = 1] = "DISCONNECT";
-        PacketType2[PacketType2["EVENT"] = 2] = "EVENT";
-        PacketType2[PacketType2["ACK"] = 3] = "ACK";
-        PacketType2[PacketType2["CONNECT_ERROR"] = 4] = "CONNECT_ERROR";
-        PacketType2[PacketType2["BINARY_EVENT"] = 5] = "BINARY_EVENT";
-        PacketType2[PacketType2["BINARY_ACK"] = 6] = "BINARY_ACK";
-      })(PacketType = exports.PacketType || (exports.PacketType = {}));
-      var Encoder = class {
-        /**
-         * Encode a packet as a single string if non-binary, or as a
-         * buffer sequence, depending on packet type.
-         *
-         * @param {Object} obj - packet object
-         */
-        encode(obj) {
-          debug("encoding packet %j", obj);
-          if (obj.type === PacketType.EVENT || obj.type === PacketType.ACK) {
-            if (is_binary_1.hasBinary(obj)) {
-              obj.type = obj.type === PacketType.EVENT ? PacketType.BINARY_EVENT : PacketType.BINARY_ACK;
-              return this.encodeAsBinary(obj);
-            }
-          }
-          return [this.encodeAsString(obj)];
-        }
-        /**
-         * Encode packet as string.
-         */
-        encodeAsString(obj) {
-          let str = "" + obj.type;
-          if (obj.type === PacketType.BINARY_EVENT || obj.type === PacketType.BINARY_ACK) {
-            str += obj.attachments + "-";
-          }
-          if (obj.nsp && "/" !== obj.nsp) {
-            str += obj.nsp + ",";
-          }
-          if (null != obj.id) {
-            str += obj.id;
-          }
-          if (null != obj.data) {
-            str += JSON.stringify(obj.data);
-          }
-          debug("encoded %j as %s", obj, str);
-          return str;
-        }
-        /**
-         * Encode packet as 'buffer sequence' by removing blobs, and
-         * deconstructing packet into object with placeholders and
-         * a list of buffers.
-         */
-        encodeAsBinary(obj) {
-          const deconstruction = binary_1.deconstructPacket(obj);
-          const pack = this.encodeAsString(deconstruction.packet);
-          const buffers = deconstruction.buffers;
-          buffers.unshift(pack);
-          return buffers;
-        }
-      };
-      exports.Encoder = Encoder;
-      var Decoder = class _Decoder extends Emitter {
-        constructor() {
-          super();
-        }
-        /**
-         * Decodes an encoded packet string into packet JSON.
-         *
-         * @param {String} obj - encoded packet
-         */
-        add(obj) {
-          let packet;
-          if (typeof obj === "string") {
-            if (this.reconstructor) {
-              throw new Error("got plaintext data when reconstructing a packet");
-            }
-            packet = this.decodeString(obj);
-            if (packet.type === PacketType.BINARY_EVENT || packet.type === PacketType.BINARY_ACK) {
-              this.reconstructor = new BinaryReconstructor(packet);
-              if (packet.attachments === 0) {
-                super.emit("decoded", packet);
-              }
-            } else {
-              super.emit("decoded", packet);
-            }
-          } else if (is_binary_1.isBinary(obj) || obj.base64) {
-            if (!this.reconstructor) {
-              throw new Error("got binary data when not reconstructing a packet");
-            } else {
-              packet = this.reconstructor.takeBinaryData(obj);
-              if (packet) {
-                this.reconstructor = null;
-                super.emit("decoded", packet);
-              }
-            }
-          } else {
-            throw new Error("Unknown type: " + obj);
-          }
-        }
-        /**
-         * Decode a packet String (JSON data)
-         *
-         * @param {String} str
-         * @return {Object} packet
-         */
-        decodeString(str) {
-          let i2 = 0;
-          const p2 = {
-            type: Number(str.charAt(0))
-          };
-          if (PacketType[p2.type] === void 0) {
-            throw new Error("unknown packet type " + p2.type);
-          }
-          if (p2.type === PacketType.BINARY_EVENT || p2.type === PacketType.BINARY_ACK) {
-            const start = i2 + 1;
-            while (str.charAt(++i2) !== "-" && i2 != str.length) {
-            }
-            const buf = str.substring(start, i2);
-            if (buf != Number(buf) || str.charAt(i2) !== "-") {
-              throw new Error("Illegal attachments");
-            }
-            p2.attachments = Number(buf);
-          }
-          if ("/" === str.charAt(i2 + 1)) {
-            const start = i2 + 1;
-            while (++i2) {
-              const c2 = str.charAt(i2);
-              if ("," === c2)
-                break;
-              if (i2 === str.length)
-                break;
-            }
-            p2.nsp = str.substring(start, i2);
-          } else {
-            p2.nsp = "/";
-          }
-          const next = str.charAt(i2 + 1);
-          if ("" !== next && Number(next) == next) {
-            const start = i2 + 1;
-            while (++i2) {
-              const c2 = str.charAt(i2);
-              if (null == c2 || Number(c2) != c2) {
-                --i2;
-                break;
-              }
-              if (i2 === str.length)
-                break;
-            }
-            p2.id = Number(str.substring(start, i2 + 1));
-          }
-          if (str.charAt(++i2)) {
-            const payload = tryParse(str.substr(i2));
-            if (_Decoder.isPayloadValid(p2.type, payload)) {
-              p2.data = payload;
-            } else {
-              throw new Error("invalid payload");
-            }
-          }
-          debug("decoded %s as %j", str, p2);
-          return p2;
-        }
-        static isPayloadValid(type, payload) {
-          switch (type) {
-            case PacketType.CONNECT:
-              return typeof payload === "object";
-            case PacketType.DISCONNECT:
-              return payload === void 0;
-            case PacketType.CONNECT_ERROR:
-              return typeof payload === "string" || typeof payload === "object";
-            case PacketType.EVENT:
-            case PacketType.BINARY_EVENT:
-              return Array.isArray(payload) && payload.length > 0;
-            case PacketType.ACK:
-            case PacketType.BINARY_ACK:
-              return Array.isArray(payload);
-          }
-        }
-        /**
-         * Deallocates a parser's resources
-         */
-        destroy() {
-          if (this.reconstructor) {
-            this.reconstructor.finishedReconstruction();
-          }
-        }
-      };
-      exports.Decoder = Decoder;
-      function tryParse(str) {
-        try {
-          return JSON.parse(str);
-        } catch (e2) {
-          return false;
-        }
-      }
-      var BinaryReconstructor = class {
-        constructor(packet) {
-          this.packet = packet;
-          this.buffers = [];
-          this.reconPack = packet;
-        }
-        /**
-         * Method to be called when binary data received from connection
-         * after a BINARY_EVENT packet.
-         *
-         * @param {Buffer | ArrayBuffer} binData - the raw binary data received
-         * @return {null | Object} returns null if more binary data is expected or
-         *   a reconstructed packet object if all buffers have been received.
-         */
-        takeBinaryData(binData) {
-          this.buffers.push(binData);
-          if (this.buffers.length === this.reconPack.attachments) {
-            const packet = binary_1.reconstructPacket(this.reconPack, this.buffers);
-            this.finishedReconstruction();
-            return packet;
-          }
-          return null;
-        }
-        /**
-         * Cleans up binary packet reconstruction variables.
-         */
-        finishedReconstruction() {
-          this.reconPack = null;
-          this.buffers = [];
-        }
-      };
-    }
-  });
-
-  // node_modules/socket.io-client/build/on.js
-  var require_on = __commonJS({
-    "node_modules/socket.io-client/build/on.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.on = void 0;
-      function on(obj, ev, fn) {
-        obj.on(ev, fn);
-        return function subDestroy() {
-          obj.off(ev, fn);
-        };
-      }
-      exports.on = on;
-    }
-  });
-
-  // node_modules/socket.io-client/build/socket.js
-  var require_socket2 = __commonJS({
-    "node_modules/socket.io-client/build/socket.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.Socket = void 0;
-      var socket_io_parser_1 = require_dist();
-      var Emitter = require_component_emitter();
-      var on_1 = require_on();
-      var debug = require_browser2()("socket.io-client:socket");
-      var RESERVED_EVENTS = Object.freeze({
-        connect: 1,
-        connect_error: 1,
-        disconnect: 1,
-        disconnecting: 1,
-        // EventEmitter reserved events: https://nodejs.org/api/events.html#events_event_newlistener
-        newListener: 1,
-        removeListener: 1
-      });
-      var Socket2 = class extends Emitter {
-        /**
-         * `Socket` constructor.
-         *
-         * @public
-         */
-        constructor(io2, nsp, opts) {
-          super();
-          this.receiveBuffer = [];
-          this.sendBuffer = [];
-          this.ids = 0;
-          this.acks = {};
-          this.flags = {};
-          this.io = io2;
-          this.nsp = nsp;
-          this.ids = 0;
-          this.acks = {};
-          this.receiveBuffer = [];
-          this.sendBuffer = [];
-          this.connected = false;
-          this.disconnected = true;
-          this.flags = {};
-          if (opts && opts.auth) {
-            this.auth = opts.auth;
-          }
-          if (this.io._autoConnect)
-            this.open();
-        }
-        /**
-         * Subscribe to open, close and packet events
-         *
-         * @private
-         */
-        subEvents() {
-          if (this.subs)
-            return;
-          const io2 = this.io;
-          this.subs = [
-            on_1.on(io2, "open", this.onopen.bind(this)),
-            on_1.on(io2, "packet", this.onpacket.bind(this)),
-            on_1.on(io2, "error", this.onerror.bind(this)),
-            on_1.on(io2, "close", this.onclose.bind(this))
-          ];
-        }
-        /**
-         * Whether the Socket will try to reconnect when its Manager connects or reconnects
-         */
-        get active() {
-          return !!this.subs;
-        }
-        /**
-         * "Opens" the socket.
-         *
-         * @public
-         */
-        connect() {
-          if (this.connected)
-            return this;
-          this.subEvents();
-          if (!this.io["_reconnecting"])
-            this.io.open();
-          if ("open" === this.io._readyState)
-            this.onopen();
-          return this;
-        }
-        /**
-         * Alias for connect()
-         */
-        open() {
-          return this.connect();
-        }
-        /**
-         * Sends a `message` event.
-         *
-         * @return self
-         * @public
-         */
-        send(...args) {
-          args.unshift("message");
-          this.emit.apply(this, args);
-          return this;
-        }
-        /**
-         * Override `emit`.
-         * If the event is in `events`, it's emitted normally.
-         *
-         * @param ev - event name
-         * @return self
-         * @public
-         */
-        emit(ev, ...args) {
-          if (RESERVED_EVENTS.hasOwnProperty(ev)) {
-            throw new Error('"' + ev + '" is a reserved event name');
-          }
-          args.unshift(ev);
-          const packet = {
-            type: socket_io_parser_1.PacketType.EVENT,
-            data: args
-          };
-          packet.options = {};
-          packet.options.compress = this.flags.compress !== false;
-          if ("function" === typeof args[args.length - 1]) {
-            debug("emitting packet with ack id %d", this.ids);
-            this.acks[this.ids] = args.pop();
-            packet.id = this.ids++;
-          }
-          const isTransportWritable = this.io.engine && this.io.engine.transport && this.io.engine.transport.writable;
-          const discardPacket = this.flags.volatile && (!isTransportWritable || !this.connected);
-          if (discardPacket) {
-            debug("discard packet as the transport is not currently writable");
-          } else if (this.connected) {
-            this.packet(packet);
-          } else {
-            this.sendBuffer.push(packet);
-          }
-          this.flags = {};
-          return this;
-        }
-        /**
-         * Sends a packet.
-         *
-         * @param packet
-         * @private
-         */
-        packet(packet) {
-          packet.nsp = this.nsp;
-          this.io._packet(packet);
-        }
-        /**
-         * Called upon engine `open`.
-         *
-         * @private
-         */
-        onopen() {
-          debug("transport is open - connecting");
-          if (typeof this.auth == "function") {
-            this.auth((data2) => {
-              this.packet({ type: socket_io_parser_1.PacketType.CONNECT, data: data2 });
-            });
-          } else {
-            this.packet({ type: socket_io_parser_1.PacketType.CONNECT, data: this.auth });
-          }
-        }
-        /**
-         * Called upon engine or manager `error`.
-         *
-         * @param err
-         * @private
-         */
-        onerror(err) {
-          if (!this.connected) {
-            super.emit("connect_error", err);
-          }
-        }
-        /**
-         * Called upon engine `close`.
-         *
-         * @param reason
-         * @private
-         */
-        onclose(reason) {
-          debug("close (%s)", reason);
-          this.connected = false;
-          this.disconnected = true;
-          delete this.id;
-          super.emit("disconnect", reason);
-        }
-        /**
-         * Called with socket packet.
-         *
-         * @param packet
-         * @private
-         */
-        onpacket(packet) {
-          const sameNamespace = packet.nsp === this.nsp;
-          if (!sameNamespace)
-            return;
-          switch (packet.type) {
-            case socket_io_parser_1.PacketType.CONNECT:
-              if (packet.data && packet.data.sid) {
-                const id2 = packet.data.sid;
-                this.onconnect(id2);
-              } else {
-                super.emit("connect_error", new Error("It seems you are trying to reach a Socket.IO server in v2.x with a v3.x client, but they are not compatible (more information here: https://socket.io/docs/v3/migrating-from-2-x-to-3-0/)"));
-              }
-              break;
-            case socket_io_parser_1.PacketType.EVENT:
-              this.onevent(packet);
-              break;
-            case socket_io_parser_1.PacketType.BINARY_EVENT:
-              this.onevent(packet);
-              break;
-            case socket_io_parser_1.PacketType.ACK:
-              this.onack(packet);
-              break;
-            case socket_io_parser_1.PacketType.BINARY_ACK:
-              this.onack(packet);
-              break;
-            case socket_io_parser_1.PacketType.DISCONNECT:
-              this.ondisconnect();
-              break;
-            case socket_io_parser_1.PacketType.CONNECT_ERROR:
-              const err = new Error(packet.data.message);
-              err.data = packet.data.data;
-              super.emit("connect_error", err);
-              break;
-          }
-        }
-        /**
-         * Called upon a server event.
-         *
-         * @param packet
-         * @private
-         */
-        onevent(packet) {
-          const args = packet.data || [];
-          debug("emitting event %j", args);
-          if (null != packet.id) {
-            debug("attaching ack callback to event");
-            args.push(this.ack(packet.id));
-          }
-          if (this.connected) {
-            this.emitEvent(args);
-          } else {
-            this.receiveBuffer.push(Object.freeze(args));
-          }
-        }
-        emitEvent(args) {
-          if (this._anyListeners && this._anyListeners.length) {
-            const listeners = this._anyListeners.slice();
-            for (const listener3 of listeners) {
-              listener3.apply(this, args);
-            }
-          }
-          super.emit.apply(this, args);
-        }
-        /**
-         * Produces an ack callback to emit with an event.
-         *
-         * @private
-         */
-        ack(id2) {
-          const self2 = this;
-          let sent = false;
-          return function(...args) {
-            if (sent)
-              return;
-            sent = true;
-            debug("sending ack %j", args);
-            self2.packet({
-              type: socket_io_parser_1.PacketType.ACK,
-              id: id2,
-              data: args
-            });
-          };
-        }
-        /**
-         * Called upon a server acknowlegement.
-         *
-         * @param packet
-         * @private
-         */
-        onack(packet) {
-          const ack = this.acks[packet.id];
-          if ("function" === typeof ack) {
-            debug("calling ack %s with %j", packet.id, packet.data);
-            ack.apply(this, packet.data);
-            delete this.acks[packet.id];
-          } else {
-            debug("bad ack %s", packet.id);
-          }
-        }
-        /**
-         * Called upon server connect.
-         *
-         * @private
-         */
-        onconnect(id2) {
-          debug("socket connected with id %s", id2);
-          this.id = id2;
-          this.connected = true;
-          this.disconnected = false;
-          super.emit("connect");
-          this.emitBuffered();
-        }
-        /**
-         * Emit buffered events (received and emitted).
-         *
-         * @private
-         */
-        emitBuffered() {
-          this.receiveBuffer.forEach((args) => this.emitEvent(args));
-          this.receiveBuffer = [];
-          this.sendBuffer.forEach((packet) => this.packet(packet));
-          this.sendBuffer = [];
-        }
-        /**
-         * Called upon server disconnect.
-         *
-         * @private
-         */
-        ondisconnect() {
-          debug("server disconnect (%s)", this.nsp);
-          this.destroy();
-          this.onclose("io server disconnect");
-        }
-        /**
-         * Called upon forced client/server side disconnections,
-         * this method ensures the manager stops tracking us and
-         * that reconnections don't get triggered for this.
-         *
-         * @private
-         */
-        destroy() {
-          if (this.subs) {
-            this.subs.forEach((subDestroy) => subDestroy());
-            this.subs = void 0;
-          }
-          this.io["_destroy"](this);
-        }
-        /**
-         * Disconnects the socket manually.
-         *
-         * @return self
-         * @public
-         */
-        disconnect() {
-          if (this.connected) {
-            debug("performing disconnect (%s)", this.nsp);
-            this.packet({ type: socket_io_parser_1.PacketType.DISCONNECT });
-          }
-          this.destroy();
-          if (this.connected) {
-            this.onclose("io client disconnect");
-          }
-          return this;
-        }
-        /**
-         * Alias for disconnect()
-         *
-         * @return self
-         * @public
-         */
-        close() {
-          return this.disconnect();
-        }
-        /**
-         * Sets the compress flag.
-         *
-         * @param compress - if `true`, compresses the sending data
-         * @return self
-         * @public
-         */
-        compress(compress) {
-          this.flags.compress = compress;
-          return this;
-        }
-        /**
-         * Sets a modifier for a subsequent event emission that the event message will be dropped when this socket is not
-         * ready to send messages.
-         *
-         * @returns self
-         * @public
-         */
-        get volatile() {
-          this.flags.volatile = true;
-          return this;
-        }
-        /**
-         * Adds a listener that will be fired when any event is emitted. The event name is passed as the first argument to the
-         * callback.
-         *
-         * @param listener
-         * @public
-         */
-        onAny(listener3) {
-          this._anyListeners = this._anyListeners || [];
-          this._anyListeners.push(listener3);
-          return this;
-        }
-        /**
-         * Adds a listener that will be fired when any event is emitted. The event name is passed as the first argument to the
-         * callback. The listener is added to the beginning of the listeners array.
-         *
-         * @param listener
-         * @public
-         */
-        prependAny(listener3) {
-          this._anyListeners = this._anyListeners || [];
-          this._anyListeners.unshift(listener3);
-          return this;
-        }
-        /**
-         * Removes the listener that will be fired when any event is emitted.
-         *
-         * @param listener
-         * @public
-         */
-        offAny(listener3) {
-          if (!this._anyListeners) {
-            return this;
-          }
-          if (listener3) {
-            const listeners = this._anyListeners;
-            for (let i2 = 0; i2 < listeners.length; i2++) {
-              if (listener3 === listeners[i2]) {
-                listeners.splice(i2, 1);
-                return this;
-              }
-            }
-          } else {
-            this._anyListeners = [];
-          }
-          return this;
-        }
-        /**
-         * Returns an array of listeners that are listening for any event that is specified. This array can be manipulated,
-         * e.g. to remove listeners.
-         *
-         * @public
-         */
-        listenersAny() {
-          return this._anyListeners || [];
-        }
-      };
-      exports.Socket = Socket2;
-    }
-  });
-
-  // node_modules/backo2/index.js
-  var require_backo2 = __commonJS({
-    "node_modules/backo2/index.js"(exports, module) {
-      module.exports = Backoff;
-      function Backoff(opts) {
-        opts = opts || {};
-        this.ms = opts.min || 100;
-        this.max = opts.max || 1e4;
-        this.factor = opts.factor || 2;
-        this.jitter = opts.jitter > 0 && opts.jitter <= 1 ? opts.jitter : 0;
-        this.attempts = 0;
-      }
-      Backoff.prototype.duration = function() {
-        var ms = this.ms * Math.pow(this.factor, this.attempts++);
-        if (this.jitter) {
-          var rand = Math.random();
-          var deviation = Math.floor(rand * this.jitter * ms);
-          ms = (Math.floor(rand * 10) & 1) == 0 ? ms - deviation : ms + deviation;
-        }
-        return Math.min(ms, this.max) | 0;
-      };
-      Backoff.prototype.reset = function() {
-        this.attempts = 0;
-      };
-      Backoff.prototype.setMin = function(min2) {
-        this.ms = min2;
-      };
-      Backoff.prototype.setMax = function(max2) {
-        this.max = max2;
-      };
-      Backoff.prototype.setJitter = function(jitter) {
-        this.jitter = jitter;
-      };
-    }
-  });
-
-  // node_modules/socket.io-client/build/manager.js
-  var require_manager = __commonJS({
-    "node_modules/socket.io-client/build/manager.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.Manager = void 0;
-      var eio = require_lib2();
-      var socket_1 = require_socket2();
-      var Emitter = require_component_emitter();
-      var parser = require_dist();
-      var on_1 = require_on();
-      var Backoff = require_backo2();
-      var debug = require_browser2()("socket.io-client:manager");
-      var Manager2 = class extends Emitter {
-        constructor(uri, opts) {
-          super();
-          this.nsps = {};
-          this.subs = [];
-          if (uri && "object" === typeof uri) {
-            opts = uri;
-            uri = void 0;
-          }
-          opts = opts || {};
-          opts.path = opts.path || "/socket.io";
-          this.opts = opts;
-          this.reconnection(opts.reconnection !== false);
-          this.reconnectionAttempts(opts.reconnectionAttempts || Infinity);
-          this.reconnectionDelay(opts.reconnectionDelay || 1e3);
-          this.reconnectionDelayMax(opts.reconnectionDelayMax || 5e3);
-          this.randomizationFactor(opts.randomizationFactor || 0.5);
-          this.backoff = new Backoff({
-            min: this.reconnectionDelay(),
-            max: this.reconnectionDelayMax(),
-            jitter: this.randomizationFactor()
-          });
-          this.timeout(null == opts.timeout ? 2e4 : opts.timeout);
-          this._readyState = "closed";
-          this.uri = uri;
-          const _parser = opts.parser || parser;
-          this.encoder = new _parser.Encoder();
-          this.decoder = new _parser.Decoder();
-          this._autoConnect = opts.autoConnect !== false;
-          if (this._autoConnect)
-            this.open();
-        }
-        reconnection(v2) {
-          if (!arguments.length)
-            return this._reconnection;
-          this._reconnection = !!v2;
-          return this;
-        }
-        reconnectionAttempts(v2) {
-          if (v2 === void 0)
-            return this._reconnectionAttempts;
-          this._reconnectionAttempts = v2;
-          return this;
-        }
-        reconnectionDelay(v2) {
-          var _a;
-          if (v2 === void 0)
-            return this._reconnectionDelay;
-          this._reconnectionDelay = v2;
-          (_a = this.backoff) === null || _a === void 0 ? void 0 : _a.setMin(v2);
-          return this;
-        }
-        randomizationFactor(v2) {
-          var _a;
-          if (v2 === void 0)
-            return this._randomizationFactor;
-          this._randomizationFactor = v2;
-          (_a = this.backoff) === null || _a === void 0 ? void 0 : _a.setJitter(v2);
-          return this;
-        }
-        reconnectionDelayMax(v2) {
-          var _a;
-          if (v2 === void 0)
-            return this._reconnectionDelayMax;
-          this._reconnectionDelayMax = v2;
-          (_a = this.backoff) === null || _a === void 0 ? void 0 : _a.setMax(v2);
-          return this;
-        }
-        timeout(v2) {
-          if (!arguments.length)
-            return this._timeout;
-          this._timeout = v2;
-          return this;
-        }
-        /**
-         * Starts trying to reconnect if reconnection is enabled and we have not
-         * started reconnecting yet
-         *
-         * @private
-         */
-        maybeReconnectOnOpen() {
-          if (!this._reconnecting && this._reconnection && this.backoff.attempts === 0) {
-            this.reconnect();
-          }
-        }
-        /**
-         * Sets the current transport `socket`.
-         *
-         * @param {Function} fn - optional, callback
-         * @return self
-         * @public
-         */
-        open(fn) {
-          debug("readyState %s", this._readyState);
-          if (~this._readyState.indexOf("open"))
-            return this;
-          debug("opening %s", this.uri);
-          this.engine = eio(this.uri, this.opts);
-          const socket = this.engine;
-          const self2 = this;
-          this._readyState = "opening";
-          this.skipReconnect = false;
-          const openSubDestroy = on_1.on(socket, "open", function() {
-            self2.onopen();
-            fn && fn();
-          });
-          const errorSub = on_1.on(socket, "error", (err) => {
-            debug("error");
-            self2.cleanup();
-            self2._readyState = "closed";
-            super.emit("error", err);
-            if (fn) {
-              fn(err);
-            } else {
-              self2.maybeReconnectOnOpen();
-            }
-          });
-          if (false !== this._timeout) {
-            const timeout = this._timeout;
-            debug("connect attempt will timeout after %d", timeout);
-            if (timeout === 0) {
-              openSubDestroy();
-            }
-            const timer = setTimeout(() => {
-              debug("connect attempt timed out after %d", timeout);
-              openSubDestroy();
-              socket.close();
-              socket.emit("error", new Error("timeout"));
-            }, timeout);
-            this.subs.push(function subDestroy() {
-              clearTimeout(timer);
-            });
-          }
-          this.subs.push(openSubDestroy);
-          this.subs.push(errorSub);
-          return this;
-        }
-        /**
-         * Alias for open()
-         *
-         * @return self
-         * @public
-         */
-        connect(fn) {
-          return this.open(fn);
-        }
-        /**
-         * Called upon transport open.
-         *
-         * @private
-         */
-        onopen() {
-          debug("open");
-          this.cleanup();
-          this._readyState = "open";
-          super.emit("open");
-          const socket = this.engine;
-          this.subs.push(on_1.on(socket, "ping", this.onping.bind(this)), on_1.on(socket, "data", this.ondata.bind(this)), on_1.on(socket, "error", this.onerror.bind(this)), on_1.on(socket, "close", this.onclose.bind(this)), on_1.on(this.decoder, "decoded", this.ondecoded.bind(this)));
-        }
-        /**
-         * Called upon a ping.
-         *
-         * @private
-         */
-        onping() {
-          super.emit("ping");
-        }
-        /**
-         * Called with data.
-         *
-         * @private
-         */
-        ondata(data2) {
-          this.decoder.add(data2);
-        }
-        /**
-         * Called when parser fully decodes a packet.
-         *
-         * @private
-         */
-        ondecoded(packet) {
-          super.emit("packet", packet);
-        }
-        /**
-         * Called upon socket error.
-         *
-         * @private
-         */
-        onerror(err) {
-          debug("error", err);
-          super.emit("error", err);
-        }
-        /**
-         * Creates a new socket for the given `nsp`.
-         *
-         * @return {Socket}
-         * @public
-         */
-        socket(nsp, opts) {
-          let socket = this.nsps[nsp];
-          if (!socket) {
-            socket = new socket_1.Socket(this, nsp, opts);
-            this.nsps[nsp] = socket;
-          }
-          return socket;
-        }
-        /**
-         * Called upon a socket close.
-         *
-         * @param socket
-         * @private
-         */
-        _destroy(socket) {
-          const nsps = Object.keys(this.nsps);
-          for (const nsp of nsps) {
-            const socket2 = this.nsps[nsp];
-            if (socket2.active) {
-              debug("socket %s is still active, skipping close", nsp);
-              return;
-            }
-          }
-          this._close();
-        }
-        /**
-         * Writes a packet.
-         *
-         * @param packet
-         * @private
-         */
-        _packet(packet) {
-          debug("writing packet %j", packet);
-          const encodedPackets = this.encoder.encode(packet);
-          for (let i2 = 0; i2 < encodedPackets.length; i2++) {
-            this.engine.write(encodedPackets[i2], packet.options);
-          }
-        }
-        /**
-         * Clean up transport subscriptions and packet buffer.
-         *
-         * @private
-         */
-        cleanup() {
-          debug("cleanup");
-          this.subs.forEach((subDestroy) => subDestroy());
-          this.subs.length = 0;
-          this.decoder.destroy();
-        }
-        /**
-         * Close the current socket.
-         *
-         * @private
-         */
-        _close() {
-          debug("disconnect");
-          this.skipReconnect = true;
-          this._reconnecting = false;
-          if ("opening" === this._readyState) {
-            this.cleanup();
-          }
-          this.backoff.reset();
-          this._readyState = "closed";
-          if (this.engine)
-            this.engine.close();
-        }
-        /**
-         * Alias for close()
-         *
-         * @private
-         */
-        disconnect() {
-          return this._close();
-        }
-        /**
-         * Called upon engine close.
-         *
-         * @private
-         */
-        onclose(reason) {
-          debug("onclose");
-          this.cleanup();
-          this.backoff.reset();
-          this._readyState = "closed";
-          super.emit("close", reason);
-          if (this._reconnection && !this.skipReconnect) {
-            this.reconnect();
-          }
-        }
-        /**
-         * Attempt a reconnection.
-         *
-         * @private
-         */
-        reconnect() {
-          if (this._reconnecting || this.skipReconnect)
-            return this;
-          const self2 = this;
-          if (this.backoff.attempts >= this._reconnectionAttempts) {
-            debug("reconnect failed");
-            this.backoff.reset();
-            super.emit("reconnect_failed");
-            this._reconnecting = false;
-          } else {
-            const delay = this.backoff.duration();
-            debug("will wait %dms before reconnect attempt", delay);
-            this._reconnecting = true;
-            const timer = setTimeout(() => {
-              if (self2.skipReconnect)
-                return;
-              debug("attempting reconnect");
-              super.emit("reconnect_attempt", self2.backoff.attempts);
-              if (self2.skipReconnect)
-                return;
-              self2.open((err) => {
-                if (err) {
-                  debug("reconnect attempt error");
-                  self2._reconnecting = false;
-                  self2.reconnect();
-                  super.emit("reconnect_error", err);
-                } else {
-                  debug("reconnect success");
-                  self2.onreconnect();
-                }
-              });
-            }, delay);
-            this.subs.push(function subDestroy() {
-              clearTimeout(timer);
-            });
-          }
-        }
-        /**
-         * Called upon successful reconnect.
-         *
-         * @private
-         */
-        onreconnect() {
-          const attempt = this.backoff.attempts;
-          this._reconnecting = false;
-          this.backoff.reset();
-          super.emit("reconnect", attempt);
-        }
-      };
-      exports.Manager = Manager2;
-    }
-  });
-
-  // node_modules/socket.io-client/build/index.js
-  var require_build = __commonJS({
-    "node_modules/socket.io-client/build/index.js"(exports, module) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.Socket = exports.io = exports.Manager = exports.protocol = void 0;
-      var url_1 = require_url();
-      var manager_1 = require_manager();
-      var socket_1 = require_socket2();
-      Object.defineProperty(exports, "Socket", { enumerable: true, get: function() {
-        return socket_1.Socket;
-      } });
-      var debug = require_browser2()("socket.io-client");
-      module.exports = exports = lookup;
-      var cache = exports.managers = {};
-      function lookup(uri, opts) {
-        if (typeof uri === "object") {
-          opts = uri;
-          uri = void 0;
-        }
-        opts = opts || {};
-        const parsed = url_1.url(uri, opts.path);
-        const source = parsed.source;
-        const id2 = parsed.id;
-        const path = parsed.path;
-        const sameNamespace = cache[id2] && path in cache[id2]["nsps"];
-        const newConnection = opts.forceNew || opts["force new connection"] || false === opts.multiplex || sameNamespace;
-        let io2;
-        if (newConnection) {
-          debug("ignoring socket cache for %s", source);
-          io2 = new manager_1.Manager(source, opts);
-        } else {
-          if (!cache[id2]) {
-            debug("new io instance for %s", source);
-            cache[id2] = new manager_1.Manager(source, opts);
-          }
-          io2 = cache[id2];
-        }
-        if (parsed.query && !opts.query) {
-          opts.query = parsed.queryKey;
-        }
-        return io2.socket(parsed.path, opts);
-      }
-      exports.io = lookup;
-      var socket_io_parser_1 = require_dist();
-      Object.defineProperty(exports, "protocol", { enumerable: true, get: function() {
-        return socket_io_parser_1.protocol;
-      } });
-      exports.connect = lookup;
-      var manager_2 = require_manager();
-      Object.defineProperty(exports, "Manager", { enumerable: true, get: function() {
-        return manager_2.Manager;
-      } });
     }
   });
 
@@ -37962,7 +34206,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           function isNative(value) {
             return typeof value == "function" && reNative.test(value);
           }
-          var setBindData = !defineProperty4 ? noop6 : function(func, value) {
+          var setBindData = !defineProperty4 ? noop7 : function(func, value) {
             descriptor.value = value;
             defineProperty4(func, "__bindData__", descriptor);
             descriptor.value = null;
@@ -39177,7 +35421,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             context._ = oldDash;
             return this;
           }
-          function noop6() {
+          function noop7() {
           }
           var now = isNative(now = Date2.now) && now || function() {
             return new Date2().getTime();
@@ -39421,7 +35665,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           lodash.lastIndexOf = lastIndexOf;
           lodash.mixin = mixin;
           lodash.noConflict = noConflict;
-          lodash.noop = noop6;
+          lodash.noop = noop7;
           lodash.now = now;
           lodash.parseInt = parseInt2;
           lodash.random = random3;
@@ -66969,10 +63213,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   // src/client/Utils/Socket.ts
   var import_events = __toESM(require_events());
 
-  // node_modules/socket.io-client/wrapper.mjs
-  var import_build = __toESM(require_build(), 1);
-  var Manager = import_build.default.Manager;
-
   // src/client/Utils/BrowserStorage.ts
   var BrowserStorage = class {
     static getString(key) {
@@ -67011,6 +63251,123 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
     static removeItem(key) {
       localStorage.removeItem(key);
+    }
+  };
+
+  // src/shared/clientSocket.ts
+  var import_lodash2 = __toESM(require_lodash());
+
+  // src/shared/Messages.ts
+  var ServerMessagesRaw = /* @__PURE__ */ ((ServerMessagesRaw2) => {
+    ServerMessagesRaw2[ServerMessagesRaw2["Login"] = 0] = "Login";
+    ServerMessagesRaw2[ServerMessagesRaw2["RGBSet"] = 1] = "RGBSet";
+    ServerMessagesRaw2[ServerMessagesRaw2["RGBGet"] = 2] = "RGBGet";
+    ServerMessagesRaw2[ServerMessagesRaw2["ModeSet"] = 3] = "ModeSet";
+    ServerMessagesRaw2[ServerMessagesRaw2["ModeGet"] = 4] = "ModeGet";
+    ServerMessagesRaw2[ServerMessagesRaw2["Settings"] = 5] = "Settings";
+    ServerMessagesRaw2[ServerMessagesRaw2["Config"] = 6] = "Config";
+    ServerMessagesRaw2[ServerMessagesRaw2["DoorLog"] = 7] = "DoorLog";
+    ServerMessagesRaw2[ServerMessagesRaw2["DoorClear"] = 8] = "DoorClear";
+    ServerMessagesRaw2[ServerMessagesRaw2["CamGet"] = 9] = "CamGet";
+    ServerMessagesRaw2[ServerMessagesRaw2["CamTake"] = 10] = "CamTake";
+    ServerMessagesRaw2[ServerMessagesRaw2["DeviceInfo"] = 11] = "DeviceInfo";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioIsAudioServerConnected"] = 12] = "AudioIsAudioServerConnected";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioGetDevices"] = 13] = "AudioGetDevices";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioPcm"] = 14] = "AudioPcm";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioPcmReport"] = 15] = "AudioPcmReport";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioActiveDevice"] = 16] = "AudioActiveDevice";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioAllDevices"] = 17] = "AudioAllDevices";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioAudioSettingsUpdate"] = 18] = "AudioAudioSettingsUpdate";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioIsInternalAudioProcessing"] = 19] = "AudioIsInternalAudioProcessing";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioApis"] = 20] = "AudioApis";
+    return ServerMessagesRaw2;
+  })(ServerMessagesRaw || {});
+  var ClientMessagesRaw = /* @__PURE__ */ ((ClientMessagesRaw2) => {
+    ClientMessagesRaw2[ClientMessagesRaw2["Login"] = 0] = "Login";
+    ClientMessagesRaw2[ClientMessagesRaw2["RGBUpdate"] = 1] = "RGBUpdate";
+    ClientMessagesRaw2[ClientMessagesRaw2["ModeUpdate"] = 2] = "ModeUpdate";
+    ClientMessagesRaw2[ClientMessagesRaw2["DoorOpen"] = 3] = "DoorOpen";
+    ClientMessagesRaw2[ClientMessagesRaw2["DoorImageAvailable"] = 4] = "DoorImageAvailable";
+    ClientMessagesRaw2[ClientMessagesRaw2["SocketLog"] = 5] = "SocketLog";
+    ClientMessagesRaw2[ClientMessagesRaw2["SettingsUpdate"] = 6] = "SettingsUpdate";
+    ClientMessagesRaw2[ClientMessagesRaw2["PCM"] = 7] = "PCM";
+    ClientMessagesRaw2[ClientMessagesRaw2["AudioGetDevices"] = 8] = "AudioGetDevices";
+    ClientMessagesRaw2[ClientMessagesRaw2["AudioActiveDevice"] = 9] = "AudioActiveDevice";
+    ClientMessagesRaw2[ClientMessagesRaw2["AudioAllDevices"] = 10] = "AudioAllDevices";
+    ClientMessagesRaw2[ClientMessagesRaw2["AudioApis"] = 11] = "AudioApis";
+    ClientMessagesRaw2[ClientMessagesRaw2["AudioSettingsUpdate"] = 12] = "AudioSettingsUpdate";
+    ClientMessagesRaw2[ClientMessagesRaw2["AudioIsInternalAudioProcessing"] = 13] = "AudioIsInternalAudioProcessing";
+    return ClientMessagesRaw2;
+  })(ClientMessagesRaw || {});
+  var SpecialEvents = /* @__PURE__ */ ((SpecialEvents3) => {
+    SpecialEvents3[SpecialEvents3["Connect"] = 251] = "Connect";
+    SpecialEvents3[SpecialEvents3["Disconnect"] = 252] = "Disconnect";
+    SpecialEvents3[SpecialEvents3["PromiseError"] = 253] = "PromiseError";
+    SpecialEvents3[SpecialEvents3["PromiseResolve"] = 254] = "PromiseResolve";
+    SpecialEvents3[SpecialEvents3["Promise"] = 255] = "Promise";
+    return SpecialEvents3;
+  })(SpecialEvents || {});
+  var ClientMessages = {
+    ...ClientMessagesRaw,
+    ...SpecialEvents
+  };
+  var ServerMessages = {
+    ...ServerMessagesRaw,
+    ...SpecialEvents
+  };
+
+  // src/shared/eventEmitter.ts
+  var EventEmitter = class {
+    constructor() {
+      this.map = /* @__PURE__ */ new Map();
+    }
+    on(key, handler) {
+      const data2 = this.map.get(key) || [];
+      if (data2.indexOf(handler) === -1) {
+        data2.push(handler);
+      }
+    }
+    off(key, handler) {
+      const data2 = this.map.get(key) || [];
+      const index = data2.indexOf(handler);
+      if (index !== -1) {
+        data2.splice(index, 1);
+      }
+      if (!data2.length) {
+        this.map.delete(key);
+      }
+    }
+    emit(key, ...args) {
+      const data2 = this.map.get(key);
+      let count = 0;
+      if (data2) {
+        for (const fn of data2) {
+          fn(...args);
+          count++;
+        }
+      }
+      return count;
+    }
+  };
+  var EventEmitterSingle = class {
+    constructor() {
+      this.map = /* @__PURE__ */ new Map();
+    }
+    on(key, handler) {
+      if (this.map.has(key)) {
+        throw new Error(`Event ${key} already registered`);
+      }
+      this.map.set(key, handler);
+    }
+    off(key) {
+      this.map.delete(key);
+    }
+    emit(key, ...args) {
+      const data2 = this.map.get(key);
+      if (data2) {
+        return data2(...args);
+      }
+      throw new Error(`Function ${key} not reistered`);
     }
   };
 
@@ -67059,6 +63416,559 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     const dateString = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
     return dateString;
   }
+  function deffer() {
+    let resolve2;
+    let reject2;
+    const promise = new Promise((_resolve, _reject) => {
+      resolve2 = _resolve;
+      reject2 = _reject;
+    });
+    return {
+      promise,
+      reject: reject2,
+      resolve: resolve2
+    };
+  }
+
+  // src/shared/messages/BinaryBuffer.ts
+  var BinaryBuffer = class {
+    constructor(bufferOrSize = 32) {
+      this._offset = 0;
+      const buf = typeof bufferOrSize === "number" ? new ArrayBuffer(bufferOrSize) : bufferOrSize;
+      this.view = buf instanceof Uint8Array ? new DataView(buf.buffer, buf.byteOffset, buf.byteLength) : new DataView(buf);
+    }
+    // getters
+    getInt8() {
+      const i8 = this.view.getInt8(this.offset);
+      this.offset += 1;
+      return i8;
+    }
+    getUint8() {
+      const u8 = this.view.getUint8(this.offset);
+      this.offset += 1;
+      return u8;
+    }
+    getBool() {
+      const data2 = this.view.getUint8(this.offset);
+      this.offset += 1;
+      return !!data2;
+    }
+    getInt16LE() {
+      this.view.getInt16(this.offset, true);
+      this.offset += 2;
+      return this;
+    }
+    getInt16BE() {
+      this.view.getInt16(this.offset, false);
+      this.offset += 2;
+      return this;
+    }
+    getUint16LE() {
+      const u16 = this.view.getUint16(this.offset, true);
+      this.offset += 2;
+      return u16;
+    }
+    getUint16BE() {
+      const u16 = this.view.getUint16(this.offset, false);
+      this.offset += 2;
+      return u16;
+    }
+    getInt32LE() {
+      const i32 = this.view.getInt32(this.offset, true);
+      this.offset += 4;
+      return i32;
+    }
+    getInt32BE() {
+      const i32 = this.view.getInt32(this.offset, false);
+      this.offset += 4;
+      return i32;
+    }
+    getUint32LE() {
+      const u32 = this.view.getUint32(this.offset, true);
+      this.offset += 4;
+      return u32;
+    }
+    getUint32BE() {
+      const u32 = this.view.getUint32(this.offset, false);
+      this.offset += 4;
+      return u32;
+    }
+    getFloatLE() {
+      const float = this.view.getFloat32(this.offset, false);
+      this.offset += 4;
+      return float;
+    }
+    getFloatBe() {
+      const float = this.view.getFloat32(this.offset, true);
+      this.offset += 4;
+      return float;
+    }
+    getDoubleLE() {
+      const double = this.view.getFloat64(this.offset, false);
+      this.offset += 8;
+      return double;
+    }
+    getDoubleBE() {
+      const double = this.view.getFloat64(this.offset, true);
+      this.offset += 8;
+      return double;
+    }
+    getLength() {
+      let length = 0;
+      let shift = 0;
+      let b2 = 0;
+      do {
+        b2 = this.getUint8();
+        length = length | (b2 & 127) << shift;
+        shift += 7;
+      } while (b2 & 128);
+      return length - 1;
+    }
+    getAsciiString() {
+      const strLength = this.getLength();
+      let str = "";
+      for (let i2 = 0; i2 < strLength; i2++) {
+        str += String.fromCharCode(this.getUint8());
+      }
+      return str;
+    }
+    getUtf8String() {
+      const strLength = this.getLength();
+      let str = "";
+      let i2 = 0;
+      while (i2 < strLength) {
+        const byte = this.getUint8();
+        if (byte < 128) {
+          str += String.fromCharCode(byte);
+        } else if (byte >= 192 && byte < 224) {
+          const secondByte = this.getUint8();
+          str += String.fromCharCode((byte & 31) << 6 | secondByte & 63);
+        } else if (byte >= 224 && byte < 240) {
+          const secondByte = this.getUint8();
+          const thirdByte = this.getUint8();
+          str += String.fromCharCode((byte & 15) << 12 | (secondByte & 63) << 6 | thirdByte & 63);
+        } else if (byte >= 240 && byte < 248) {
+          const secondByte = this.getUint8();
+          const thirdByte = this.getUint8();
+          const fourthByte = this.getUint8();
+          const codePoint = ((byte & 7) << 18 | (secondByte & 63) << 12 | (thirdByte & 63) << 6 | fourthByte & 63) - 65536;
+          str += String.fromCharCode(55296 | codePoint >> 10, 56320 | codePoint & 1023);
+        }
+        i2++;
+      }
+      return str;
+    }
+    getU8Arr() {
+      const length = this.getLength();
+      if (length === -1)
+        return null;
+      return this.getBytes(length);
+    }
+    getBytes(length) {
+      const offset = this.offset;
+      this.offset += length;
+      return new Uint8Array(this.view.buffer, this.view.byteOffset + offset, length);
+    }
+    getAny() {
+      return JSON.parse(this.getUtf8String());
+    }
+    // writters
+    setInt8(value) {
+      this.view.setInt8(this.offset, value);
+      this.offset += 1;
+      return this;
+    }
+    setUint8(value) {
+      this.view.setUint8(this.offset, value);
+      this.offset += 1;
+      return this;
+    }
+    setBool(value) {
+      this.view.setUint8(this.offset, value ? 1 : 0);
+      this.offset += 1;
+      return this;
+    }
+    setInt16LE(value) {
+      this.view.setInt16(this.offset, value, true);
+      this.offset += 2;
+      return this;
+    }
+    setInt16BE(value) {
+      this.view.setInt16(this.offset, value, false);
+      this.offset += 2;
+      return this;
+    }
+    setUint16LE(value) {
+      this.view.setUint16(this.offset, value, true);
+      this.offset += 2;
+      return this;
+    }
+    setUint16BE(value) {
+      this.view.setUint16(this.offset, value, false);
+      this.offset += 2;
+      return this;
+    }
+    setInt32LE(value) {
+      this.view.setInt32(this.offset, value, true);
+      this.offset += 4;
+      return this;
+    }
+    setInt32BE(value) {
+      this.view.setInt32(this.offset, value, false);
+      this.offset += 4;
+      return this;
+    }
+    setUint32LE(value) {
+      this.view.setUint32(this.offset, value, true);
+      this.offset += 4;
+      return this;
+    }
+    setUint32BE(value) {
+      this.view.setUint32(this.offset, value, false);
+      this.offset += 4;
+      return this;
+    }
+    setFloatLE(value) {
+      this.view.setFloat32(this.offset, value, true);
+      this.offset += 4;
+      return this;
+    }
+    setFloatBE(value) {
+      this.view.setFloat32(this.offset, value, false);
+      this.offset += 4;
+      return this;
+    }
+    setDoubleLE(value) {
+      this.view.setFloat64(this.offset, value, true);
+      this.offset += 8;
+      return this;
+    }
+    setDoubleBE(value) {
+      this.view.setFloat64(this.offset, value, false);
+      this.offset += 8;
+      return this;
+    }
+    setLength(value) {
+      if (value < -1 || value > 2147483646)
+        throw new Error("Invalid length value");
+      value++;
+      if (value === 0) {
+        this.setUint8(0);
+      } else {
+        while (value > 0) {
+          let byte = value & 127;
+          if (value > 127)
+            byte |= 128;
+          this.setUint8(byte);
+          value >>= 7;
+        }
+      }
+      return this;
+    }
+    setAsciiString(asciiString) {
+      const strLength = asciiString.length;
+      let asciiLength = 0;
+      for (let i2 = 0; i2 < strLength; i2++) {
+        const charCode = asciiString.charCodeAt(i2);
+        if (charCode <= 127) {
+          asciiLength++;
+        }
+      }
+      this.setLength(asciiLength);
+      for (let i2 = 0; i2 < strLength; i2++) {
+        const charCode = asciiString.charCodeAt(i2);
+        if (charCode <= 127) {
+          this.setUint8(charCode);
+        }
+      }
+    }
+    setUtf8String(str) {
+      const strLength = str.length;
+      this.setLength(strLength);
+      for (let i2 = 0; i2 < strLength; i2++) {
+        const charCode = str.charCodeAt(i2);
+        if (charCode <= 127) {
+          this.setUint8(charCode);
+        } else if (charCode <= 2047) {
+          this.setUint8(192 | charCode >> 6);
+          this.setUint8(128 | charCode & 63);
+        } else if (charCode <= 65535) {
+          this.setUint8(224 | charCode >> 12);
+          this.setUint8(128 | charCode >> 6 & 63);
+          this.setUint8(128 | charCode & 63);
+        } else if (charCode <= 1114111) {
+          this.setUint8(240 | charCode >> 18);
+          this.setUint8(128 | charCode >> 12 & 63);
+          this.setUint8(128 | charCode >> 6 & 63);
+          this.setUint8(128 | charCode & 63);
+        }
+      }
+      return this;
+    }
+    setU8Arr(arr) {
+      this.setLength(arr.byteLength);
+      this.setBytes(arr);
+      return this;
+    }
+    setBytes(value) {
+      for (let src = 0, length = value.length, dst = this.offset; src < length; src++, dst++) {
+        const v2 = value[src];
+        if (v2 != null) {
+          this.view.setUint8(dst, v2);
+        } else {
+          throw new Error("value[src] is null");
+        }
+      }
+      this.offset += value.byteLength;
+      return this;
+    }
+    setAny(obj) {
+      this.setUtf8String(JSON.stringify(obj));
+      return this;
+    }
+    get offset() {
+      return this._offset;
+    }
+    set offset(value) {
+      this._offset = value;
+      if (this.view.byteLength < this.offset) {
+        const newSize = (this.view.byteLength || 1) * 2;
+        const u8Arr = new Uint8Array(newSize);
+        const copy = new Uint8Array(this.view.buffer);
+        for (let i2 = 0; i2 < copy.length; i2++) {
+          u8Arr[i2] = copy[i2];
+        }
+        this.view = new DataView(u8Arr.buffer);
+        console.warn("Buffer resized");
+      }
+    }
+    getBuffer() {
+      return new Uint8Array(this.view.buffer, this.view.byteOffset, this.offset);
+    }
+    getRestOfTheBuferBuffer() {
+      return new Uint8Array(this.view.buffer.slice(this.offset), this.view.byteOffset, this.view.byteLength);
+    }
+  };
+  function utf8StringLen(str) {
+    const strLength = str.length;
+    let len = 0;
+    let value = strLength;
+    value++;
+    if (value === 0) {
+      len++;
+    } else {
+      while (value > 0) {
+        let byte = value & 127;
+        if (value > 127)
+          byte |= 128;
+        len++;
+        value >>= 7;
+      }
+    }
+    for (let i2 = 0; i2 < strLength; i2++) {
+      const charCode = str.charCodeAt(i2);
+      if (charCode <= 127) {
+        len += 1;
+      } else if (charCode <= 2047) {
+        len += 2;
+      } else if (charCode <= 65535) {
+        len += 3;
+      } else if (charCode <= 1114111) {
+        len += 4;
+      }
+    }
+    return len;
+  }
+
+  // src/shared/messages/messageHandle.ts
+  var emptyMessage = new Uint8Array();
+  var MessageHandleBase = class {
+    constructor(handle, client) {
+      this.handle = handle;
+      this.events = new EventEmitter();
+      this.promiseEvents = new EventEmitterSingle();
+      this.deffered = /* @__PURE__ */ new Map();
+      this.messageId = 0;
+      this.onConnect = () => {
+        this.events.emit(251 /* Connect */);
+      };
+      this.onDisconnect = () => {
+        this.events.emit(252 /* Disconnect */);
+        this.deffered.forEach((value) => value.reject(new Error("Disonnected")));
+        this.deffered.clear();
+      };
+      this.onMessage = async (reader) => {
+        const type = reader.getUint8();
+        switch (type) {
+          case 255 /* Promise */: {
+            const promiseType = reader.getUint8();
+            const messageId = reader.getUint8();
+            const bufferObj = new BinaryBuffer(reader.getU8Arr());
+            try {
+              const data2 = await this.promiseEvents.emit(promiseType, bufferObj);
+              const buff = new Uint8Array(5 + data2.byteLength);
+              const buffer = new BinaryBuffer(buff);
+              buffer.setUint32LE(messageId);
+              buffer.setBytes(data2);
+              this.send(254 /* PromiseResolve */, buffer.getBuffer());
+            } catch (error) {
+              const errorEncoded = new SocketError(error.message).toBuffer();
+              const buff = new Uint8Array(5 + errorEncoded.byteLength);
+              const buffer = new BinaryBuffer(buff);
+              buffer.setUint32LE(messageId);
+              buffer.setBytes(errorEncoded);
+              this.send(253 /* PromiseError */, buffer.getBuffer());
+            }
+            return true;
+          }
+          case 254 /* PromiseResolve */: {
+            const promiseType = reader.getUint8();
+            const messageId = reader.getUint8();
+            const data2 = this.deffered.get(messageId);
+            this.deffered.delete(messageId);
+            if (data2) {
+              const res = this.onPromiseData(promiseType, reader);
+              data2.resolve(res);
+            }
+            return true;
+          }
+          case 253 /* PromiseError */: {
+            reader.getUint8();
+            const messageId = reader.getUint8();
+            const data2 = this.deffered.get(messageId);
+            this.deffered.delete(messageId);
+            if (data2) {
+              const res = SocketError.fromBuffer(reader);
+              data2.reject(res);
+            }
+            return true;
+          }
+          default:
+            const count = this.events.emit(type, reader);
+            return !!count;
+        }
+      };
+      handle.connect = this.onConnect;
+      handle.disconnect = this.onDisconnect;
+      handle.message = this.onMessage;
+    }
+    on(key, cb) {
+      this.events.on(key, cb);
+    }
+    onPromise(key, cb) {
+      this.promiseEvents.on(key, cb);
+    }
+    off(key, cb) {
+      this.events.off(key, cb);
+    }
+    offPromise(key) {
+      this.promiseEvents.off(key);
+    }
+    onPromiseData(type, data2) {
+      return null;
+    }
+    sendPromise(type, message = emptyMessage) {
+      const deffered = deffer();
+      const id2 = this.messageId++;
+      this.deffered.set(id2, deffered);
+      const buffer = new BinaryBuffer(message.byteLength + 1 + 4);
+      buffer.setUint8(type);
+      buffer.setUint32LE(this.messageId);
+      buffer.setU8Arr(message);
+      this.handle.send(buffer.getU8Arr());
+      return deffered.promise;
+    }
+    send(type, message = emptyMessage) {
+      const buffer = new Uint8Array(message.byteLength + 1);
+      buffer.set(message, 1);
+      buffer[0] = type;
+      return this.handle.send(buffer);
+    }
+  };
+  var SocketError = class _SocketError extends Error {
+    constructor(message) {
+      super(message);
+    }
+    static fromBuffer(reader) {
+      return new _SocketError(reader.getUtf8String());
+    }
+    static fromU8Array(arr) {
+      return _SocketError.fromBuffer(new BinaryBuffer(arr));
+    }
+    toBuffer() {
+      const writer = new BinaryBuffer(utf8StringLen(this.message));
+      return writer.getBuffer();
+    }
+  };
+
+  // src/shared/clientSocket.ts
+  var ClientSocket = class {
+    constructor() {
+      this.handle = createClientHandle((buffer) => false);
+      this.clientHandle = new ClientMessageHandle(this.handle, this);
+      this.onOpen = (_event) => {
+        this.handle.connect();
+      };
+      this.onClose = (_event) => {
+        this.handle.disconnect();
+      };
+      this.onMessage = (event) => {
+        const data2 = event.data;
+        if (typeof data2 === "string") {
+          console.error("Recived string!", data2);
+        } else {
+          const buffer = new BinaryBuffer(new Uint8Array(data2));
+          this.handle.message(buffer);
+        }
+      };
+      this.onError = (event) => {
+        console.log(event);
+      };
+    }
+    createSocket(url) {
+      const urlObj = new URL(url);
+      const prefix = urlObj.protocol.startsWith("https") ? "wss" : "ws";
+      const socketUrl = `${prefix}://${urlObj.host}/`;
+      const socket = new WebSocket(socketUrl);
+      socket.binaryType = "arraybuffer";
+      socket.addEventListener("open", (event) => {
+        this.socket = socket;
+        this.handle.send = (message) => {
+          this.socket.send(message);
+          return true;
+        };
+        this.handle.connect();
+      });
+      socket.addEventListener("message", this.onMessage);
+      socket.addEventListener("error", this.onError);
+      socket.addEventListener("close", (event) => {
+        this.handle.disconnect();
+        this.socket = void 0;
+      });
+    }
+    disconnect() {
+      if (this.socket) {
+        this.socket.close();
+      }
+      this.socket = void 0;
+      this.handle = void 0;
+      this.clientHandle = void 0;
+    }
+    get connected() {
+      console.log(!!this.socket);
+      return !!this.socket;
+    }
+  };
+  var ClientMessageHandle = class extends MessageHandleBase {
+  };
+  function createClientHandle(send) {
+    return {
+      connect: import_lodash2.noop,
+      disconnect: import_lodash2.noop,
+      message: import_lodash2.noop,
+      send
+    };
+  }
 
   // src/shared/constants.ts
   var SECOND = 1e3;
@@ -67073,159 +63983,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var SCHEDULE_TYPE = ["Pattern", "RGB"];
   var HASH = randomString(16);
 
-  // src/shared/socketError.ts
-  function createSocketError(message, stack) {
-    const error = new Error(message);
-    if (stack) {
-      error.stack = stack;
-    }
-    if (null) {
-      return { message };
-    }
-    return { message: error.message, stack: error.stack };
-  }
-
-  // src/shared/clientSocket.ts
-  var ClientSocket = class {
-    constructor() {
-      this.callbacks = /* @__PURE__ */ new Map();
-      this.promiseCallback = /* @__PURE__ */ new Map();
-      this.handlePacket = async (...args) => {
-        const value = args[0];
-        const len = args.length;
-        const callback = args[len - 1];
-        const promise = typeof callback === "function";
-        if (promise) {
-          const promise2 = this.promiseCallback.get(value);
-          if (promise2 === void 0) {
-            Logger.debug("WARNING", `Promise value "${value}" does not exit!`);
-            callback(void 0, createSocketError("Unknown value", void 0));
-            return;
-          }
-          const filteredArgs = args.slice(1, args.length - 1);
-          try {
-            const result = await promise2.apply(this, filteredArgs);
-            callback(result);
-          } catch (error) {
-            const message = error && error.message || "Unknown error";
-            const stack = error && error.stack;
-            callback(void 0, createSocketError(message, stack));
-            Logger.debug("Socket promise error", error);
-          }
-        } else {
-          const callbacks = this.callbacks.get(value);
-          if (!callbacks) {
-            Logger.debug("WARNING", `Value "${value}" does not exit!`);
-            return;
-          }
-          const filteredArgs = args.slice(1, args.length);
-          for (const callback2 of callbacks) {
-            callback2.apply(this, filteredArgs);
-          }
-        }
-      };
-    }
-    setSocket(socket) {
-      [this.callbacks, this.promiseCallback].forEach((it) => {
-        it.forEach((value, key) => {
-          const iterableValues = Array.isArray(value) ? value : [value];
-          for (const fn of iterableValues) {
-            if (this.socket) {
-              this.socket.off(key, fn);
-            }
-            socket.on(key, fn);
-          }
-        });
-      });
-      this.socket = socket;
-      const fns = this.callbacks.get("connect") || [];
-      for (const fn of fns) {
-        fn();
-      }
-    }
-    on(event, fn) {
-      const fns = this.callbacks.get(event) || [];
-      pushUniqToArray(fns, fn);
-      this.callbacks.set(event, fns);
-      if (this.socket) {
-        this.socket.on(event, (...args) => this.handlePacket.apply(this, [event, ...args]));
-      }
-    }
-    off(event, fn) {
-      const fns = this.callbacks.get(event) || [];
-      removeFromArray(fns, fn);
-      if (!fns.length) {
-        if (this.socket) {
-          this.socket.off(event);
-        }
-      }
-    }
-    emit(value, ...args) {
-      if (this.socket) {
-        this.socket.emit.apply(this.socket, [value, ...args]);
-      } else {
-        throw new Error("Sending data to uninitialized socket");
-      }
-    }
-    onPromise(event, fn) {
-      if (!(fn instanceof (async () => {
-      }).constructor)) {
-        throw new Error("Promise callback expected");
-      }
-      const fns = this.promiseCallback.get(event);
-      if (fns)
-        throw new Error(`value ${event} already exist!`);
-      if (this.socket) {
-        this.socket.on(event, (...args) => this.handlePacket.apply(this, [event, ...args]));
-      }
-      this.promiseCallback.set(event, fn);
-    }
-    offPromise(event) {
-      this.promiseCallback.delete(event);
-    }
-    emitPromise(value, ...args) {
-      return new Promise(async (resolve2, reject2) => {
-        const rejectTimeout = setTimeout(() => {
-          reject2(new Error("Connection timed out"));
-        }, SECOND * 5);
-        const fun = (value2, error) => {
-          clearTimeout(rejectTimeout);
-          if (error) {
-            const objectError = new Error(error.message);
-            if (error.stack) {
-              objectError.stack = error.stack;
-            }
-            return reject2(objectError);
-          } else {
-            return resolve2(value2);
-          }
-        };
-        const emitArgs = [value, ...args, fun];
-        if (this.socket) {
-          this.socket.emit.apply(this.socket, emitArgs);
-        } else {
-          fun(void 0, new Error("Socket not connected"));
-        }
-      });
-    }
-    get connected() {
-      if (this.socket) {
-        return this.socket.connected;
-      }
-      return false;
-    }
-    destroy() {
-      for (const [key, fns] of this.callbacks) {
-        for (const fn of fns) {
-          this.socket.off(key, fn);
-        }
-      }
-      this.callbacks.clear();
-    }
-  };
+  // src/shared/interfaces.ts
+  var clientKeys = [
+    "audio-server",
+    "browser-client",
+    "android-app",
+    "android-app-background",
+    "unknown"
+  ];
 
   // src/client/Utils/Socket.ts
-  var import_lodash2 = __toESM(require_lodash());
+  var import_lodash3 = __toESM(require_lodash());
   var LightSocket = class {
     constructor(version2, raiseNotification) {
       this.version = version2;
@@ -67237,24 +64005,29 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       this._magicHome = false;
       this._activeCamera = false;
       this._doorSensor = false;
-      this._mode = "Manual";
+      this._mode = 0 /* Manual */;
+      this.STORAGE_KEY = "socket-password";
+      this.onModeUpdateBin = (_2, data2) => {
+        this.onModeUpdate(data2.getUint8());
+      };
       this.onModeUpdate = (mode) => {
         this._mode = mode;
         this.eventEmitter.emit("mode-update", this._mode);
       };
       this._clientSocket = new ClientSocket();
-      this._clientSocket.on("mode-update", this.onModeUpdate);
-      this._clientSocket.on("connect", async (msg) => {
+      this._clientSocket.createSocket(location.href);
+      this._clientSocket.clientHandle.on(2 /* ModeUpdate */, this.onModeUpdateBin);
+      this._clientSocket.clientHandle.on(251 /* Connect */, async (msg) => {
         this.getSettings();
         this.eventEmitter.emit("connect");
       });
-      this._clientSocket.on("disconnect", (msg) => {
+      this._clientSocket.clientHandle.on(252 /* Disconnect */, (msg) => {
         this.eventEmitter.emit("disconnect");
         this._authenticated = false;
         this._magicHome = false;
         this.emptyQueue();
       });
-      this.authenticate().catch(import_lodash2.noop);
+      this.authenticate().catch(import_lodash3.noop);
     }
     on(value, listener3) {
       this.eventEmitter.on(value, listener3);
@@ -67263,65 +64036,44 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       this.eventEmitter.off(value, listener3);
     }
     async getSettings() {
-      this._settings = await this._clientSocket.emitPromise("server-settings-get");
-      try {
-        const result = await this._clientSocket.emitPromise("server-config-get");
-        this._magicHome = result.magicController;
-        this._doorSensor = result.doorSensor;
-        this._activeCamera = result.activeCamera;
-        if (this._mode !== result.mode) {
-          this._mode = result.mode;
-          this.onModeUpdate(this._mode);
-        }
-        if (this.version !== result.version) {
-          this.raiseNotification("Invalid app version", `Expected ${result.version}v using ${this.version}v`);
-        }
-      } catch (_error) {
-        this._magicHome = false;
-        this._doorSensor = false;
-      }
     }
     async authenticate(password) {
       return new Promise((resolve2, reject2) => {
-        const storageKey = "socket-password";
-        if (this.socket) {
+        if (this._authenticated) {
           resolve2();
         } else {
-          const pass = password || BrowserStorage.getString(storageKey);
+          const pass = password || BrowserStorage.getString(this.STORAGE_KEY);
           if (!pass) {
             reject2(new Error("No password provided"));
             return;
           }
-          const socket = (0, import_build.default)({
-            auth: {
-              password: pass,
-              clientType: "browser-client"
-            }
-          });
-          socket.on("connection-login", (data2) => {
-            if (data2.status === "ok") {
-              this._socket = socket;
+          this._clientSocket.clientHandle.on(0 /* Login */, (_2, data2) => {
+            const ok = data2.setBool(false);
+            const message = data2.getUtf8String();
+            if (ok) {
               this._authenticated = true;
-              this.clientSocket.setSocket(socket);
-              BrowserStorage.setString(storageKey, pass);
+              BrowserStorage.setString(this.STORAGE_KEY, pass);
               resolve2();
             } else {
-              if (data2.message) {
-                reject2(new Error(data2.message));
+              if (message) {
+                reject2(new Error(message));
               } else {
                 reject2(new Error("Unknown error"));
               }
             }
           });
+          const type = "browser-client";
+          const binary = new BinaryBuffer(utf8StringLen(pass) + utf8StringLen(type)).setUtf8String(pass).setUtf8String(type).getBuffer();
+          this._clientSocket.clientHandle.send(0 /* Login */, binary);
           this.sendQueue();
         }
       });
     }
     setColor(red2, green, blue) {
-      return this._clientSocket.emitPromise("rgb", red2, green, blue);
+      return this._clientSocket.clientHandle.sendPromise(1 /* RGBSet */, new BinaryBuffer(3).setUint8(red2).setUint8(green).setUint8(blue).getBuffer());
     }
     get socket() {
-      return this._socket;
+      return this._clientSocket;
     }
     get authenticated() {
       return this._authenticated;
@@ -67333,49 +64085,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       return this._mode;
     }
     emitIfPossible(event, ...args) {
-      if (this.authenticated) {
-        this.clientSocket.emit.apply(this.clientSocket, [event, ...args]);
-      } else {
-        const mergedArgs = [event, ...args];
-        this.queue.push({ promise: false, args: mergedArgs, date: Date.now() });
-      }
     }
     async emitPromiseIfPossible(event, ...args) {
-      if (this.authenticated) {
-        return this.clientSocket.emitPromise.apply(this.clientSocket, [event, ...args]);
-      } else {
-        const mergedArgs = [event, ...args];
-        return new Promise((resolve2, reject2) => {
-          this.queue.push({ promise: true, resolve: resolve2, reject: reject2, args: mergedArgs, date: Date.now() });
-        });
-      }
+      return Promise.resolve({});
     }
     async sendQueue() {
-      if (!this.queue.length) {
-        return;
-      }
-      const item = this.queue.shift();
-      const args = item.args;
-      const dateNow = Date.now();
-      const promise = item.promise;
-      if (item.date + MINUTE < dateNow) {
-        if (promise) {
-          item.reject(new Error("Request timed out"));
-        }
-        this.sendQueue();
-        return;
-      }
-      if (promise) {
-        try {
-          const result = await this.clientSocket.emitPromise.apply(this.clientSocket, args);
-          item.resolve(result);
-        } catch (error) {
-          item.reject(error);
-        }
-      } else {
-        this.clientSocket.emit.apply(null, args);
-      }
-      this.sendQueue();
     }
     async emptyQueue() {
       if (!this.queue.length) {
@@ -67408,17 +64122,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var import_events4 = __toESM(require_events());
 
   // src/shared/colour.ts
-  var import_lodash3 = __toESM(require_lodash());
+  var import_lodash4 = __toESM(require_lodash());
   var MAX_RGB = 16777215;
   function componentToHex(c2) {
-    c2 = (0, import_lodash3.clamp)(c2, 0, 255);
+    c2 = (0, import_lodash4.clamp)(c2, 0, 255);
     const hex = c2.toString(16);
     return hex.length == 1 ? "0" + hex : hex;
   }
   function rgb2hex(r2, g2, b2) {
-    r2 = (0, import_lodash3.clamp)(r2, 0, 255);
-    g2 = (0, import_lodash3.clamp)(g2, 0, 255);
-    b2 = (0, import_lodash3.clamp)(b2, 0, 255);
+    r2 = (0, import_lodash4.clamp)(r2, 0, 255);
+    g2 = (0, import_lodash4.clamp)(g2, 0, 255);
+    b2 = (0, import_lodash4.clamp)(b2, 0, 255);
     return "#" + componentToHex(r2) + componentToHex(g2) + componentToHex(b2);
   }
   function rgbObj2Hex(obj) {
@@ -67694,7 +64408,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
 
   // src/client/Utils/Patterns.ts
   var import_events2 = __toESM(require_events());
-  var import_lodash4 = __toESM(require_lodash());
+  var import_lodash5 = __toESM(require_lodash());
   var PatternService = class {
     constructor(lightSocket) {
       this.lightSocket = lightSocket;
@@ -67705,7 +64419,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         this.ledPattern = ledPattern;
         this.eventEmitter.emit("update", this.ledPattern);
       };
-      lightSocket.clientSocket.on("patterns-update", this.patternUpdate);
     }
     async fetchPattern(force = false) {
       if (this.fetched && !force) {
@@ -67750,12 +64463,12 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
     getRandomPatternItem() {
       const ledPattern = {
-        delay: (0, import_lodash4.random)(500, 1e3),
-        mode: (0, import_lodash4.sample)(MODES),
+        delay: (0, import_lodash5.random)(500, 1e3),
+        mode: (0, import_lodash5.sample)(MODES),
         rgb: {
-          r: (0, import_lodash4.random)(0, 255),
-          g: (0, import_lodash4.random)(0, 255),
-          b: (0, import_lodash4.random)(0, 255)
+          r: (0, import_lodash5.random)(0, 255),
+          g: (0, import_lodash5.random)(0, 255),
+          b: (0, import_lodash5.random)(0, 255)
         }
       };
       return ledPattern;
@@ -67788,7 +64501,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       ledPattern.name = name;
     }
     destroy() {
-      this.lightSocket.clientSocket.off("patterns-update", this.patternUpdate);
     }
   };
 
@@ -68141,7 +64853,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         this.eventEmitter.emit("update", this.schedulerDescription);
         this.setUpdate(true);
       };
-      lightSocket.clientSocket.on("schedule-update", this.scheduleUpdate);
     }
     async fetchSchedule(force = false) {
       if (this.fetched && !force) {
@@ -68187,7 +64898,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       this.setUpdate(false);
     }
     destroy() {
-      this.lightSocket.clientSocket.off("schedule-update", this.scheduleUpdate);
     }
     get updated() {
       return this._updated;
@@ -68216,14 +64926,20 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         const rgbBuffer = this._audioProcessor.rgbBuffer;
         this.eventEmitter.emit("audioUpdate", { leftBuffer, rightBuffer, mergedBuffer, rgbBuffer });
       };
+      this._raiseNotificationBin = (client, binary) => {
+        const type = binary.getUtf8String();
+        const str = binary.getUtf8String();
+        const des = binary.getUtf8String();
+        const log2 = { title: str, type, description: des };
+        this._raiseNotification(log2);
+      };
       this._raiseNotification = (log2) => {
         this.eventEmitter.emit("log", log2);
       };
       const script = document.getElementById("version");
       this.version = script.textContent.trim();
       this._lightSocket = new LightSocket(this.version, this.raiseNotification);
-      this._lightSocket.clientSocket.on("pcm", this.onPCM);
-      this._lightSocket.clientSocket.on("socket-log", this._raiseNotification);
+      this._lightSocket.clientSocket.clientHandle.on(5 /* SocketLog */, this._raiseNotificationBin);
       this._pattern = new PatternService(this._lightSocket);
       this._scheduleService = new ScheduleService(this._lightSocket, this._pattern);
     }
@@ -68235,7 +64951,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
     destroy() {
       this.eventEmitter.removeAllListeners();
-      this._lightSocket.socket.disconnect();
+      this._lightSocket.socket.handle.disconnect();
     }
     get connected() {
       return this._lightSocket.socket.connected;
@@ -70025,7 +66741,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
 
   // src/client/Components/ColourPicker/ColourPicker.tsx
   var import_react7 = __toESM(require_react());
-  var import_lodash5 = __toESM(require_lodash());
+  var import_lodash6 = __toESM(require_lodash());
 
   // node_modules/@fortawesome/fontawesome-svg-core/index.es.js
   function _typeof(obj) {
@@ -70125,14 +66841,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   function _nonIterableRest() {
     throw new TypeError("Invalid attempt to destructure non-iterable instance");
   }
-  var noop2 = function noop3() {
+  var noop3 = function noop4() {
   };
   var _WINDOW = {};
   var _DOCUMENT = {};
   var _MUTATION_OBSERVER = null;
   var _PERFORMANCE = {
-    mark: noop2,
-    measure: noop2
+    mark: noop3,
+    measure: noop3
   };
   try {
     if (typeof window !== "undefined")
@@ -70754,7 +67470,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       return asIcon(args);
     }
   }
-  var noop$1 = function noop4() {
+  var noop$1 = function noop5() {
   };
   var p = config.measurePerformance && PERFORMANCE && PERFORMANCE.mark && PERFORMANCE.measure ? PERFORMANCE : {
     mark: noop$1,
@@ -71675,15 +68391,15 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         this.isTouch = !ev.isTrusted;
         if (this.mainPressed) {
           const { x: x2, y: y2, width, height } = this.getCanvasBounds();
-          const calcX = (0, import_lodash5.clamp)(ev.x - x2, 0, width);
-          const calcY = (0, import_lodash5.clamp)(ev.y - y2, 0, height);
+          const calcX = (0, import_lodash6.clamp)(ev.x - x2, 0, width);
+          const calcY = (0, import_lodash6.clamp)(ev.y - y2, 0, height);
           const v2 = Math.round(this.state.colour.hsv.v * this.palette.SV_MAX);
           const rgb = this.palette.getColourAt(calcX, calcY, v2);
           this.setNewColor(rgb);
           this.emitColour(true);
         } else if (this.sidePressed) {
           const { y: y2, height } = this.getCanvasSideBounds();
-          const calcY = (0, import_lodash5.clamp)(ev.y - y2, 0, height);
+          const calcY = (0, import_lodash6.clamp)(ev.y - y2, 0, height);
           const hsv = this.state.colour.hsv;
           const h = hsv.h;
           const s2 = hsv.s * this.palette.SV_MAX;
@@ -72912,7 +69628,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
 
   // src/client/Components/DatePicker/DatePicker.tsx
   var import_react11 = __toESM(require_react());
-  var import_lodash6 = __toESM(require_lodash());
+  var import_lodash7 = __toESM(require_lodash());
   var Div7 = styled_components_browser_esm_default.div`
     width: 200px;
     align-items: center;
@@ -73140,7 +69856,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       return /* @__PURE__ */ import_react11.default.createElement("button", { onClick }, /* @__PURE__ */ import_react11.default.createElement(FontAwesomeIcon, { icon: icon2 }));
     }
     get renderTable() {
-      const date = (0, import_lodash6.chunk)(this.getMonthTable(this.state.month, this.state.year), this.DAYS.length);
+      const date = (0, import_lodash7.chunk)(this.getMonthTable(this.state.month, this.state.year), this.DAYS.length);
       return /* @__PURE__ */ import_react11.default.createElement("div", null, /* @__PURE__ */ import_react11.default.createElement(Caption, null, /* @__PURE__ */ import_react11.default.createElement("span", null, this.state.year, " ", this.MONTHS[this.state.month - 1]), /* @__PURE__ */ import_react11.default.createElement(ArrowButtons, null, this.getFontAwesomeArrows(faArrowUp, () => this.changeMonth(-1)), this.getFontAwesomeArrows(faArrowDown, () => this.changeMonth(1)))), /* @__PURE__ */ import_react11.default.createElement("table", null, /* @__PURE__ */ import_react11.default.createElement("thead", null, /* @__PURE__ */ import_react11.default.createElement("tr", null, /* @__PURE__ */ import_react11.default.createElement("th", null, "Mo"), /* @__PURE__ */ import_react11.default.createElement("th", null, "Tu"), /* @__PURE__ */ import_react11.default.createElement("th", null, "We"), /* @__PURE__ */ import_react11.default.createElement("th", null, "Th"), /* @__PURE__ */ import_react11.default.createElement("th", null, "Fr"), /* @__PURE__ */ import_react11.default.createElement("th", null, "Sa"), /* @__PURE__ */ import_react11.default.createElement("th", null, "Su"))), /* @__PURE__ */ import_react11.default.createElement("tbody", null, this.getTR(date))));
     }
     render() {
@@ -73150,7 +69866,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
 
   // src/client/Components/DatePicker/TimePicker.tsx
   var import_react12 = __toESM(require_react());
-  var import_lodash7 = __toESM(require_lodash());
+  var import_lodash8 = __toESM(require_lodash());
   var Div8 = styled_components_browser_esm_default.div`
     width: 150px;
     align-items: center;
@@ -73210,7 +69926,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       };
       this.toNumber = (value, min2, max2) => {
         value = value.toString().replace(/\D/g, "");
-        return (0, import_lodash7.clamp)(toInt(value), min2, max2);
+        return (0, import_lodash8.clamp)(toInt(value), min2, max2);
       };
       this.getInputStyle = (active) => {
         const style = { border: `${this.BORDER_SIZE}px solid transparent` };
@@ -73385,7 +70101,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   };
 
   // src/client/Components/DayScheduleBuilder/DayScheduleBuilder.tsx
-  var import_lodash8 = __toESM(require_lodash());
+  var import_lodash9 = __toESM(require_lodash());
   var import_react16 = __toESM(require_react());
 
   // src/client/styles.ts
@@ -73584,7 +70300,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var DayScheduleBuilder = class extends import_react16.default.Component {
     constructor(props) {
       super(props);
-      this.debounceSortAndCorrect = (0, import_lodash8.debounce)(() => {
+      this.debounceSortAndCorrect = (0, import_lodash9.debounce)(() => {
         const state = { ...this.state };
         this.sort(state);
         this.correct(state);
@@ -73650,7 +70366,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           time: this.getRandomTime(),
           data: {
             type: "RGB",
-            data: { r: (0, import_lodash8.random)(0, 255), g: (0, import_lodash8.random)(0, 255), b: (0, import_lodash8.random)(0, 255) }
+            data: { r: (0, import_lodash9.random)(0, 255), g: (0, import_lodash9.random)(0, 255), b: (0, import_lodash9.random)(0, 255) }
           }
         });
         this.sort(state, false);
@@ -73695,7 +70411,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       this.setState({ canPaste: !!copiedData.length });
     }
     getRandomTime() {
-      const r2 = import_lodash8.random;
+      const r2 = import_lodash9.random;
       return `${r2(0, 23)}:${r2(10, 59)}:${r2(10, 59)}-${r2(0, 23)}:${r2(10, 59)}:${r2(10, 59)}`;
     }
     onTimeChange(hourDate, time) {
@@ -74850,18 +71566,18 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var classof = classof$1;
   var getBuiltIn$1 = getBuiltIn$5;
   var inspectSource = inspectSource$2;
-  var noop5 = function() {
+  var noop6 = function() {
   };
   var empty = [];
   var construct = getBuiltIn$1("Reflect", "construct");
   var constructorRegExp = /^\s*(?:class|function)\b/;
   var exec = uncurryThis$1(constructorRegExp.exec);
-  var INCORRECT_TO_STRING = !constructorRegExp.exec(noop5);
+  var INCORRECT_TO_STRING = !constructorRegExp.exec(noop6);
   var isConstructorModern = function isConstructor(argument) {
     if (!isCallable(argument))
       return false;
     try {
-      construct(noop5, empty, argument);
+      construct(noop6, empty, argument);
       return true;
     } catch (error) {
       return false;
@@ -77040,17 +73756,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
 
   // src/client/Components/Tabs/Device.tsx
   var import_react22 = __toESM(require_react());
-
-  // src/shared/interfaces.ts
-  var clientKeys = [
-    "audio-server",
-    "browser-client",
-    "android-app",
-    "android-app-background",
-    "unknown"
-  ];
-
-  // src/client/Components/Tabs/Device.tsx
   var import_prettysize = __toESM(require_prettysize());
   var import_react_loading3 = __toESM(require_react_loading());
   var import_moment3 = __toESM(require_moment());
@@ -77381,22 +74086,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     async componentDidMount() {
       const lightSocket = this.props.als.lightSocket;
       this.crx = this.canvas.getContext("2d");
-      lightSocket.clientSocket.on("rgb-update", this.onRGBUpdate);
-      lightSocket.clientSocket.on("mode-update", this.onModeUpdate);
       this.favIconReference = document.createElement("link");
       document.head.append(this.favIconReference);
       this.favIconReference.rel = "shortcut icon";
       if (this.props.als.lightSocket.clientSocket.connected) {
         this.onSocketConnect();
       } else {
-        this.props.als.lightSocket.clientSocket.on("connect", this.onSocketConnect);
+        this.props.als.lightSocket.clientSocket.clientHandle.on(251 /* Connect */, this.onSocketConnect);
       }
     }
     componentWillUnmount() {
       this.destroyed = true;
-      this.props.als.lightSocket.clientSocket.off("rgb-update", this.onRGBUpdate);
-      this.props.als.lightSocket.clientSocket.off("mode-update", this.onModeUpdate);
-      this.props.als.lightSocket.clientSocket.off("connect", this.onSocketConnect);
       document.head.removeChild(this.favIconReference);
     }
     get canvas() {

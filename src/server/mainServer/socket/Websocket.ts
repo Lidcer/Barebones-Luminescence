@@ -1,28 +1,24 @@
-import { includes, pushUniqToArray, removeFromArray, Stringify } from "../../../shared/utils";
-import { Server } from "http";
-import { IS_DEV } from "../main/config";
+import { pushUniqToArray, removeFromArray, Stringify } from "../../../shared/utils";
 import { Client } from "./client";
 import { Logger } from "../../../shared/logger";
-import SocketIO from "socket.io";
-import { createSocketError } from "../../../shared/socketError";
 import { ClientType, Log } from "../../../shared/interfaces";
 import { EventEmitter } from "events";
 import { userClients } from "../../../shared/constants";
+import { BunServer, WSEvent  } from "../../sharedFiles/bun-server";
+import { ClientMessagesRaw, ServerMessagesRaw, SpecialEvents } from "../../../shared/Messages";
+import { SocketData, SocketRaw } from "../../../shared/messages/messageHandle";
+import { BinaryBuffer, utf8StringLen } from "../../../shared/messages/BinaryBuffer";
 
-type WebsocketCallback = (client: Client, ...args: any[] | any) => void;
-type WebsocketCallbackPromise = (client: Client, ...args: any[] | any) => Promise<any>;
-
-const ignoreEvents = ["connection", "disconnect"];
+type WebsocketCallback = (client: Client, buffer: SocketData) => void;
+type WebsocketCallbackPromise = (client: Client, buffer: SocketData) => Promise<SocketRaw>;
 
 export class WebSocket {
     private event = new EventEmitter();
-    private socketServer: SocketIO.Server;
     private clients: Client[] = [];
-    private callbacks = new Map<string, WebsocketCallback[]>();
-    private promiseCallback = new Map<string, WebsocketCallbackPromise>();
+    private callbacks = new Map<ServerMessagesRaw, WebsocketCallback[]>();
+    private promiseCallback = new Map<ServerMessagesRaw, WebsocketCallbackPromise>();
 
-    constructor(props: { server?: Server; onlyOne?: boolean }) {
-        this.socketServer = new SocketIO.Server(props.server);
+    constructor(private server?: BunServer) {
 
         process.on("uncaughtException", err => {
             console.error("uncaughtException", err);
@@ -55,56 +51,25 @@ export class WebSocket {
                     break;
             }
         });
-        this.socketServer.on("connection", (c: SocketIO.Socket) => {
+        this.server.socketEmitter.on(WSEvent.Connect, (c) => {
             const client = new Client(c);
             if (!client.auth()) {
                 return;
             }
             this.clients.push(client);
-            Logger.log("[WebSocket]", "connected", client.id, this.getSocketInfo());
+            Logger.log("[WebSocket]", "connected", this.getSocketInfo());
 
-            client.onAny(async (...args) => {
-                const value = args[0];
-                if (includes(ignoreEvents, value)) {
-                    return;
+
+            const methods = Array.from(this.callbacks);
+            for (const [methodName, arr] of methods) {
+                for (const method of arr) {
+                    client.serverMessageHandler.on(methodName, method);
                 }
-                const len = args.length;
-                const callback = args[len - 1];
-                const promise = typeof callback === "function";
-                if (promise) {
-                    const promise = this.promiseCallback.get(value);
-                    if (promise === undefined) {
-                        Logger.debug("WARNING", `Promise value "${value}" does not exit!`);
-                        callback(undefined, createSocketError("Unknown value", IS_DEV ? undefined : null));
-                        return;
-                    }
-                    const filteredArgs = args.slice(1, args.length - 1);
-                    try {
-                        const result = await promise.apply(this, [client, ...filteredArgs]);
-                        callback(result);
-                    } catch (error) {
-                        const message = (error && error.message) || "Unknown error";
-                        const stack = error && error.stack;
-                        callback(undefined, createSocketError(message, IS_DEV ? stack : null));
-                        Logger.debug("Socket promise error", error);
-                    }
-                } else {
-                    const callbacks = this.callbacks.get(value);
-                    if (!callbacks) {
-                        Logger.debug("WARNING", `Value "${value}" does not exit!`);
-                        return;
-                    }
-                    const filteredArgs = args.slice(1);
+            }
 
-                    for (const callback of callbacks) {
-                        callback.apply(this, [client, ...filteredArgs]);
-                    }
-                }
-            });
-
-            client.on("disconnect", () => {
+            client.serverMessageHandler.on(SpecialEvents.Disconnect, () => {
                 removeFromArray(this.clients, client);
-                Logger.log("[WebSocket]", "disconnected", client.id, this.getSocketInfo());
+                Logger.log("[WebSocket]", "disconnected", this.getSocketInfo());
                 const allowedClients: ClientType[] = ["android-app", "android-app-background", "browser-client"];
                 const clients = this.clients.filter(c => allowedClients.includes(c.clientType));
                 if (!clients.length) {
@@ -133,29 +98,40 @@ export class WebSocket {
         return this.clients;
     }
 
-    broadcast(message: string, ...args: any) {
-        if (!message.length) {
-            throw new Error("Cannot broadcast empty message");
-        }
-        for (const client of this.clients) {
-            if (userClients.includes(client.clientType)) {
-                client.emit.apply(client, [message, ...args]);
+    broadcast(type: ClientMessagesRaw, buffer: SocketRaw) {
+        if (this.clients.length) {
+            const binaryBuffer = new BinaryBuffer(buffer.byteLength + 1 + 4)
+            binaryBuffer.setUint8(type);
+            binaryBuffer.setU8Arr(buffer);
+            const raw = binaryBuffer.getU8Arr();
+
+            for (const client of this.clients) {
+                if (userClients.includes(client.clientType)) {
+                    client.socket.ws.sendBinary(raw);
+                }
             }
         }
     }
 
-    on<T extends any[]>(value: string, callback: (client: Client, ...args: T) => void | Promise<void>) {
+    on(value: ServerMessagesRaw, callback: (client: Client, buffer: SocketData) => void | Promise<void>) {
         const callbackFunction = this.callbacks.get(value) || [];
         pushUniqToArray(callbackFunction, callback);
+        for (const client of this.clients) {
+            client.serverMessageHandler.on(value, callback);
+        }
         this.callbacks.set(value, callbackFunction);
     }
-    off(value: string, callback: (client: Client, ...args) => void) {
+    off(value: ServerMessagesRaw, callback: (client: Client, buffer: SocketData) => void) {
         const callbackFunction = this.callbacks.get(value) || [];
         removeFromArray(callbackFunction, callback);
+        for (const client of this.clients) {
+            client.serverMessageHandler.off(value, callback);
+        }
+
         this.callbacks.set(value, callbackFunction);
     }
 
-    onPromise<A, T extends any[]>(value: string, callback: (client: Client, ...args: T) => Promise<A>) {
+    onPromise<A, T extends any[]>(value: ServerMessagesRaw, callback: (client: Client, buffer: SocketData) => Promise<SocketRaw>) {
         if (!(callback instanceof (async () => {}).constructor)) {
             const err = new Error("Promise callback expected");
             this.broadcastLog("fatal", err);
@@ -171,8 +147,9 @@ export class WebSocket {
         this.promiseCallback.set(value, callback);
     }
 
-    offPromise(value: string, callback: (client: Client, ...args: any[]) => void) {
+    offPromise(value: ServerMessagesRaw, callback: (client: Client, buffer: SocketData) => SocketRaw) {
         const promiseCallback = this.promiseCallback.get(value);
+        //@ts-ignore
         if (promiseCallback === callback) {
             this.promiseCallback.delete(value);
         }
@@ -182,17 +159,28 @@ export class WebSocket {
         return this.clients;
     }
     broadcastLog(type: Log["type"], name: string | Error, description?: string) {
-        let str = "";
-        let des = "";
-        if (name instanceof Error) {
-            str = name.name;
-            des = name.stack;
-        } else {
-            str = name;
-            des = description;
-        }
+        if (this.clients.length) {
+            let str = "";
+            let des = "";
+            if (name instanceof Error) {
+                str = name.name;
+                des = name.stack;
+            } else {
+                str = name;
+                des = description;
+            }
 
-        const socketError: Log = { type, title: str, description: des };
-        this.broadcast("socket-log", socketError);
+            const binary = new BinaryBuffer(1 + utf8StringLen(type) + utf8StringLen(str) + utf8StringLen(description));
+            binary.setUint8(ClientMessagesRaw.SocketLog);
+            binary.setUtf8String(type);
+            binary.setUtf8String(str);
+            binary.setUtf8String(des);
+            const raw = binary.getBuffer();
+            for (const client of this.clients) {
+                if (client.clientType === "browser-client") {
+                    client.socket.ws.sendBinary(raw);
+                }
+            }
+        }
     }
 }

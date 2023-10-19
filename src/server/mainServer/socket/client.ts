@@ -1,97 +1,86 @@
-import { MINUTE, SECOND, userClients } from "../../../shared/constants";
-import SocketIO from "socket.io";
-import { SocketError } from "../../../shared/socketError";
-import { ClientType, LoginData, SocketAuth } from "../../../shared/interfaces";
+import { ClientMessagesRaw, ServerMessagesRaw, SpecialEvents } from "../../../shared/Messages";
+import { MINUTE, userClients } from "../../../shared/constants";
+import { ClientType } from "../../../shared/interfaces";
+import { Socket, WSEvent } from "../../sharedFiles/bun-server";
+import { noop } from "lodash";
+import { MessageHandleBase, SocketRaw, Handle } from "../../../shared/messages/messageHandle";
 import { PASSWORD } from "../main/config";
+import { BinaryBuffer, utf8StringLen } from "../../../shared/messages/BinaryBuffer";
 
 const wrongPass = new Map<string, number>();
 
-function toString(data: string | string[]) {
-    if (Array.isArray(data)) {
-        return data.join(" ");
-    }
-    return data;
-}
-function checkIp(socket: SocketIO.Socket) {
-    return socket.request.connection.remoteAddress || toString(socket.request.headers["x-forwarded-for"]);
-}
 
 export class Client {
     private type: ClientType = "unknown";
     private _sendPCM = false;
-
-    constructor(private client: SocketIO.Socket) {}
+    public serverMessageHandler: ServerMessageHandle
+    constructor(public socket: Socket) {
+        const obj = createServerHandle(buffer => !!socket.ws.sendBinary(buffer));
+        this.serverMessageHandler = new ServerMessageHandle(obj, this);
+        socket.on(WSEvent.Message, (_ws, buffer) => {
+            obj.message(buffer);
+        });
+        socket.on(WSEvent.Disconnect, (_ws, buffer) => {
+            obj.disconnect();
+        });
+        obj.connect()
+    }
 
     auth() {
-        const ip = checkIp(this.client);
+        
+        const ip = this.remoteAddress;
         if (!ip) {
-            this.client.disconnect();
+            this.socket.ws.close();
             return;
         }
-        const auth = this.client.handshake.auth as SocketAuth;
-        if (auth.password !== PASSWORD) {
+        const auth = this.socket.ws.data.headers.authentication;
+        const clientType = this.socket.ws.data.headers['client-type'];
+
+        if (auth !== PASSWORD) {
             let count = wrongPass.get(ip) || 0;
             count++;
             if (count > 10) {
                 count = 10;
             }
             if (count > 3) {
-                this.client.emit("connection-login", {
-                    status: "failed",
-                    message: "Too many attempts. Self defending mode activated",
-                } as LoginData);
+                const message = "Too many attempts. Self defending mode activated";
+                const binary = new BinaryBuffer(2 + utf8StringLen(message))
+                                .setUint8(ClientMessagesRaw.Login)
+                                .setBool(false)
+                                .setUtf8String(message)
+                                .getBuffer();
+                this.socket.send(binary)
+   
             } else {
-                this.client.emit("connection-login", { status: "failed", message: "Wrong password" } as LoginData);
+                const message = "Wrong password"
+                const binary = new BinaryBuffer(2 + utf8StringLen(message))
+                .setUint8(ClientMessagesRaw.Login)
+                .setBool(false)
+                .setUtf8String(message)
+                .getBuffer();
+                this.socket.send(binary)
             }
-            this.client.disconnect();
+            this.socket.ws.close();
             wrongPass.set(ip, count);
-            Logger.warn(checkIp(this.client), "Failed to connect!");
+            Logger.warn(ip, "Failed to connect!");
             return false;
         } else {
-            this.type = auth.clientType;
-            this.client.emit("connection-login", { status: "ok" } as LoginData);
-            Logger.log(checkIp(this.client), "Connected");
+            this.type = clientType as any;
+            const message = "Succeful";
+            const binary = new BinaryBuffer(2 + utf8StringLen(message))
+            .setUint8(ClientMessagesRaw.Login)
+            .setBool(true)
+            .setUtf8String(message)
+            .getBuffer();
+            this.socket.send(binary)
+            Logger.log(ip, "Connected");
         }
 
         return true;
     }
 
-    onAny(listener: (...args: any[]) => void) {
-        this.client.onAny(listener);
-        return this;
-    }
-
-    on(event: string, listener: (...args: any[]) => void) {
-        this.client.on(event, listener);
-        return this;
-    }
-    emit(event: string, ...args: any[]) {
-        return this.client.emit.apply(this.client, [event, ...args]);
-    }
-    emitPromise<R = any>(value: string, ...args: any[]) {
-        return new Promise<R>(async (resolve, reject) => {
-            const rejectTimeout = setTimeout(() => {
-                reject(new Error("Connection timed out"));
-            }, SECOND * 5);
-
-            const fun = (value?: R, error?: SocketError) => {
-                clearTimeout(rejectTimeout);
-                if (error) {
-                    const objectError = new Error(error.message);
-                    if (error.stack) {
-                        objectError.stack = error.stack;
-                    }
-                    return reject(objectError);
-                } else {
-                    resolve(value);
-                }
-            };
-            const emitArgs = [value, ...args, fun];
-            this.client.emit.apply(this.client, emitArgs);
-        });
-    }
     disconnect() {
-        return this.client.disconnect();
+        return this.socket.disonnect();
     }
     setAudioProcessor() {
         if (this.type !== "unknown") {
@@ -99,17 +88,17 @@ export class Client {
         }
         this.type = "audio-server";
     }
-    get id() {
-        return this.client.id;
-    }
+    // get id() {
+    //     return this.socket.id;
+    // }
     get connected() {
-        return this.client.connected;
+        return this.socket.connected;
     }
     get disconnected() {
-        return this.client.disconnected;
+        return this.socket.ws;
     }
     get remoteAddress() {
-        return this.client.conn.remoteAddress;
+        return this.socket.ws.remoteAddress;
     }
     validateAuthentication() {
         if (userClients.includes(this.clientType) || this.clientType === "audio-server") {
@@ -136,3 +125,18 @@ setTimeout(() => {
         }
     });
 }, MINUTE);
+
+
+
+export class ServerMessageHandle extends MessageHandleBase<ServerMessagesRaw | SpecialEvents, ClientMessagesRaw | SpecialEvents, Client> {
+
+}
+
+export function createServerHandle(send: (message: SocketRaw) => boolean): Handle<ServerMessagesRaw | SpecialEvents, ClientMessagesRaw | SpecialEvents> {
+    return {
+        connect: noop,
+        disconnect: noop,
+        message: noop,
+        send,
+    }
+}

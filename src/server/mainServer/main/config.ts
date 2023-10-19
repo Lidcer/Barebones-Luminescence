@@ -5,6 +5,7 @@ import path from "path";
 import fs from "fs";
 import { Logger as Log } from "../../../shared/logger";
 import { randomBytes } from "crypto";
+import esbuild from "esbuild";
 
 const IS_DEV = process.env.NODE_ENV !== "production";
 
@@ -53,7 +54,8 @@ if (!config.PASSWORD || !config.SECRET) {
 }
 
 // server
-const SERVER_PORT = process.env.PORT || config.SERVER_PORT || 5050;
+const serverPort = process.env.PORT || config.SERVER_PORT || 5050;;
+const SERVER_PORT = typeof serverPort === "string" ? parseInt(serverPort, 10) : serverPort;
 const WEBPACK_PORT = 8085; // For dev environment only
 const PASSWORD = config.PASSWORD;
 const SECRET = config.SECRET;
@@ -78,6 +80,56 @@ export function regenerateConfig(shouldShutDownServer = false) {
 
 function updateConfig() {
     fs.writeFileSync(configJsonPath, JSON.stringify(config, undefined, 1));
+}
+
+
+function watchFolder(folder: string, cb: () => void) {
+    fs.readdir(folder, (err, files) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+  
+      files.forEach((file) => {
+        const filePath = `${folder}/${file}`;
+        fs.watch(filePath, (event, filename) => {
+          if (event === 'change') {
+            cb()
+          } else if (event === 'rename') {
+            cb()
+          }
+        });
+        if (fs.statSync(filePath).isDirectory()) {
+          watchFolder(filePath, cb);
+        }
+      });
+    });
+  }
+
+function buildClient() {
+    esbuild.build({
+        entryPoints: ['./src/client/index.jsx'],
+        plugins: [],
+        define: {
+            DEV: JSON.stringify(true),
+        },
+        bundle: true,
+        outfile: './statics/bundle.js',
+    });
+    Logger.debug("Client built")
+}
+
+if (DEV) {
+    let timer: Timer;
+    const cb = () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            buildClient();
+        }, 1000)
+    }
+    watchFolder("./src/client", cb);
+    watchFolder("./src/shared", cb);
+    buildClient();
 }
 
 export {
