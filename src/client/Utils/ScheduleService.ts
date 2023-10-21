@@ -4,6 +4,8 @@ import { Logger } from "../../shared/logger";
 import { convertSchedulerDescription, convertSchedulerDescriptionVague } from "../../shared/Scheduler";
 import { PatternService } from "./Patterns";
 import { LightSocket } from "./Socket";
+import { ServerMessagesRaw } from "../../shared/Messages";
+import { quickBuffer } from "../../shared/utils";
 
 export class ScheduleService {
     private schedulerDescription: SchedulerDescriptionVague = {
@@ -30,8 +32,8 @@ export class ScheduleService {
         }
         try {
             await this.patternService.fetchPattern();
-            const result = await this.lightSocket.emitPromiseIfPossible<SchedulerDescriptionVague, []>("schedule-get");
-            this.schedulerDescription = result;
+            const result = await this.lightSocket.emitPromiseIfPossible(ServerMessagesRaw.ScheduleGet);
+            this.schedulerDescription = JSON.parse(result.getUtf8String());
         } catch (error) {
             DEV && Logger.debug("Fetch Schedule", error);
         }
@@ -57,9 +59,10 @@ export class ScheduleService {
         return this.schedulerDescription;
     }
     async sendSchedule() {
-        await this.lightSocket.emitPromiseIfPossible<void, [SchedulerDescriptionVague]>(
-            "schedule-set",
-            this.schedulerDescription,
+        console.log(this.schedulerDescription);
+        await this.lightSocket.emitPromiseIfPossible(
+            ServerMessagesRaw.ScheduleSet,
+            quickBuffer(this.schedulerDescription),
         );
         this.setUpdate(true);
     }

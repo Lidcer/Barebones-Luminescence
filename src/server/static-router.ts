@@ -10,16 +10,15 @@ export function staticsRouter(app: BunServer) {
         }
         return scriptCache;
     };
-    
+
     app.get("/script-*.js", (req, res) => {
         return new Response(getScript(), {
             headers: {
-                "Content-Type": "Application/javascript"
-            }
-        })
-    })
+                "Content-Type": "Application/javascript",
+            },
+        });
+    });
 
     //const staticsPath = path.join(process.cwd(), "dist", "statics");
     //router.use("/statics", express.static(staticsPath));
-
 }

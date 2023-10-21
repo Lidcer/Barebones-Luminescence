@@ -6,7 +6,7 @@ import { rgb2hex } from "../../../shared/colour";
 import { DayDescription, DayNames } from "../../../shared/interfaces";
 import { Logger } from "../../../shared/logger";
 import styled from "styled-components";
-import { DAY_NAMES } from "../../../shared/constants";
+import { DAY_NAMES, SECOND } from "../../../shared/constants";
 import { DateAndTimePricker } from "../DatePicker/DateAndTimePicker";
 import { DayScheduleBuilder } from "../DayScheduleBuilder/DayScheduleBuilder";
 import { Button } from "../../styles";
@@ -33,6 +33,42 @@ const DayButton = styled.button`
         background-color: rgb(16, 16, 16);
     }
 `;
+
+const InlineBlock = styled.div`
+    display: inline-block;
+`;
+
+const Flex = styled.div`
+    display: flex;
+`;
+
+const FlexColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+const DateInput = styled.input`
+    user-select: none;
+    background-color: rgb(42, 42, 42);
+    color: white;
+    font-size: 20px;
+    padding: 2px;
+    margin: 2px;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    transition: background-color 0.25s, color 0.25s;
+
+    :hover {
+        background-color: rgb(52, 52, 52);
+    }
+
+    :disabled {
+        color: rgb(128, 128, 128);
+        background-color: rgb(16, 16, 16);
+    }
+`;
+
 const Space = styled.div`
     width: 20px;
     display: inline-block;
@@ -40,6 +76,10 @@ const Space = styled.div`
 
 const Inline = styled.div`
     display: inline-block;
+`;
+
+const Margin = styled.div`
+    margin: 2px;
 `;
 
 const CustomDate = styled.div`
@@ -56,6 +96,7 @@ interface ScheduleTabState {
     customSelected: string;
     customDate?: Date;
     addNewCustom?: Date;
+    time?: string;
     saved: boolean;
 }
 export const cacheMap = new Map<DayDescription, TimeParser[]>();
@@ -66,6 +107,8 @@ export class ScheduleBuilder extends React.Component<ScheduleTabProps, ScheduleT
     private canvasWidth = 50;
     private ctx: CanvasRenderingContext2D;
     private frame: number;
+    private last = Date.now();
+    private time = 0;
 
     constructor(props: ScheduleTabProps) {
         super(props);
@@ -97,7 +140,9 @@ export class ScheduleBuilder extends React.Component<ScheduleTabProps, ScheduleT
         cancelAnimationFrame(this.frame);
         this.s.off("update", this.onScheduleUpdate);
         this.s.off("on-save-change", this.onSaveStateChange);
-        this.scheduler.destroy();
+        if (this.scheduler) {
+            this.scheduler.destroy();
+        }
     }
 
     onSaveStateChange = (saved: boolean) => {
@@ -117,7 +162,20 @@ export class ScheduleBuilder extends React.Component<ScheduleTabProps, ScheduleT
         const s = this.props.als.scheduleService.getFullSchedule();
         this.scheduler.loadSchedule(s);
     };
+
     draw = () => {
+        const nowMs = Date.now();
+        const ms = nowMs - this.last;
+        this.last = nowMs;
+        this.time += ms;
+        if (this.time > SECOND && this.state.customDate) {
+            const then = this.state.customDate;
+            then.setSeconds(new Date().getSeconds());
+            const time = then.getTime() + this.time;
+            const clone = new Date(time);
+            this.setState({ time: clone.toLocaleString(), customDate: clone });
+            this.time = 0;
+        }
         const { width, height } = this.canvas.getBoundingClientRect();
         const { r, g, b } = this.scheduler.state;
         this.ctx.fillStyle = rgb2hex(r, g, b);
@@ -165,7 +223,13 @@ export class ScheduleBuilder extends React.Component<ScheduleTabProps, ScheduleT
     onAddCustomDate = () => {
         this.setState({ addNewCustom: new Date() });
     };
+    toDateString(date: Date) {
+        const year = date.getFullYear();
+        const month = `${date.getMonth() + 1}`.padStart(2, "0");
+        const day = `${date.getDate()}`.padStart(2, "0");
 
+        return `${year}-${month}-${day}`;
+    }
     renderNewCustomDatePicker() {
         if (!this.state.addNewCustom) {
             return <DayButton onClick={this.onAddCustomDate}>Add date</DayButton>;
@@ -173,11 +237,24 @@ export class ScheduleBuilder extends React.Component<ScheduleTabProps, ScheduleT
 
         return (
             <>
-                <DatePicker
+                <DateInput
+                    type='date'
+                    value={this.state.addNewCustom ? this.toDateString(this.state.addNewCustom) : undefined}
+                    onChange={ev => {
+                        const value = (ev.target as HTMLInputElement).value;
+                        if (value) {
+                            console.log(value);
+                            this.setState({ addNewCustom: new Date(value) });
+                        } else {
+                            this.setState({ addNewCustom: undefined });
+                        }
+                    }}
+                />
+                {/* <DatePicker
                     className='date-picker'
                     value={this.state.addNewCustom}
                     onChange={(date: Date) => this.setState({ addNewCustom: date })}
-                />
+                /> */}
                 <Button
                     onClick={() => {
                         const state = { ...this.state };
@@ -278,27 +355,6 @@ export class ScheduleBuilder extends React.Component<ScheduleTabProps, ScheduleT
     private get s() {
         return this.props.als.scheduleService;
     }
-    setCustomDate = () => {
-        this.setState({ customDate: this.state.customDate ? undefined : this.scheduler.getDate() });
-    };
-    get customDatePicker() {
-        if (!this.state.customDate) {
-            return null;
-        }
-        const e = (date: Date) => {
-            this.scheduler.getDate = () => {
-                return date;
-            };
-            this.setState({ customDate: date });
-        };
-
-        return (
-            <CustomDate>
-                <DateAndTimePricker onDateChange={e} date={this.state.customDate} />
-            </CustomDate>
-        );
-    }
-
     onDescriptionChange = (dayDescription: DayDescription) => {
         const description = this.s.getFullSchedule();
         const selected = this.state.selected;
@@ -312,17 +368,43 @@ export class ScheduleBuilder extends React.Component<ScheduleTabProps, ScheduleT
         this.forceUpdate();
     };
 
+    displayTime() {
+        if (this.state.customDate && this.state.time) {
+            return <Margin>{this.state.time}</Margin>;
+        }
+        return null;
+    }
+
     render() {
         return (
             <div>
                 <h1>Schedule builder</h1>
-                <canvas ref={this.canvasRef} width={this.canvasWidth} height={this.canvasHeight}></canvas>
-                {this.customDatePicker}
-                <Button onClick={this.setCustomDate}>{this.state.customDate ? "Hide" : "Set custom date"}</Button>
-                <Button className={this.state.saved ? "" : "warning-button"} onClick={this.onSave}>
-                    Save
-                </Button>{" "}
-                {this.state.saved ? null : "You have unsaved schedule"}
+                <Flex>
+                    <canvas ref={this.canvasRef} width={this.canvasWidth} height={this.canvasHeight}></canvas>
+                    <InlineBlock>
+                        <Flex>
+                            <FlexColumn>
+                                {this.displayTime()}
+                                <DateInput
+                                    type='datetime-local'
+                                    onChange={data => {
+                                        const value = (data.nativeEvent.target as HTMLInputElement).value;
+                                        if (value) {
+                                            const date = new Date(value);
+                                            this.setState({ customDate: date });
+                                        } else {
+                                            this.setState({ customDate: undefined });
+                                        }
+                                    }}
+                                />
+                            </FlexColumn>
+                            <Button className={this.state.saved ? "" : "warning-button"} onClick={this.onSave}>
+                                Save
+                            </Button>
+                            {this.state.saved ? null : "You have unsaved schedule"}
+                        </Flex>
+                    </InlineBlock>
+                </Flex>
                 {this.days}
                 {this.renderDaySchedule()}
             </div>

@@ -9,20 +9,22 @@ import { ClientMessagesRaw, ServerMessagesRaw } from "../../../shared/Messages";
 import { BinaryBuffer } from "../../../shared/messages/BinaryBuffer";
 
 export function setupCommunicationToAudioServer(websocket: WebSocket, audioProcessor: AudioProcessor) {
-    websocket.onPromise<boolean, []>(ServerMessagesRaw.AudioIsAudioServerConnected, async client => {
+    websocket.onPromise(ServerMessagesRaw.AudioIsServerConnected, async (_, client) => {
         client.validateAuthentication();
         return new BinaryBuffer(1).setBool(!!websocket.getAudioServer()).getBuffer();
     });
-    websocket.onPromise<RtAudioDeviceInfo[], []>(ServerMessagesRaw.AudioGetDevices, async client => {
+    websocket.onPromise(ServerMessagesRaw.AudioGetDevices, async (_, client) => {
         client.validateAuthentication();
         const audioServer = websocket.getAudioServer();
         if (!audioServer) {
             throw new Error("Audio server does not exist");
         }
-        const result = await audioServer.serverMessageHandler.sendPromise(ClientMessagesRaw.AudioGetDevices);
+        const result = (
+            await audioServer.serverMessageHandler.sendPromise(ClientMessagesRaw.AudioGetDevices)
+        ).getBuffer();
         return result;
     });
-    websocket.on(ServerMessagesRaw.AudioPcm, (client, pcm) => {
+    websocket.on(ServerMessagesRaw.AudioPcm, (pcm, client) => {
         if (client.clientType !== "audio-server") {
             Logger.error("non server is sending pcm");
             return;
@@ -39,52 +41,58 @@ export function setupCommunicationToAudioServer(websocket: WebSocket, audioProce
         audioProcessor.pipe(intArray);
     });
 
-    websocket.onPromise<boolean, [boolean]>(ServerMessagesRaw.AudioPcmReport, async (client, value) => {
+    websocket.onPromise(ServerMessagesRaw.AudioPcmReport, async (value, client) => {
         client.validateAuthentication();
         client.sendPCM = !!value;
         return new BinaryBuffer(1).setBool(client.sendPCM).getBuffer();
     });
-    websocket.onPromise<ActiveDevice, []>(ServerMessagesRaw.AudioActiveDevice, async client => {
+    websocket.onPromise(ServerMessagesRaw.AudioActiveDevice, async (_, client) => {
         client.validateAuthentication();
         const audioServer = websocket.getAudioServer();
         if (!audioServer) {
             throw new Error("Audio server does not exist");
         }
-        return audioServer.serverMessageHandler.sendPromise(ServerMessagesRaw.AudioActiveDevice);
+        return (await audioServer.serverMessageHandler.sendPromise(ServerMessagesRaw.AudioActiveDevice)).getBuffer();
     });
-    websocket.onPromise<RtAudioDeviceInf[], []>(ServerMessagesRaw.AudioAllDevices, async client => {
+    websocket.onPromise(ServerMessagesRaw.AudioAllDevices, async (_, client) => {
         client.validateAuthentication();
         const audioServer = websocket.getAudioServer();
         if (!audioServer) {
             throw new Error("Audio server does not exist");
         }
-        return audioServer.serverMessageHandler.sendPromise(ClientMessagesRaw.AudioAllDevices);
-    
+        return (await audioServer.serverMessageHandler.sendPromise(ClientMessagesRaw.AudioAllDevices)).getBuffer();
     });
-    websocket.onPromise<boolean, [AudioUpdate]>(ServerMessagesRaw.AudioAudioSettingsUpdate, async (client, device) => {
+    websocket.onPromise(ServerMessagesRaw.AudioSettingsUpdate, async (device, client) => {
         client.validateAuthentication();
         const audioServer = websocket.getAudioServer();
         if (!audioServer) {
             throw new Error("Audio server does not exist");
         }
-        return audioServer.serverMessageHandler.sendPromise(ClientMessagesRaw.AudioSettingsUpdate, device.getBuffer());
+        return (
+            await audioServer.serverMessageHandler.sendPromise(
+                ClientMessagesRaw.AudioSettingsUpdate,
+                device.getBuffer(),
+            )
+        ).getBuffer();
     });
-    websocket.onPromise<boolean, [{ [key: string]: number }]>(ServerMessagesRaw.AudioApis, async client => {
+    websocket.onPromise(ServerMessagesRaw.AudioApis, async (_, client) => {
         client.validateAuthentication();
         const audioServer = websocket.getAudioServer();
         if (!audioServer) {
             throw new Error("Audio server does not exist");
         }
 
-        return audioServer.serverMessageHandler.sendPromise(ClientMessagesRaw.AudioApis);
+        return (await audioServer.serverMessageHandler.sendPromise(ClientMessagesRaw.AudioApis)).getBuffer();
     });
-    websocket.onPromise<boolean, []>(ServerMessagesRaw.AudioIsInternalAudioProcessing, async client => {
+    websocket.onPromise(ServerMessagesRaw.AudioIsInternalAudioProcessing, async (_, client) => {
         client.validateAuthentication();
         const audioServer = websocket.getAudioServer();
         if (!audioServer) {
             throw new Error("Audio server does not exist");
         }
 
-        return audioServer.serverMessageHandler.sendPromise(ClientMessagesRaw.AudioIsInternalAudioProcessing);
+        return (
+            await audioServer.serverMessageHandler.sendPromise(ClientMessagesRaw.AudioIsInternalAudioProcessing)
+        ).getBuffer();
     });
 }

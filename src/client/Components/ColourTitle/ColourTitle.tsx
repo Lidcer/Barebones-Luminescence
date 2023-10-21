@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { rgb2hex } from "../../../shared/colour";
 import { AudioLightSystem } from "../../Utils/AudioSystem";
-import { ControllerMode, RGB } from "../../../shared/interfaces";
+import { ControllerMode, RGB, modeToString } from "../../../shared/interfaces";
 import { Logger } from "../../../shared/logger";
-import { SpecialEvents } from "../../../shared/Messages";
+import { ClientMessagesRaw, ServerMessagesRaw, SpecialEvents } from "../../../shared/Messages";
 
 const H1 = styled.h1`
     display: inline-block;
@@ -22,7 +22,7 @@ interface ColourTitleProps {
 interface ColourTitleState {}
 
 export class ColourTitle extends React.Component<ColourTitleProps, ColourTitleState> {
-    private readonly title = "Light controller";
+    private readonly title = "LumiFlex";
     private ref = React.createRef<HTMLCanvasElement>();
     private crx: CanvasRenderingContext2D;
     private canvasSize = 25;
@@ -31,13 +31,14 @@ export class ColourTitle extends React.Component<ColourTitleProps, ColourTitleSt
     async componentDidMount() {
         const lightSocket = this.props.als.lightSocket;
         this.crx = this.canvas.getContext("2d");
-        //lightSocket.clientSocket.on("rgb-update", this.onRGBUpdate);
-        //lightSocket.clientSocket.on("mode-update", this.onModeUpdate);
+        lightSocket.on("rgb-update", this.onRGBUpdate);
+        lightSocket.on("mode-update", this.onModeUpdate);
         this.favIconReference = document.createElement("link");
         document.head.append(this.favIconReference);
         this.favIconReference.rel = "shortcut icon";
 
-        if (this.props.als.lightSocket.clientSocket.connected) {
+        const connected = this.props.als.lightSocket.clientSocket.connected;
+        if (connected) {
             this.onSocketConnect();
         } else {
             this.props.als.lightSocket.clientSocket.clientHandle.on(SpecialEvents.Connect, this.onSocketConnect);
@@ -55,20 +56,23 @@ export class ColourTitle extends React.Component<ColourTitleProps, ColourTitleSt
     onSocketConnect = async () => {
         const lightSocket = this.props.als.lightSocket;
         try {
-            const mode = await lightSocket.emitPromiseIfPossible<ControllerMode, []>("mode-get");
-            const rgb = await lightSocket.emitPromiseIfPossible<RGB, []>("rgb-status");
+            const modeBuffer = await lightSocket.emitPromiseIfPossible(ServerMessagesRaw.ModeGet);
+            const rgb = await lightSocket.emitPromiseIfPossible(ServerMessagesRaw.RGBGet);
             if (this.destroyed) {
                 return;
             }
-            this.onModeUpdate(mode);
-            this.onRGBUpdate(rgb);
+            this.onModeUpdate(modeBuffer.getUint8());
+            const r = rgb.getUint8();
+            const g = rgb.getUint8();
+            const b = rgb.getUint8();
+            this.onRGBUpdate({ r, g, b });
         } catch (error) {
             Logger.debug("Socket error", error);
         }
-    }
+    };
 
     onModeUpdate = (mode: ControllerMode) => {
-        document.title = `${this.title} (${mode})`;
+        document.title = `${this.title} (${modeToString(mode)})`;
     };
 
     onRGBUpdate = (rgb: RGB) => {
@@ -94,7 +98,7 @@ export class ColourTitle extends React.Component<ColourTitleProps, ColourTitleSt
         return (
             <div>
                 <Canvas ref={this.ref} height={this.canvasSize} width={this.canvasSize} />
-                <H1>Light Controller</H1>
+                <H1>LumiFlex</H1>
             </div>
         );
     }

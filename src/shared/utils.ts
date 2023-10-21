@@ -1,4 +1,5 @@
 import { Deffered } from "./interfaces";
+import { BinaryBuffer, utf8StringLen } from "./messages/BinaryBuffer";
 
 export function cloneDeep<A>(object: A) {
     return JSON.parse(JSON.stringify(object)) as A;
@@ -163,16 +164,31 @@ export function getDayString(date: Date) {
 }
 
 export function deffer<A = any>(): Deffered<A> {
-    let resolve: Deffered['resolve'];
-    let reject: Deffered['reject'];
-    const promise: Deffered['promise'] = new Promise((_resolve, _reject) => {
-        resolve =_resolve;
-        reject =_reject;
+    let resolve: Deffered["resolve"];
+    let reject: Deffered["reject"];
+    const promise: Deffered["promise"] = new Promise((_resolve, _reject) => {
+        resolve = _resolve;
+        reject = _reject;
     });
 
     return {
         promise,
         reject,
         resolve,
+    };
+}
+export function quickBuffer(value: boolean | number | string | any) {
+    switch (typeof value) {
+        case "boolean":
+            return new BinaryBuffer(1).setBool(value).getBuffer();
+        case "string":
+            return new BinaryBuffer(utf8StringLen(value)).setUtf8String(value).getBuffer();
+        case "number": {
+            return new BinaryBuffer(1).setUint8(value).getBuffer();
+        }
+        case "object": {
+            return quickBuffer(JSON.stringify(value));
+        }
     }
+    return new Uint8Array();
 }

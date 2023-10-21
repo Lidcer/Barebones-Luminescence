@@ -568,7 +568,7 @@
             }
             return element;
           };
-          function createElement2(type, config2, children) {
+          function createElement3(type, config2, children) {
             var propName;
             var props = {};
             var key = null;
@@ -698,8 +698,8 @@
           }
           var didWarnAboutMaps = false;
           var userProvidedKeyEscapeRegex = /\/+/g;
-          function escapeUserProvidedKey(text) {
-            return text.replace(userProvidedKeyEscapeRegex, "$&/");
+          function escapeUserProvidedKey(text2) {
+            return text2.replace(userProvidedKeyEscapeRegex, "$&/");
           }
           function getElementKey(element, index) {
             if (typeof element === "object" && element !== null && element.key != null) {
@@ -712,24 +712,24 @@
             if (type === "undefined" || type === "boolean") {
               children = null;
             }
-            var invokeCallback2 = false;
+            var invokeCallback = false;
             if (children === null) {
-              invokeCallback2 = true;
+              invokeCallback = true;
             } else {
               switch (type) {
                 case "string":
                 case "number":
-                  invokeCallback2 = true;
+                  invokeCallback = true;
                   break;
                 case "object":
                   switch (children.$$typeof) {
                     case REACT_ELEMENT_TYPE:
                     case REACT_PORTAL_TYPE:
-                      invokeCallback2 = true;
+                      invokeCallback = true;
                   }
               }
             }
-            if (invokeCallback2) {
+            if (invokeCallback) {
               var _child = children;
               var mappedChild = callback(_child);
               var childKey = nameSoFar === "" ? SEPARATOR + getElementKey(_child, 0) : nameSoFar;
@@ -822,7 +822,7 @@
               forEachFunc.apply(this, arguments);
             }, forEachContext);
           }
-          function toArray(children) {
+          function toArray2(children) {
             return mapChildren(children, function(child) {
               return child;
             }) || [];
@@ -1023,26 +1023,26 @@
             }
             return lazyType;
           }
-          function forwardRef(render) {
+          function forwardRef(render3) {
             {
-              if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
+              if (render3 != null && render3.$$typeof === REACT_MEMO_TYPE) {
                 error("forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...)).");
-              } else if (typeof render !== "function") {
-                error("forwardRef requires a render function but was given %s.", render === null ? "null" : typeof render);
+              } else if (typeof render3 !== "function") {
+                error("forwardRef requires a render function but was given %s.", render3 === null ? "null" : typeof render3);
               } else {
-                if (render.length !== 0 && render.length !== 2) {
-                  error("forwardRef render functions accept exactly two parameters: props and ref. %s", render.length === 1 ? "Did you forget to use the ref parameter?" : "Any additional parameter will be undefined.");
+                if (render3.length !== 0 && render3.length !== 2) {
+                  error("forwardRef render functions accept exactly two parameters: props and ref. %s", render3.length === 1 ? "Did you forget to use the ref parameter?" : "Any additional parameter will be undefined.");
                 }
               }
-              if (render != null) {
-                if (render.defaultProps != null || render.propTypes != null) {
+              if (render3 != null) {
+                if (render3.defaultProps != null || render3.propTypes != null) {
                   error("forwardRef render functions do not support propTypes or defaultProps. Did you accidentally pass a React component?");
                 }
               }
             }
             var elementType = {
               $$typeof: REACT_FORWARD_REF_TYPE,
-              render
+              render: render3
             };
             {
               var ownName;
@@ -1054,8 +1054,8 @@
                 },
                 set: function(name) {
                   ownName = name;
-                  if (render.displayName == null) {
-                    render.displayName = name;
+                  if (render3.displayName == null) {
+                    render3.displayName = name;
                   }
                 }
               });
@@ -1636,7 +1636,7 @@
                 error("React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
               }
             }
-            var element = createElement2.apply(this, arguments);
+            var element = createElement3.apply(this, arguments);
             if (element == null) {
               return element;
             }
@@ -1697,7 +1697,7 @@
             map: mapChildren,
             forEach: forEachChildren,
             count: countChildren,
-            toArray,
+            toArray: toArray2,
             only: onlyChild
           };
           exports.Children = Children;
@@ -2535,11 +2535,11 @@
       if (true) {
         (function() {
           "use strict";
-          var React29 = require_react();
+          var React27 = require_react();
           var _assign = require_object_assign();
           var Scheduler2 = require_scheduler();
           var tracing = require_tracing();
-          var ReactSharedInternals = React29.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React27.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function warn(format) {
             {
               for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -2571,7 +2571,7 @@
               Function.prototype.apply.call(console[level], console, argsWithFormat);
             }
           }
-          if (!React29) {
+          if (!React27) {
             {
               throw Error("ReactDOM was loaded before React. Make sure you load the React package before loading ReactDOM.");
             }
@@ -3991,7 +3991,7 @@
           var didWarnInvalidChild = false;
           function flattenChildren(children) {
             var content = "";
-            React29.Children.forEach(children, function(child) {
+            React27.Children.forEach(children, function(child) {
               if (child == null) {
                 return;
               }
@@ -4002,7 +4002,7 @@
           function validateProps(element, props) {
             {
               if (typeof props.children === "object" && props.children !== null) {
-                React29.Children.forEach(props.children, function(child) {
+                React27.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -4304,15 +4304,15 @@
           var COMMENT_NODE = 8;
           var DOCUMENT_NODE = 9;
           var DOCUMENT_FRAGMENT_NODE = 11;
-          var setTextContent = function(node, text) {
-            if (text) {
+          var setTextContent = function(node, text2) {
+            if (text2) {
               var firstChild = node.firstChild;
               if (firstChild && firstChild === node.lastChild && firstChild.nodeType === TEXT_NODE) {
-                firstChild.nodeValue = text;
+                firstChild.nodeValue = text2;
                 return;
               }
             }
-            node.textContent = text;
+            node.textContent = text2;
           };
           var shorthandToLonghand = {
             animation: ["animationDelay", "animationDirection", "animationDuration", "animationFillMode", "animationIterationCount", "animationName", "animationPlayState", "animationTimingFunction"],
@@ -5350,7 +5350,7 @@
                 return true;
               }
               var propertyInfo = getPropertyInfo(name);
-              var isReserved = propertyInfo !== null && propertyInfo.type === RESERVED;
+              var isReserved2 = propertyInfo !== null && propertyInfo.type === RESERVED;
               if (possibleStandardNames.hasOwnProperty(lowerCasedName)) {
                 var standardName = possibleStandardNames[lowerCasedName];
                 if (standardName !== name) {
@@ -5358,7 +5358,7 @@
                   warnedProperties$1[name] = true;
                   return true;
                 }
-              } else if (!isReserved && name !== lowerCasedName) {
+              } else if (!isReserved2 && name !== lowerCasedName) {
                 error("React does not recognize the `%s` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `%s` instead. If you accidentally passed it from a parent component, remove it from the DOM element.", name, lowerCasedName);
                 warnedProperties$1[name] = true;
                 return true;
@@ -5372,7 +5372,7 @@
                 warnedProperties$1[name] = true;
                 return true;
               }
-              if (isReserved) {
+              if (isReserved2) {
                 return true;
               }
               if (shouldRemoveAttributeWithWarning(name, value, propertyInfo, false)) {
@@ -5478,8 +5478,8 @@
           var batchedUpdatesImpl = function(fn, bookkeeping) {
             return fn(bookkeeping);
           };
-          var discreteUpdatesImpl = function(fn, a2, b2, c2, d2) {
-            return fn(a2, b2, c2, d2);
+          var discreteUpdatesImpl = function(fn, a2, b2, c2, d3) {
+            return fn(a2, b2, c2, d3);
           };
           var flushDiscreteUpdatesImpl = function() {
           };
@@ -5517,11 +5517,11 @@
               finishEventHandler();
             }
           }
-          function discreteUpdates(fn, a2, b2, c2, d2) {
+          function discreteUpdates(fn, a2, b2, c2, d3) {
             var prevIsInsideEventHandler = isInsideEventHandler;
             isInsideEventHandler = true;
             try {
-              return discreteUpdatesImpl(fn, a2, b2, c2, d2);
+              return discreteUpdatesImpl(fn, a2, b2, c2, d3);
             } finally {
               isInsideEventHandler = prevIsInsideEventHandler;
               if (!isInsideEventHandler) {
@@ -5598,7 +5598,7 @@
               passiveBrowserEventsSupported = false;
             }
           }
-          function invokeGuardedCallbackProd(name, func, context, a2, b2, c2, d2, e2, f) {
+          function invokeGuardedCallbackProd(name, func, context, a2, b2, c2, d3, e2, f) {
             var funcArgs = Array.prototype.slice.call(arguments, 3);
             try {
               func.apply(context, funcArgs);
@@ -5610,7 +5610,7 @@
           {
             if (typeof window !== "undefined" && typeof window.dispatchEvent === "function" && typeof document !== "undefined" && typeof document.createEvent === "function") {
               var fakeNode = document.createElement("react");
-              invokeGuardedCallbackImpl = function invokeGuardedCallbackDev(name, func, context, a2, b2, c2, d2, e2, f) {
+              invokeGuardedCallbackImpl = function invokeGuardedCallbackDev(name, func, context, a2, b2, c2, d3, e2, f) {
                 if (!(typeof document !== "undefined")) {
                   {
                     throw Error("The `document` global was defined when React was initialized, but is not defined anymore. This can happen in a test environment if a component schedules an update from an asynchronous callback, but the test has already finished running. To solve this, you can either unmount the component at the end of your test (and ensure that any asynchronous operations get canceled in `componentWillUnmount`), or you can change the test itself to be asynchronous.");
@@ -5687,12 +5687,12 @@
               caughtError = error2;
             }
           };
-          function invokeGuardedCallback(name, func, context, a2, b2, c2, d2, e2, f) {
+          function invokeGuardedCallback(name, func, context, a2, b2, c2, d3, e2, f) {
             hasError = false;
             caughtError = null;
             invokeGuardedCallbackImpl$1.apply(reporter, arguments);
           }
-          function invokeGuardedCallbackAndCatchFirstError(name, func, context, a2, b2, c2, d2, e2, f) {
+          function invokeGuardedCallbackAndCatchFirstError(name, func, context, a2, b2, c2, d3, e2, f) {
             invokeGuardedCallback.apply(this, arguments);
             if (hasError) {
               var error2 = clearCaughtError();
@@ -7199,7 +7199,7 @@
             var start;
             var startValue = startText;
             var startLength = startValue.length;
-            var end;
+            var end3;
             var endValue = getText();
             var endLength = endValue.length;
             for (start = 0; start < startLength; start++) {
@@ -7208,12 +7208,12 @@
               }
             }
             var minEnd = startLength - start;
-            for (end = 1; end <= minEnd; end++) {
-              if (startValue[startLength - end] !== endValue[endLength - end]) {
+            for (end3 = 1; end3 <= minEnd; end3++) {
+              if (startValue[startLength - end3] !== endValue[endLength - end3]) {
                 break;
               }
             }
-            var sliceTail = end > 1 ? 1 - end : void 0;
+            var sliceTail = end3 > 1 ? 1 - end3 : void 0;
             fallbackText = endValue.slice(start, sliceTail);
             return fallbackText;
           }
@@ -8076,7 +8076,7 @@
           function getModernOffsetsFromPoints(outerNode, anchorNode, anchorOffset, focusNode, focusOffset) {
             var length = 0;
             var start = -1;
-            var end = -1;
+            var end3 = -1;
             var indexWithinAnchor = 0;
             var indexWithinFocus = 0;
             var node = outerNode;
@@ -8089,7 +8089,7 @@
                     start = length + anchorOffset;
                   }
                   if (node === focusNode && (focusOffset === 0 || node.nodeType === TEXT_NODE)) {
-                    end = length + focusOffset;
+                    end3 = length + focusOffset;
                   }
                   if (node.nodeType === TEXT_NODE) {
                     length += node.nodeValue.length;
@@ -8108,7 +8108,7 @@
                     start = length;
                   }
                   if (parentNode === focusNode && ++indexWithinFocus === focusOffset) {
-                    end = length;
+                    end3 = length;
                   }
                   if ((next = node.nextSibling) !== null) {
                     break;
@@ -8118,12 +8118,12 @@
                 }
                 node = next;
               }
-            if (start === -1 || end === -1) {
+            if (start === -1 || end3 === -1) {
               return null;
             }
             return {
               start,
-              end
+              end: end3
             };
           }
           function setOffsets(node, offsets) {
@@ -8135,14 +8135,14 @@
             var selection = win.getSelection();
             var length = node.textContent.length;
             var start = Math.min(offsets.start, length);
-            var end = offsets.end === void 0 ? start : Math.min(offsets.end, length);
-            if (!selection.extend && start > end) {
-              var temp = end;
-              end = start;
+            var end3 = offsets.end === void 0 ? start : Math.min(offsets.end, length);
+            if (!selection.extend && start > end3) {
+              var temp = end3;
+              end3 = start;
               start = temp;
             }
             var startMarker = getNodeForCharacterOffset(node, start);
-            var endMarker = getNodeForCharacterOffset(node, end);
+            var endMarker = getNodeForCharacterOffset(node, end3);
             if (startMarker && endMarker) {
               if (selection.rangeCount === 1 && selection.anchorNode === startMarker.node && selection.anchorOffset === startMarker.offset && selection.focusNode === endMarker.node && selection.focusOffset === endMarker.offset) {
                 return;
@@ -8150,7 +8150,7 @@
               var range = doc.createRange();
               range.setStart(startMarker.node, startMarker.offset);
               selection.removeAllRanges();
-              if (start > end) {
+              if (start > end3) {
                 selection.addRange(range);
                 selection.extend(endMarker.node, endMarker.offset);
               } else {
@@ -8259,13 +8259,13 @@
           }
           function setSelection(input, offsets) {
             var start = offsets.start;
-            var end = offsets.end;
-            if (end === void 0) {
-              end = start;
+            var end3 = offsets.end;
+            if (end3 === void 0) {
+              end3 = start;
             }
             if ("selectionStart" in input) {
               input.selectionStart = start;
-              input.selectionEnd = Math.min(end, input.value.length);
+              input.selectionEnd = Math.min(end3, input.value.length);
             } else {
               setOffsets(input, offsets);
             }
@@ -8940,7 +8940,7 @@
               }
             }
           }
-          function createElement2(type, props, rootContainerElement, parentNamespace) {
+          function createElement3(type, props, rootContainerElement, parentNamespace) {
             var isCustomComponentTag;
             var ownerDocument = getOwnerDocumentFromRootContainer(rootContainerElement);
             var domElement;
@@ -8988,8 +8988,8 @@
             }
             return domElement;
           }
-          function createTextNode(text, rootContainerElement) {
-            return getOwnerDocumentFromRootContainer(rootContainerElement).createTextNode(text);
+          function createTextNode(text2, rootContainerElement) {
+            return getOwnerDocumentFromRootContainer(rootContainerElement).createTextNode(text2);
           }
           function setInitialProperties(domElement, tag, rawProps, rootContainerElement) {
             var isCustomComponentTag = isCustomComponent(tag, rawProps);
@@ -9443,13 +9443,13 @@
             }
             return updatePayload;
           }
-          function diffHydratedText(textNode, text) {
-            var isDifferent = textNode.nodeValue !== text;
+          function diffHydratedText(textNode, text2) {
+            var isDifferent = textNode.nodeValue !== text2;
             return isDifferent;
           }
-          function warnForUnmatchedText(textNode, text) {
+          function warnForUnmatchedText(textNode, text2) {
             {
-              warnForTextDifference(textNode.nodeValue, text);
+              warnForTextDifference(textNode.nodeValue, text2);
             }
           }
           function warnForDeletedHydratableElement(parentNode, child) {
@@ -9479,16 +9479,16 @@
               error("Expected server HTML to contain a matching <%s> in <%s>.", tag, parentNode.nodeName.toLowerCase());
             }
           }
-          function warnForInsertedHydratedText(parentNode, text) {
+          function warnForInsertedHydratedText(parentNode, text2) {
             {
-              if (text === "") {
+              if (text2 === "") {
                 return;
               }
               if (didWarnInvalidHydration) {
                 return;
               }
               didWarnInvalidHydration = true;
-              error('Expected server HTML to contain a matching text node for "%s" in <%s>.', text, parentNode.nodeName.toLowerCase());
+              error('Expected server HTML to contain a matching text node for "%s" in <%s>.', text2, parentNode.nodeName.toLowerCase());
             }
           }
           function restoreControlledState$3(domElement, tag, props) {
@@ -9825,7 +9825,7 @@
               }
               parentNamespace = hostContextDev.namespace;
             }
-            var domElement = createElement2(type, props, rootContainerInstance, parentNamespace);
+            var domElement = createElement3(type, props, rootContainerInstance, parentNamespace);
             precacheFiberNode(internalInstanceHandle, domElement);
             updateFiberProps(domElement, props);
             return domElement;
@@ -9851,12 +9851,12 @@
           function shouldSetTextContent(type, props) {
             return type === "textarea" || type === "option" || type === "noscript" || typeof props.children === "string" || typeof props.children === "number" || typeof props.dangerouslySetInnerHTML === "object" && props.dangerouslySetInnerHTML !== null && props.dangerouslySetInnerHTML.__html != null;
           }
-          function createTextInstance(text, rootContainerInstance, hostContext, internalInstanceHandle) {
+          function createTextInstance(text2, rootContainerInstance, hostContext, internalInstanceHandle) {
             {
               var hostContextDev = hostContext;
-              validateDOMNesting(null, text, hostContextDev.ancestorInfo);
+              validateDOMNesting(null, text2, hostContextDev.ancestorInfo);
             }
-            var textNode = createTextNode(text, rootContainerInstance);
+            var textNode = createTextNode(text2, rootContainerInstance);
             precacheFiberNode(internalInstanceHandle, textNode);
             return textNode;
           }
@@ -9933,8 +9933,8 @@
             var display = styleProp !== void 0 && styleProp !== null && styleProp.hasOwnProperty("display") ? styleProp.display : null;
             instance.style.display = dangerousStyleValue("display", display);
           }
-          function unhideTextInstance(textInstance, text) {
-            textInstance.nodeValue = text;
+          function unhideTextInstance(textInstance, text2) {
+            textInstance.nodeValue = text2;
           }
           function clearContainer(container) {
             if (container.nodeType === ELEMENT_NODE) {
@@ -9952,8 +9952,8 @@
             }
             return instance;
           }
-          function canHydrateTextInstance(instance, text) {
-            if (text === "" || instance.nodeType !== TEXT_NODE) {
+          function canHydrateTextInstance(instance, text2) {
+            if (text2 === "" || instance.nodeType !== TEXT_NODE) {
               return null;
             }
             return instance;
@@ -9989,9 +9989,9 @@
             }
             return diffHydratedProperties(instance, type, props, parentNamespace);
           }
-          function hydrateTextInstance(textInstance, text, internalInstanceHandle) {
+          function hydrateTextInstance(textInstance, text2, internalInstanceHandle) {
             precacheFiberNode(internalInstanceHandle, textInstance);
-            return diffHydratedText(textInstance, text);
+            return diffHydratedText(textInstance, text2);
           }
           function getNextHydratableInstanceAfterSuspenseInstance(suspenseInstance) {
             var node = suspenseInstance.nextSibling;
@@ -10039,14 +10039,14 @@
           function commitHydratedSuspenseInstance(suspenseInstance) {
             retryIfBlockedOn(suspenseInstance);
           }
-          function didNotMatchHydratedContainerTextInstance(parentContainer, textInstance, text) {
+          function didNotMatchHydratedContainerTextInstance(parentContainer, textInstance, text2) {
             {
-              warnForUnmatchedText(textInstance, text);
+              warnForUnmatchedText(textInstance, text2);
             }
           }
-          function didNotMatchHydratedTextInstance(parentType, parentProps, parentInstance, textInstance, text) {
+          function didNotMatchHydratedTextInstance(parentType, parentProps, parentInstance, textInstance, text2) {
             if (parentProps[SUPPRESS_HYDRATION_WARNING$1] !== true) {
-              warnForUnmatchedText(textInstance, text);
+              warnForUnmatchedText(textInstance, text2);
             }
           }
           function didNotHydrateContainerInstance(parentContainer, instance) {
@@ -10076,9 +10076,9 @@
               warnForInsertedHydratedElement(parentContainer, type);
             }
           }
-          function didNotFindHydratableContainerTextInstance(parentContainer, text) {
+          function didNotFindHydratableContainerTextInstance(parentContainer, text2) {
             {
-              warnForInsertedHydratedText(parentContainer, text);
+              warnForInsertedHydratedText(parentContainer, text2);
             }
           }
           function didNotFindHydratableInstance(parentType, parentProps, parentInstance, type, props) {
@@ -10086,9 +10086,9 @@
               warnForInsertedHydratedElement(parentInstance, type);
             }
           }
-          function didNotFindHydratableTextInstance(parentType, parentProps, parentInstance, text) {
+          function didNotFindHydratableTextInstance(parentType, parentProps, parentInstance, text2) {
             if (parentProps[SUPPRESS_HYDRATION_WARNING$1] !== true) {
-              warnForInsertedHydratedText(parentInstance, text);
+              warnForInsertedHydratedText(parentInstance, text2);
             }
           }
           function didNotFindHydratableSuspenseInstance(parentType, parentProps, parentInstance) {
@@ -11394,7 +11394,7 @@
           }
           var fakeInternalInstance = {};
           var isArray3 = Array.isArray;
-          var emptyRefsObject = new React29.Component().refs;
+          var emptyRefsObject = new React27.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -12894,8 +12894,8 @@
                       didNotFindHydratableContainerInstance(parentContainer, type);
                       break;
                     case HostText:
-                      var text = fiber.pendingProps;
-                      didNotFindHydratableContainerTextInstance(parentContainer, text);
+                      var text2 = fiber.pendingProps;
+                      didNotFindHydratableContainerTextInstance(parentContainer, text2);
                       break;
                   }
                   break;
@@ -12938,8 +12938,8 @@
                 return false;
               }
               case HostText: {
-                var text = fiber.pendingProps;
-                var textInstance = canHydrateTextInstance(nextInstance, text);
+                var text2 = fiber.pendingProps;
+                var textInstance = canHydrateTextInstance(nextInstance, text2);
                 if (textInstance !== null) {
                   fiber.stateNode = textInstance;
                   return true;
@@ -14851,18 +14851,18 @@
                 }
               }
             }
-            var render2 = Component.render;
+            var render4 = Component.render;
             var ref = workInProgress2.ref;
             var nextChildren;
             prepareToReadContext(workInProgress2, renderLanes2);
             {
               ReactCurrentOwner$1.current = workInProgress2;
               setIsRendering(true);
-              nextChildren = renderWithHooks(current2, workInProgress2, render2, nextProps, ref, renderLanes2);
+              nextChildren = renderWithHooks(current2, workInProgress2, render4, nextProps, ref, renderLanes2);
               if (workInProgress2.mode & StrictMode) {
                 disableLogs();
                 try {
-                  nextChildren = renderWithHooks(current2, workInProgress2, render2, nextProps, ref, renderLanes2);
+                  nextChildren = renderWithHooks(current2, workInProgress2, render4, nextProps, ref, renderLanes2);
                 } finally {
                   reenableLogs();
                 }
@@ -16040,9 +16040,9 @@
               }
             }
             var newProps = workInProgress2.pendingProps;
-            var render2 = newProps.children;
+            var render4 = newProps.children;
             {
-              if (typeof render2 !== "function") {
+              if (typeof render4 !== "function") {
                 error("A context consumer was rendered with multiple children, or a child that isn't a function. A context consumer expects a single child that is a function. If you did pass a function, make sure there is no trailing or leading whitespace around it.");
               }
             }
@@ -16052,7 +16052,7 @@
             {
               ReactCurrentOwner$1.current = workInProgress2;
               setIsRendering(true);
-              newChildren = render2(newValue);
+              newChildren = render4(newValue);
               setIsRendering(false);
             }
             workInProgress2.flags |= PerformedWork;
@@ -18358,12 +18358,12 @@
               }
             }
           }
-          function discreteUpdates$1(fn, a2, b2, c2, d2) {
+          function discreteUpdates$1(fn, a2, b2, c2, d3) {
             var prevExecutionContext = executionContext;
             executionContext |= DiscreteEventContext;
             {
               try {
-                return runWithPriority$1(UserBlockingPriority$2, fn.bind(null, a2, b2, c2, d2));
+                return runWithPriority$1(UserBlockingPriority$2, fn.bind(null, a2, b2, c2, d3));
               } finally {
                 executionContext = prevExecutionContext;
                 if (executionContext === NoContext) {
@@ -20944,7 +20944,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             }
             return legacyRenderSubtreeIntoContainer(null, element, container, true, callback);
           }
-          function render(element, container, callback) {
+          function render3(element, container, callback) {
             if (!isValidContainer(container)) {
               {
                 throw Error("Target container is not a DOM element.");
@@ -21081,7 +21081,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           exports.findDOMNode = findDOMNode;
           exports.flushSync = flushSync;
           exports.hydrate = hydrate;
-          exports.render = render;
+          exports.render = render3;
           exports.unmountComponentAtNode = unmountComponentAtNode;
           exports.unstable_batchedUpdates = batchedUpdates$1;
           exports.unstable_createPortal = unstable_createPortal;
@@ -21720,9 +21720,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           });
           return result;
         }
-        function overArg(func, transform2) {
+        function overArg(func, transform) {
           return function(arg) {
-            return func(transform2(arg));
+            return func(transform(arg));
           };
         }
         function replaceHolders(array, placeholder) {
@@ -21944,7 +21944,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             return result2;
           }
           function lazyValue() {
-            var array = this.__wrapped__.value(), dir = this.__dir__, isArr = isArray3(array), isRight = dir < 0, arrLength = isArr ? array.length : 0, view = getView(0, arrLength, this.__views__), start = view.start, end = view.end, length = end - start, index = isRight ? end : start - 1, iteratees = this.__iteratees__, iterLength = iteratees.length, resIndex = 0, takeCount = nativeMin(length, this.__takeCount__);
+            var array = this.__wrapped__.value(), dir = this.__dir__, isArr = isArray3(array), isRight = dir < 0, arrLength = isArr ? array.length : 0, view = getView(0, arrLength, this.__views__), start = view.start, end3 = view.end, length = end3 - start, index = isRight ? end3 : start - 1, iteratees = this.__iteratees__, iterLength = iteratees.length, resIndex = 0, takeCount = nativeMin(length, this.__takeCount__);
             if (!isArr || !isRight && arrLength == length && takeCount == length) {
               return baseWrapperValue(array, this.__actions__);
             }
@@ -22379,18 +22379,18 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             }
             return result2;
           }
-          function baseFill(array, value, start, end) {
+          function baseFill(array, value, start, end3) {
             var length = array.length;
             start = toInteger(start);
             if (start < 0) {
               start = -start > length ? 0 : length + start;
             }
-            end = end === undefined2 || end > length ? length : toInteger(end);
-            if (end < 0) {
-              end += length;
+            end3 = end3 === undefined2 || end3 > length ? length : toInteger(end3);
+            if (end3 < 0) {
+              end3 += length;
             }
-            end = start > end ? 0 : toLength2(end);
-            while (start < end) {
+            end3 = start > end3 ? 0 : toLength2(end3);
+            while (start < end3) {
               array[start++] = value;
             }
             return array;
@@ -22462,8 +22462,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           function baseHasIn(object, key) {
             return object != null && key in Object2(object);
           }
-          function baseInRange(number, start, end) {
-            return number >= nativeMin(start, end) && number < nativeMax(start, end);
+          function baseInRange(number, start, end3) {
+            return number >= nativeMin(start, end3) && number < nativeMax(start, end3);
           }
           function baseIntersection(arrays, iteratee2, comparator) {
             var includes2 = comparator ? arrayIncludesWith : arrayIncludes2, length = arrays[0].length, othLength = arrays.length, othIndex = othLength, caches = Array2(othLength), maxLength = Infinity, result2 = [];
@@ -22821,8 +22821,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           function baseRandom(lower, upper) {
             return lower + nativeFloor(nativeRandom() * (upper - lower + 1));
           }
-          function baseRange(start, end, step, fromRight) {
-            var index = -1, length = nativeMax(nativeCeil((end - start) / (step || 1)), 0), result2 = Array2(length);
+          function baseRange(start, end3, step, fromRight) {
+            var index = -1, length = nativeMax(nativeCeil((end3 - start) / (step || 1)), 0), result2 = Array2(length);
             while (length--) {
               result2[fromRight ? length : ++index] = start;
               start += step;
@@ -22893,16 +22893,16 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           function baseShuffle(collection) {
             return shuffleSelf(values(collection));
           }
-          function baseSlice(array, start, end) {
+          function baseSlice(array, start, end3) {
             var index = -1, length = array.length;
             if (start < 0) {
               start = -start > length ? 0 : length + start;
             }
-            end = end > length ? length : end;
-            if (end < 0) {
-              end += length;
+            end3 = end3 > length ? length : end3;
+            if (end3 < 0) {
+              end3 += length;
             }
-            length = start > end ? 0 : end - start >>> 0;
+            length = start > end3 ? 0 : end3 - start >>> 0;
             start >>>= 0;
             var result2 = Array2(length);
             while (++index < length) {
@@ -23096,10 +23096,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             return isKey(value, object) ? [value] : stringToPath(toString3(value));
           }
           var castRest = baseRest;
-          function castSlice(array, start, end) {
+          function castSlice(array, start, end3) {
             var length = array.length;
-            end = end === undefined2 ? length : end;
-            return !start && end >= length ? array : baseSlice(array, start, end);
+            end3 = end3 === undefined2 ? length : end3;
+            return !start && end3 >= length ? array : baseSlice(array, start, end3);
           }
           var clearTimeout2 = ctxClearTimeout || function(id2) {
             return root.clearTimeout(id2);
@@ -23517,19 +23517,19 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             return wrapper;
           }
           function createRange(fromRight) {
-            return function(start, end, step) {
-              if (step && typeof step != "number" && isIterateeCall(start, end, step)) {
-                end = step = undefined2;
+            return function(start, end3, step) {
+              if (step && typeof step != "number" && isIterateeCall(start, end3, step)) {
+                end3 = step = undefined2;
               }
               start = toFinite(start);
-              if (end === undefined2) {
-                end = start;
+              if (end3 === undefined2) {
+                end3 = start;
                 start = 0;
               } else {
-                end = toFinite(end);
+                end3 = toFinite(end3);
               }
-              step = step === undefined2 ? start < end ? 1 : -1 : toFinite(step);
-              return baseRange(start, end, step, fromRight);
+              step = step === undefined2 ? start < end3 ? 1 : -1 : toFinite(step);
+              return baseRange(start, end3, step, fromRight);
             };
           }
           function createRelationalOperation(operator) {
@@ -23900,7 +23900,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               return result2;
             };
           }
-          function getView(start, end, transforms) {
+          function getView(start, end3, transforms) {
             var index = -1, length = transforms.length;
             while (++index < length) {
               var data2 = transforms[index], size2 = data2.size;
@@ -23909,17 +23909,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                   start += size2;
                   break;
                 case "dropRight":
-                  end -= size2;
+                  end3 -= size2;
                   break;
                 case "take":
-                  end = nativeMin(end, start + size2);
+                  end3 = nativeMin(end3, start + size2);
                   break;
                 case "takeRight":
-                  start = nativeMax(start, end - size2);
+                  start = nativeMax(start, end3 - size2);
                   break;
               }
             }
-            return { "start": start, "end": end };
+            return { "start": start, "end": end3 };
           }
           function getWrapDetails(source) {
             var match2 = source.match(reWrapDetails);
@@ -24115,7 +24115,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           function objectToString(value) {
             return nativeObjectToString.call(value);
           }
-          function overRest(func, start, transform3) {
+          function overRest(func, start, transform2) {
             start = nativeMax(start === undefined2 ? func.length - 1 : start, 0);
             return function() {
               var args = arguments, index = -1, length = nativeMax(args.length - start, 0), array = Array2(length);
@@ -24127,7 +24127,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               while (++index < start) {
                 otherArgs[index] = args[index];
               }
-              otherArgs[start] = transform3(array);
+              otherArgs[start] = transform2(array);
               return apply(func, this, otherArgs);
             };
           }
@@ -24235,7 +24235,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             result2.__values__ = wrapper.__values__;
             return result2;
           }
-          function chunk2(array, size2, guard) {
+          function chunk(array, size2, guard) {
             if (guard ? isIterateeCall(array, size2, guard) : size2 === undefined2) {
               size2 = 1;
             } else {
@@ -24312,16 +24312,16 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           function dropWhile(array, predicate) {
             return array && array.length ? baseWhile(array, getIteratee(predicate, 3), true) : [];
           }
-          function fill(array, value, start, end) {
+          function fill(array, value, start, end3) {
             var length = array == null ? 0 : array.length;
             if (!length) {
               return [];
             }
             if (start && typeof start != "number" && isIterateeCall(array, value, start)) {
               start = 0;
-              end = length;
+              end3 = length;
             }
-            return baseFill(array, value, start, end);
+            return baseFill(array, value, start, end3);
           }
           function findIndex(array, predicate, fromIndex) {
             var length = array == null ? 0 : array.length;
@@ -24468,19 +24468,19 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           function reverse(array) {
             return array == null ? array : nativeReverse.call(array);
           }
-          function slice(array, start, end) {
+          function slice(array, start, end3) {
             var length = array == null ? 0 : array.length;
             if (!length) {
               return [];
             }
-            if (end && typeof end != "number" && isIterateeCall(array, start, end)) {
+            if (end3 && typeof end3 != "number" && isIterateeCall(array, start, end3)) {
               start = 0;
-              end = length;
+              end3 = length;
             } else {
               start = start == null ? 0 : toInteger(start);
-              end = end === undefined2 ? length : toInteger(end);
+              end3 = end3 === undefined2 ? length : toInteger(end3);
             }
-            return baseSlice(array, start, end);
+            return baseSlice(array, start, end3);
           }
           function sortedIndex(array, value) {
             return baseSortedIndex(array, value);
@@ -24668,7 +24668,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           }
           function wrapperNext() {
             if (this.__values__ === undefined2) {
-              this.__values__ = toArray(this.value());
+              this.__values__ = toArray2(this.value());
             }
             var done = this.__index__ >= this.__values__.length, value = done ? undefined2 : this.__values__[this.__index__++];
             return { "done": done, "value": value };
@@ -24807,7 +24807,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             var func = isArray3(collection) ? arrayReduceRight : baseReduce, initAccum = arguments.length < 3;
             return func(collection, getIteratee(iteratee2, 4), accumulator, initAccum, baseEachRight);
           }
-          function reject2(collection, predicate) {
+          function reject(collection, predicate) {
             var func = isArray3(collection) ? arrayFilter : baseFilter;
             return func(collection, negate(getIteratee(predicate, 3)));
           }
@@ -25288,7 +25288,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           var lte = createRelationalOperation(function(value, other) {
             return value <= other;
           });
-          function toArray(value) {
+          function toArray2(value) {
             if (!value) {
               return [];
             }
@@ -25542,7 +25542,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           }
           var toPairs = createToPairs(keys3);
           var toPairsIn = createToPairs(keysIn);
-          function transform2(object, iteratee2, accumulator) {
+          function transform(object, iteratee2, accumulator) {
             var isArr = isArray3(object), isArrLike = isArr || isBuffer(object) || isTypedArray(object);
             iteratee2 = getIteratee(iteratee2, 4);
             if (accumulator == null) {
@@ -25576,7 +25576,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           function valuesIn(object) {
             return object == null ? [] : baseValues(object, keysIn(object));
           }
-          function clamp6(number, lower, upper) {
+          function clamp4(number, lower, upper) {
             if (upper === undefined2) {
               upper = lower;
               lower = undefined2;
@@ -25591,16 +25591,16 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             }
             return baseClamp(toNumber(number), lower, upper);
           }
-          function inRange(number, start, end) {
+          function inRange(number, start, end3) {
             start = toFinite(start);
-            if (end === undefined2) {
-              end = start;
+            if (end3 === undefined2) {
+              end3 = start;
               start = 0;
             } else {
-              end = toFinite(end);
+              end3 = toFinite(end3);
             }
             number = toNumber(number);
-            return baseInRange(number, start, end);
+            return baseInRange(number, start, end3);
           }
           function random3(lower, upper, floating) {
             if (floating && typeof floating != "boolean" && isIterateeCall(lower, upper, floating)) {
@@ -25654,9 +25654,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             target = baseToString(target);
             var length = string.length;
             position = position === undefined2 ? length : baseClamp(toInteger(position), 0, length);
-            var end = position;
+            var end3 = position;
             position -= target.length;
-            return position >= 0 && string.slice(position, end) == target;
+            return position >= 0 && string.slice(position, end3) == target;
           }
           function escape(string) {
             string = toString3(string);
@@ -25711,7 +25711,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             }
             return baseRepeat(toString3(string), n2);
           }
-          function replace() {
+          function replace3() {
             var args = arguments, string = toString3(args[0]);
             return args.length < 3 ? string : string.replace(args[1], args[2]);
           }
@@ -25807,8 +25807,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             if (!string || !(chars = baseToString(chars))) {
               return string;
             }
-            var strSymbols = stringToArray(string), chrSymbols = stringToArray(chars), start = charsStartIndex(strSymbols, chrSymbols), end = charsEndIndex(strSymbols, chrSymbols) + 1;
-            return castSlice(strSymbols, start, end).join("");
+            var strSymbols = stringToArray(string), chrSymbols = stringToArray(chars), start = charsStartIndex(strSymbols, chrSymbols), end3 = charsEndIndex(strSymbols, chrSymbols) + 1;
+            return castSlice(strSymbols, start, end3).join("");
           }
           function trimEnd(string, chars, guard) {
             string = toString3(string);
@@ -25818,8 +25818,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             if (!string || !(chars = baseToString(chars))) {
               return string;
             }
-            var strSymbols = stringToArray(string), end = charsEndIndex(strSymbols, stringToArray(chars)) + 1;
-            return castSlice(strSymbols, 0, end).join("");
+            var strSymbols = stringToArray(string), end3 = charsEndIndex(strSymbols, stringToArray(chars)) + 1;
+            return castSlice(strSymbols, 0, end3).join("");
           }
           function trimStart(string, chars, guard) {
             string = toString3(string);
@@ -25848,19 +25848,19 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             if (length >= strLength) {
               return string;
             }
-            var end = length - stringSize(omission);
-            if (end < 1) {
+            var end3 = length - stringSize(omission);
+            if (end3 < 1) {
               return omission;
             }
-            var result2 = strSymbols ? castSlice(strSymbols, 0, end).join("") : string.slice(0, end);
+            var result2 = strSymbols ? castSlice(strSymbols, 0, end3).join("") : string.slice(0, end3);
             if (separator === undefined2) {
               return result2 + omission;
             }
             if (strSymbols) {
-              end += result2.length - end;
+              end3 += result2.length - end3;
             }
             if (isRegExp(separator)) {
-              if (string.slice(end).search(separator)) {
+              if (string.slice(end3).search(separator)) {
                 var match2, substring = result2;
                 if (!separator.global) {
                   separator = RegExp2(separator.source, toString3(reFlags.exec(separator)) + "g");
@@ -25869,9 +25869,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                 while (match2 = separator.exec(substring)) {
                   var newEnd = match2.index;
                 }
-                result2 = result2.slice(0, newEnd === undefined2 ? end : newEnd);
+                result2 = result2.slice(0, newEnd === undefined2 ? end3 : newEnd);
               }
-            } else if (string.indexOf(baseToString(separator), end) != end) {
+            } else if (string.indexOf(baseToString(separator), end3) != end3) {
               var index = result2.lastIndexOf(separator);
               if (index > -1) {
                 result2 = result2.slice(0, index);
@@ -26107,7 +26107,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           lodash.bindKey = bindKey;
           lodash.castArray = castArray;
           lodash.chain = chain;
-          lodash.chunk = chunk2;
+          lodash.chunk = chunk;
           lodash.compact = compact;
           lodash.concat = concat2;
           lodash.cond = cond;
@@ -26191,7 +26191,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           lodash.range = range;
           lodash.rangeRight = rangeRight;
           lodash.rearg = rearg;
-          lodash.reject = reject2;
+          lodash.reject = reject;
           lodash.remove = remove;
           lodash.rest = rest;
           lodash.reverse = reverse;
@@ -26213,12 +26213,12 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           lodash.tap = tap;
           lodash.throttle = throttle;
           lodash.thru = thru;
-          lodash.toArray = toArray;
+          lodash.toArray = toArray2;
           lodash.toPairs = toPairs;
           lodash.toPairsIn = toPairsIn;
           lodash.toPath = toPath;
           lodash.toPlainObject = toPlainObject;
-          lodash.transform = transform2;
+          lodash.transform = transform;
           lodash.unary = unary;
           lodash.union = union;
           lodash.unionBy = unionBy;
@@ -26253,7 +26253,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           lodash.camelCase = camelCase;
           lodash.capitalize = capitalize2;
           lodash.ceil = ceil2;
-          lodash.clamp = clamp6;
+          lodash.clamp = clamp4;
           lodash.clone = clone;
           lodash.cloneDeep = cloneDeep2;
           lodash.cloneDeepWith = cloneDeepWith;
@@ -26360,7 +26360,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           lodash.reduce = reduce2;
           lodash.reduceRight = reduceRight;
           lodash.repeat = repeat;
-          lodash.replace = replace;
+          lodash.replace = replace3;
           lodash.result = result;
           lodash.round = round;
           lodash.runInContext = runInContext2;
@@ -26475,10 +26475,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           LazyWrapper.prototype.reject = function(predicate) {
             return this.filter(negate(getIteratee(predicate)));
           };
-          LazyWrapper.prototype.slice = function(start, end) {
+          LazyWrapper.prototype.slice = function(start, end3) {
             start = toInteger(start);
             var result2 = this;
-            if (result2.__filtered__ && (start > 0 || end < 0)) {
+            if (result2.__filtered__ && (start > 0 || end3 < 0)) {
               return new LazyWrapper(result2);
             }
             if (start < 0) {
@@ -26486,9 +26486,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             } else if (start) {
               result2 = result2.drop(start);
             }
-            if (end !== undefined2) {
-              end = toInteger(end);
-              result2 = end < 0 ? result2.dropRight(-end) : result2.take(end - start);
+            if (end3 !== undefined2) {
+              end3 = toInteger(end3);
+              result2 = end3 < 0 ? result2.dropRight(-end3) : result2.take(end3 - start);
             }
             return result2;
           };
@@ -26593,7 +26593,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       })(exports, function() {
         "use strict";
         var hookCallback;
-        function hooks() {
+        function hooks8() {
           return hookCallback.apply(null, arguments);
         }
         function setHookCallback(callback) {
@@ -26719,7 +26719,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           }
           return m2;
         }
-        var momentProperties = hooks.momentProperties = [], updateInProgress = false;
+        var momentProperties = hooks8.momentProperties = [], updateInProgress = false;
         function copyConfig(to2, from2) {
           var i2, prop, val, momentPropertiesLen = momentProperties.length;
           if (!isUndefined(from2._isAMomentObject)) {
@@ -26771,7 +26771,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           }
           if (updateInProgress === false) {
             updateInProgress = true;
-            hooks.updateOffset(this);
+            hooks8.updateOffset(this);
             updateInProgress = false;
           }
         }
@@ -26779,15 +26779,15 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           return obj instanceof Moment || obj != null && obj._isAMomentObject != null;
         }
         function warn(msg) {
-          if (hooks.suppressDeprecationWarnings === false && typeof console !== "undefined" && console.warn) {
+          if (hooks8.suppressDeprecationWarnings === false && typeof console !== "undefined" && console.warn) {
             console.warn("Deprecation warning: " + msg);
           }
         }
         function deprecate(msg, fn) {
           var firstTime = true;
           return extend(function() {
-            if (hooks.deprecationHandler != null) {
-              hooks.deprecationHandler(null, msg);
+            if (hooks8.deprecationHandler != null) {
+              hooks8.deprecationHandler(null, msg);
             }
             if (firstTime) {
               var args = [], arg, i2, key, argLen = arguments.length;
@@ -26816,16 +26816,16 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }
         var deprecations = {};
         function deprecateSimple(name, msg) {
-          if (hooks.deprecationHandler != null) {
-            hooks.deprecationHandler(name, msg);
+          if (hooks8.deprecationHandler != null) {
+            hooks8.deprecationHandler(name, msg);
           }
           if (!deprecations[name]) {
             warn(msg);
             deprecations[name] = true;
           }
         }
-        hooks.suppressDeprecationWarnings = false;
-        hooks.deprecationHandler = null;
+        hooks8.suppressDeprecationWarnings = false;
+        hooks8.deprecationHandler = null;
         function isFunction(input) {
           return typeof Function !== "undefined" && input instanceof Function || Object.prototype.toString.call(input) === "[object Function]";
         }
@@ -27087,7 +27087,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           return function(value) {
             if (value != null) {
               set$1(this, unit, value);
-              hooks.updateOffset(this, keepTime);
+              hooks8.updateOffset(this, keepTime);
               return this;
             } else {
               return get3(this, unit);
@@ -27355,7 +27355,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         function getSetMonth(value) {
           if (value != null) {
             setMonth(this, value);
-            hooks.updateOffset(this, true);
+            hooks8.updateOffset(this, true);
             return this;
           } else {
             return get3(this, "Month");
@@ -27450,10 +27450,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         addRegexToken("YYYYYY", match1to6, match6);
         addParseToken(["YYYYY", "YYYYYY"], YEAR2);
         addParseToken("YYYY", function(input, array) {
-          array[YEAR2] = input.length === 2 ? hooks.parseTwoDigitYear(input) : toInt2(input);
+          array[YEAR2] = input.length === 2 ? hooks8.parseTwoDigitYear(input) : toInt2(input);
         });
         addParseToken("YY", function(input, array) {
-          array[YEAR2] = hooks.parseTwoDigitYear(input);
+          array[YEAR2] = hooks8.parseTwoDigitYear(input);
         });
         addParseToken("Y", function(input, array) {
           array[YEAR2] = parseInt(input, 10);
@@ -27461,22 +27461,22 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         function daysInYear(year) {
           return isLeapYear(year) ? 366 : 365;
         }
-        hooks.parseTwoDigitYear = function(input) {
+        hooks8.parseTwoDigitYear = function(input) {
           return toInt2(input) + (toInt2(input) > 68 ? 1900 : 2e3);
         };
         var getSetYear = makeGetSet("FullYear", true);
         function getIsLeapYear() {
           return isLeapYear(this.year());
         }
-        function createDate(y2, m2, d2, h, M2, s2, ms) {
+        function createDate(y2, m2, d3, h, M2, s2, ms) {
           var date;
           if (y2 < 100 && y2 >= 0) {
-            date = new Date(y2 + 400, m2, d2, h, M2, s2, ms);
+            date = new Date(y2 + 400, m2, d3, h, M2, s2, ms);
             if (isFinite(date.getFullYear())) {
               date.setFullYear(y2);
             }
           } else {
-            date = new Date(y2, m2, d2, h, M2, s2, ms);
+            date = new Date(y2, m2, d3, h, M2, s2, ms);
           }
           return date;
         }
@@ -28346,10 +28346,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           if (config2._strict) {
             config2._isValid = false;
           } else {
-            hooks.createFromInputFallback(config2);
+            hooks8.createFromInputFallback(config2);
           }
         }
-        hooks.createFromInputFallback = deprecate(
+        hooks8.createFromInputFallback = deprecate(
           "value provided is not in a recognized RFC2822 or ISO format. moment construction falls back to js Date(), which is not reliable across all browsers and versions. Non RFC2822/ISO date formats are discouraged. Please refer to http://momentjs.com/guides/#/warnings/js-date/ for more info.",
           function(config2) {
             config2._d = /* @__PURE__ */ new Date(config2._i + (config2._useUTC ? " UTC" : ""));
@@ -28365,7 +28365,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           return c2;
         }
         function currentDateArray(config2) {
-          var nowValue = new Date(hooks.now());
+          var nowValue = new Date(hooks8.now());
           if (config2._useUTC) {
             return [
               nowValue.getUTCFullYear(),
@@ -28464,16 +28464,16 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             config2._dayOfYear = temp.dayOfYear;
           }
         }
-        hooks.ISO_8601 = function() {
+        hooks8.ISO_8601 = function() {
         };
-        hooks.RFC_2822 = function() {
+        hooks8.RFC_2822 = function() {
         };
         function configFromStringAndFormat(config2) {
-          if (config2._f === hooks.ISO_8601) {
+          if (config2._f === hooks8.ISO_8601) {
             configFromISO(config2);
             return;
           }
-          if (config2._f === hooks.RFC_2822) {
+          if (config2._f === hooks8.RFC_2822) {
             configFromRFC2822(config2);
             return;
           }
@@ -28635,7 +28635,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         function configFromInput(config2) {
           var input = config2._i;
           if (isUndefined(input)) {
-            config2._d = new Date(hooks.now());
+            config2._d = new Date(hooks8.now());
           } else if (isDate(input)) {
             config2._d = new Date(input.valueOf());
           } else if (typeof input === "string") {
@@ -28650,7 +28650,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           } else if (isNumber(input)) {
             config2._d = new Date(input);
           } else {
-            hooks.createFromInputFallback(config2);
+            hooks8.createFromInputFallback(config2);
           }
         }
         function createLocalOrUTC(input, format2, locale2, strict, isUTC) {
@@ -28812,12 +28812,12 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         });
         var chunkOffset = /([\+\-]|\d\d)/gi;
         function offsetFromString(matcher, string) {
-          var matches = (string || "").match(matcher), chunk2, parts, minutes2;
+          var matches = (string || "").match(matcher), chunk, parts, minutes2;
           if (matches === null) {
             return null;
           }
-          chunk2 = matches[matches.length - 1] || [];
-          parts = (chunk2 + "").match(chunkOffset) || ["-", 0, 0];
+          chunk = matches[matches.length - 1] || [];
+          parts = (chunk + "").match(chunkOffset) || ["-", 0, 0];
           minutes2 = +(parts[1] * 60) + toInt2(parts[2]);
           return minutes2 === 0 ? 0 : parts[0] === "+" ? minutes2 : -minutes2;
         }
@@ -28827,7 +28827,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             res = model.clone();
             diff2 = (isMoment(input) || isDate(input) ? input.valueOf() : createLocal(input).valueOf()) - res.valueOf();
             res._d.setTime(res._d.valueOf() + diff2);
-            hooks.updateOffset(res, false);
+            hooks8.updateOffset(res, false);
             return res;
           } else {
             return createLocal(input).local();
@@ -28836,7 +28836,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         function getDateOffset(m2) {
           return -Math.round(m2._d.getTimezoneOffset());
         }
-        hooks.updateOffset = function() {
+        hooks8.updateOffset = function() {
         };
         function getSetOffset(input, keepLocalTime, keepMinutes) {
           var offset2 = this._offset || 0, localAdjust;
@@ -28870,7 +28870,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                 );
               } else if (!this._changeInProgress) {
                 this._changeInProgress = true;
-                hooks.updateOffset(this, true);
+                hooks8.updateOffset(this, true);
                 this._changeInProgress = null;
               }
             }
@@ -29071,7 +29071,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             mom._d.setTime(mom._d.valueOf() + milliseconds2 * isAdding);
           }
           if (updateOffset) {
-            hooks.updateOffset(mom, days2 || months2);
+            hooks8.updateOffset(mom, days2 || months2);
           }
         }
         var add = createAdder(1, "add"), subtract = createAdder(-1, "subtract");
@@ -29155,7 +29155,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               time = void 0;
             }
           }
-          var now2 = time || createLocal(), sod = cloneWithOffset(now2, this).startOf("day"), format2 = hooks.calendarFormat(this, sod) || "sameElse", output = formats && (isFunction(formats[format2]) ? formats[format2].call(this, now2) : formats[format2]);
+          var now2 = time || createLocal(), sod = cloneWithOffset(now2, this).startOf("day"), format2 = hooks8.calendarFormat(this, sod) || "sameElse", output = formats && (isFunction(formats[format2]) ? formats[format2].call(this, now2) : formats[format2]);
           return this.format(
             output || this.localeData().calendar(format2, this, createLocal(now2))
           );
@@ -29269,8 +29269,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           }
           return -(wholeMonthDiff + adjust) || 0;
         }
-        hooks.defaultFormat = "YYYY-MM-DDTHH:mm:ssZ";
-        hooks.defaultFormatUtc = "YYYY-MM-DDTHH:mm:ss[Z]";
+        hooks8.defaultFormat = "YYYY-MM-DDTHH:mm:ssZ";
+        hooks8.defaultFormatUtc = "YYYY-MM-DDTHH:mm:ss[Z]";
         function toString3() {
           return this.clone().locale("en").format("ddd MMM DD YYYY HH:mm:ss [GMT]ZZ");
         }
@@ -29314,7 +29314,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }
         function format(inputString) {
           if (!inputString) {
-            inputString = this.isUtc() ? hooks.defaultFormatUtc : hooks.defaultFormat;
+            inputString = this.isUtc() ? hooks8.defaultFormatUtc : hooks8.defaultFormat;
           }
           var output = formatMoment(this, inputString);
           return this.localeData().postformat(output);
@@ -29368,18 +29368,18 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         function mod$1(dividend, divisor) {
           return (dividend % divisor + divisor) % divisor;
         }
-        function localStartOfDate(y2, m2, d2) {
+        function localStartOfDate(y2, m2, d3) {
           if (y2 < 100 && y2 >= 0) {
-            return new Date(y2 + 400, m2, d2) - MS_PER_400_YEARS;
+            return new Date(y2 + 400, m2, d3) - MS_PER_400_YEARS;
           } else {
-            return new Date(y2, m2, d2).valueOf();
+            return new Date(y2, m2, d3).valueOf();
           }
         }
-        function utcStartOfDate(y2, m2, d2) {
+        function utcStartOfDate(y2, m2, d3) {
           if (y2 < 100 && y2 >= 0) {
-            return Date.UTC(y2 + 400, m2, d2) - MS_PER_400_YEARS;
+            return Date.UTC(y2 + 400, m2, d3) - MS_PER_400_YEARS;
           } else {
-            return Date.UTC(y2, m2, d2);
+            return Date.UTC(y2, m2, d3);
           }
         }
         function startOf(units) {
@@ -29438,7 +29438,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               break;
           }
           this._d.setTime(time);
-          hooks.updateOffset(this, true);
+          hooks8.updateOffset(this, true);
           return this;
         }
         function endOf(units) {
@@ -29497,7 +29497,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               break;
           }
           this._d.setTime(time);
-          hooks.updateOffset(this, true);
+          hooks8.updateOffset(this, true);
           return this;
         }
         function valueOf() {
@@ -29509,7 +29509,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         function toDate() {
           return new Date(this.valueOf());
         }
-        function toArray() {
+        function toArray2() {
           var m2 = this;
           return [
             m2.year(),
@@ -29601,7 +29601,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           for (i2 = 0, l2 = eras.length; i2 < l2; ++i2) {
             switch (typeof eras[i2].since) {
               case "string":
-                date = hooks(eras[i2].since).startOf("day");
+                date = hooks8(eras[i2].since).startOf("day");
                 eras[i2].since = date.valueOf();
                 break;
             }
@@ -29610,7 +29610,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                 eras[i2].until = Infinity;
                 break;
               case "string":
-                date = hooks(eras[i2].until).startOf("day").valueOf();
+                date = hooks8(eras[i2].until).startOf("day").valueOf();
                 eras[i2].until = date.valueOf();
                 break;
             }
@@ -29652,9 +29652,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         function localeErasConvertYear(era, year) {
           var dir = era.since <= era.until ? 1 : -1;
           if (year === void 0) {
-            return hooks(era.since).year();
+            return hooks8(era.since).year();
           } else {
-            return hooks(era.since).year() + (year - era.offset) * dir;
+            return hooks8(era.since).year() + (year - era.offset) * dir;
           }
         }
         function getEraName() {
@@ -29702,7 +29702,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             dir = eras[i2].since <= eras[i2].until ? 1 : -1;
             val = this.clone().startOf("day").valueOf();
             if (eras[i2].since <= val && val <= eras[i2].until || eras[i2].until <= val && val <= eras[i2].since) {
-              return (this.year() - hooks(eras[i2].since).year()) * dir + eras[i2].offset;
+              return (this.year() - hooks8(eras[i2].since).year()) * dir + eras[i2].offset;
             }
           }
           return this.year();
@@ -29787,7 +29787,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           }
         );
         addWeekParseToken(["gg", "GG"], function(input, week, config2, token2) {
-          week[token2] = hooks.parseTwoDigitYear(input);
+          week[token2] = hooks8.parseTwoDigitYear(input);
         });
         function getSetWeekYear(input) {
           return getSetWeekYearHelper.call(
@@ -29971,7 +29971,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         proto.set = stringSet;
         proto.startOf = startOf;
         proto.subtract = subtract;
-        proto.toArray = toArray;
+        proto.toArray = toArray2;
         proto.toObject = toObject2;
         proto.toDate = toDate;
         proto.toISOString = toISOString;
@@ -30171,11 +30171,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             return number + output;
           }
         });
-        hooks.lang = deprecate(
+        hooks8.lang = deprecate(
           "moment.lang is deprecated. Use moment.locale instead.",
           getSetGlobalLocale
         );
-        hooks.langData = deprecate(
+        hooks8.langData = deprecate(
           "moment.langData is deprecated. Use moment.localeData instead.",
           getLocale
         );
@@ -30460,36 +30460,36 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         addParseToken("x", function(input, array, config2) {
           config2._d = new Date(toInt2(input));
         });
-        hooks.version = "2.29.4";
+        hooks8.version = "2.29.4";
         setHookCallback(createLocal);
-        hooks.fn = proto;
-        hooks.min = min2;
-        hooks.max = max2;
-        hooks.now = now;
-        hooks.utc = createUTC;
-        hooks.unix = createUnix;
-        hooks.months = listMonths;
-        hooks.isDate = isDate;
-        hooks.locale = getSetGlobalLocale;
-        hooks.invalid = createInvalid;
-        hooks.duration = createDuration;
-        hooks.isMoment = isMoment;
-        hooks.weekdays = listWeekdays;
-        hooks.parseZone = createInZone;
-        hooks.localeData = getLocale;
-        hooks.isDuration = isDuration;
-        hooks.monthsShort = listMonthsShort;
-        hooks.weekdaysMin = listWeekdaysMin;
-        hooks.defineLocale = defineLocale;
-        hooks.updateLocale = updateLocale;
-        hooks.locales = listLocales;
-        hooks.weekdaysShort = listWeekdaysShort;
-        hooks.normalizeUnits = normalizeUnits;
-        hooks.relativeTimeRounding = getSetRelativeTimeRounding;
-        hooks.relativeTimeThreshold = getSetRelativeTimeThreshold;
-        hooks.calendarFormat = getCalendarFormat;
-        hooks.prototype = proto;
-        hooks.HTML5_FMT = {
+        hooks8.fn = proto;
+        hooks8.min = min2;
+        hooks8.max = max2;
+        hooks8.now = now;
+        hooks8.utc = createUTC;
+        hooks8.unix = createUnix;
+        hooks8.months = listMonths;
+        hooks8.isDate = isDate;
+        hooks8.locale = getSetGlobalLocale;
+        hooks8.invalid = createInvalid;
+        hooks8.duration = createDuration;
+        hooks8.isMoment = isMoment;
+        hooks8.weekdays = listWeekdays;
+        hooks8.parseZone = createInZone;
+        hooks8.localeData = getLocale;
+        hooks8.isDuration = isDuration;
+        hooks8.monthsShort = listMonthsShort;
+        hooks8.weekdaysMin = listWeekdaysMin;
+        hooks8.defineLocale = defineLocale;
+        hooks8.updateLocale = updateLocale;
+        hooks8.locales = listLocales;
+        hooks8.weekdaysShort = listWeekdaysShort;
+        hooks8.normalizeUnits = normalizeUnits;
+        hooks8.relativeTimeRounding = getSetRelativeTimeRounding;
+        hooks8.relativeTimeThreshold = getSetRelativeTimeThreshold;
+        hooks8.calendarFormat = getCalendarFormat;
+        hooks8.prototype = proto;
+        hooks8.HTML5_FMT = {
           DATETIME_LOCAL: "YYYY-MM-DDTHH:mm",
           // <input type="datetime-local" />
           DATETIME_LOCAL_SECONDS: "YYYY-MM-DDTHH:mm:ss",
@@ -30509,7 +30509,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           MONTH: "YYYY-MM"
           // <input type="month" />
         };
-        return hooks;
+        return hooks8;
       });
     }
   });
@@ -31700,14 +31700,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         const results = [];
         const chunks = arguments_.trim().split(/\s*,\s*/g);
         let matches;
-        for (const chunk2 of chunks) {
-          const number = Number(chunk2);
+        for (const chunk of chunks) {
+          const number = Number(chunk);
           if (!Number.isNaN(number)) {
             results.push(number);
-          } else if (matches = chunk2.match(STRING_REGEX)) {
+          } else if (matches = chunk.match(STRING_REGEX)) {
             results.push(matches[2].replace(ESCAPE_REGEX, (m2, escape, character) => escape ? unescape(escape) : character));
           } else {
-            throw new Error(`Invalid Chalk template style argument: ${chunk2} (in style '${name}')`);
+            throw new Error(`Invalid Chalk template style argument: ${chunk} (in style '${name}')`);
           }
         }
         return results;
@@ -31729,9 +31729,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       }
       function buildStyle(chalk2, styles2) {
         const enabled = {};
-        for (const layer of styles2) {
-          for (const style of layer.styles) {
-            enabled[style[0]] = layer.inverse ? null : style.slice(1);
+        for (const layer2 of styles2) {
+          for (const style of layer2.styles) {
+            enabled[style[0]] = layer2.inverse ? null : style.slice(1);
           }
         }
         let current = chalk2;
@@ -31749,27 +31749,27 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       module.exports = (chalk2, temporary) => {
         const styles2 = [];
         const chunks = [];
-        let chunk2 = [];
+        let chunk = [];
         temporary.replace(TEMPLATE_REGEX, (m2, escapeCharacter, inverse, style, close, character) => {
           if (escapeCharacter) {
-            chunk2.push(unescape(escapeCharacter));
+            chunk.push(unescape(escapeCharacter));
           } else if (style) {
-            const string = chunk2.join("");
-            chunk2 = [];
+            const string = chunk.join("");
+            chunk = [];
             chunks.push(styles2.length === 0 ? string : buildStyle(chalk2, styles2)(string));
             styles2.push({ inverse, styles: parseStyle(style) });
           } else if (close) {
             if (styles2.length === 0) {
               throw new Error("Found extraneous } in Chalk template literal");
             }
-            chunks.push(buildStyle(chalk2, styles2)(chunk2.join("")));
-            chunk2 = [];
+            chunks.push(buildStyle(chalk2, styles2)(chunk.join("")));
+            chunk = [];
             styles2.pop();
           } else {
-            chunk2.push(character);
+            chunk.push(character);
           }
         });
-        chunks.push(chunk2.join(""));
+        chunks.push(chunk.join(""));
         if (styles2.length > 0) {
           const errMessage = `Chalk template literal is missing ${styles2.length} closing bracket${styles2.length === 1 ? "" : "s"} (\`}\`)`;
           throw new Error(errMessage);
@@ -31984,22 +31984,22 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       var NumberIsNaN = Number.isNaN || function NumberIsNaN2(value) {
         return value !== value;
       };
-      function EventEmitter6() {
-        EventEmitter6.init.call(this);
+      function EventEmitter5() {
+        EventEmitter5.init.call(this);
       }
-      module.exports = EventEmitter6;
+      module.exports = EventEmitter5;
       module.exports.once = once;
-      EventEmitter6.EventEmitter = EventEmitter6;
-      EventEmitter6.prototype._events = void 0;
-      EventEmitter6.prototype._eventsCount = 0;
-      EventEmitter6.prototype._maxListeners = void 0;
+      EventEmitter5.EventEmitter = EventEmitter5;
+      EventEmitter5.prototype._events = void 0;
+      EventEmitter5.prototype._eventsCount = 0;
+      EventEmitter5.prototype._maxListeners = void 0;
       var defaultMaxListeners = 10;
       function checkListener(listener3) {
         if (typeof listener3 !== "function") {
           throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener3);
         }
       }
-      Object.defineProperty(EventEmitter6, "defaultMaxListeners", {
+      Object.defineProperty(EventEmitter5, "defaultMaxListeners", {
         enumerable: true,
         get: function() {
           return defaultMaxListeners;
@@ -32011,14 +32011,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           defaultMaxListeners = arg;
         }
       });
-      EventEmitter6.init = function() {
+      EventEmitter5.init = function() {
         if (this._events === void 0 || this._events === Object.getPrototypeOf(this)._events) {
           this._events = /* @__PURE__ */ Object.create(null);
           this._eventsCount = 0;
         }
         this._maxListeners = this._maxListeners || void 0;
       };
-      EventEmitter6.prototype.setMaxListeners = function setMaxListeners(n2) {
+      EventEmitter5.prototype.setMaxListeners = function setMaxListeners(n2) {
         if (typeof n2 !== "number" || n2 < 0 || NumberIsNaN(n2)) {
           throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + n2 + ".");
         }
@@ -32027,13 +32027,13 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       };
       function _getMaxListeners(that) {
         if (that._maxListeners === void 0)
-          return EventEmitter6.defaultMaxListeners;
+          return EventEmitter5.defaultMaxListeners;
         return that._maxListeners;
       }
-      EventEmitter6.prototype.getMaxListeners = function getMaxListeners() {
+      EventEmitter5.prototype.getMaxListeners = function getMaxListeners() {
         return _getMaxListeners(this);
       };
-      EventEmitter6.prototype.emit = function emit(type) {
+      EventEmitter5.prototype.emit = function emit(type) {
         var args = [];
         for (var i2 = 1; i2 < arguments.length; i2++)
           args.push(arguments[i2]);
@@ -32111,11 +32111,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }
         return target;
       }
-      EventEmitter6.prototype.addListener = function addListener(type, listener3) {
+      EventEmitter5.prototype.addListener = function addListener(type, listener3) {
         return _addListener(this, type, listener3, false);
       };
-      EventEmitter6.prototype.on = EventEmitter6.prototype.addListener;
-      EventEmitter6.prototype.prependListener = function prependListener(type, listener3) {
+      EventEmitter5.prototype.on = EventEmitter5.prototype.addListener;
+      EventEmitter5.prototype.prependListener = function prependListener(type, listener3) {
         return _addListener(this, type, listener3, true);
       };
       function onceWrapper() {
@@ -32134,17 +32134,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         state.wrapFn = wrapped;
         return wrapped;
       }
-      EventEmitter6.prototype.once = function once2(type, listener3) {
+      EventEmitter5.prototype.once = function once2(type, listener3) {
         checkListener(listener3);
         this.on(type, _onceWrap(this, type, listener3));
         return this;
       };
-      EventEmitter6.prototype.prependOnceListener = function prependOnceListener(type, listener3) {
+      EventEmitter5.prototype.prependOnceListener = function prependOnceListener(type, listener3) {
         checkListener(listener3);
         this.prependListener(type, _onceWrap(this, type, listener3));
         return this;
       };
-      EventEmitter6.prototype.removeListener = function removeListener(type, listener3) {
+      EventEmitter5.prototype.removeListener = function removeListener(type, listener3) {
         var list, events, position, i2, originalListener;
         checkListener(listener3);
         events = this._events;
@@ -32184,8 +32184,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }
         return this;
       };
-      EventEmitter6.prototype.off = EventEmitter6.prototype.removeListener;
-      EventEmitter6.prototype.removeAllListeners = function removeAllListeners(type) {
+      EventEmitter5.prototype.off = EventEmitter5.prototype.removeListener;
+      EventEmitter5.prototype.removeAllListeners = function removeAllListeners(type) {
         var listeners, events, i2;
         events = this._events;
         if (events === void 0)
@@ -32237,20 +32237,20 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           return unwrap ? [evlistener.listener || evlistener] : [evlistener];
         return unwrap ? unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
       }
-      EventEmitter6.prototype.listeners = function listeners(type) {
+      EventEmitter5.prototype.listeners = function listeners(type) {
         return _listeners(this, type, true);
       };
-      EventEmitter6.prototype.rawListeners = function rawListeners(type) {
+      EventEmitter5.prototype.rawListeners = function rawListeners(type) {
         return _listeners(this, type, false);
       };
-      EventEmitter6.listenerCount = function(emitter, type) {
+      EventEmitter5.listenerCount = function(emitter, type) {
         if (typeof emitter.listenerCount === "function") {
           return emitter.listenerCount(type);
         } else {
           return listenerCount.call(emitter, type);
         }
       };
-      EventEmitter6.prototype.listenerCount = listenerCount;
+      EventEmitter5.prototype.listenerCount = listenerCount;
       function listenerCount(type) {
         var events = this._events;
         if (events !== void 0) {
@@ -32263,7 +32263,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }
         return 0;
       }
-      EventEmitter6.prototype.eventNames = function eventNames() {
+      EventEmitter5.prototype.eventNames = function eventNames() {
         return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
       };
       function arrayClone(arr, n2) {
@@ -32285,16 +32285,16 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         return ret2;
       }
       function once(emitter, name) {
-        return new Promise(function(resolve2, reject2) {
+        return new Promise(function(resolve, reject) {
           function errorListener(err) {
             emitter.removeListener(name, resolver);
-            reject2(err);
+            reject(err);
           }
           function resolver() {
             if (typeof emitter.removeListener === "function") {
               emitter.removeListener("error", errorListener);
             }
-            resolve2([].slice.call(arguments));
+            resolve([].slice.call(arguments));
           }
           ;
           eventTargetAgnosticAddListener(emitter, name, resolver, { once: true });
@@ -33645,12 +33645,12 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             objectPool.push(object);
           }
         }
-        function slice(array, start, end) {
+        function slice(array, start, end3) {
           start || (start = 0);
-          if (typeof end == "undefined") {
-            end = array ? array.length : 0;
+          if (typeof end3 == "undefined") {
+            end3 = array ? array.length : 0;
           }
-          var index = -1, length = end - start || 0, result = Array(length < 0 ? 0 : length);
+          var index = -1, length = end3 - start || 0, result = Array(length < 0 ? 0 : length);
           while (++index < length) {
             result[index] = array[start + index];
           }
@@ -34548,7 +34548,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             }
             return result2;
           }
-          function transform2(object, callback, accumulator, thisArg) {
+          function transform(object, callback, accumulator, thisArg) {
             var isArr = isArray3(object);
             if (accumulator == null) {
               if (isArr) {
@@ -34809,7 +34809,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             });
             return accumulator;
           }
-          function reject2(collection, callback, thisArg) {
+          function reject(collection, callback, thisArg) {
             callback = lodash.createCallback(callback, thisArg, 3);
             return filter(collection, function(value, index, collection2) {
               return !callback(value, index, collection2);
@@ -34885,7 +34885,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             }
             return result2;
           }
-          function toArray(collection) {
+          function toArray2(collection) {
             if (collection && typeof collection.length == "number") {
               return slice(collection);
             }
@@ -35052,14 +35052,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             }
             return array;
           }
-          function range(start, end, step) {
+          function range(start, end3, step) {
             start = +start || 0;
             step = typeof step == "number" ? step : +step || 1;
-            if (end == null) {
-              end = start;
+            if (end3 == null) {
+              end3 = start;
               start = 0;
             }
-            var index = -1, length = nativeMax(0, ceil2((end - start) / (step || 1))), result2 = Array2(length);
+            var index = -1, length = nativeMax(0, ceil2((end3 - start) / (step || 1))), result2 = Array2(length);
             while (++index < length) {
               result2[index] = start;
               start += step;
@@ -35467,9 +35467,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               return isFunction(value) ? object[key]() : value;
             }
           }
-          function template(text, data2, options) {
+          function template(text2, data2, options) {
             var settings = lodash.templateSettings;
-            text = String2(text || "");
+            text2 = String2(text2 || "");
             options = defaults({}, options, settings);
             var imports = defaults({}, options.imports, settings.imports), importsKeys = keys3(imports), importsValues = values(imports);
             var isEvaluating, index = 0, interpolate = options.interpolate || reNoMatch, source = "__p += '";
@@ -35477,9 +35477,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               (options.escape || reNoMatch).source + "|" + interpolate.source + "|" + (interpolate === reInterpolate ? reEsTemplate : reNoMatch).source + "|" + (options.evaluate || reNoMatch).source + "|$",
               "g"
             );
-            text.replace(reDelimiters, function(match2, escapeValue, interpolateValue, esTemplateValue, evaluateValue, offset) {
+            text2.replace(reDelimiters, function(match2, escapeValue, interpolateValue, esTemplateValue, evaluateValue, offset) {
               interpolateValue || (interpolateValue = esTemplateValue);
-              source += text.slice(index, offset).replace(reUnescapedString, escapeStringChar);
+              source += text2.slice(index, offset).replace(reUnescapedString, escapeStringChar);
               if (escapeValue) {
                 source += "' +\n__e(" + escapeValue + ") +\n'";
               }
@@ -35600,7 +35600,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           lodash.property = property;
           lodash.pull = pull;
           lodash.range = range;
-          lodash.reject = reject2;
+          lodash.reject = reject;
           lodash.remove = remove;
           lodash.rest = rest;
           lodash.shuffle = shuffle;
@@ -35608,8 +35608,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           lodash.tap = tap;
           lodash.throttle = throttle;
           lodash.times = times;
-          lodash.toArray = toArray;
-          lodash.transform = transform2;
+          lodash.toArray = toArray2;
+          lodash.transform = transform;
           lodash.union = union;
           lodash.uniq = uniq;
           lodash.values = values;
@@ -37849,17 +37849,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   // node_modules/frequencyjs/lib/convolution/spectrum.js
   var require_spectrum2 = __commonJS({
     "node_modules/frequencyjs/lib/convolution/spectrum.js"(exports, module) {
-      var transform2 = require_transform();
+      var transform = require_transform();
       var _2 = require_lodash2();
       module.exports = function(signal1, signal2, options) {
-        var spec1 = transform2.toSpectrum(signal1, options.spectrum);
-        var spec2 = transform2.toSpectrum(signal2, options.spectrum);
+        var spec1 = transform.toSpectrum(signal1, options.spectrum);
+        var spec2 = transform.toSpectrum(signal2, options.spectrum);
         var idxDist = spec1.length / spec2.length;
         var convSpec = _2.map(_2.range(spec2.legnth), function(idx) {
           return spec1[idx * idxDist] * spec2[idx];
         });
         convSpec.sampling = 1;
-        return transform2.toSignal(convSpec, options.spectrum).create({
+        return transform.toSignal(convSpec, options.spectrum).create({
           length: signal1.length,
           sampling: signal1.sampling
         });
@@ -37910,9 +37910,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           var sig2 = Signal(signal2);
           if (signal1.length != signal2.length)
             return false;
-          var diffSQ = _2.reduce(_2.range(signal1.length), function(d2, idx) {
+          var diffSQ = _2.reduce(_2.range(signal1.length), function(d3, idx) {
             var diff = sig1[idx].value - sig2[idx].value;
-            return d2 + diff * diff;
+            return d3 + diff * diff;
           }, 0);
           return diffSQ / signal1.length < options.epsilon;
         }
@@ -37945,237 +37945,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   // node_modules/react-is/cjs/react-is.development.js
   var require_react_is_development = __commonJS({
     "node_modules/react-is/cjs/react-is.development.js"(exports) {
-      "use strict";
-      if (true) {
-        (function() {
-          "use strict";
-          var REACT_ELEMENT_TYPE = Symbol.for("react.element");
-          var REACT_PORTAL_TYPE = Symbol.for("react.portal");
-          var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
-          var REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode");
-          var REACT_PROFILER_TYPE = Symbol.for("react.profiler");
-          var REACT_PROVIDER_TYPE = Symbol.for("react.provider");
-          var REACT_CONTEXT_TYPE = Symbol.for("react.context");
-          var REACT_SERVER_CONTEXT_TYPE = Symbol.for("react.server_context");
-          var REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref");
-          var REACT_SUSPENSE_TYPE = Symbol.for("react.suspense");
-          var REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list");
-          var REACT_MEMO_TYPE = Symbol.for("react.memo");
-          var REACT_LAZY_TYPE = Symbol.for("react.lazy");
-          var REACT_OFFSCREEN_TYPE = Symbol.for("react.offscreen");
-          var enableScopeAPI = false;
-          var enableCacheElement = false;
-          var enableTransitionTracing = false;
-          var enableLegacyHidden = false;
-          var enableDebugTracing = false;
-          var REACT_MODULE_REFERENCE;
-          {
-            REACT_MODULE_REFERENCE = Symbol.for("react.module.reference");
-          }
-          function isValidElementType(type) {
-            if (typeof type === "string" || typeof type === "function") {
-              return true;
-            }
-            if (type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || enableDebugTracing || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || enableLegacyHidden || type === REACT_OFFSCREEN_TYPE || enableScopeAPI || enableCacheElement || enableTransitionTracing) {
-              return true;
-            }
-            if (typeof type === "object" && type !== null) {
-              if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || // This needs to include all possible module reference object
-              // types supported by any Flight configuration anywhere since
-              // we don't know which Flight build this will end up being used
-              // with.
-              type.$$typeof === REACT_MODULE_REFERENCE || type.getModuleId !== void 0) {
-                return true;
-              }
-            }
-            return false;
-          }
-          function typeOf(object) {
-            if (typeof object === "object" && object !== null) {
-              var $$typeof = object.$$typeof;
-              switch ($$typeof) {
-                case REACT_ELEMENT_TYPE:
-                  var type = object.type;
-                  switch (type) {
-                    case REACT_FRAGMENT_TYPE:
-                    case REACT_PROFILER_TYPE:
-                    case REACT_STRICT_MODE_TYPE:
-                    case REACT_SUSPENSE_TYPE:
-                    case REACT_SUSPENSE_LIST_TYPE:
-                      return type;
-                    default:
-                      var $$typeofType = type && type.$$typeof;
-                      switch ($$typeofType) {
-                        case REACT_SERVER_CONTEXT_TYPE:
-                        case REACT_CONTEXT_TYPE:
-                        case REACT_FORWARD_REF_TYPE:
-                        case REACT_LAZY_TYPE:
-                        case REACT_MEMO_TYPE:
-                        case REACT_PROVIDER_TYPE:
-                          return $$typeofType;
-                        default:
-                          return $$typeof;
-                      }
-                  }
-                case REACT_PORTAL_TYPE:
-                  return $$typeof;
-              }
-            }
-            return void 0;
-          }
-          var ContextConsumer = REACT_CONTEXT_TYPE;
-          var ContextProvider = REACT_PROVIDER_TYPE;
-          var Element = REACT_ELEMENT_TYPE;
-          var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment = REACT_FRAGMENT_TYPE;
-          var Lazy = REACT_LAZY_TYPE;
-          var Memo = REACT_MEMO_TYPE;
-          var Portal = REACT_PORTAL_TYPE;
-          var Profiler = REACT_PROFILER_TYPE;
-          var StrictMode = REACT_STRICT_MODE_TYPE;
-          var Suspense = REACT_SUSPENSE_TYPE;
-          var SuspenseList = REACT_SUSPENSE_LIST_TYPE;
-          var hasWarnedAboutDeprecatedIsAsyncMode = false;
-          var hasWarnedAboutDeprecatedIsConcurrentMode = false;
-          function isAsyncMode(object) {
-            {
-              if (!hasWarnedAboutDeprecatedIsAsyncMode) {
-                hasWarnedAboutDeprecatedIsAsyncMode = true;
-                console["warn"]("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 18+.");
-              }
-            }
-            return false;
-          }
-          function isConcurrentMode(object) {
-            {
-              if (!hasWarnedAboutDeprecatedIsConcurrentMode) {
-                hasWarnedAboutDeprecatedIsConcurrentMode = true;
-                console["warn"]("The ReactIs.isConcurrentMode() alias has been deprecated, and will be removed in React 18+.");
-              }
-            }
-            return false;
-          }
-          function isContextConsumer(object) {
-            return typeOf(object) === REACT_CONTEXT_TYPE;
-          }
-          function isContextProvider(object) {
-            return typeOf(object) === REACT_PROVIDER_TYPE;
-          }
-          function isElement(object) {
-            return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-          }
-          function isForwardRef(object) {
-            return typeOf(object) === REACT_FORWARD_REF_TYPE;
-          }
-          function isFragment(object) {
-            return typeOf(object) === REACT_FRAGMENT_TYPE;
-          }
-          function isLazy(object) {
-            return typeOf(object) === REACT_LAZY_TYPE;
-          }
-          function isMemo(object) {
-            return typeOf(object) === REACT_MEMO_TYPE;
-          }
-          function isPortal(object) {
-            return typeOf(object) === REACT_PORTAL_TYPE;
-          }
-          function isProfiler(object) {
-            return typeOf(object) === REACT_PROFILER_TYPE;
-          }
-          function isStrictMode(object) {
-            return typeOf(object) === REACT_STRICT_MODE_TYPE;
-          }
-          function isSuspense(object) {
-            return typeOf(object) === REACT_SUSPENSE_TYPE;
-          }
-          function isSuspenseList(object) {
-            return typeOf(object) === REACT_SUSPENSE_LIST_TYPE;
-          }
-          exports.ContextConsumer = ContextConsumer;
-          exports.ContextProvider = ContextProvider;
-          exports.Element = Element;
-          exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment;
-          exports.Lazy = Lazy;
-          exports.Memo = Memo;
-          exports.Portal = Portal;
-          exports.Profiler = Profiler;
-          exports.StrictMode = StrictMode;
-          exports.Suspense = Suspense;
-          exports.SuspenseList = SuspenseList;
-          exports.isAsyncMode = isAsyncMode;
-          exports.isConcurrentMode = isConcurrentMode;
-          exports.isContextConsumer = isContextConsumer;
-          exports.isContextProvider = isContextProvider;
-          exports.isElement = isElement;
-          exports.isForwardRef = isForwardRef;
-          exports.isFragment = isFragment;
-          exports.isLazy = isLazy;
-          exports.isMemo = isMemo;
-          exports.isPortal = isPortal;
-          exports.isProfiler = isProfiler;
-          exports.isStrictMode = isStrictMode;
-          exports.isSuspense = isSuspense;
-          exports.isSuspenseList = isSuspenseList;
-          exports.isValidElementType = isValidElementType;
-          exports.typeOf = typeOf;
-        })();
-      }
-    }
-  });
-
-  // node_modules/react-is/index.js
-  var require_react_is = __commonJS({
-    "node_modules/react-is/index.js"(exports, module) {
-      "use strict";
-      if (false) {
-        module.exports = null;
-      } else {
-        module.exports = require_react_is_development();
-      }
-    }
-  });
-
-  // node_modules/shallowequal/index.js
-  var require_shallowequal = __commonJS({
-    "node_modules/shallowequal/index.js"(exports, module) {
-      module.exports = function shallowEqual(objA, objB, compare, compareContext) {
-        var ret2 = compare ? compare.call(compareContext, objA, objB) : void 0;
-        if (ret2 !== void 0) {
-          return !!ret2;
-        }
-        if (objA === objB) {
-          return true;
-        }
-        if (typeof objA !== "object" || !objA || typeof objB !== "object" || !objB) {
-          return false;
-        }
-        var keysA = Object.keys(objA);
-        var keysB = Object.keys(objB);
-        if (keysA.length !== keysB.length) {
-          return false;
-        }
-        var bHasOwnProperty = Object.prototype.hasOwnProperty.bind(objB);
-        for (var idx = 0; idx < keysA.length; idx++) {
-          var key = keysA[idx];
-          if (!bHasOwnProperty(key)) {
-            return false;
-          }
-          var valueA = objA[key];
-          var valueB = objB[key];
-          ret2 = compare ? compare.call(compareContext, valueA, valueB, key) : void 0;
-          if (ret2 === false || ret2 === void 0 && valueA !== valueB) {
-            return false;
-          }
-        }
-        return true;
-      };
-    }
-  });
-
-  // node_modules/hoist-non-react-statics/node_modules/react-is/cjs/react-is.development.js
-  var require_react_is_development2 = __commonJS({
-    "node_modules/hoist-non-react-statics/node_modules/react-is/cjs/react-is.development.js"(exports) {
       "use strict";
       if (true) {
         (function() {
@@ -38328,15 +38097,52 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
   });
 
-  // node_modules/hoist-non-react-statics/node_modules/react-is/index.js
-  var require_react_is2 = __commonJS({
-    "node_modules/hoist-non-react-statics/node_modules/react-is/index.js"(exports, module) {
+  // node_modules/react-is/index.js
+  var require_react_is = __commonJS({
+    "node_modules/react-is/index.js"(exports, module) {
       "use strict";
       if (false) {
         module.exports = null;
       } else {
-        module.exports = require_react_is_development2();
+        module.exports = require_react_is_development();
       }
+    }
+  });
+
+  // node_modules/shallowequal/index.js
+  var require_shallowequal = __commonJS({
+    "node_modules/shallowequal/index.js"(exports, module) {
+      module.exports = function shallowEqual(objA, objB, compare, compareContext) {
+        var ret2 = compare ? compare.call(compareContext, objA, objB) : void 0;
+        if (ret2 !== void 0) {
+          return !!ret2;
+        }
+        if (objA === objB) {
+          return true;
+        }
+        if (typeof objA !== "object" || !objA || typeof objB !== "object" || !objB) {
+          return false;
+        }
+        var keysA = Object.keys(objA);
+        var keysB = Object.keys(objB);
+        if (keysA.length !== keysB.length) {
+          return false;
+        }
+        var bHasOwnProperty = Object.prototype.hasOwnProperty.bind(objB);
+        for (var idx = 0; idx < keysA.length; idx++) {
+          var key = keysA[idx];
+          if (!bHasOwnProperty(key)) {
+            return false;
+          }
+          var valueA = objA[key];
+          var valueB = objB[key];
+          ret2 = compare ? compare.call(compareContext, valueA, valueB, key) : void 0;
+          if (ret2 === false || ret2 === void 0 && valueA !== valueB) {
+            return false;
+          }
+        }
+        return true;
+      };
     }
   });
 
@@ -38344,7 +38150,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var require_hoist_non_react_statics_cjs = __commonJS({
     "node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js"(exports, module) {
       "use strict";
-      var reactIs = require_react_is2();
+      var reactIs = require_react_is();
       var REACT_STATICS = {
         childContextTypes: true,
         contextType: true,
@@ -38511,14 +38317,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                   }
                 };
               }
-              function invariant(condition, format, a2, b2, c2, d2, e2, f) {
+              function invariant(condition, format, a2, b2, c2, d3, e2, f) {
                 validateFormat(format);
                 if (!condition) {
                   var error;
                   if (format === void 0) {
                     error = new Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");
                   } else {
-                    var args = [a2, b2, c2, d2, e2, f];
+                    var args = [a2, b2, c2, d3, e2, f];
                     var argIndex = 0;
                     error = new Error(format.replace(/%s/g, function() {
                       return args[argIndex++];
@@ -38840,7 +38646,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                   }
                 }, {
                   key: "render",
-                  value: function render() {
+                  value: function render3() {
                     var _props = this.props, color = _props.color, delay = _props.delay, type = _props.type, height = _props.height, width = _props.width, restProps = _objectWithoutProperties2(_props, ["color", "delay", "type", "height", "width"]);
                     var selectedType = this.state.delayed ? "blank" : type;
                     var svg = svgSources[selectedType];
@@ -38928,22 +38734,22 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               H2.isPureReactComponent = true;
               var I2 = { current: null }, J2 = Object.prototype.hasOwnProperty, K2 = { key: true, ref: true, __self: true, __source: true };
               function L2(a2, b2, e2) {
-                var c2 = void 0, d2 = {}, g2 = null, h = null;
+                var c2 = void 0, d3 = {}, g2 = null, h = null;
                 if (null != b2)
                   for (c2 in void 0 !== b2.ref && (h = b2.ref), void 0 !== b2.key && (g2 = "" + b2.key), b2)
-                    J2.call(b2, c2) && !K2.hasOwnProperty(c2) && (d2[c2] = b2[c2]);
+                    J2.call(b2, c2) && !K2.hasOwnProperty(c2) && (d3[c2] = b2[c2]);
                 var f = arguments.length - 2;
                 if (1 === f)
-                  d2.children = e2;
+                  d3.children = e2;
                 else if (1 < f) {
                   for (var k2 = Array(f), l2 = 0; l2 < f; l2++)
                     k2[l2] = arguments[l2 + 2];
-                  d2.children = k2;
+                  d3.children = k2;
                 }
                 if (a2 && a2.defaultProps)
                   for (c2 in f = a2.defaultProps, f)
-                    void 0 === d2[c2] && (d2[c2] = f[c2]);
-                return { $$typeof: t2, type: a2, key: g2, ref: h, props: d2, _owner: I2.current };
+                    void 0 === d3[c2] && (d3[c2] = f[c2]);
+                return { $$typeof: t2, type: a2, key: g2, ref: h, props: d3, _owner: I2.current };
               }
               function M2(a2) {
                 return "object" === typeof a2 && null !== a2 && a2.$$typeof === t2;
@@ -38955,15 +38761,15 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                 });
               }
               var N2 = /\/+/g, O2 = [];
-              function P2(a2, b2, e2, c2) {
+              function P(a2, b2, e2, c2) {
                 if (O2.length) {
-                  var d2 = O2.pop();
-                  d2.result = a2;
-                  d2.keyPrefix = b2;
-                  d2.func = e2;
-                  d2.context = c2;
-                  d2.count = 0;
-                  return d2;
+                  var d3 = O2.pop();
+                  d3.result = a2;
+                  d3.keyPrefix = b2;
+                  d3.func = e2;
+                  d3.context = c2;
+                  d3.count = 0;
+                  return d3;
                 }
                 return { result: a2, keyPrefix: b2, func: e2, context: c2, count: 0 };
               }
@@ -38976,14 +38782,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                 10 > O2.length && O2.push(a2);
               }
               function R2(a2, b2, e2, c2) {
-                var d2 = typeof a2;
-                if ("undefined" === d2 || "boolean" === d2)
+                var d3 = typeof a2;
+                if ("undefined" === d3 || "boolean" === d3)
                   a2 = null;
                 var g2 = false;
                 if (null === a2)
                   g2 = true;
                 else
-                  switch (d2) {
+                  switch (d3) {
                     case "string":
                     case "number":
                       g2 = true;
@@ -39001,15 +38807,15 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                 b2 = "" === b2 ? "." : b2 + ":";
                 if (Array.isArray(a2))
                   for (var h = 0; h < a2.length; h++) {
-                    d2 = a2[h];
-                    var f = b2 + S2(d2, h);
-                    g2 += R2(d2, f, e2, c2);
+                    d3 = a2[h];
+                    var f = b2 + S2(d3, h);
+                    g2 += R2(d3, f, e2, c2);
                   }
                 else if (null === a2 || "undefined" === typeof a2 ? f = null : (f = B2 && a2[B2] || a2["@@iterator"], f = "function" === typeof f ? f : null), "function" === typeof f)
-                  for (a2 = f.call(a2), h = 0; !(d2 = a2.next()).done; )
-                    d2 = d2.value, f = b2 + S2(d2, h++), g2 += R2(d2, f, e2, c2);
+                  for (a2 = f.call(a2), h = 0; !(d3 = a2.next()).done; )
+                    d3 = d3.value, f = b2 + S2(d3, h++), g2 += R2(d3, f, e2, c2);
                 else
-                  "object" === d2 && (e2 = "" + a2, C2("31", "[object Object]" === e2 ? "object with keys {" + Object.keys(a2).join(", ") + "}" : e2, ""));
+                  "object" === d3 && (e2 = "" + a2, C2("31", "[object Object]" === e2 ? "object with keys {" + Object.keys(a2).join(", ") + "}" : e2, ""));
                 return g2;
               }
               function S2(a2, b2) {
@@ -39019,14 +38825,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                 a2.func.call(a2.context, b2, a2.count++);
               }
               function U2(a2, b2, e2) {
-                var c2 = a2.result, d2 = a2.keyPrefix;
+                var c2 = a2.result, d3 = a2.keyPrefix;
                 a2 = a2.func.call(a2.context, b2, a2.count++);
-                Array.isArray(a2) ? V2(a2, c2, e2, q2.thatReturnsArgument) : null != a2 && (M2(a2) && (b2 = d2 + (!a2.key || b2 && b2.key === a2.key ? "" : ("" + a2.key).replace(N2, "$&/") + "/") + e2, a2 = { $$typeof: t2, type: a2.type, key: b2, ref: a2.ref, props: a2.props, _owner: a2._owner }), c2.push(a2));
+                Array.isArray(a2) ? V2(a2, c2, e2, q2.thatReturnsArgument) : null != a2 && (M2(a2) && (b2 = d3 + (!a2.key || b2 && b2.key === a2.key ? "" : ("" + a2.key).replace(N2, "$&/") + "/") + e2, a2 = { $$typeof: t2, type: a2.type, key: b2, ref: a2.ref, props: a2.props, _owner: a2._owner }), c2.push(a2));
               }
-              function V2(a2, b2, e2, c2, d2) {
+              function V2(a2, b2, e2, c2, d3) {
                 var g2 = "";
                 null != e2 && (g2 = ("" + e2).replace(N2, "$&/") + "/");
-                b2 = P2(b2, g2, c2, d2);
+                b2 = P(b2, g2, c2, d3);
                 null == a2 || R2(a2, "", U2, b2);
                 Q2(b2);
               }
@@ -39039,7 +38845,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               }, forEach: function(a2, b2, e2) {
                 if (null == a2)
                   return a2;
-                b2 = P2(null, null, b2, e2);
+                b2 = P(null, null, b2, e2);
                 null == a2 || R2(a2, "", T2, b2);
                 Q2(b2);
               }, count: function(a2) {
@@ -39070,25 +38876,25 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                 return { $$typeof: A, render: a2 };
               }, Fragment: v2, StrictMode: w3, unstable_AsyncMode: z2, createElement: L2, cloneElement: function(a2, b2, e2) {
                 null === a2 || void 0 === a2 ? C2("267", a2) : void 0;
-                var c2 = void 0, d2 = m2({}, a2.props), g2 = a2.key, h = a2.ref, f = a2._owner;
+                var c2 = void 0, d3 = m2({}, a2.props), g2 = a2.key, h = a2.ref, f = a2._owner;
                 if (null != b2) {
                   void 0 !== b2.ref && (h = b2.ref, f = I2.current);
                   void 0 !== b2.key && (g2 = "" + b2.key);
                   var k2 = void 0;
                   a2.type && a2.type.defaultProps && (k2 = a2.type.defaultProps);
                   for (c2 in b2)
-                    J2.call(b2, c2) && !K2.hasOwnProperty(c2) && (d2[c2] = void 0 === b2[c2] && void 0 !== k2 ? k2[c2] : b2[c2]);
+                    J2.call(b2, c2) && !K2.hasOwnProperty(c2) && (d3[c2] = void 0 === b2[c2] && void 0 !== k2 ? k2[c2] : b2[c2]);
                 }
                 c2 = arguments.length - 2;
                 if (1 === c2)
-                  d2.children = e2;
+                  d3.children = e2;
                 else if (1 < c2) {
                   k2 = Array(c2);
                   for (var l2 = 0; l2 < c2; l2++)
                     k2[l2] = arguments[l2 + 2];
-                  d2.children = k2;
+                  d3.children = k2;
                 }
-                return { $$typeof: t2, type: a2.type, key: g2, ref: h, props: d2, _owner: f };
+                return { $$typeof: t2, type: a2.type, key: g2, ref: h, props: d3, _owner: f };
               }, createFactory: function(a2) {
                 var b2 = L2.bind(null, a2);
                 b2.type = a2;
@@ -39397,7 +39203,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                     }
                     return element;
                   };
-                  function createElement2(type, config2, children) {
+                  function createElement3(type, config2, children) {
                     var propName = void 0;
                     var props = {};
                     var key = null;
@@ -39533,8 +39339,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                   }
                   var didWarnAboutMaps = false;
                   var userProvidedKeyEscapeRegex = /\/+/g;
-                  function escapeUserProvidedKey(text) {
-                    return ("" + text).replace(userProvidedKeyEscapeRegex, "$&/");
+                  function escapeUserProvidedKey(text2) {
+                    return ("" + text2).replace(userProvidedKeyEscapeRegex, "$&/");
                   }
                   var POOL_SIZE = 10;
                   var traverseContextPool = [];
@@ -39572,24 +39378,24 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                     if (type === "undefined" || type === "boolean") {
                       children = null;
                     }
-                    var invokeCallback2 = false;
+                    var invokeCallback = false;
                     if (children === null) {
-                      invokeCallback2 = true;
+                      invokeCallback = true;
                     } else {
                       switch (type) {
                         case "string":
                         case "number":
-                          invokeCallback2 = true;
+                          invokeCallback = true;
                           break;
                         case "object":
                           switch (children.$$typeof) {
                             case REACT_ELEMENT_TYPE:
                             case REACT_PORTAL_TYPE:
-                              invokeCallback2 = true;
+                              invokeCallback = true;
                           }
                       }
                     }
-                    if (invokeCallback2) {
+                    if (invokeCallback) {
                       callback(
                         traverseContext,
                         children,
@@ -39698,7 +39504,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                   function countChildren(children, context) {
                     return traverseAllChildren(children, emptyFunction.thatReturnsNull, null);
                   }
-                  function toArray(children) {
+                  function toArray2(children) {
                     var result = [];
                     mapIntoWithKeyPrefixInternal(children, result, null, emptyFunction.thatReturnsArgument);
                     return result;
@@ -39735,13 +39541,13 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                     }
                     return context;
                   }
-                  function forwardRef(render) {
+                  function forwardRef(render3) {
                     {
-                      !(typeof render === "function") ? warning(false, "forwardRef requires a render function but was given %s.", render === null ? "null" : typeof render) : void 0;
+                      !(typeof render3 === "function") ? warning(false, "forwardRef requires a render function but was given %s.", render3 === null ? "null" : typeof render3) : void 0;
                     }
                     return {
                       $$typeof: REACT_FORWARD_REF_TYPE,
-                      render
+                      render: render3
                     };
                   }
                   var describeComponentFrame = function(name, source, ownerName) {
@@ -39948,7 +39754,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                       }
                       warning(false, "React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
                     }
-                    var element = createElement2.apply(this, arguments);
+                    var element = createElement3.apply(this, arguments);
                     if (element == null) {
                       return element;
                     }
@@ -39989,12 +39795,12 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                     validatePropTypes(newElement);
                     return newElement;
                   }
-                  var React29 = {
+                  var React27 = {
                     Children: {
                       map: mapChildren,
                       forEach: forEachChildren,
                       count: countChildren,
-                      toArray,
+                      toArray: toArray2,
                       only: onlyChild
                     },
                     createRef,
@@ -40017,7 +39823,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                     }
                   };
                   {
-                    _assign(React29.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED, {
+                    _assign(React27.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED, {
                       // These should not be included in production.
                       ReactDebugCurrentFrame,
                       // Shim for React DOM 16.0.0 which still destructured (but not used) this.
@@ -40026,9 +39832,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                     });
                   }
                   var React$2 = Object.freeze({
-                    default: React29
+                    default: React27
                   });
-                  var React$3 = React$2 && React29 || React$2;
+                  var React$3 = React$2 && React27 || React$2;
                   var react = React$3["default"] ? React$3["default"] : React$3;
                   module2.exports = react;
                 })();
@@ -40270,7 +40076,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                 }
                 function createNodeChecker() {
                   function validate(props, propName, componentName, location2, propFullName) {
-                    if (!isNode2(props[propName])) {
+                    if (!isNode(props[propName])) {
                       return new PropTypeError("Invalid " + location2 + " `" + propFullName + "` supplied to " + ("`" + componentName + "`, expected a ReactNode."));
                     }
                     return null;
@@ -40322,7 +40128,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                   }
                   return createChainableTypeChecker(validate);
                 }
-                function isNode2(propValue) {
+                function isNode(propValue) {
                   switch (typeof propValue) {
                     case "number":
                     case "string":
@@ -40332,7 +40138,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                       return !propValue;
                     case "object":
                       if (Array.isArray(propValue)) {
-                        return propValue.every(isNode2);
+                        return propValue.every(isNode);
                       }
                       if (propValue === null || isValidElement(propValue)) {
                         return true;
@@ -40343,7 +40149,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                         var step;
                         if (iteratorFn !== propValue.entries) {
                           while (!(step = iterator.next()).done) {
-                            if (!isNode2(step.value)) {
+                            if (!isNode(step.value)) {
                               return false;
                             }
                           }
@@ -40351,7 +40157,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                           while (!(step = iterator.next()).done) {
                             var entry = step.value;
                             if (entry) {
-                              if (!isNode2(entry[1])) {
+                              if (!isNode(entry[1])) {
                                 return false;
                               }
                             }
@@ -40602,173 +40408,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
   });
 
-  // node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js
-  var require_react_is_development3 = __commonJS({
-    "node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js"(exports) {
-      "use strict";
-      if (true) {
-        (function() {
-          "use strict";
-          var hasSymbol = typeof Symbol === "function" && Symbol.for;
-          var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for("react.element") : 60103;
-          var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for("react.portal") : 60106;
-          var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for("react.fragment") : 60107;
-          var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for("react.strict_mode") : 60108;
-          var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for("react.profiler") : 60114;
-          var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for("react.provider") : 60109;
-          var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for("react.context") : 60110;
-          var REACT_ASYNC_MODE_TYPE = hasSymbol ? Symbol.for("react.async_mode") : 60111;
-          var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for("react.concurrent_mode") : 60111;
-          var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for("react.forward_ref") : 60112;
-          var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for("react.suspense") : 60113;
-          var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? Symbol.for("react.suspense_list") : 60120;
-          var REACT_MEMO_TYPE = hasSymbol ? Symbol.for("react.memo") : 60115;
-          var REACT_LAZY_TYPE = hasSymbol ? Symbol.for("react.lazy") : 60116;
-          var REACT_BLOCK_TYPE = hasSymbol ? Symbol.for("react.block") : 60121;
-          var REACT_FUNDAMENTAL_TYPE = hasSymbol ? Symbol.for("react.fundamental") : 60117;
-          var REACT_RESPONDER_TYPE = hasSymbol ? Symbol.for("react.responder") : 60118;
-          var REACT_SCOPE_TYPE = hasSymbol ? Symbol.for("react.scope") : 60119;
-          function isValidElementType(type) {
-            return typeof type === "string" || typeof type === "function" || // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
-            type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === "object" && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE || type.$$typeof === REACT_BLOCK_TYPE);
-          }
-          function typeOf(object) {
-            if (typeof object === "object" && object !== null) {
-              var $$typeof = object.$$typeof;
-              switch ($$typeof) {
-                case REACT_ELEMENT_TYPE:
-                  var type = object.type;
-                  switch (type) {
-                    case REACT_ASYNC_MODE_TYPE:
-                    case REACT_CONCURRENT_MODE_TYPE:
-                    case REACT_FRAGMENT_TYPE:
-                    case REACT_PROFILER_TYPE:
-                    case REACT_STRICT_MODE_TYPE:
-                    case REACT_SUSPENSE_TYPE:
-                      return type;
-                    default:
-                      var $$typeofType = type && type.$$typeof;
-                      switch ($$typeofType) {
-                        case REACT_CONTEXT_TYPE:
-                        case REACT_FORWARD_REF_TYPE:
-                        case REACT_LAZY_TYPE:
-                        case REACT_MEMO_TYPE:
-                        case REACT_PROVIDER_TYPE:
-                          return $$typeofType;
-                        default:
-                          return $$typeof;
-                      }
-                  }
-                case REACT_PORTAL_TYPE:
-                  return $$typeof;
-              }
-            }
-            return void 0;
-          }
-          var AsyncMode = REACT_ASYNC_MODE_TYPE;
-          var ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
-          var ContextConsumer = REACT_CONTEXT_TYPE;
-          var ContextProvider = REACT_PROVIDER_TYPE;
-          var Element = REACT_ELEMENT_TYPE;
-          var ForwardRef = REACT_FORWARD_REF_TYPE;
-          var Fragment = REACT_FRAGMENT_TYPE;
-          var Lazy = REACT_LAZY_TYPE;
-          var Memo = REACT_MEMO_TYPE;
-          var Portal = REACT_PORTAL_TYPE;
-          var Profiler = REACT_PROFILER_TYPE;
-          var StrictMode = REACT_STRICT_MODE_TYPE;
-          var Suspense = REACT_SUSPENSE_TYPE;
-          var hasWarnedAboutDeprecatedIsAsyncMode = false;
-          function isAsyncMode(object) {
-            {
-              if (!hasWarnedAboutDeprecatedIsAsyncMode) {
-                hasWarnedAboutDeprecatedIsAsyncMode = true;
-                console["warn"]("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 17+. Update your code to use ReactIs.isConcurrentMode() instead. It has the exact same API.");
-              }
-            }
-            return isConcurrentMode(object) || typeOf(object) === REACT_ASYNC_MODE_TYPE;
-          }
-          function isConcurrentMode(object) {
-            return typeOf(object) === REACT_CONCURRENT_MODE_TYPE;
-          }
-          function isContextConsumer(object) {
-            return typeOf(object) === REACT_CONTEXT_TYPE;
-          }
-          function isContextProvider(object) {
-            return typeOf(object) === REACT_PROVIDER_TYPE;
-          }
-          function isElement(object) {
-            return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-          }
-          function isForwardRef(object) {
-            return typeOf(object) === REACT_FORWARD_REF_TYPE;
-          }
-          function isFragment(object) {
-            return typeOf(object) === REACT_FRAGMENT_TYPE;
-          }
-          function isLazy(object) {
-            return typeOf(object) === REACT_LAZY_TYPE;
-          }
-          function isMemo(object) {
-            return typeOf(object) === REACT_MEMO_TYPE;
-          }
-          function isPortal(object) {
-            return typeOf(object) === REACT_PORTAL_TYPE;
-          }
-          function isProfiler(object) {
-            return typeOf(object) === REACT_PROFILER_TYPE;
-          }
-          function isStrictMode(object) {
-            return typeOf(object) === REACT_STRICT_MODE_TYPE;
-          }
-          function isSuspense(object) {
-            return typeOf(object) === REACT_SUSPENSE_TYPE;
-          }
-          exports.AsyncMode = AsyncMode;
-          exports.ConcurrentMode = ConcurrentMode;
-          exports.ContextConsumer = ContextConsumer;
-          exports.ContextProvider = ContextProvider;
-          exports.Element = Element;
-          exports.ForwardRef = ForwardRef;
-          exports.Fragment = Fragment;
-          exports.Lazy = Lazy;
-          exports.Memo = Memo;
-          exports.Portal = Portal;
-          exports.Profiler = Profiler;
-          exports.StrictMode = StrictMode;
-          exports.Suspense = Suspense;
-          exports.isAsyncMode = isAsyncMode;
-          exports.isConcurrentMode = isConcurrentMode;
-          exports.isContextConsumer = isContextConsumer;
-          exports.isContextProvider = isContextProvider;
-          exports.isElement = isElement;
-          exports.isForwardRef = isForwardRef;
-          exports.isFragment = isFragment;
-          exports.isLazy = isLazy;
-          exports.isMemo = isMemo;
-          exports.isPortal = isPortal;
-          exports.isProfiler = isProfiler;
-          exports.isStrictMode = isStrictMode;
-          exports.isSuspense = isSuspense;
-          exports.isValidElementType = isValidElementType;
-          exports.typeOf = typeOf;
-        })();
-      }
-    }
-  });
-
-  // node_modules/prop-types/node_modules/react-is/index.js
-  var require_react_is3 = __commonJS({
-    "node_modules/prop-types/node_modules/react-is/index.js"(exports, module) {
-      "use strict";
-      if (false) {
-        module.exports = null;
-      } else {
-        module.exports = require_react_is_development3();
-      }
-    }
-  });
-
   // node_modules/prop-types/lib/ReactPropTypesSecret.js
   var require_ReactPropTypesSecret = __commonJS({
     "node_modules/prop-types/lib/ReactPropTypesSecret.js"(exports, module) {
@@ -40795,8 +40434,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         ReactPropTypesSecret = require_ReactPropTypesSecret();
         loggedTypeFailures = {};
         has2 = require_has();
-        printWarning = function(text) {
-          var message = "Warning: " + text;
+        printWarning = function(text2) {
+          var message = "Warning: " + text2;
           if (typeof console !== "undefined") {
             console.error(message);
           }
@@ -40855,7 +40494,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var require_factoryWithTypeCheckers = __commonJS({
     "node_modules/prop-types/factoryWithTypeCheckers.js"(exports, module) {
       "use strict";
-      var ReactIs = require_react_is3();
+      var ReactIs = require_react_is();
       var assign = require_object_assign();
       var ReactPropTypesSecret = require_ReactPropTypesSecret();
       var has2 = require_has();
@@ -40863,8 +40502,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       var printWarning = function() {
       };
       if (true) {
-        printWarning = function(text) {
-          var message = "Warning: " + text;
+        printWarning = function(text2) {
+          var message = "Warning: " + text2;
           if (typeof console !== "undefined") {
             console.error(message);
           }
@@ -41121,7 +40760,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }
         function createNodeChecker() {
           function validate(props, propName, componentName, location2, propFullName) {
-            if (!isNode2(props[propName])) {
+            if (!isNode(props[propName])) {
               return new PropTypeError("Invalid " + location2 + " `" + propFullName + "` supplied to " + ("`" + componentName + "`, expected a ReactNode."));
             }
             return null;
@@ -41181,7 +40820,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           }
           return createChainableTypeChecker(validate);
         }
-        function isNode2(propValue) {
+        function isNode(propValue) {
           switch (typeof propValue) {
             case "number":
             case "string":
@@ -41191,7 +40830,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               return !propValue;
             case "object":
               if (Array.isArray(propValue)) {
-                return propValue.every(isNode2);
+                return propValue.every(isNode);
               }
               if (propValue === null || isValidElement(propValue)) {
                 return true;
@@ -41202,7 +40841,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                 var step;
                 if (iteratorFn !== propValue.entries) {
                   while (!(step = iterator.next()).done) {
-                    if (!isNode2(step.value)) {
+                    if (!isNode(step.value)) {
                       return false;
                     }
                   }
@@ -41210,7 +40849,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                   while (!(step = iterator.next()).done) {
                     var entry = step.value;
                     if (entry) {
-                      if (!isNode2(entry[1])) {
+                      if (!isNode(entry[1])) {
                         return false;
                       }
                     }
@@ -41298,7 +40937,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var require_prop_types = __commonJS({
     "node_modules/prop-types/index.js"(exports, module) {
       if (true) {
-        ReactIs = require_react_is3();
+        ReactIs = require_react_is();
         throwOnDirectAccess = true;
         module.exports = require_factoryWithTypeCheckers()(ReactIs.isElement, throwOnDirectAccess);
       } else {
@@ -42850,7 +42489,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           }
         };
         chroma.distance = function(a2, b2, mode) {
-          var d2, i2, l1, l2, ref, ref1, sum_sq;
+          var d3, i2, l1, l2, ref, ref1, sum_sq;
           if (mode == null) {
             mode = "lab";
           }
@@ -42864,8 +42503,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           l2 = b2.get(mode);
           sum_sq = 0;
           for (i2 in l1) {
-            d2 = (l1[i2] || 0) - (l2[i2] || 0);
-            sum_sq += d2 * d2;
+            d3 = (l1[i2] || 0) - (l2[i2] || 0);
+            sum_sq += d3 * d3;
           }
           return Math.sqrt(sum_sq);
         };
@@ -43264,17 +42903,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             }
           };
           f.classes = function(classes) {
-            var d2;
+            var d3;
             if (classes != null) {
               if (type(classes) === "array") {
                 _classes = classes;
                 _domain = [classes[0], classes[classes.length - 1]];
               } else {
-                d2 = chroma.analyze(_domain);
+                d3 = chroma.analyze(_domain);
                 if (classes === 0) {
-                  _classes = [d2.min, d2.max];
+                  _classes = [d3.min, d3.max];
                 } else {
-                  _classes = chroma.limits(d2, "e", classes);
+                  _classes = chroma.limits(d3, "e", classes);
                 }
               }
               return f;
@@ -43282,7 +42921,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             return _classes;
           };
           f.domain = function(domain) {
-            var c2, d2, k2, len, o2, ref, w3;
+            var c2, d3, k2, len, o2, ref, w3;
             if (!arguments.length) {
               return _domain;
             }
@@ -43292,8 +42931,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             k2 = _colors.length;
             if (domain.length === k2 && _min !== _max) {
               for (o2 = 0, len = domain.length; o2 < len; o2++) {
-                d2 = domain[o2];
-                _pos.push((d2 - _min) / (_max - _min));
+                d3 = domain[o2];
+                _pos.push((d3 - _min) / (_max - _min));
               }
             } else {
               for (c2 = w3 = 0, ref = k2 - 1; 0 <= ref ? w3 <= ref : w3 >= ref; c2 = 0 <= ref ? ++w3 : --w3) {
@@ -43439,9 +43078,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               return _gamma;
             }
           };
-          f.nodata = function(d2) {
-            if (d2 != null) {
-              _nacol = chroma(d2);
+          f.nodata = function(d3) {
+            if (d3 != null) {
+              _nacol = chroma(d3);
               return f;
             } else {
               return _nacol;
@@ -44289,7 +43928,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       var assign = require_assign();
       var normalizeOpts = require_normalize_options();
       var contains = require_contains();
-      var d2 = module.exports = function(dscr, value) {
+      var d3 = module.exports = function(dscr, value) {
         var c2, e2, w3, options, desc;
         if (arguments.length < 2 || typeof dscr !== "string") {
           options = value;
@@ -44309,7 +43948,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         desc = { value, configurable: c2, enumerable: e2, writable: w3 };
         return !options ? desc : assign(normalizeOpts(options), desc);
       };
-      d2.gs = function(dscr, get3, set3) {
+      d3.gs = function(dscr, get3, set3) {
         var c2, e2, options, desc;
         if (typeof dscr !== "string") {
           options = set3;
@@ -44488,7 +44127,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var require_generate_name = __commonJS({
     "node_modules/es6-symbol/lib/private/generate-name.js"(exports, module) {
       "use strict";
-      var d2 = require_d();
+      var d3 = require_d();
       var create3 = Object.create;
       var defineProperty4 = Object.defineProperty;
       var objPrototype = Object.prototype;
@@ -44503,11 +44142,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         defineProperty4(
           objPrototype,
           name,
-          d2.gs(null, function(value) {
+          d3.gs(null, function(value) {
             if (ie11BugWorkaround)
               return;
             ie11BugWorkaround = true;
-            defineProperty4(this, name, d2(value));
+            defineProperty4(this, name, d3(value));
             ie11BugWorkaround = false;
           })
         );
@@ -44520,35 +44159,35 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var require_standard_symbols = __commonJS({
     "node_modules/es6-symbol/lib/private/setup/standard-symbols.js"(exports, module) {
       "use strict";
-      var d2 = require_d();
+      var d3 = require_d();
       var NativeSymbol = require_global_this().Symbol;
       module.exports = function(SymbolPolyfill) {
         return Object.defineProperties(SymbolPolyfill, {
           // To ensure proper interoperability with other native functions (e.g. Array.from)
           // fallback to eventual native implementation of given symbol
-          hasInstance: d2(
+          hasInstance: d3(
             "",
             NativeSymbol && NativeSymbol.hasInstance || SymbolPolyfill("hasInstance")
           ),
-          isConcatSpreadable: d2(
+          isConcatSpreadable: d3(
             "",
             NativeSymbol && NativeSymbol.isConcatSpreadable || SymbolPolyfill("isConcatSpreadable")
           ),
-          iterator: d2("", NativeSymbol && NativeSymbol.iterator || SymbolPolyfill("iterator")),
-          match: d2("", NativeSymbol && NativeSymbol.match || SymbolPolyfill("match")),
-          replace: d2("", NativeSymbol && NativeSymbol.replace || SymbolPolyfill("replace")),
-          search: d2("", NativeSymbol && NativeSymbol.search || SymbolPolyfill("search")),
-          species: d2("", NativeSymbol && NativeSymbol.species || SymbolPolyfill("species")),
-          split: d2("", NativeSymbol && NativeSymbol.split || SymbolPolyfill("split")),
-          toPrimitive: d2(
+          iterator: d3("", NativeSymbol && NativeSymbol.iterator || SymbolPolyfill("iterator")),
+          match: d3("", NativeSymbol && NativeSymbol.match || SymbolPolyfill("match")),
+          replace: d3("", NativeSymbol && NativeSymbol.replace || SymbolPolyfill("replace")),
+          search: d3("", NativeSymbol && NativeSymbol.search || SymbolPolyfill("search")),
+          species: d3("", NativeSymbol && NativeSymbol.species || SymbolPolyfill("species")),
+          split: d3("", NativeSymbol && NativeSymbol.split || SymbolPolyfill("split")),
+          toPrimitive: d3(
             "",
             NativeSymbol && NativeSymbol.toPrimitive || SymbolPolyfill("toPrimitive")
           ),
-          toStringTag: d2(
+          toStringTag: d3(
             "",
             NativeSymbol && NativeSymbol.toStringTag || SymbolPolyfill("toStringTag")
           ),
-          unscopables: d2(
+          unscopables: d3(
             "",
             NativeSymbol && NativeSymbol.unscopables || SymbolPolyfill("unscopables")
           )
@@ -44561,17 +44200,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var require_symbol_registry = __commonJS({
     "node_modules/es6-symbol/lib/private/setup/symbol-registry.js"(exports, module) {
       "use strict";
-      var d2 = require_d();
+      var d3 = require_d();
       var validateSymbol = require_validate_symbol();
       var registry = /* @__PURE__ */ Object.create(null);
       module.exports = function(SymbolPolyfill) {
         return Object.defineProperties(SymbolPolyfill, {
-          for: d2(function(key) {
+          for: d3(function(key) {
             if (registry[key])
               return registry[key];
             return registry[key] = SymbolPolyfill(String(key));
           }),
-          keyFor: d2(function(symbol) {
+          keyFor: d3(function(symbol) {
             var key;
             validateSymbol(symbol);
             for (key in registry) {
@@ -44589,7 +44228,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var require_polyfill = __commonJS({
     "node_modules/es6-symbol/polyfill.js"(exports, module) {
       "use strict";
-      var d2 = require_d();
+      var d3 = require_d();
       var validateSymbol = require_validate_symbol();
       var NativeSymbol = require_global_this().Symbol;
       var generateName = require_generate_name();
@@ -44624,46 +44263,46 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         symbol = create3(HiddenSymbol.prototype);
         description = description === void 0 ? "" : String(description);
         return defineProperties2(symbol, {
-          __description__: d2("", description),
-          __name__: d2("", generateName(description))
+          __description__: d3("", description),
+          __name__: d3("", generateName(description))
         });
       };
       setupStandardSymbols(SymbolPolyfill);
       setupSymbolRegistry(SymbolPolyfill);
       defineProperties2(HiddenSymbol.prototype, {
-        constructor: d2(SymbolPolyfill),
-        toString: d2("", function() {
+        constructor: d3(SymbolPolyfill),
+        toString: d3("", function() {
           return this.__name__;
         })
       });
       defineProperties2(SymbolPolyfill.prototype, {
-        toString: d2(function() {
+        toString: d3(function() {
           return "Symbol (" + validateSymbol(this).__description__ + ")";
         }),
-        valueOf: d2(function() {
+        valueOf: d3(function() {
           return validateSymbol(this);
         })
       });
       defineProperty4(
         SymbolPolyfill.prototype,
         SymbolPolyfill.toPrimitive,
-        d2("", function() {
+        d3("", function() {
           var symbol = validateSymbol(this);
           if (typeof symbol === "symbol")
             return symbol;
           return symbol.toString();
         })
       );
-      defineProperty4(SymbolPolyfill.prototype, SymbolPolyfill.toStringTag, d2("c", "Symbol"));
+      defineProperty4(SymbolPolyfill.prototype, SymbolPolyfill.toStringTag, d3("c", "Symbol"));
       defineProperty4(
         HiddenSymbol.prototype,
         SymbolPolyfill.toStringTag,
-        d2("c", SymbolPolyfill.prototype[SymbolPolyfill.toStringTag])
+        d3("c", SymbolPolyfill.prototype[SymbolPolyfill.toStringTag])
       );
       defineProperty4(
         HiddenSymbol.prototype,
         SymbolPolyfill.toPrimitive,
-        d2("c", SymbolPolyfill.prototype[SymbolPolyfill.toPrimitive])
+        d3("c", SymbolPolyfill.prototype[SymbolPolyfill.toPrimitive])
       );
     }
   });
@@ -45166,7 +44805,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       var assign = require_assign();
       var callable = require_valid_callable();
       var value = require_valid_value();
-      var d2 = require_d();
+      var d3 = require_d();
       var autoBind = require_auto_bind();
       var Symbol2 = require_es6_symbol();
       var defineProperty4 = Object.defineProperty;
@@ -45176,9 +44815,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         if (!(this instanceof Iterator))
           throw new TypeError("Constructor requires 'new'");
         defineProperties2(this, {
-          __list__: d2("w", value(list)),
-          __context__: d2("w", context),
-          __nextIndex__: d2("w", 0)
+          __list__: d3("w", value(list)),
+          __context__: d3("w", context),
+          __nextIndex__: d3("w", 0)
         });
         if (!context)
           return;
@@ -45192,7 +44831,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         Iterator.prototype,
         assign(
           {
-            _next: d2(function() {
+            _next: d3(function() {
               var i2;
               if (!this.__list__)
                 return void 0;
@@ -45206,18 +44845,18 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               this._unBind();
               return void 0;
             }),
-            next: d2(function() {
+            next: d3(function() {
               return this._createResult(this._next());
             }),
-            _createResult: d2(function(i2) {
+            _createResult: d3(function(i2) {
               if (i2 === void 0)
                 return { done: true, value: void 0 };
               return { done: false, value: this._resolve(i2) };
             }),
-            _resolve: d2(function(i2) {
+            _resolve: d3(function(i2) {
               return this.__list__[i2];
             }),
-            _unBind: d2(function() {
+            _unBind: d3(function() {
               this.__list__ = null;
               delete this.__redo__;
               if (!this.__context__)
@@ -45227,17 +44866,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               this.__context__.off("_clear", this._onClear);
               this.__context__ = null;
             }),
-            toString: d2(function() {
+            toString: d3(function() {
               return "[object " + (this[Symbol2.toStringTag] || "Object") + "]";
             })
           },
           autoBind({
-            _onAdd: d2(function(index) {
+            _onAdd: d3(function(index) {
               if (index >= this.__nextIndex__)
                 return;
               ++this.__nextIndex__;
               if (!this.__redo__) {
-                defineProperty4(this, "__redo__", d2("c", [index]));
+                defineProperty4(this, "__redo__", d3("c", [index]));
                 return;
               }
               this.__redo__.forEach(function(redo, i2) {
@@ -45246,7 +44885,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               }, this);
               this.__redo__.push(index);
             }),
-            _onDelete: d2(function(index) {
+            _onDelete: d3(function(index) {
               var i2;
               if (index >= this.__nextIndex__)
                 return;
@@ -45261,7 +44900,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                   this.__redo__[j2] = --redo;
               }, this);
             }),
-            _onClear: d2(function() {
+            _onClear: d3(function() {
               if (this.__redo__)
                 clear.call(this.__redo__);
               this.__nextIndex__ = 0;
@@ -45272,7 +44911,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       defineProperty4(
         Iterator.prototype,
         Symbol2.iterator,
-        d2(function() {
+        d3(function() {
           return this;
         })
       );
@@ -45285,7 +44924,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       "use strict";
       var setPrototypeOf = require_set_prototype_of();
       var contains = require_contains();
-      var d2 = require_d();
+      var d3 = require_d();
       var Symbol2 = require_es6_symbol();
       var Iterator = require_es6_iterator();
       var defineProperty4 = Object.defineProperty;
@@ -45302,13 +44941,13 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           kind = "key";
         else
           kind = "value";
-        defineProperty4(this, "__kind__", d2("", kind));
+        defineProperty4(this, "__kind__", d3("", kind));
       };
       if (setPrototypeOf)
         setPrototypeOf(ArrayIterator, Iterator);
       delete ArrayIterator.prototype.constructor;
       ArrayIterator.prototype = Object.create(Iterator.prototype, {
-        _resolve: d2(function(i2) {
+        _resolve: d3(function(i2) {
           if (this.__kind__ === "value")
             return this.__list__[i2];
           if (this.__kind__ === "key+value")
@@ -45316,7 +44955,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           return i2;
         })
       });
-      defineProperty4(ArrayIterator.prototype, Symbol2.toStringTag, d2("c", "Array Iterator"));
+      defineProperty4(ArrayIterator.prototype, Symbol2.toStringTag, d3("c", "Array Iterator"));
     }
   });
 
@@ -45325,7 +44964,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     "node_modules/es6-iterator/string.js"(exports, module) {
       "use strict";
       var setPrototypeOf = require_set_prototype_of();
-      var d2 = require_d();
+      var d3 = require_d();
       var Symbol2 = require_es6_symbol();
       var Iterator = require_es6_iterator();
       var defineProperty4 = Object.defineProperty;
@@ -45335,13 +44974,13 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           throw new TypeError("Constructor requires 'new'");
         str = String(str);
         Iterator.call(this, str);
-        defineProperty4(this, "__length__", d2("", str.length));
+        defineProperty4(this, "__length__", d3("", str.length));
       };
       if (setPrototypeOf)
         setPrototypeOf(StringIterator, Iterator);
       delete StringIterator.prototype.constructor;
       StringIterator.prototype = Object.create(Iterator.prototype, {
-        _next: d2(function() {
+        _next: d3(function() {
           if (!this.__list__)
             return void 0;
           if (this.__nextIndex__ < this.__length__)
@@ -45349,7 +44988,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           this._unBind();
           return void 0;
         }),
-        _resolve: d2(function(i2) {
+        _resolve: d3(function(i2) {
           var char = this.__list__[i2], code;
           if (this.__nextIndex__ === this.__length__)
             return char;
@@ -45359,7 +44998,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           return char;
         })
       });
-      defineProperty4(StringIterator.prototype, Symbol2.toStringTag, d2("c", "String Iterator"));
+      defineProperty4(StringIterator.prototype, Symbol2.toStringTag, d3("c", "String Iterator"));
     }
   });
 
@@ -45498,7 +45137,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       var object = require_valid_object();
       var ensureValue = require_valid_value();
       var randomUniq = require_random_uniq();
-      var d2 = require_d();
+      var d3 = require_d();
       var getIterator = require_get();
       var forOf = require_for_of();
       var toStringTagSymbol = require_es6_symbol().toStringTag;
@@ -45517,7 +45156,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           if (!isArray3(iterable))
             iterable = getIterator(iterable);
         }
-        defineProperty4(self2, "__weakMapData__", d2("c", "$weakMap$" + randomUniq()));
+        defineProperty4(self2, "__weakMapData__", d3("c", "$weakMap$" + randomUniq()));
         if (!iterable)
           return self2;
         forOf(iterable, function(val) {
@@ -45529,33 +45168,33 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       if (isNative) {
         if (setPrototypeOf)
           setPrototypeOf(WeakMapPoly, WeakMap);
-        WeakMapPoly.prototype = Object.create(WeakMap.prototype, { constructor: d2(WeakMapPoly) });
+        WeakMapPoly.prototype = Object.create(WeakMap.prototype, { constructor: d3(WeakMapPoly) });
       }
       Object.defineProperties(WeakMapPoly.prototype, {
-        delete: d2(function(key) {
+        delete: d3(function(key) {
           if (objHasOwnProperty.call(object(key), this.__weakMapData__)) {
             delete key[this.__weakMapData__];
             return true;
           }
           return false;
         }),
-        get: d2(function(key) {
+        get: d3(function(key) {
           if (!objHasOwnProperty.call(object(key), this.__weakMapData__))
             return void 0;
           return key[this.__weakMapData__];
         }),
-        has: d2(function(key) {
+        has: d3(function(key) {
           return objHasOwnProperty.call(object(key), this.__weakMapData__);
         }),
-        set: d2(function(key, value) {
-          defineProperty4(object(key), this.__weakMapData__, d2("c", value));
+        set: d3(function(key, value) {
+          defineProperty4(object(key), this.__weakMapData__, d3("c", value));
           return this;
         }),
-        toString: d2(function() {
+        toString: d3(function() {
           return "[object WeakMap]";
         })
       });
-      defineProperty4(WeakMapPoly.prototype, toStringTagSymbol, d2("c", "WeakMap"));
+      defineProperty4(WeakMapPoly.prototype, toStringTagSymbol, d3("c", "WeakMap"));
     }
   });
 
@@ -52902,9925 +52541,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
   });
 
-  // node_modules/react-time-picker/node_modules/react-clock/dist/Clock.css
-  var require_Clock = __commonJS({
-    "node_modules/react-time-picker/node_modules/react-clock/dist/Clock.css"(exports, module) {
-      module.exports = {};
-    }
-  });
-
-  // node_modules/make-event-props/dist/cjs/index.js
-  var require_cjs = __commonJS({
-    "node_modules/make-event-props/dist/cjs/index.js"(exports) {
-      "use strict";
-      var __spreadArray = exports && exports.__spreadArray || function(to, from, pack) {
-        if (pack || arguments.length === 2)
-          for (var i2 = 0, l2 = from.length, ar; i2 < l2; i2++) {
-            if (ar || !(i2 in from)) {
-              if (!ar)
-                ar = Array.prototype.slice.call(from, 0, i2);
-              ar[i2] = from[i2];
-            }
-          }
-        return to.concat(ar || Array.prototype.slice.call(from));
-      };
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.allEvents = exports.changeEvents = exports.otherEvents = exports.transitionEvents = exports.animationEvents = exports.wheelEvents = exports.uiEvents = exports.pointerEvents = exports.touchEvents = exports.selectionEvents = exports.dragEvents = exports.mouseEvents = exports.mediaEvents = exports.keyboardEvents = exports.imageEvents = exports.formEvents = exports.focusEvents = exports.compositionEvents = exports.clipboardEvents = void 0;
-      exports.clipboardEvents = ["onCopy", "onCut", "onPaste"];
-      exports.compositionEvents = [
-        "onCompositionEnd",
-        "onCompositionStart",
-        "onCompositionUpdate"
-      ];
-      exports.focusEvents = ["onFocus", "onBlur"];
-      exports.formEvents = ["onInput", "onInvalid", "onReset", "onSubmit"];
-      exports.imageEvents = ["onLoad", "onError"];
-      exports.keyboardEvents = ["onKeyDown", "onKeyPress", "onKeyUp"];
-      exports.mediaEvents = [
-        "onAbort",
-        "onCanPlay",
-        "onCanPlayThrough",
-        "onDurationChange",
-        "onEmptied",
-        "onEncrypted",
-        "onEnded",
-        "onError",
-        "onLoadedData",
-        "onLoadedMetadata",
-        "onLoadStart",
-        "onPause",
-        "onPlay",
-        "onPlaying",
-        "onProgress",
-        "onRateChange",
-        "onSeeked",
-        "onSeeking",
-        "onStalled",
-        "onSuspend",
-        "onTimeUpdate",
-        "onVolumeChange",
-        "onWaiting"
-      ];
-      exports.mouseEvents = [
-        "onClick",
-        "onContextMenu",
-        "onDoubleClick",
-        "onMouseDown",
-        "onMouseEnter",
-        "onMouseLeave",
-        "onMouseMove",
-        "onMouseOut",
-        "onMouseOver",
-        "onMouseUp"
-      ];
-      exports.dragEvents = [
-        "onDrag",
-        "onDragEnd",
-        "onDragEnter",
-        "onDragExit",
-        "onDragLeave",
-        "onDragOver",
-        "onDragStart",
-        "onDrop"
-      ];
-      exports.selectionEvents = ["onSelect"];
-      exports.touchEvents = ["onTouchCancel", "onTouchEnd", "onTouchMove", "onTouchStart"];
-      exports.pointerEvents = [
-        "onPointerDown",
-        "onPointerMove",
-        "onPointerUp",
-        "onPointerCancel",
-        "onGotPointerCapture",
-        "onLostPointerCapture",
-        "onPointerEnter",
-        "onPointerLeave",
-        "onPointerOver",
-        "onPointerOut"
-      ];
-      exports.uiEvents = ["onScroll"];
-      exports.wheelEvents = ["onWheel"];
-      exports.animationEvents = [
-        "onAnimationStart",
-        "onAnimationEnd",
-        "onAnimationIteration"
-      ];
-      exports.transitionEvents = ["onTransitionEnd"];
-      exports.otherEvents = ["onToggle"];
-      exports.changeEvents = ["onChange"];
-      exports.allEvents = __spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray(__spreadArray([], exports.clipboardEvents, true), exports.compositionEvents, true), exports.focusEvents, true), exports.formEvents, true), exports.imageEvents, true), exports.keyboardEvents, true), exports.mediaEvents, true), exports.mouseEvents, true), exports.dragEvents, true), exports.selectionEvents, true), exports.touchEvents, true), exports.pointerEvents, true), exports.uiEvents, true), exports.wheelEvents, true), exports.animationEvents, true), exports.transitionEvents, true), exports.changeEvents, true), exports.otherEvents, true);
-      function makeEventProps(props, getArgs) {
-        var eventProps = {};
-        exports.allEvents.forEach(function(eventName) {
-          var eventHandler = props[eventName];
-          if (!eventHandler) {
-            return;
-          }
-          if (getArgs) {
-            eventProps[eventName] = function(event) {
-              return eventHandler(event, getArgs(eventName));
-            };
-          } else {
-            eventProps[eventName] = eventHandler;
-          }
-        });
-        return eventProps;
-      }
-      exports.default = makeEventProps;
-    }
-  });
-
-  // node_modules/merge-class-names/dist/umd/index.js
-  var require_umd = __commonJS({
-    "node_modules/merge-class-names/dist/umd/index.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = mergeClassNames;
-      function mergeClassNames() {
-        return Array.prototype.slice.call(arguments).reduce(function(classList2, arg) {
-          return classList2.concat(arg);
-        }, []).filter(function(arg) {
-          return typeof arg === "string";
-        }).join(" ");
-      }
-    }
-  });
-
-  // node_modules/detect-element-overflow/dist/cjs/index.js
-  var require_cjs2 = __commonJS({
-    "node_modules/detect-element-overflow/dist/cjs/index.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      function getRect(element) {
-        return element.getBoundingClientRect();
-      }
-      function detectElementOverflow(element, container) {
-        return {
-          get collidedTop() {
-            return getRect(element).top < getRect(container).top;
-          },
-          get collidedBottom() {
-            return getRect(element).bottom > getRect(container).bottom;
-          },
-          get collidedLeft() {
-            return getRect(element).left < getRect(container).left;
-          },
-          get collidedRight() {
-            return getRect(element).right > getRect(container).right;
-          },
-          get overflowTop() {
-            return getRect(container).top - getRect(element).top;
-          },
-          get overflowBottom() {
-            return getRect(element).bottom - getRect(container).bottom;
-          },
-          get overflowLeft() {
-            return getRect(container).left - getRect(element).left;
-          },
-          get overflowRight() {
-            return getRect(element).right - getRect(container).right;
-          }
-        };
-      }
-      exports.default = detectElementOverflow;
-    }
-  });
-
-  // node_modules/tiny-warning/dist/tiny-warning.cjs.js
-  var require_tiny_warning_cjs = __commonJS({
-    "node_modules/tiny-warning/dist/tiny-warning.cjs.js"(exports, module) {
-      "use strict";
-      var isProduction = false;
-      function warning(condition, message) {
-        if (!isProduction) {
-          if (condition) {
-            return;
-          }
-          var text = "Warning: " + message;
-          if (typeof console !== "undefined") {
-            console.warn(text);
-          }
-          try {
-            throw Error(text);
-          } catch (x2) {
-          }
-        }
-      }
-      module.exports = warning;
-    }
-  });
-
-  // node_modules/react-fit/dist/cjs/Fit.js
-  var require_Fit = __commonJS({
-    "node_modules/react-fit/dist/cjs/Fit.js"(exports) {
-      "use strict";
-      "use client";
-      var __extends = exports && exports.__extends || function() {
-        var extendStatics = function(d2, b2) {
-          extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d3, b3) {
-            d3.__proto__ = b3;
-          } || function(d3, b3) {
-            for (var p2 in b3)
-              if (Object.prototype.hasOwnProperty.call(b3, p2))
-                d3[p2] = b3[p2];
-          };
-          return extendStatics(d2, b2);
-        };
-        return function(d2, b2) {
-          if (typeof b2 !== "function" && b2 !== null)
-            throw new TypeError("Class extends value " + String(b2) + " is not a constructor or null");
-          extendStatics(d2, b2);
-          function __() {
-            this.constructor = d2;
-          }
-          d2.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
-        };
-      }();
-      var __assign = exports && exports.__assign || function() {
-        __assign = Object.assign || function(t2) {
-          for (var s2, i2 = 1, n2 = arguments.length; i2 < n2; i2++) {
-            s2 = arguments[i2];
-            for (var p2 in s2)
-              if (Object.prototype.hasOwnProperty.call(s2, p2))
-                t2[p2] = s2[p2];
-          }
-          return t2;
-        };
-        return __assign.apply(this, arguments);
-      };
-      var __createBinding = exports && exports.__createBinding || (Object.create ? function(o2, m2, k2, k22) {
-        if (k22 === void 0)
-          k22 = k2;
-        var desc = Object.getOwnPropertyDescriptor(m2, k2);
-        if (!desc || ("get" in desc ? !m2.__esModule : desc.writable || desc.configurable)) {
-          desc = { enumerable: true, get: function() {
-            return m2[k2];
-          } };
-        }
-        Object.defineProperty(o2, k22, desc);
-      } : function(o2, m2, k2, k22) {
-        if (k22 === void 0)
-          k22 = k2;
-        o2[k22] = m2[k2];
-      });
-      var __setModuleDefault = exports && exports.__setModuleDefault || (Object.create ? function(o2, v2) {
-        Object.defineProperty(o2, "default", { enumerable: true, value: v2 });
-      } : function(o2, v2) {
-        o2["default"] = v2;
-      });
-      var __importStar = exports && exports.__importStar || function(mod) {
-        if (mod && mod.__esModule)
-          return mod;
-        var result = {};
-        if (mod != null) {
-          for (var k2 in mod)
-            if (k2 !== "default" && Object.prototype.hasOwnProperty.call(mod, k2))
-              __createBinding(result, mod, k2);
-        }
-        __setModuleDefault(result, mod);
-        return result;
-      };
-      var __rest = exports && exports.__rest || function(s2, e2) {
-        var t2 = {};
-        for (var p2 in s2)
-          if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0)
-            t2[p2] = s2[p2];
-        if (s2 != null && typeof Object.getOwnPropertySymbols === "function")
-          for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
-            if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i2]))
-              t2[p2[i2]] = s2[p2[i2]];
-          }
-        return t2;
-      };
-      var __importDefault = exports && exports.__importDefault || function(mod) {
-        return mod && mod.__esModule ? mod : { "default": mod };
-      };
-      Object.defineProperty(exports, "__esModule", { value: true });
-      var react_1 = __importStar(require_react());
-      var react_dom_1 = require_react_dom();
-      var prop_types_1 = __importDefault(require_prop_types());
-      var detect_element_overflow_1 = __importDefault(require_cjs2());
-      var tiny_warning_1 = __importDefault(require_tiny_warning_cjs());
-      var isBrowser = typeof document !== "undefined";
-      var isDisplayContentsSupported = isBrowser && "CSS" in window && "supports" in window.CSS && CSS.supports("display", "contents");
-      var isMutationObserverSupported = isBrowser && "MutationObserver" in window;
-      function capitalize2(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-      }
-      function findScrollContainer(element) {
-        var parent = element.parentElement;
-        while (parent) {
-          var overflow = window.getComputedStyle(parent).overflow;
-          if (overflow.split(" ").every(function(o2) {
-            return o2 === "auto" || o2 === "scroll";
-          })) {
-            return parent;
-          }
-          parent = parent.parentElement;
-        }
-        return document.documentElement;
-      }
-      function alignAxis(_a) {
-        var axis = _a.axis, container = _a.container, element = _a.element, invertAxis = _a.invertAxis, secondary = _a.secondary, scrollContainer = _a.scrollContainer, spacing = _a.spacing;
-        var style = window.getComputedStyle(element);
-        var parent = container.parentElement;
-        if (!parent) {
-          return;
-        }
-        var scrollContainerCollisions = (0, detect_element_overflow_1.default)(parent, scrollContainer);
-        var documentCollisions = (0, detect_element_overflow_1.default)(parent, document.documentElement);
-        var isX = axis === "x";
-        var startProperty = isX ? "left" : "top";
-        var endProperty = isX ? "right" : "bottom";
-        var sizeProperty = isX ? "width" : "height";
-        var overflowStartProperty = "overflow".concat(capitalize2(startProperty));
-        var overflowEndProperty = "overflow".concat(capitalize2(endProperty));
-        var scrollProperty = "scroll".concat(capitalize2(startProperty));
-        var uppercasedSizeProperty = capitalize2(sizeProperty);
-        var offsetSizeProperty = "offset".concat(uppercasedSizeProperty);
-        var clientSizeProperty = "client".concat(uppercasedSizeProperty);
-        var minSizeProperty = "min-".concat(sizeProperty);
-        var scrollbarWidth = scrollContainer[offsetSizeProperty] - scrollContainer[clientSizeProperty];
-        var startSpacing = typeof spacing === "object" ? spacing[startProperty] : spacing;
-        var availableStartSpace = -Math.max(scrollContainerCollisions[overflowStartProperty], documentCollisions[overflowStartProperty] + document.documentElement[scrollProperty]) - startSpacing;
-        var endSpacing = typeof spacing === "object" ? spacing[endProperty] : spacing;
-        var availableEndSpace = -Math.max(scrollContainerCollisions[overflowEndProperty], documentCollisions[overflowEndProperty] - document.documentElement[scrollProperty]) - endSpacing - scrollbarWidth;
-        if (secondary) {
-          availableStartSpace += parent[clientSizeProperty];
-          availableEndSpace += parent[clientSizeProperty];
-        }
-        var offsetSize = element[offsetSizeProperty];
-        function displayStart() {
-          element.style[startProperty] = "auto";
-          element.style[endProperty] = secondary ? "0" : "100%";
-        }
-        function displayEnd() {
-          element.style[startProperty] = secondary ? "0" : "100%";
-          element.style[endProperty] = "auto";
-        }
-        function displayIfFits(availableSpace, display) {
-          var fits2 = offsetSize <= availableSpace;
-          if (fits2) {
-            display();
-          }
-          return fits2;
-        }
-        function displayStartIfFits() {
-          return displayIfFits(availableStartSpace, displayStart);
-        }
-        function displayEndIfFits() {
-          return displayIfFits(availableEndSpace, displayEnd);
-        }
-        function displayWhereverShrinkedFits() {
-          var moreSpaceStart = availableStartSpace > availableEndSpace;
-          var rawMinSize = style.getPropertyValue(minSizeProperty);
-          var minSize = rawMinSize ? parseInt(rawMinSize, 10) : null;
-          function shrinkToSize(size) {
-            (0, tiny_warning_1.default)(!minSize || size >= minSize, "<Fit />'s child will not fit anywhere with its current ".concat(minSizeProperty, " of ").concat(minSize, "px."));
-            var newSize = Math.max(size, minSize || 0);
-            (0, tiny_warning_1.default)(false, "<Fit />'s child needed to have its ".concat(sizeProperty, " decreased to ").concat(newSize, "px."));
-            element.style[sizeProperty] = "".concat(newSize, "px");
-          }
-          if (moreSpaceStart) {
-            shrinkToSize(availableStartSpace);
-            displayStart();
-          } else {
-            shrinkToSize(availableEndSpace);
-            displayEnd();
-          }
-        }
-        var fits;
-        if (invertAxis) {
-          fits = displayStartIfFits() || displayEndIfFits();
-        } else {
-          fits = displayEndIfFits() || displayStartIfFits();
-        }
-        if (!fits) {
-          displayWhereverShrinkedFits();
-        }
-      }
-      function alignMainAxis(args) {
-        alignAxis(args);
-      }
-      function alignSecondaryAxis(args) {
-        alignAxis(__assign(__assign({}, args), { axis: args.axis === "x" ? "y" : "x", secondary: true }));
-      }
-      function alignBothAxis(args) {
-        var invertAxis = args.invertAxis, invertSecondaryAxis = args.invertSecondaryAxis, commonArgs = __rest(args, ["invertAxis", "invertSecondaryAxis"]);
-        alignMainAxis(__assign(__assign({}, commonArgs), { invertAxis }));
-        alignSecondaryAxis(__assign(__assign({}, commonArgs), { invertAxis: invertSecondaryAxis }));
-      }
-      var Fit = (
-        /** @class */
-        function(_super) {
-          __extends(Fit2, _super);
-          function Fit2() {
-            var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.fit = function() {
-              var _a = _this, scrollContainer = _a.scrollContainer, container = _a.container, element = _a.element;
-              if (!scrollContainer || !container || !element) {
-                return;
-              }
-              var elementWidth = element.clientWidth;
-              var elementHeight = element.clientHeight;
-              if (_this.elementWidth === elementWidth && _this.elementHeight === elementHeight) {
-                return;
-              }
-              _this.elementWidth = elementWidth;
-              _this.elementHeight = elementHeight;
-              var parent = container.parentElement;
-              if (!parent) {
-                return;
-              }
-              var style = window.getComputedStyle(element);
-              var position = style.position;
-              if (position !== "absolute") {
-                element.style.position = "absolute";
-              }
-              var parentStyle = window.getComputedStyle(parent);
-              var parentPosition = parentStyle.position;
-              if (parentPosition !== "relative" && parentPosition !== "absolute") {
-                parent.style.position = "relative";
-              }
-              var _b = _this.props, invertAxis = _b.invertAxis, invertSecondaryAxis = _b.invertSecondaryAxis, _c = _b.mainAxis, mainAxis = _c === void 0 ? "y" : _c, _d = _b.spacing, spacing = _d === void 0 ? 8 : _d;
-              alignBothAxis({
-                container,
-                element,
-                invertAxis,
-                invertSecondaryAxis,
-                axis: mainAxis,
-                scrollContainer,
-                spacing
-              });
-            };
-            return _this;
-          }
-          Fit2.prototype.componentDidMount = function() {
-            var _this = this;
-            if (!isDisplayContentsSupported) {
-              var element = (0, react_dom_1.findDOMNode)(this);
-              if (!element || !(element instanceof HTMLElement)) {
-                return;
-              }
-              this.container = element;
-              this.element = element;
-              this.scrollContainer = findScrollContainer(element);
-            }
-            this.fit();
-            var onMutation = function() {
-              _this.fit();
-            };
-            if (isMutationObserverSupported && this.element) {
-              var mutationObserver = new MutationObserver(onMutation);
-              mutationObserver.observe(this.element, {
-                attributes: true,
-                attributeFilter: ["class", "style"]
-              });
-            }
-          };
-          Fit2.prototype.render = function() {
-            var _this = this;
-            var children = this.props.children;
-            var child = react_1.default.Children.only(children);
-            if (isDisplayContentsSupported) {
-              return react_1.default.createElement("span", { ref: function(container) {
-                _this.container = container;
-                var element = container && container.firstElementChild;
-                if (!element || !(element instanceof HTMLElement)) {
-                  return;
-                }
-                _this.element = element;
-                _this.scrollContainer = findScrollContainer(element);
-              }, style: { display: "contents" } }, child);
-            }
-            return child;
-          };
-          Fit2.propTypes = {
-            children: prop_types_1.default.node.isRequired,
-            invertAxis: prop_types_1.default.bool,
-            invertSecondaryAxis: prop_types_1.default.bool,
-            mainAxis: prop_types_1.default.oneOf(["x", "y"]),
-            spacing: prop_types_1.default.oneOfType([
-              prop_types_1.default.number,
-              prop_types_1.default.shape({
-                bottom: prop_types_1.default.number.isRequired,
-                left: prop_types_1.default.number.isRequired,
-                right: prop_types_1.default.number.isRequired,
-                top: prop_types_1.default.number.isRequired
-              })
-            ])
-          };
-          return Fit2;
-        }(react_1.Component)
-      );
-      exports.default = Fit;
-    }
-  });
-
-  // node_modules/react-fit/dist/cjs/index.js
-  var require_cjs3 = __commonJS({
-    "node_modules/react-fit/dist/cjs/index.js"(exports) {
-      "use strict";
-      var __importDefault = exports && exports.__importDefault || function(mod) {
-        return mod && mod.__esModule ? mod : { "default": mod };
-      };
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.Fit = void 0;
-      var Fit_js_1 = __importDefault(require_Fit());
-      exports.Fit = Fit_js_1.default;
-      exports.default = Fit_js_1.default;
-    }
-  });
-
-  // node_modules/@wojtekmaj/date-utils/dist/cjs/index.js
-  var require_cjs4 = __commonJS({
-    "node_modules/@wojtekmaj/date-utils/dist/cjs/index.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.getISOLocalDateTime = exports.getISOLocalDate = exports.getISOLocalMonth = exports.getHoursMinutesSeconds = exports.getHoursMinutes = exports.getDaysInMonth = exports.getDayRange = exports.getNextDayEnd = exports.getPreviousDayEnd = exports.getDayEnd = exports.getNextDayStart = exports.getPreviousDayStart = exports.getDayStart = exports.getMonthRange = exports.getNextMonthEnd = exports.getPreviousMonthEnd = exports.getMonthEnd = exports.getNextMonthStart = exports.getPreviousMonthStart = exports.getMonthStart = exports.getYearRange = exports.getNextYearEnd = exports.getPreviousYearEnd = exports.getYearEnd = exports.getNextYearStart = exports.getPreviousYearStart = exports.getYearStart = exports.getDecadeRange = exports.getNextDecadeEnd = exports.getPreviousDecadeEnd = exports.getDecadeEnd = exports.getNextDecadeStart = exports.getPreviousDecadeStart = exports.getDecadeStart = exports.getCenturyRange = exports.getNextCenturyEnd = exports.getPreviousCenturyEnd = exports.getCenturyEnd = exports.getNextCenturyStart = exports.getPreviousCenturyStart = exports.getCenturyStart = exports.getMilliseconds = exports.getSeconds = exports.getMinutes = exports.getHours = exports.getDate = exports.getMonthHuman = exports.getMonth = exports.getYear = void 0;
-      function makeGetEdgeOfNeighbor(getPeriod, getEdgeOfPeriod, defaultOffset) {
-        return function makeGetEdgeOfNeighborInternal(date, offset) {
-          if (offset === void 0) {
-            offset = defaultOffset;
-          }
-          var previousPeriod = getPeriod(date) + offset;
-          return getEdgeOfPeriod(previousPeriod);
-        };
-      }
-      function makeGetEnd(getBeginOfNextPeriod) {
-        return function makeGetEndInternal(date) {
-          return new Date(getBeginOfNextPeriod(date).getTime() - 1);
-        };
-      }
-      function makeGetRange(getStart, getEnd) {
-        return function makeGetRangeInternal(date) {
-          return [getStart(date), getEnd(date)];
-        };
-      }
-      function getYear(date) {
-        if (date instanceof Date) {
-          return date.getFullYear();
-        }
-        if (typeof date === "number") {
-          return date;
-        }
-        var year = parseInt(date, 10);
-        if (typeof date === "string" && !isNaN(year)) {
-          return year;
-        }
-        throw new Error("Failed to get year from date: ".concat(date, "."));
-      }
-      exports.getYear = getYear;
-      function getMonth(date) {
-        if (date instanceof Date) {
-          return date.getMonth();
-        }
-        throw new Error("Failed to get month from date: ".concat(date, "."));
-      }
-      exports.getMonth = getMonth;
-      function getMonthHuman(date) {
-        if (date instanceof Date) {
-          return date.getMonth() + 1;
-        }
-        throw new Error("Failed to get human-readable month from date: ".concat(date, "."));
-      }
-      exports.getMonthHuman = getMonthHuman;
-      function getDate(date) {
-        if (date instanceof Date) {
-          return date.getDate();
-        }
-        throw new Error("Failed to get year from date: ".concat(date, "."));
-      }
-      exports.getDate = getDate;
-      function getHours(date) {
-        if (date instanceof Date) {
-          return date.getHours();
-        }
-        if (typeof date === "string") {
-          var datePieces = date.split(":");
-          if (datePieces.length >= 2) {
-            var hoursString = datePieces[0];
-            if (hoursString) {
-              var hours = parseInt(hoursString, 10);
-              if (!isNaN(hours)) {
-                return hours;
-              }
-            }
-          }
-        }
-        throw new Error("Failed to get hours from date: ".concat(date, "."));
-      }
-      exports.getHours = getHours;
-      function getMinutes(date) {
-        if (date instanceof Date) {
-          return date.getMinutes();
-        }
-        if (typeof date === "string") {
-          var datePieces = date.split(":");
-          if (datePieces.length >= 2) {
-            var minutesString = datePieces[1] || "0";
-            var minutes = parseInt(minutesString, 10);
-            if (!isNaN(minutes)) {
-              return minutes;
-            }
-          }
-        }
-        throw new Error("Failed to get minutes from date: ".concat(date, "."));
-      }
-      exports.getMinutes = getMinutes;
-      function getSeconds(date) {
-        if (date instanceof Date) {
-          return date.getSeconds();
-        }
-        if (typeof date === "string") {
-          var datePieces = date.split(":");
-          if (datePieces.length >= 2) {
-            var secondsWithMillisecondsString = datePieces[2] || "0";
-            var seconds = parseInt(secondsWithMillisecondsString, 10);
-            if (!isNaN(seconds)) {
-              return seconds;
-            }
-          }
-        }
-        throw new Error("Failed to get seconds from date: ".concat(date, "."));
-      }
-      exports.getSeconds = getSeconds;
-      function getMilliseconds(date) {
-        if (date instanceof Date) {
-          return date.getMilliseconds();
-        }
-        if (typeof date === "string") {
-          var datePieces = date.split(":");
-          if (datePieces.length >= 2) {
-            var secondsWithMillisecondsString = datePieces[2] || "0";
-            var millisecondsString = secondsWithMillisecondsString.split(".")[1] || "0";
-            var milliseconds = parseInt(millisecondsString, 10);
-            if (!isNaN(milliseconds)) {
-              return milliseconds;
-            }
-          }
-        }
-        throw new Error("Failed to get seconds from date: ".concat(date, "."));
-      }
-      exports.getMilliseconds = getMilliseconds;
-      function getCenturyStart(date) {
-        var year = getYear(date);
-        var centuryStartYear = year + (-year + 1) % 100;
-        var centuryStartDate = /* @__PURE__ */ new Date();
-        centuryStartDate.setFullYear(centuryStartYear, 0, 1);
-        centuryStartDate.setHours(0, 0, 0, 0);
-        return centuryStartDate;
-      }
-      exports.getCenturyStart = getCenturyStart;
-      exports.getPreviousCenturyStart = makeGetEdgeOfNeighbor(getYear, getCenturyStart, -100);
-      exports.getNextCenturyStart = makeGetEdgeOfNeighbor(getYear, getCenturyStart, 100);
-      exports.getCenturyEnd = makeGetEnd(exports.getNextCenturyStart);
-      exports.getPreviousCenturyEnd = makeGetEdgeOfNeighbor(getYear, exports.getCenturyEnd, -100);
-      exports.getNextCenturyEnd = makeGetEdgeOfNeighbor(getYear, exports.getCenturyEnd, 100);
-      exports.getCenturyRange = makeGetRange(getCenturyStart, exports.getCenturyEnd);
-      function getDecadeStart(date) {
-        var year = getYear(date);
-        var decadeStartYear = year + (-year + 1) % 10;
-        var decadeStartDate = /* @__PURE__ */ new Date();
-        decadeStartDate.setFullYear(decadeStartYear, 0, 1);
-        decadeStartDate.setHours(0, 0, 0, 0);
-        return decadeStartDate;
-      }
-      exports.getDecadeStart = getDecadeStart;
-      exports.getPreviousDecadeStart = makeGetEdgeOfNeighbor(getYear, getDecadeStart, -10);
-      exports.getNextDecadeStart = makeGetEdgeOfNeighbor(getYear, getDecadeStart, 10);
-      exports.getDecadeEnd = makeGetEnd(exports.getNextDecadeStart);
-      exports.getPreviousDecadeEnd = makeGetEdgeOfNeighbor(getYear, exports.getDecadeEnd, -10);
-      exports.getNextDecadeEnd = makeGetEdgeOfNeighbor(getYear, exports.getDecadeEnd, 10);
-      exports.getDecadeRange = makeGetRange(getDecadeStart, exports.getDecadeEnd);
-      function getYearStart(date) {
-        var year = getYear(date);
-        var yearStartDate = /* @__PURE__ */ new Date();
-        yearStartDate.setFullYear(year, 0, 1);
-        yearStartDate.setHours(0, 0, 0, 0);
-        return yearStartDate;
-      }
-      exports.getYearStart = getYearStart;
-      exports.getPreviousYearStart = makeGetEdgeOfNeighbor(getYear, getYearStart, -1);
-      exports.getNextYearStart = makeGetEdgeOfNeighbor(getYear, getYearStart, 1);
-      exports.getYearEnd = makeGetEnd(exports.getNextYearStart);
-      exports.getPreviousYearEnd = makeGetEdgeOfNeighbor(getYear, exports.getYearEnd, -1);
-      exports.getNextYearEnd = makeGetEdgeOfNeighbor(getYear, exports.getYearEnd, 1);
-      exports.getYearRange = makeGetRange(getYearStart, exports.getYearEnd);
-      function makeGetEdgeOfNeighborMonth(getEdgeOfPeriod, defaultOffset) {
-        return function makeGetEdgeOfNeighborMonthInternal(date, offset) {
-          if (offset === void 0) {
-            offset = defaultOffset;
-          }
-          var year = getYear(date);
-          var month = getMonth(date) + offset;
-          var previousPeriod = /* @__PURE__ */ new Date();
-          previousPeriod.setFullYear(year, month, 1);
-          previousPeriod.setHours(0, 0, 0, 0);
-          return getEdgeOfPeriod(previousPeriod);
-        };
-      }
-      function getMonthStart(date) {
-        var year = getYear(date);
-        var month = getMonth(date);
-        var monthStartDate = /* @__PURE__ */ new Date();
-        monthStartDate.setFullYear(year, month, 1);
-        monthStartDate.setHours(0, 0, 0, 0);
-        return monthStartDate;
-      }
-      exports.getMonthStart = getMonthStart;
-      exports.getPreviousMonthStart = makeGetEdgeOfNeighborMonth(getMonthStart, -1);
-      exports.getNextMonthStart = makeGetEdgeOfNeighborMonth(getMonthStart, 1);
-      exports.getMonthEnd = makeGetEnd(exports.getNextMonthStart);
-      exports.getPreviousMonthEnd = makeGetEdgeOfNeighborMonth(exports.getMonthEnd, -1);
-      exports.getNextMonthEnd = makeGetEdgeOfNeighborMonth(exports.getMonthEnd, 1);
-      exports.getMonthRange = makeGetRange(getMonthStart, exports.getMonthEnd);
-      function makeGetEdgeOfNeighborDay(getEdgeOfPeriod, defaultOffset) {
-        return function makeGetEdgeOfNeighborDayInternal(date, offset) {
-          if (offset === void 0) {
-            offset = defaultOffset;
-          }
-          var year = getYear(date);
-          var month = getMonth(date);
-          var day = getDate(date) + offset;
-          var previousPeriod = /* @__PURE__ */ new Date();
-          previousPeriod.setFullYear(year, month, day);
-          previousPeriod.setHours(0, 0, 0, 0);
-          return getEdgeOfPeriod(previousPeriod);
-        };
-      }
-      function getDayStart(date) {
-        var year = getYear(date);
-        var month = getMonth(date);
-        var day = getDate(date);
-        var dayStartDate = /* @__PURE__ */ new Date();
-        dayStartDate.setFullYear(year, month, day);
-        dayStartDate.setHours(0, 0, 0, 0);
-        return dayStartDate;
-      }
-      exports.getDayStart = getDayStart;
-      exports.getPreviousDayStart = makeGetEdgeOfNeighborDay(getDayStart, -1);
-      exports.getNextDayStart = makeGetEdgeOfNeighborDay(getDayStart, 1);
-      exports.getDayEnd = makeGetEnd(exports.getNextDayStart);
-      exports.getPreviousDayEnd = makeGetEdgeOfNeighborDay(exports.getDayEnd, -1);
-      exports.getNextDayEnd = makeGetEdgeOfNeighborDay(exports.getDayEnd, 1);
-      exports.getDayRange = makeGetRange(getDayStart, exports.getDayEnd);
-      function getDaysInMonth(date) {
-        return getDate((0, exports.getMonthEnd)(date));
-      }
-      exports.getDaysInMonth = getDaysInMonth;
-      function padStart(num, val) {
-        if (val === void 0) {
-          val = 2;
-        }
-        var numStr = "".concat(num);
-        if (numStr.length >= val) {
-          return num;
-        }
-        return "0000".concat(numStr).slice(-val);
-      }
-      function getHoursMinutes(date) {
-        var hours = padStart(getHours(date));
-        var minutes = padStart(getMinutes(date));
-        return "".concat(hours, ":").concat(minutes);
-      }
-      exports.getHoursMinutes = getHoursMinutes;
-      function getHoursMinutesSeconds(date) {
-        var hours = padStart(getHours(date));
-        var minutes = padStart(getMinutes(date));
-        var seconds = padStart(getSeconds(date));
-        return "".concat(hours, ":").concat(minutes, ":").concat(seconds);
-      }
-      exports.getHoursMinutesSeconds = getHoursMinutesSeconds;
-      function getISOLocalMonth(date) {
-        var year = padStart(getYear(date), 4);
-        var month = padStart(getMonthHuman(date));
-        return "".concat(year, "-").concat(month);
-      }
-      exports.getISOLocalMonth = getISOLocalMonth;
-      function getISOLocalDate(date) {
-        var year = padStart(getYear(date), 4);
-        var month = padStart(getMonthHuman(date));
-        var day = padStart(getDate(date));
-        return "".concat(year, "-").concat(month, "-").concat(day);
-      }
-      exports.getISOLocalDate = getISOLocalDate;
-      function getISOLocalDateTime(date) {
-        return "".concat(getISOLocalDate(date), "T").concat(getHoursMinutesSeconds(date));
-      }
-      exports.getISOLocalDateTime = getISOLocalDateTime;
-    }
-  });
-
-  // node_modules/react-time-picker/node_modules/react-clock/dist/umd/shared/utils.js
-  var require_utils = __commonJS({
-    "node_modules/react-time-picker/node_modules/react-clock/dist/umd/shared/utils.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.isDefined = isDefined;
-      function isDefined(variable) {
-        return typeof variable !== "undefined";
-      }
-    }
-  });
-
-  // node_modules/react-time-picker/node_modules/react-clock/dist/umd/shared/propTypes.js
-  var require_propTypes = __commonJS({
-    "node_modules/react-time-picker/node_modules/react-clock/dist/umd/shared/propTypes.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.isOppositeHandLength = exports.isMarkWidth = exports.isMarkLength = exports.isHandWidth = exports.isHandLength = void 0;
-      var _utils = require_utils();
-      function _typeof3(obj) {
-        "@babel/helpers - typeof";
-        return _typeof3 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj2) {
-          return typeof obj2;
-        } : function(obj2) {
-          return obj2 && "function" == typeof Symbol && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        }, _typeof3(obj);
-      }
-      var isNumberBetween = function isNumberBetween2(min2, max2) {
-        return function(props, propName, componentName) {
-          var value = props[propName];
-          if ((0, _utils.isDefined)(value)) {
-            if (typeof value !== "number") {
-              return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof3(value), "` supplied to `").concat(componentName, "`, expected `number`."));
-            }
-            if (value < min2 || value > max2) {
-              return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof3(value), "` supplied to `").concat(componentName, "`, length must be between ").concat(min2, " and ").concat(max2, "."));
-            }
-          }
-          return null;
-        };
-      };
-      var isHandLength = isNumberBetween(0, 100);
-      exports.isHandLength = isHandLength;
-      var isOppositeHandLength = isNumberBetween(-100, 100);
-      exports.isOppositeHandLength = isOppositeHandLength;
-      var isHandWidth = function isHandWidth2(props, propName, componentName) {
-        var width = props[propName];
-        if ((0, _utils.isDefined)(width)) {
-          if (typeof width !== "number") {
-            return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof3(width), "` supplied to `").concat(componentName, "`, expected `number`."));
-          }
-          if (width < 0) {
-            return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof3(width), "` supplied to `").concat(componentName, "`, width must be greater or equal to 0."));
-          }
-        }
-        return null;
-      };
-      exports.isHandWidth = isHandWidth;
-      var isMarkLength = isHandLength;
-      exports.isMarkLength = isMarkLength;
-      var isMarkWidth = isHandWidth;
-      exports.isMarkWidth = isMarkWidth;
-    }
-  });
-
-  // node_modules/react-time-picker/node_modules/react-clock/dist/umd/Hand.js
-  var require_Hand = __commonJS({
-    "node_modules/react-time-picker/node_modules/react-clock/dist/umd/Hand.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Hand;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _propTypes2 = require_propTypes();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function Hand(_ref2) {
-        var _ref$angle = _ref2.angle, angle = _ref$angle === void 0 ? 0 : _ref$angle, name = _ref2.name, _ref$length = _ref2.length, length = _ref$length === void 0 ? 100 : _ref$length, _ref$oppositeLength = _ref2.oppositeLength, oppositeLength = _ref$oppositeLength === void 0 ? 10 : _ref$oppositeLength, _ref$width = _ref2.width, width = _ref$width === void 0 ? 1 : _ref$width;
-        return /* @__PURE__ */ _react["default"].createElement("div", {
-          className: "react-clock__hand react-clock__".concat(name, "-hand"),
-          style: {
-            transform: "rotate(".concat(angle, "deg)")
-          }
-        }, /* @__PURE__ */ _react["default"].createElement("div", {
-          className: "react-clock__hand__body react-clock__".concat(name, "-hand__body"),
-          style: {
-            width: "".concat(width, "px"),
-            top: "".concat(50 - length / 2, "%"),
-            bottom: "".concat(50 - oppositeLength / 2, "%")
-          }
-        }));
-      }
-      Hand.propTypes = {
-        angle: _propTypes["default"].number,
-        length: _propTypes2.isHandLength,
-        name: _propTypes["default"].string.isRequired,
-        oppositeLength: _propTypes2.isHandLength,
-        width: _propTypes["default"].number
-      };
-    }
-  });
-
-  // node_modules/react-time-picker/node_modules/react-clock/dist/umd/Mark.js
-  var require_Mark = __commonJS({
-    "node_modules/react-time-picker/node_modules/react-clock/dist/umd/Mark.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Mark;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _propTypes2 = require_propTypes();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function Mark(_ref2) {
-        var _ref$angle = _ref2.angle, angle = _ref$angle === void 0 ? 0 : _ref$angle, _ref$length = _ref2.length, length = _ref$length === void 0 ? 10 : _ref$length, name = _ref2.name, _ref$width = _ref2.width, width = _ref$width === void 0 ? 1 : _ref$width, number = _ref2.number;
-        return /* @__PURE__ */ _react["default"].createElement("div", {
-          className: "react-clock__mark react-clock__".concat(name, "-mark"),
-          style: {
-            transform: "rotate(".concat(angle, "deg)")
-          }
-        }, /* @__PURE__ */ _react["default"].createElement("div", {
-          className: "react-clock__mark__body react-clock__".concat(name, "-mark__body"),
-          style: {
-            width: "".concat(width, "px"),
-            top: 0,
-            bottom: "".concat(100 - length / 2, "%")
-          }
-        }), number && /* @__PURE__ */ _react["default"].createElement("div", {
-          className: "react-clock__mark__number",
-          style: {
-            transform: "rotate(-".concat(angle, "deg)"),
-            top: "".concat(length / 2, "%")
-          }
-        }, number));
-      }
-      Mark.propTypes = {
-        angle: _propTypes["default"].number,
-        length: _propTypes2.isMarkLength,
-        name: _propTypes["default"].string.isRequired,
-        number: _propTypes["default"].oneOfType([_propTypes["default"].number, _propTypes["default"].string]),
-        width: _propTypes2.isMarkWidth
-      };
-    }
-  });
-
-  // node_modules/react-time-picker/node_modules/react-clock/dist/umd/MinuteMark.js
-  var require_MinuteMark = __commonJS({
-    "node_modules/react-time-picker/node_modules/react-clock/dist/umd/MinuteMark.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = MinuteMark;
-      var _react = _interopRequireDefault(require_react());
-      var _Mark = _interopRequireDefault(require_Mark());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function MinuteMark(props) {
-        return /* @__PURE__ */ _react["default"].createElement(_Mark["default"], props);
-      }
-    }
-  });
-
-  // node_modules/lodash.memoize/index.js
-  var require_lodash3 = __commonJS({
-    "node_modules/lodash.memoize/index.js"(exports, module) {
-      var FUNC_ERROR_TEXT = "Expected a function";
-      var HASH_UNDEFINED = "__lodash_hash_undefined__";
-      var funcTag = "[object Function]";
-      var genTag = "[object GeneratorFunction]";
-      var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
-      var reIsHostCtor = /^\[object .+?Constructor\]$/;
-      var freeGlobal = typeof global == "object" && global && global.Object === Object && global;
-      var freeSelf = typeof self == "object" && self && self.Object === Object && self;
-      var root = freeGlobal || freeSelf || Function("return this")();
-      function getValue(object, key) {
-        return object == null ? void 0 : object[key];
-      }
-      function isHostObject(value) {
-        var result = false;
-        if (value != null && typeof value.toString != "function") {
-          try {
-            result = !!(value + "");
-          } catch (e2) {
-          }
-        }
-        return result;
-      }
-      var arrayProto = Array.prototype;
-      var funcProto = Function.prototype;
-      var objectProto = Object.prototype;
-      var coreJsData = root["__core-js_shared__"];
-      var maskSrcKey = function() {
-        var uid2 = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || "");
-        return uid2 ? "Symbol(src)_1." + uid2 : "";
-      }();
-      var funcToString = funcProto.toString;
-      var hasOwnProperty3 = objectProto.hasOwnProperty;
-      var objectToString = objectProto.toString;
-      var reIsNative = RegExp(
-        "^" + funcToString.call(hasOwnProperty3).replace(reRegExpChar, "\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, "$1.*?") + "$"
-      );
-      var splice = arrayProto.splice;
-      var Map2 = getNative(root, "Map");
-      var nativeCreate = getNative(Object, "create");
-      function Hash(entries) {
-        var index = -1, length = entries ? entries.length : 0;
-        this.clear();
-        while (++index < length) {
-          var entry = entries[index];
-          this.set(entry[0], entry[1]);
-        }
-      }
-      function hashClear() {
-        this.__data__ = nativeCreate ? nativeCreate(null) : {};
-      }
-      function hashDelete(key) {
-        return this.has(key) && delete this.__data__[key];
-      }
-      function hashGet(key) {
-        var data2 = this.__data__;
-        if (nativeCreate) {
-          var result = data2[key];
-          return result === HASH_UNDEFINED ? void 0 : result;
-        }
-        return hasOwnProperty3.call(data2, key) ? data2[key] : void 0;
-      }
-      function hashHas(key) {
-        var data2 = this.__data__;
-        return nativeCreate ? data2[key] !== void 0 : hasOwnProperty3.call(data2, key);
-      }
-      function hashSet(key, value) {
-        var data2 = this.__data__;
-        data2[key] = nativeCreate && value === void 0 ? HASH_UNDEFINED : value;
-        return this;
-      }
-      Hash.prototype.clear = hashClear;
-      Hash.prototype["delete"] = hashDelete;
-      Hash.prototype.get = hashGet;
-      Hash.prototype.has = hashHas;
-      Hash.prototype.set = hashSet;
-      function ListCache(entries) {
-        var index = -1, length = entries ? entries.length : 0;
-        this.clear();
-        while (++index < length) {
-          var entry = entries[index];
-          this.set(entry[0], entry[1]);
-        }
-      }
-      function listCacheClear() {
-        this.__data__ = [];
-      }
-      function listCacheDelete(key) {
-        var data2 = this.__data__, index = assocIndexOf(data2, key);
-        if (index < 0) {
-          return false;
-        }
-        var lastIndex = data2.length - 1;
-        if (index == lastIndex) {
-          data2.pop();
-        } else {
-          splice.call(data2, index, 1);
-        }
-        return true;
-      }
-      function listCacheGet(key) {
-        var data2 = this.__data__, index = assocIndexOf(data2, key);
-        return index < 0 ? void 0 : data2[index][1];
-      }
-      function listCacheHas(key) {
-        return assocIndexOf(this.__data__, key) > -1;
-      }
-      function listCacheSet(key, value) {
-        var data2 = this.__data__, index = assocIndexOf(data2, key);
-        if (index < 0) {
-          data2.push([key, value]);
-        } else {
-          data2[index][1] = value;
-        }
-        return this;
-      }
-      ListCache.prototype.clear = listCacheClear;
-      ListCache.prototype["delete"] = listCacheDelete;
-      ListCache.prototype.get = listCacheGet;
-      ListCache.prototype.has = listCacheHas;
-      ListCache.prototype.set = listCacheSet;
-      function MapCache(entries) {
-        var index = -1, length = entries ? entries.length : 0;
-        this.clear();
-        while (++index < length) {
-          var entry = entries[index];
-          this.set(entry[0], entry[1]);
-        }
-      }
-      function mapCacheClear() {
-        this.__data__ = {
-          "hash": new Hash(),
-          "map": new (Map2 || ListCache)(),
-          "string": new Hash()
-        };
-      }
-      function mapCacheDelete(key) {
-        return getMapData(this, key)["delete"](key);
-      }
-      function mapCacheGet(key) {
-        return getMapData(this, key).get(key);
-      }
-      function mapCacheHas(key) {
-        return getMapData(this, key).has(key);
-      }
-      function mapCacheSet(key, value) {
-        getMapData(this, key).set(key, value);
-        return this;
-      }
-      MapCache.prototype.clear = mapCacheClear;
-      MapCache.prototype["delete"] = mapCacheDelete;
-      MapCache.prototype.get = mapCacheGet;
-      MapCache.prototype.has = mapCacheHas;
-      MapCache.prototype.set = mapCacheSet;
-      function assocIndexOf(array, key) {
-        var length = array.length;
-        while (length--) {
-          if (eq(array[length][0], key)) {
-            return length;
-          }
-        }
-        return -1;
-      }
-      function baseIsNative(value) {
-        if (!isObject2(value) || isMasked(value)) {
-          return false;
-        }
-        var pattern = isFunction(value) || isHostObject(value) ? reIsNative : reIsHostCtor;
-        return pattern.test(toSource(value));
-      }
-      function getMapData(map, key) {
-        var data2 = map.__data__;
-        return isKeyable(key) ? data2[typeof key == "string" ? "string" : "hash"] : data2.map;
-      }
-      function getNative(object, key) {
-        var value = getValue(object, key);
-        return baseIsNative(value) ? value : void 0;
-      }
-      function isKeyable(value) {
-        var type = typeof value;
-        return type == "string" || type == "number" || type == "symbol" || type == "boolean" ? value !== "__proto__" : value === null;
-      }
-      function isMasked(func) {
-        return !!maskSrcKey && maskSrcKey in func;
-      }
-      function toSource(func) {
-        if (func != null) {
-          try {
-            return funcToString.call(func);
-          } catch (e2) {
-          }
-          try {
-            return func + "";
-          } catch (e2) {
-          }
-        }
-        return "";
-      }
-      function memoize2(func, resolver) {
-        if (typeof func != "function" || resolver && typeof resolver != "function") {
-          throw new TypeError(FUNC_ERROR_TEXT);
-        }
-        var memoized = function() {
-          var args = arguments, key = resolver ? resolver.apply(this, args) : args[0], cache = memoized.cache;
-          if (cache.has(key)) {
-            return cache.get(key);
-          }
-          var result = func.apply(this, args);
-          memoized.cache = cache.set(key, result);
-          return result;
-        };
-        memoized.cache = new (memoize2.Cache || MapCache)();
-        return memoized;
-      }
-      memoize2.Cache = MapCache;
-      function eq(value, other) {
-        return value === other || value !== value && other !== other;
-      }
-      function isFunction(value) {
-        var tag = isObject2(value) ? objectToString.call(value) : "";
-        return tag == funcTag || tag == genTag;
-      }
-      function isObject2(value) {
-        var type = typeof value;
-        return !!value && (type == "object" || type == "function");
-      }
-      module.exports = memoize2;
-    }
-  });
-
-  // node_modules/react-time-picker/node_modules/get-user-locale/dist/umd/index.js
-  var require_umd2 = __commonJS({
-    "node_modules/react-time-picker/node_modules/get-user-locale/dist/umd/index.js"(exports) {
-      "use strict";
-      exports.__esModule = true;
-      exports.getUserLocales = exports.getUserLocale = exports["default"] = void 0;
-      var _lodash = _interopRequireDefault(require_lodash3());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function resolver(options) {
-        return JSON.stringify(options);
-      }
-      function uniqDefined(arr) {
-        return arr.filter(function(el, index) {
-          return el && arr.indexOf(el) === index;
-        });
-      }
-      function normalizeLocales(arr) {
-        return arr.map(function(el) {
-          if (!el || el.indexOf("-") === -1 || el.toLowerCase() !== el) {
-            return el;
-          }
-          var splitEl = el.split("-");
-          return splitEl[0] + "-" + splitEl[1].toUpperCase();
-        });
-      }
-      function getUserLocalesInternal(_temp) {
-        var _ref2 = _temp === void 0 ? {} : _temp, _ref$useFallbackLocal = _ref2.useFallbackLocale, useFallbackLocale = _ref$useFallbackLocal === void 0 ? true : _ref$useFallbackLocal, _ref$fallbackLocale = _ref2.fallbackLocale, fallbackLocale = _ref$fallbackLocale === void 0 ? "en-US" : _ref$fallbackLocale;
-        var languageList = [];
-        if (typeof window !== "undefined") {
-          var _window = window, navigator2 = _window.navigator;
-          languageList = languageList.concat(navigator2.languages, navigator2.language, navigator2.userLanguage, navigator2.browserLanguage, navigator2.systemLanguage);
-        }
-        if (useFallbackLocale) {
-          languageList.push(fallbackLocale);
-        }
-        return normalizeLocales(uniqDefined(languageList));
-      }
-      var getUserLocales = (0, _lodash["default"])(getUserLocalesInternal, resolver);
-      exports.getUserLocales = getUserLocales;
-      function getUserLocaleInternal(options) {
-        return getUserLocales(options)[0] || null;
-      }
-      var getUserLocale = (0, _lodash["default"])(getUserLocaleInternal, resolver);
-      exports.getUserLocale = getUserLocale;
-      var _default2 = getUserLocale;
-      exports["default"] = _default2;
-    }
-  });
-
-  // node_modules/react-time-picker/node_modules/react-clock/dist/umd/shared/hourFormatter.js
-  var require_hourFormatter = __commonJS({
-    "node_modules/react-time-picker/node_modules/react-clock/dist/umd/shared/hourFormatter.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.formatHour = void 0;
-      var _getUserLocale = _interopRequireDefault(require_umd2());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      var formatHour = function formatHour2(locale, hour) {
-        return hour.toLocaleString(locale || (0, _getUserLocale["default"])());
-      };
-      exports.formatHour = formatHour;
-    }
-  });
-
-  // node_modules/react-time-picker/node_modules/react-clock/dist/umd/HourMark.js
-  var require_HourMark = __commonJS({
-    "node_modules/react-time-picker/node_modules/react-clock/dist/umd/HourMark.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = HourMark;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _Mark = _interopRequireDefault(require_Mark());
-      var _hourFormatter = require_hourFormatter();
-      var _excluded2 = ["formatHour", "locale", "number"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _extends2() {
-        _extends2 = Object.assign || function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      function HourMark(_ref2) {
-        var _ref$formatHour = _ref2.formatHour, formatHour = _ref$formatHour === void 0 ? _hourFormatter.formatHour : _ref$formatHour, locale = _ref2.locale, number = _ref2.number, otherProps = _objectWithoutProperties2(_ref2, _excluded2);
-        return /* @__PURE__ */ _react["default"].createElement(_Mark["default"], _extends2({
-          number: number && formatHour(locale, number)
-        }, otherProps));
-      }
-      HourMark.propTypes = {
-        formatHour: _propTypes["default"].func,
-        locale: _propTypes["default"].string,
-        number: _propTypes["default"].oneOfType([_propTypes["default"].number, _propTypes["default"].string])
-      };
-    }
-  });
-
-  // node_modules/react-time-picker/node_modules/react-clock/dist/umd/Clock.js
-  var require_Clock2 = __commonJS({
-    "node_modules/react-time-picker/node_modules/react-clock/dist/umd/Clock.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Clock;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _mergeClassNames = _interopRequireDefault(require_umd());
-      var _dateUtils = require_cjs4();
-      var _Hand = _interopRequireDefault(require_Hand());
-      var _MinuteMark = _interopRequireDefault(require_MinuteMark());
-      var _HourMark = _interopRequireDefault(require_HourMark());
-      var _propTypes2 = require_propTypes();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function Clock(_ref2) {
-        var className = _ref2.className, formatHour = _ref2.formatHour, _ref$hourHandLength = _ref2.hourHandLength, hourHandLength = _ref$hourHandLength === void 0 ? 50 : _ref$hourHandLength, hourHandOppositeLength = _ref2.hourHandOppositeLength, _ref$hourHandWidth = _ref2.hourHandWidth, hourHandWidth = _ref$hourHandWidth === void 0 ? 4 : _ref$hourHandWidth, _ref$hourMarksLength = _ref2.hourMarksLength, hourMarksLength = _ref$hourMarksLength === void 0 ? 10 : _ref$hourMarksLength, _ref$hourMarksWidth = _ref2.hourMarksWidth, hourMarksWidth = _ref$hourMarksWidth === void 0 ? 3 : _ref$hourMarksWidth, locale = _ref2.locale, _ref$minuteHandLength = _ref2.minuteHandLength, minuteHandLength = _ref$minuteHandLength === void 0 ? 70 : _ref$minuteHandLength, minuteHandOppositeLength = _ref2.minuteHandOppositeLength, _ref$minuteHandWidth = _ref2.minuteHandWidth, minuteHandWidth = _ref$minuteHandWidth === void 0 ? 2 : _ref$minuteHandWidth, _ref$minuteMarksLengt = _ref2.minuteMarksLength, minuteMarksLength = _ref$minuteMarksLengt === void 0 ? 6 : _ref$minuteMarksLengt, _ref$minuteMarksWidth = _ref2.minuteMarksWidth, minuteMarksWidth = _ref$minuteMarksWidth === void 0 ? 1 : _ref$minuteMarksWidth, _ref$renderHourMarks = _ref2.renderHourMarks, renderHourMarks = _ref$renderHourMarks === void 0 ? true : _ref$renderHourMarks, _ref$renderMinuteHand = _ref2.renderMinuteHand, renderMinuteHand = _ref$renderMinuteHand === void 0 ? true : _ref$renderMinuteHand, _ref$renderMinuteMark = _ref2.renderMinuteMarks, renderMinuteMarks = _ref$renderMinuteMark === void 0 ? true : _ref$renderMinuteMark, renderNumbers = _ref2.renderNumbers, _ref$renderSecondHand = _ref2.renderSecondHand, renderSecondHand = _ref$renderSecondHand === void 0 ? true : _ref$renderSecondHand, _ref$secondHandLength = _ref2.secondHandLength, secondHandLength = _ref$secondHandLength === void 0 ? 90 : _ref$secondHandLength, secondHandOppositeLength = _ref2.secondHandOppositeLength, _ref$secondHandWidth = _ref2.secondHandWidth, secondHandWidth = _ref$secondHandWidth === void 0 ? 1 : _ref$secondHandWidth, _ref$size = _ref2.size, size = _ref$size === void 0 ? 150 : _ref$size, value = _ref2.value;
-        function renderMinuteMarksFn() {
-          if (!renderMinuteMarks) {
-            return null;
-          }
-          var minuteMarks = [];
-          for (var i2 = 1; i2 <= 60; i2 += 1) {
-            var isHourMark = renderHourMarks && !(i2 % 5);
-            if (!isHourMark) {
-              minuteMarks.push(/* @__PURE__ */ _react["default"].createElement(_MinuteMark["default"], {
-                key: "minute_".concat(i2),
-                angle: i2 * 6,
-                length: minuteMarksLength,
-                name: "minute",
-                width: minuteMarksWidth
-              }));
-            }
-          }
-          return minuteMarks;
-        }
-        function renderHourMarksFn() {
-          if (!renderHourMarks) {
-            return null;
-          }
-          var hourMarks = [];
-          for (var i2 = 1; i2 <= 12; i2 += 1) {
-            hourMarks.push(/* @__PURE__ */ _react["default"].createElement(_HourMark["default"], {
-              key: "hour_".concat(i2),
-              angle: i2 * 30,
-              formatHour,
-              length: hourMarksLength,
-              locale,
-              name: "hour",
-              number: renderNumbers ? i2 : null,
-              width: hourMarksWidth
-            }));
-          }
-          return hourMarks;
-        }
-        function renderFace() {
-          return /* @__PURE__ */ _react["default"].createElement("div", {
-            className: "react-clock__face"
-          }, renderMinuteMarksFn(), renderHourMarksFn());
-        }
-        function renderHourHandFn() {
-          var angle = value ? (0, _dateUtils.getHours)(value) * 30 + (0, _dateUtils.getMinutes)(value) / 2 + (0, _dateUtils.getSeconds)(value) / 600 : 0;
-          return /* @__PURE__ */ _react["default"].createElement(_Hand["default"], {
-            angle,
-            length: hourHandLength,
-            name: "hour",
-            oppositeLength: hourHandOppositeLength,
-            width: hourHandWidth
-          });
-        }
-        function renderMinuteHandFn() {
-          if (!renderMinuteHand) {
-            return null;
-          }
-          var angle = value ? (0, _dateUtils.getHours)(value) * 360 + (0, _dateUtils.getMinutes)(value) * 6 + (0, _dateUtils.getSeconds)(value) / 10 : 0;
-          return /* @__PURE__ */ _react["default"].createElement(_Hand["default"], {
-            angle,
-            length: minuteHandLength,
-            name: "minute",
-            oppositeLength: minuteHandOppositeLength,
-            width: minuteHandWidth
-          });
-        }
-        function renderSecondHandFn() {
-          if (!renderSecondHand) {
-            return null;
-          }
-          var angle = value ? (0, _dateUtils.getMinutes)(value) * 360 + (0, _dateUtils.getSeconds)(value) * 6 : 0;
-          return /* @__PURE__ */ _react["default"].createElement(_Hand["default"], {
-            angle,
-            length: secondHandLength,
-            name: "second",
-            oppositeLength: secondHandOppositeLength,
-            width: secondHandWidth
-          });
-        }
-        return /* @__PURE__ */ _react["default"].createElement("time", {
-          className: (0, _mergeClassNames["default"])("react-clock", className),
-          dateTime: value instanceof Date ? value.toISOString() : value,
-          style: {
-            width: "".concat(size, "px"),
-            height: "".concat(size, "px")
-          }
-        }, renderFace(), renderHourHandFn(), renderMinuteHandFn(), renderSecondHandFn());
-      }
-      Clock.propTypes = {
-        className: _propTypes["default"].oneOfType([_propTypes["default"].string, _propTypes["default"].arrayOf(_propTypes["default"].string)]),
-        formatHour: _propTypes["default"].func,
-        hourHandLength: _propTypes2.isHandLength,
-        hourHandOppositeLength: _propTypes2.isOppositeHandLength,
-        hourHandWidth: _propTypes2.isHandWidth,
-        hourMarksLength: _propTypes2.isMarkLength,
-        hourMarksWidth: _propTypes2.isMarkWidth,
-        locale: _propTypes["default"].string,
-        minuteHandLength: _propTypes2.isHandLength,
-        minuteHandOppositeLength: _propTypes2.isOppositeHandLength,
-        minuteHandWidth: _propTypes2.isHandWidth,
-        minuteMarksLength: _propTypes2.isMarkLength,
-        minuteMarksWidth: _propTypes2.isMarkWidth,
-        renderHourMarks: _propTypes["default"].bool,
-        renderMinuteHand: _propTypes["default"].bool,
-        renderMinuteMarks: _propTypes["default"].bool,
-        renderNumbers: _propTypes["default"].bool,
-        renderSecondHand: _propTypes["default"].bool,
-        secondHandLength: _propTypes2.isHandLength,
-        secondHandOppositeLength: _propTypes2.isOppositeHandLength,
-        secondHandWidth: _propTypes2.isHandWidth,
-        size: _propTypes["default"].number,
-        value: _propTypes["default"].oneOfType([_propTypes["default"].string, _propTypes["default"].instanceOf(Date)])
-      };
-    }
-  });
-
-  // node_modules/react-time-picker/node_modules/react-clock/dist/umd/index.js
-  var require_umd3 = __commonJS({
-    "node_modules/react-time-picker/node_modules/react-clock/dist/umd/index.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = void 0;
-      var _Clock = _interopRequireDefault(require_Clock2());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      var _default2 = _Clock["default"];
-      exports["default"] = _default2;
-    }
-  });
-
-  // node_modules/react-time-picker/dist/Divider.js
-  var require_Divider = __commonJS({
-    "node_modules/react-time-picker/dist/Divider.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Divider;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function Divider(_ref2) {
-        var children = _ref2.children;
-        return /* @__PURE__ */ _react["default"].createElement("span", {
-          className: "react-time-picker__inputGroup__divider"
-        }, children);
-      }
-      Divider.propTypes = {
-        children: _propTypes["default"].node
-      };
-    }
-  });
-
-  // node_modules/merge-refs/dist/cjs/index.js
-  var require_cjs5 = __commonJS({
-    "node_modules/merge-refs/dist/cjs/index.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      function mergeRefs() {
-        var inputRefs = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          inputRefs[_i] = arguments[_i];
-        }
-        var filteredInputRefs = inputRefs.filter(Boolean);
-        if (filteredInputRefs.length <= 1) {
-          var firstRef = filteredInputRefs[0];
-          return firstRef || null;
-        }
-        return function mergedRefs(ref) {
-          filteredInputRefs.forEach(function(inputRef) {
-            if (typeof inputRef === "function") {
-              inputRef(ref);
-            } else if (inputRef) {
-              inputRef.current = ref;
-            }
-          });
-        };
-      }
-      exports.default = mergeRefs;
-    }
-  });
-
-  // node_modules/update-input-width/dist/cjs/index.js
-  var require_cjs6 = __commonJS({
-    "node_modules/update-input-width/dist/cjs/index.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", { value: true });
-      exports.updateInputWidth = exports.measureText = exports.getFontShorthand = void 0;
-      var allowedVariants = ["normal", "small-caps"];
-      function getFontShorthand(element) {
-        if (!element) {
-          return "";
-        }
-        var style = window.getComputedStyle(element);
-        if (style.font) {
-          return style.font;
-        }
-        var isFontDefined = style.fontFamily !== "";
-        if (!isFontDefined) {
-          return "";
-        }
-        var fontVariant = allowedVariants.includes(style.fontVariant) ? style.fontVariant : "normal";
-        return "".concat(style.fontStyle, " ").concat(fontVariant, " ").concat(style.fontWeight, " ").concat(style.fontSize, " / ").concat(style.lineHeight, " ").concat(style.fontFamily);
-      }
-      exports.getFontShorthand = getFontShorthand;
-      var cachedCanvas;
-      function measureText(text, font) {
-        var canvas = cachedCanvas || (cachedCanvas = document.createElement("canvas"));
-        var context = canvas.getContext("2d");
-        if (!context) {
-          return null;
-        }
-        context.font = font;
-        var width = context.measureText(text).width;
-        return Math.ceil(width);
-      }
-      exports.measureText = measureText;
-      function updateInputWidth(element) {
-        if (typeof document === "undefined" || !element) {
-          return null;
-        }
-        var font = getFontShorthand(element);
-        var text = element.value || element.placeholder;
-        var width = measureText(text, font);
-        if (width === null) {
-          return null;
-        }
-        element.style.width = "".concat(width, "px");
-        return width;
-      }
-      exports.updateInputWidth = updateInputWidth;
-      exports.default = updateInputWidth;
-    }
-  });
-
-  // node_modules/react-time-picker/dist/shared/propTypes.js
-  var require_propTypes2 = __commonJS({
-    "node_modules/react-time-picker/dist/shared/propTypes.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.isValueType = exports.isTime = exports.isRef = void 0;
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _typeof3(obj) {
-        "@babel/helpers - typeof";
-        return _typeof3 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj2) {
-          return typeof obj2;
-        } : function(obj2) {
-          return obj2 && "function" == typeof Symbol && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        }, _typeof3(obj);
-      }
-      var allViews = ["hour", "minute", "second"];
-      var allValueTypes = [].concat(allViews);
-      var hourOptionalSecondsRegExp = /^(([0-1])?[0-9]|2[0-3]):[0-5][0-9](:([0-5][0-9]))?$/;
-      var isTime = function isTime2(props, propName, componentName) {
-        var time = props[propName];
-        if (time) {
-          if (!hourOptionalSecondsRegExp.test(time)) {
-            return new Error("Invalid prop `".concat(propName, "` of type `").concat(typeof minDate === "undefined" ? "undefined" : _typeof3(minDate), "` supplied to `").concat(componentName, "`, expected time in HH:mm(:ss) format."));
-          }
-        }
-        return null;
-      };
-      exports.isTime = isTime;
-      var isValueType = _propTypes["default"].oneOf(allValueTypes);
-      exports.isValueType = isValueType;
-      var isRef = _propTypes["default"].oneOfType([_propTypes["default"].func, _propTypes["default"].shape({
-        current: _propTypes["default"].any
-      })]);
-      exports.isRef = isRef;
-    }
-  });
-
-  // node_modules/react-time-picker/dist/TimeInput/Input.js
-  var require_Input = __commonJS({
-    "node_modules/react-time-picker/dist/TimeInput/Input.js"(exports) {
-      "use strict";
-      function _typeof3(obj) {
-        "@babel/helpers - typeof";
-        return _typeof3 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj2) {
-          return typeof obj2;
-        } : function(obj2) {
-          return obj2 && "function" == typeof Symbol && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        }, _typeof3(obj);
-      }
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Input6;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _mergeClassNames = _interopRequireDefault(require_umd());
-      var _mergeRefs = _interopRequireDefault(require_cjs5());
-      var _updateInputWidth = _interopRequireWildcard(require_cjs6());
-      var _propTypes2 = require_propTypes2();
-      function _getRequireWildcardCache(nodeInterop) {
-        if (typeof WeakMap !== "function")
-          return null;
-        var cacheBabelInterop = /* @__PURE__ */ new WeakMap();
-        var cacheNodeInterop = /* @__PURE__ */ new WeakMap();
-        return (_getRequireWildcardCache = function _getRequireWildcardCache2(nodeInterop2) {
-          return nodeInterop2 ? cacheNodeInterop : cacheBabelInterop;
-        })(nodeInterop);
-      }
-      function _interopRequireWildcard(obj, nodeInterop) {
-        if (!nodeInterop && obj && obj.__esModule) {
-          return obj;
-        }
-        if (obj === null || _typeof3(obj) !== "object" && typeof obj !== "function") {
-          return { "default": obj };
-        }
-        var cache = _getRequireWildcardCache(nodeInterop);
-        if (cache && cache.has(obj)) {
-          return cache.get(obj);
-        }
-        var newObj = {};
-        var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-        for (var key in obj) {
-          if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-            var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-            if (desc && (desc.get || desc.set)) {
-              Object.defineProperty(newObj, key, desc);
-            } else {
-              newObj[key] = obj[key];
-            }
-          }
-        }
-        newObj["default"] = obj;
-        if (cache) {
-          cache.set(obj, newObj);
-        }
-        return newObj;
-      }
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      var isIEOrEdgeLegacy = typeof window !== "undefined" && /(MSIE|Trident\/|Edge\/)/.test(window.navigator.userAgent);
-      var isFirefox = typeof window !== "undefined" && /Firefox/.test(window.navigator.userAgent);
-      function onFocus(event) {
-        var target = event.target;
-        if (isIEOrEdgeLegacy) {
-          requestAnimationFrame(function() {
-            return target.select();
-          });
-        } else {
-          target.select();
-        }
-      }
-      function updateInputWidthOnFontLoad(element) {
-        if (!document.fonts) {
-          return;
-        }
-        var font = (0, _updateInputWidth.getFontShorthand)(element);
-        if (!font) {
-          return;
-        }
-        var isFontLoaded = document.fonts.check(font);
-        if (isFontLoaded) {
-          return;
-        }
-        function onLoadingDone() {
-          (0, _updateInputWidth["default"])(element);
-        }
-        document.fonts.addEventListener("loadingdone", onLoadingDone);
-      }
-      function getSelectionString(input) {
-        if (input && "selectionStart" in input && input.selectionStart !== null) {
-          return input.value.slice(input.selectionStart, input.selectionEnd);
-        }
-        if ("getSelection" in window) {
-          return window.getSelection().toString();
-        }
-        return null;
-      }
-      function makeOnKeyPress(maxLength) {
-        return function onKeyPress(event) {
-          if (isFirefox) {
-            return;
-          }
-          var key = event.key, input = event.target;
-          var value = input.value;
-          var isNumberKey = key.length === 1 && /\d/.test(key);
-          var selection = getSelectionString(input);
-          if (!isNumberKey || !(selection || value.length < maxLength)) {
-            event.preventDefault();
-          }
-        };
-      }
-      function Input6(_ref2) {
-        var ariaLabel = _ref2.ariaLabel, autoFocus = _ref2.autoFocus, className = _ref2.className, disabled = _ref2.disabled, inputRef = _ref2.inputRef, max2 = _ref2.max, min2 = _ref2.min, name = _ref2.name, nameForClass = _ref2.nameForClass, onChange = _ref2.onChange, onKeyDown = _ref2.onKeyDown, _onKeyUp = _ref2.onKeyUp, _ref$placeholder = _ref2.placeholder, placeholder = _ref$placeholder === void 0 ? "--" : _ref$placeholder, required = _ref2.required, showLeadingZeros = _ref2.showLeadingZeros, step = _ref2.step, value = _ref2.value;
-        var hasLeadingZero = showLeadingZeros && value && value < 10 && (value === "0" || !value.toString().startsWith("0"));
-        var maxLength = max2 ? max2.toString().length : null;
-        return [hasLeadingZero && /* @__PURE__ */ _react["default"].createElement("span", {
-          key: "leadingZero",
-          className: "".concat(className, "__leadingZero")
-        }, "0"), /* @__PURE__ */ _react["default"].createElement("input", {
-          key: "input",
-          "aria-label": ariaLabel,
-          autoComplete: "off",
-          autoFocus,
-          className: (0, _mergeClassNames["default"])("".concat(className, "__input"), "".concat(className, "__").concat(nameForClass || name), hasLeadingZero && "".concat(className, "__input--hasLeadingZero")),
-          "data-input": "true",
-          disabled,
-          inputMode: "numeric",
-          max: max2,
-          min: min2,
-          name,
-          onChange,
-          onFocus,
-          onKeyDown,
-          onKeyPress: makeOnKeyPress(maxLength),
-          onKeyUp: function onKeyUp(event) {
-            (0, _updateInputWidth["default"])(event.target);
-            if (_onKeyUp) {
-              _onKeyUp(event);
-            }
-          },
-          placeholder,
-          ref: (0, _mergeRefs["default"])(_updateInputWidth["default"], updateInputWidthOnFontLoad, inputRef),
-          required,
-          step,
-          type: "number",
-          value: value !== null ? value : ""
-        })];
-      }
-      Input6.propTypes = {
-        ariaLabel: _propTypes["default"].string,
-        autoFocus: _propTypes["default"].bool,
-        className: _propTypes["default"].string.isRequired,
-        disabled: _propTypes["default"].bool,
-        inputRef: _propTypes2.isRef,
-        max: _propTypes["default"].number,
-        min: _propTypes["default"].number,
-        name: _propTypes["default"].string,
-        nameForClass: _propTypes["default"].string,
-        onChange: _propTypes["default"].func,
-        onKeyDown: _propTypes["default"].func,
-        onKeyUp: _propTypes["default"].func,
-        placeholder: _propTypes["default"].string,
-        required: _propTypes["default"].bool,
-        showLeadingZeros: _propTypes["default"].bool,
-        step: _propTypes["default"].number,
-        value: _propTypes["default"].string
-      };
-    }
-  });
-
-  // node_modules/react-time-picker/dist/shared/dates.js
-  var require_dates = __commonJS({
-    "node_modules/react-time-picker/dist/shared/dates.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.convert12to24 = convert12to24;
-      exports.convert24to12 = convert24to12;
-      function convert12to24(hour12, amPm) {
-        var hour24 = parseInt(hour12, 10);
-        if (amPm === "am" && hour24 === 12) {
-          hour24 = 0;
-        } else if (amPm === "pm" && hour24 < 12) {
-          hour24 += 12;
-        }
-        return hour24;
-      }
-      function convert24to12(hour24) {
-        var hour12 = hour24 % 12 || 12;
-        return [hour12, hour24 < 12 ? "am" : "pm"];
-      }
-    }
-  });
-
-  // node_modules/react-time-picker/dist/shared/dateFormatter.js
-  var require_dateFormatter = __commonJS({
-    "node_modules/react-time-picker/dist/shared/dateFormatter.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.getFormatter = getFormatter;
-      exports.getNumberFormatter = getNumberFormatter;
-      var _getUserLocale = _interopRequireDefault(require_umd2());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      var formatterCache = /* @__PURE__ */ new Map();
-      function getFormatter(options) {
-        return function(locale, date) {
-          var localeWithDefault = locale || (0, _getUserLocale["default"])();
-          if (!formatterCache.has(localeWithDefault)) {
-            formatterCache.set(localeWithDefault, /* @__PURE__ */ new Map());
-          }
-          var formatterCacheLocale = formatterCache.get(localeWithDefault);
-          if (!formatterCacheLocale.has(options)) {
-            formatterCacheLocale.set(options, new Intl.DateTimeFormat(localeWithDefault, options).format);
-          }
-          return formatterCacheLocale.get(options)(date);
-        };
-      }
-      var numberFormatterCache = /* @__PURE__ */ new Map();
-      function getNumberFormatter(options) {
-        return function(locale, date) {
-          var localeWithDefault = locale || (0, _getUserLocale["default"])();
-          if (!numberFormatterCache.has(localeWithDefault)) {
-            numberFormatterCache.set(localeWithDefault, /* @__PURE__ */ new Map());
-          }
-          var numberFormatterCacheLocale = numberFormatterCache.get(localeWithDefault);
-          if (!numberFormatterCacheLocale.has(options)) {
-            numberFormatterCacheLocale.set(options, new Intl.NumberFormat(localeWithDefault, options).format);
-          }
-          return numberFormatterCacheLocale.get(options)(date);
-        };
-      }
-    }
-  });
-
-  // node_modules/react-time-picker/dist/shared/utils.js
-  var require_utils2 = __commonJS({
-    "node_modules/react-time-picker/dist/shared/utils.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.getAmPmLabels = getAmPmLabels;
-      exports.safeMax = safeMax;
-      exports.safeMin = safeMin;
-      var _dateFormatter = require_dateFormatter();
-      function _toConsumableArray2(arr) {
-        return _arrayWithoutHoles2(arr) || _iterableToArray2(arr) || _unsupportedIterableToArray3(arr) || _nonIterableSpread2();
-      }
-      function _nonIterableSpread2() {
-        throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-      function _iterableToArray2(iter) {
-        if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null)
-          return Array.from(iter);
-      }
-      function _arrayWithoutHoles2(arr) {
-        if (Array.isArray(arr))
-          return _arrayLikeToArray3(arr);
-      }
-      function _slicedToArray2(arr, i2) {
-        return _arrayWithHoles2(arr) || _iterableToArrayLimit2(arr, i2) || _unsupportedIterableToArray3(arr, i2) || _nonIterableRest2();
-      }
-      function _nonIterableRest2() {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-      function _unsupportedIterableToArray3(o2, minLen) {
-        if (!o2)
-          return;
-        if (typeof o2 === "string")
-          return _arrayLikeToArray3(o2, minLen);
-        var n2 = Object.prototype.toString.call(o2).slice(8, -1);
-        if (n2 === "Object" && o2.constructor)
-          n2 = o2.constructor.name;
-        if (n2 === "Map" || n2 === "Set")
-          return Array.from(o2);
-        if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
-          return _arrayLikeToArray3(o2, minLen);
-      }
-      function _arrayLikeToArray3(arr, len) {
-        if (len == null || len > arr.length)
-          len = arr.length;
-        for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++) {
-          arr2[i2] = arr[i2];
-        }
-        return arr2;
-      }
-      function _iterableToArrayLimit2(arr, i2) {
-        var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-        if (_i == null)
-          return;
-        var _arr = [];
-        var _n = true;
-        var _d = false;
-        var _s, _e2;
-        try {
-          for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-            _arr.push(_s.value);
-            if (i2 && _arr.length === i2)
-              break;
-          }
-        } catch (err) {
-          _d = true;
-          _e2 = err;
-        } finally {
-          try {
-            if (!_n && _i["return"] != null)
-              _i["return"]();
-          } finally {
-            if (_d)
-              throw _e2;
-          }
-        }
-        return _arr;
-      }
-      function _arrayWithHoles2(arr) {
-        if (Array.isArray(arr))
-          return arr;
-      }
-      var nines = ["9", "\u0669"];
-      var ninesRegExp = new RegExp("[".concat(nines.join(""), "]"));
-      var amPmFormatter = (0, _dateFormatter.getFormatter)({
-        hour: "numeric"
-      });
-      function getAmPmLabels(locale) {
-        var amString = amPmFormatter(locale, new Date(2017, 0, 1, 9));
-        var pmString = amPmFormatter(locale, new Date(2017, 0, 1, 21));
-        var _amString$split = amString.split(ninesRegExp), _amString$split2 = _slicedToArray2(_amString$split, 2), am1 = _amString$split2[0], am2 = _amString$split2[1];
-        var _pmString$split = pmString.split(ninesRegExp), _pmString$split2 = _slicedToArray2(_pmString$split, 2), pm1 = _pmString$split2[0], pm2 = _pmString$split2[1];
-        if (pm2 !== void 0) {
-          if (am1 !== pm1) {
-            return [am1, pm1].map(function(el) {
-              return el.trim();
-            });
-          }
-          if (am2 !== pm2) {
-            return [am2, pm2].map(function(el) {
-              return el.trim();
-            });
-          }
-        }
-        return ["AM", "PM"];
-      }
-      function isValidNumber(num) {
-        return num !== null && num !== false && !Number.isNaN(Number(num));
-      }
-      function safeMin() {
-        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-        return Math.min.apply(Math, _toConsumableArray2(args.filter(isValidNumber)));
-      }
-      function safeMax() {
-        for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-          args[_key2] = arguments[_key2];
-        }
-        return Math.max.apply(Math, _toConsumableArray2(args.filter(isValidNumber)));
-      }
-    }
-  });
-
-  // node_modules/react-time-picker/dist/TimeInput/Hour12Input.js
-  var require_Hour12Input = __commonJS({
-    "node_modules/react-time-picker/dist/TimeInput/Hour12Input.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Hour12Input;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _Input = _interopRequireDefault(require_Input());
-      var _dates = require_dates();
-      var _propTypes2 = require_propTypes2();
-      var _utils = require_utils2();
-      var _excluded2 = ["amPm", "hour", "maxTime", "minTime", "value"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _extends2() {
-        _extends2 = Object.assign || function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _slicedToArray2(arr, i2) {
-        return _arrayWithHoles2(arr) || _iterableToArrayLimit2(arr, i2) || _unsupportedIterableToArray3(arr, i2) || _nonIterableRest2();
-      }
-      function _nonIterableRest2() {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-      function _unsupportedIterableToArray3(o2, minLen) {
-        if (!o2)
-          return;
-        if (typeof o2 === "string")
-          return _arrayLikeToArray3(o2, minLen);
-        var n2 = Object.prototype.toString.call(o2).slice(8, -1);
-        if (n2 === "Object" && o2.constructor)
-          n2 = o2.constructor.name;
-        if (n2 === "Map" || n2 === "Set")
-          return Array.from(o2);
-        if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
-          return _arrayLikeToArray3(o2, minLen);
-      }
-      function _arrayLikeToArray3(arr, len) {
-        if (len == null || len > arr.length)
-          len = arr.length;
-        for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++) {
-          arr2[i2] = arr[i2];
-        }
-        return arr2;
-      }
-      function _iterableToArrayLimit2(arr, i2) {
-        var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-        if (_i == null)
-          return;
-        var _arr = [];
-        var _n = true;
-        var _d = false;
-        var _s, _e2;
-        try {
-          for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-            _arr.push(_s.value);
-            if (i2 && _arr.length === i2)
-              break;
-          }
-        } catch (err) {
-          _d = true;
-          _e2 = err;
-        } finally {
-          try {
-            if (!_n && _i["return"] != null)
-              _i["return"]();
-          } finally {
-            if (_d)
-              throw _e2;
-          }
-        }
-        return _arr;
-      }
-      function _arrayWithHoles2(arr) {
-        if (Array.isArray(arr))
-          return arr;
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      function Hour12Input(_ref2) {
-        var amPm = _ref2.amPm, hour = _ref2.hour, maxTime = _ref2.maxTime, minTime = _ref2.minTime, value = _ref2.value, otherProps = _objectWithoutProperties2(_ref2, _excluded2);
-        var maxHour = (0, _utils.safeMin)(12, maxTime && function() {
-          var _convert24to = (0, _dates.convert24to12)((0, _dateUtils.getHours)(maxTime)), _convert24to2 = _slicedToArray2(_convert24to, 2), maxHourResult = _convert24to2[0], maxAmPm = _convert24to2[1];
-          if (maxAmPm !== amPm) {
-            return null;
-          }
-          return maxHourResult;
-        }());
-        var minHour = (0, _utils.safeMax)(1, minTime && function() {
-          var _convert24to3 = (0, _dates.convert24to12)((0, _dateUtils.getHours)(minTime)), _convert24to4 = _slicedToArray2(_convert24to3, 2), minHourResult = _convert24to4[0], minAmPm = _convert24to4[1];
-          if (
-            // pm is always after am, so we should ignore validation
-            minAmPm !== amPm || // If minHour is 12 am/pm, user should be able to enter 12, 1, ..., 11.
-            minHourResult === 12
-          ) {
-            return null;
-          }
-          return minHourResult;
-        }());
-        var value12 = value ? (0, _dates.convert24to12)(value)[0].toString() : "";
-        return /* @__PURE__ */ _react["default"].createElement(_Input["default"], _extends2({
-          max: maxHour,
-          min: minHour,
-          name: "hour12",
-          nameForClass: "hour",
-          value: value12
-        }, otherProps));
-      }
-      Hour12Input.propTypes = {
-        amPm: _propTypes["default"].string,
-        ariaLabel: _propTypes["default"].string,
-        className: _propTypes["default"].string.isRequired,
-        disabled: _propTypes["default"].bool,
-        hour: _propTypes["default"].string,
-        inputRef: _propTypes2.isRef,
-        maxTime: _propTypes2.isTime,
-        minTime: _propTypes2.isTime,
-        onChange: _propTypes["default"].func,
-        onKeyDown: _propTypes["default"].func,
-        onKeyUp: _propTypes["default"].func,
-        placeholder: _propTypes["default"].string,
-        required: _propTypes["default"].bool,
-        showLeadingZeros: _propTypes["default"].bool,
-        value: _propTypes["default"].string
-      };
-    }
-  });
-
-  // node_modules/react-time-picker/dist/TimeInput/Hour24Input.js
-  var require_Hour24Input = __commonJS({
-    "node_modules/react-time-picker/dist/TimeInput/Hour24Input.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Hour24Input;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _Input = _interopRequireDefault(require_Input());
-      var _propTypes2 = require_propTypes2();
-      var _utils = require_utils2();
-      var _excluded2 = ["hour", "maxTime", "minTime"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _extends2() {
-        _extends2 = Object.assign || function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      function Hour24Input(_ref2) {
-        var hour = _ref2.hour, maxTime = _ref2.maxTime, minTime = _ref2.minTime, otherProps = _objectWithoutProperties2(_ref2, _excluded2);
-        var maxHour = (0, _utils.safeMin)(23, maxTime && (0, _dateUtils.getHours)(maxTime));
-        var minHour = (0, _utils.safeMax)(0, minTime && (0, _dateUtils.getHours)(minTime));
-        return /* @__PURE__ */ _react["default"].createElement(_Input["default"], _extends2({
-          max: maxHour,
-          min: minHour,
-          name: "hour24",
-          nameForClass: "hour"
-        }, otherProps));
-      }
-      Hour24Input.propTypes = {
-        ariaLabel: _propTypes["default"].string,
-        className: _propTypes["default"].string.isRequired,
-        disabled: _propTypes["default"].bool,
-        hour: _propTypes["default"].string,
-        inputRef: _propTypes2.isRef,
-        maxTime: _propTypes2.isTime,
-        minTime: _propTypes2.isTime,
-        onChange: _propTypes["default"].func,
-        onKeyDown: _propTypes["default"].func,
-        onKeyUp: _propTypes["default"].func,
-        placeholder: _propTypes["default"].string,
-        required: _propTypes["default"].bool,
-        showLeadingZeros: _propTypes["default"].bool,
-        value: _propTypes["default"].string
-      };
-    }
-  });
-
-  // node_modules/react-time-picker/dist/TimeInput/MinuteInput.js
-  var require_MinuteInput = __commonJS({
-    "node_modules/react-time-picker/dist/TimeInput/MinuteInput.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = MinuteInput;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _Input = _interopRequireDefault(require_Input());
-      var _propTypes2 = require_propTypes2();
-      var _utils = require_utils2();
-      var _excluded2 = ["hour", "maxTime", "minTime", "showLeadingZeros"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _extends2() {
-        _extends2 = Object.assign || function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      function MinuteInput(_ref2) {
-        var hour = _ref2.hour, maxTime = _ref2.maxTime, minTime = _ref2.minTime, _ref$showLeadingZeros = _ref2.showLeadingZeros, showLeadingZeros = _ref$showLeadingZeros === void 0 ? true : _ref$showLeadingZeros, otherProps = _objectWithoutProperties2(_ref2, _excluded2);
-        function isSameHour(date) {
-          return date && hour === (0, _dateUtils.getHours)(date).toString();
-        }
-        var maxMinute = (0, _utils.safeMin)(59, isSameHour(maxTime) && (0, _dateUtils.getMinutes)(maxTime));
-        var minMinute = (0, _utils.safeMax)(0, isSameHour(minTime) && (0, _dateUtils.getMinutes)(minTime));
-        return /* @__PURE__ */ _react["default"].createElement(_Input["default"], _extends2({
-          max: maxMinute,
-          min: minMinute,
-          name: "minute",
-          showLeadingZeros
-        }, otherProps));
-      }
-      MinuteInput.propTypes = {
-        ariaLabel: _propTypes["default"].string,
-        className: _propTypes["default"].string.isRequired,
-        disabled: _propTypes["default"].bool,
-        hour: _propTypes["default"].string,
-        inputRef: _propTypes2.isRef,
-        maxTime: _propTypes2.isTime,
-        minTime: _propTypes2.isTime,
-        onChange: _propTypes["default"].func,
-        onKeyDown: _propTypes["default"].func,
-        onKeyUp: _propTypes["default"].func,
-        placeholder: _propTypes["default"].string,
-        required: _propTypes["default"].bool,
-        showLeadingZeros: _propTypes["default"].bool,
-        value: _propTypes["default"].string
-      };
-    }
-  });
-
-  // node_modules/react-time-picker/dist/TimeInput/SecondInput.js
-  var require_SecondInput = __commonJS({
-    "node_modules/react-time-picker/dist/TimeInput/SecondInput.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = SecondInput;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _Input = _interopRequireDefault(require_Input());
-      var _propTypes2 = require_propTypes2();
-      var _utils = require_utils2();
-      var _excluded2 = ["hour", "maxTime", "minTime", "minute", "showLeadingZeros"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _extends2() {
-        _extends2 = Object.assign || function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      function SecondInput(_ref2) {
-        var hour = _ref2.hour, maxTime = _ref2.maxTime, minTime = _ref2.minTime, minute = _ref2.minute, _ref$showLeadingZeros = _ref2.showLeadingZeros, showLeadingZeros = _ref$showLeadingZeros === void 0 ? true : _ref$showLeadingZeros, otherProps = _objectWithoutProperties2(_ref2, _excluded2);
-        function isSameMinute(date) {
-          return date && hour === (0, _dateUtils.getHours)(date).toString() && minute === (0, _dateUtils.getMinutes)(date).toString();
-        }
-        var maxSecond = (0, _utils.safeMin)(59, isSameMinute(maxTime) && (0, _dateUtils.getSeconds)(maxTime));
-        var minSecond = (0, _utils.safeMax)(0, isSameMinute(minTime) && (0, _dateUtils.getSeconds)(minTime));
-        return /* @__PURE__ */ _react["default"].createElement(_Input["default"], _extends2({
-          max: maxSecond,
-          min: minSecond,
-          name: "second",
-          showLeadingZeros
-        }, otherProps));
-      }
-      SecondInput.propTypes = {
-        ariaLabel: _propTypes["default"].string,
-        className: _propTypes["default"].string.isRequired,
-        disabled: _propTypes["default"].bool,
-        hour: _propTypes["default"].string,
-        inputRef: _propTypes2.isRef,
-        maxTime: _propTypes2.isTime,
-        minTime: _propTypes2.isTime,
-        minute: _propTypes["default"].string,
-        onChange: _propTypes["default"].func,
-        onKeyDown: _propTypes["default"].func,
-        onKeyUp: _propTypes["default"].func,
-        placeholder: _propTypes["default"].string,
-        required: _propTypes["default"].bool,
-        showLeadingZeros: _propTypes["default"].bool,
-        value: _propTypes["default"].string
-      };
-    }
-  });
-
-  // node_modules/react-time-picker/dist/TimeInput/NativeInput.js
-  var require_NativeInput = __commonJS({
-    "node_modules/react-time-picker/dist/TimeInput/NativeInput.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = NativeInput;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _propTypes2 = require_propTypes2();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function NativeInput(_ref2) {
-        var ariaLabel = _ref2.ariaLabel, disabled = _ref2.disabled, maxTime = _ref2.maxTime, minTime = _ref2.minTime, name = _ref2.name, onChange = _ref2.onChange, required = _ref2.required, value = _ref2.value, valueType = _ref2.valueType;
-        var nativeValueParser = function() {
-          switch (valueType) {
-            case "hour":
-              return function(receivedValue) {
-                return "".concat((0, _dateUtils.getHours)(receivedValue), ":00");
-              };
-            case "minute":
-              return _dateUtils.getHoursMinutes;
-            case "second":
-              return _dateUtils.getHoursMinutesSeconds;
-            default:
-              throw new Error("Invalid valueType.");
-          }
-        }();
-        var step = function() {
-          switch (valueType) {
-            case "hour":
-              return 3600;
-            case "minute":
-              return 60;
-            case "second":
-              return 1;
-            default:
-              throw new Error("Invalid valueType.");
-          }
-        }();
-        function stopPropagation(event) {
-          event.stopPropagation();
-        }
-        return /* @__PURE__ */ _react["default"].createElement("input", {
-          "aria-label": ariaLabel,
-          disabled,
-          max: maxTime ? nativeValueParser(maxTime) : null,
-          min: minTime ? nativeValueParser(minTime) : null,
-          name,
-          onChange,
-          onFocus: stopPropagation,
-          required,
-          step,
-          style: {
-            visibility: "hidden",
-            position: "absolute",
-            zIndex: "-999"
-          },
-          type: "time",
-          value: value ? nativeValueParser(value) : ""
-        });
-      }
-      NativeInput.propTypes = {
-        ariaLabel: _propTypes["default"].string,
-        disabled: _propTypes["default"].bool,
-        maxTime: _propTypes2.isTime,
-        minTime: _propTypes2.isTime,
-        name: _propTypes["default"].string,
-        onChange: _propTypes["default"].func,
-        required: _propTypes["default"].bool,
-        value: _propTypes["default"].oneOfType([_propTypes["default"].string, _propTypes["default"].instanceOf(Date)]),
-        valueType: _propTypes2.isValueType
-      };
-    }
-  });
-
-  // node_modules/react-time-picker/dist/TimeInput/AmPm.js
-  var require_AmPm = __commonJS({
-    "node_modules/react-time-picker/dist/TimeInput/AmPm.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = AmPm;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _mergeClassNames = _interopRequireDefault(require_umd());
-      var _dateUtils = require_cjs4();
-      var _dates = require_dates();
-      var _propTypes2 = require_propTypes2();
-      var _utils = require_utils2();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _slicedToArray2(arr, i2) {
-        return _arrayWithHoles2(arr) || _iterableToArrayLimit2(arr, i2) || _unsupportedIterableToArray3(arr, i2) || _nonIterableRest2();
-      }
-      function _nonIterableRest2() {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-      function _unsupportedIterableToArray3(o2, minLen) {
-        if (!o2)
-          return;
-        if (typeof o2 === "string")
-          return _arrayLikeToArray3(o2, minLen);
-        var n2 = Object.prototype.toString.call(o2).slice(8, -1);
-        if (n2 === "Object" && o2.constructor)
-          n2 = o2.constructor.name;
-        if (n2 === "Map" || n2 === "Set")
-          return Array.from(o2);
-        if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
-          return _arrayLikeToArray3(o2, minLen);
-      }
-      function _arrayLikeToArray3(arr, len) {
-        if (len == null || len > arr.length)
-          len = arr.length;
-        for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++) {
-          arr2[i2] = arr[i2];
-        }
-        return arr2;
-      }
-      function _iterableToArrayLimit2(arr, i2) {
-        var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-        if (_i == null)
-          return;
-        var _arr = [];
-        var _n = true;
-        var _d = false;
-        var _s, _e2;
-        try {
-          for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-            _arr.push(_s.value);
-            if (i2 && _arr.length === i2)
-              break;
-          }
-        } catch (err) {
-          _d = true;
-          _e2 = err;
-        } finally {
-          try {
-            if (!_n && _i["return"] != null)
-              _i["return"]();
-          } finally {
-            if (_d)
-              throw _e2;
-          }
-        }
-        return _arr;
-      }
-      function _arrayWithHoles2(arr) {
-        if (Array.isArray(arr))
-          return arr;
-      }
-      function AmPm(_ref2) {
-        var ariaLabel = _ref2.ariaLabel, className = _ref2.className, disabled = _ref2.disabled, inputRef = _ref2.inputRef, locale = _ref2.locale, maxTime = _ref2.maxTime, minTime = _ref2.minTime, onChange = _ref2.onChange, required = _ref2.required, value = _ref2.value;
-        var amDisabled = minTime && (0, _dates.convert24to12)((0, _dateUtils.getHours)(minTime))[1] === "pm";
-        var pmDisabled = maxTime && (0, _dates.convert24to12)((0, _dateUtils.getHours)(maxTime))[1] === "am";
-        var name = "amPm";
-        var _getAmPmLabels = (0, _utils.getAmPmLabels)(locale), _getAmPmLabels2 = _slicedToArray2(_getAmPmLabels, 2), amLabel = _getAmPmLabels2[0], pmLabel = _getAmPmLabels2[1];
-        return /* @__PURE__ */ _react["default"].createElement("select", {
-          "aria-label": ariaLabel,
-          className: (0, _mergeClassNames["default"])("".concat(className, "__input"), "".concat(className, "__").concat(name)),
-          "data-input": "true",
-          "data-select": "true",
-          disabled,
-          name,
-          onChange,
-          ref: inputRef,
-          required,
-          value: value !== null ? value : ""
-        }, !value && /* @__PURE__ */ _react["default"].createElement("option", {
-          value: ""
-        }, "--"), /* @__PURE__ */ _react["default"].createElement("option", {
-          disabled: amDisabled,
-          value: "am"
-        }, amLabel), /* @__PURE__ */ _react["default"].createElement("option", {
-          disabled: pmDisabled,
-          value: "pm"
-        }, pmLabel));
-      }
-      AmPm.propTypes = {
-        ariaLabel: _propTypes["default"].string,
-        className: _propTypes["default"].string.isRequired,
-        disabled: _propTypes["default"].bool,
-        inputRef: _propTypes2.isRef,
-        locale: _propTypes["default"].string,
-        maxTime: _propTypes2.isTime,
-        minTime: _propTypes2.isTime,
-        onChange: _propTypes["default"].func,
-        required: _propTypes["default"].bool,
-        value: _propTypes["default"].oneOf(["am", "pm"])
-      };
-    }
-  });
-
-  // node_modules/react-time-picker/dist/TimeInput.js
-  var require_TimeInput = __commonJS({
-    "node_modules/react-time-picker/dist/TimeInput.js"(exports) {
-      "use strict";
-      function _typeof3(obj) {
-        "@babel/helpers - typeof";
-        return _typeof3 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj2) {
-          return typeof obj2;
-        } : function(obj2) {
-          return obj2 && "function" == typeof Symbol && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        }, _typeof3(obj);
-      }
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = void 0;
-      var _react = _interopRequireWildcard(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _Divider = _interopRequireDefault(require_Divider());
-      var _Hour12Input = _interopRequireDefault(require_Hour12Input());
-      var _Hour24Input = _interopRequireDefault(require_Hour24Input());
-      var _MinuteInput = _interopRequireDefault(require_MinuteInput());
-      var _SecondInput = _interopRequireDefault(require_SecondInput());
-      var _NativeInput = _interopRequireDefault(require_NativeInput());
-      var _AmPm = _interopRequireDefault(require_AmPm());
-      var _dateFormatter = require_dateFormatter();
-      var _dates = require_dates();
-      var _propTypes2 = require_propTypes2();
-      var _utils = require_utils2();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _getRequireWildcardCache(nodeInterop) {
-        if (typeof WeakMap !== "function")
-          return null;
-        var cacheBabelInterop = /* @__PURE__ */ new WeakMap();
-        var cacheNodeInterop = /* @__PURE__ */ new WeakMap();
-        return (_getRequireWildcardCache = function _getRequireWildcardCache2(nodeInterop2) {
-          return nodeInterop2 ? cacheNodeInterop : cacheBabelInterop;
-        })(nodeInterop);
-      }
-      function _interopRequireWildcard(obj, nodeInterop) {
-        if (!nodeInterop && obj && obj.__esModule) {
-          return obj;
-        }
-        if (obj === null || _typeof3(obj) !== "object" && typeof obj !== "function") {
-          return { "default": obj };
-        }
-        var cache = _getRequireWildcardCache(nodeInterop);
-        if (cache && cache.has(obj)) {
-          return cache.get(obj);
-        }
-        var newObj = {};
-        var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-        for (var key in obj) {
-          if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-            var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-            if (desc && (desc.get || desc.set)) {
-              Object.defineProperty(newObj, key, desc);
-            } else {
-              newObj[key] = obj[key];
-            }
-          }
-        }
-        newObj["default"] = obj;
-        if (cache) {
-          cache.set(obj, newObj);
-        }
-        return newObj;
-      }
-      function _slicedToArray2(arr, i2) {
-        return _arrayWithHoles2(arr) || _iterableToArrayLimit2(arr, i2) || _unsupportedIterableToArray3(arr, i2) || _nonIterableRest2();
-      }
-      function _nonIterableRest2() {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-      function _iterableToArrayLimit2(arr, i2) {
-        var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-        if (_i == null)
-          return;
-        var _arr = [];
-        var _n = true;
-        var _d = false;
-        var _s, _e2;
-        try {
-          for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-            _arr.push(_s.value);
-            if (i2 && _arr.length === i2)
-              break;
-          }
-        } catch (err) {
-          _d = true;
-          _e2 = err;
-        } finally {
-          try {
-            if (!_n && _i["return"] != null)
-              _i["return"]();
-          } finally {
-            if (_d)
-              throw _e2;
-          }
-        }
-        return _arr;
-      }
-      function _arrayWithHoles2(arr) {
-        if (Array.isArray(arr))
-          return arr;
-      }
-      function _extends2() {
-        _extends2 = Object.assign || function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _classCallCheck3(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-          throw new TypeError("Cannot call a class as a function");
-        }
-      }
-      function _defineProperties3(target, props) {
-        for (var i2 = 0; i2 < props.length; i2++) {
-          var descriptor = props[i2];
-          descriptor.enumerable = descriptor.enumerable || false;
-          descriptor.configurable = true;
-          if ("value" in descriptor)
-            descriptor.writable = true;
-          Object.defineProperty(target, descriptor.key, descriptor);
-        }
-      }
-      function _createClass3(Constructor, protoProps, staticProps) {
-        if (protoProps)
-          _defineProperties3(Constructor.prototype, protoProps);
-        if (staticProps)
-          _defineProperties3(Constructor, staticProps);
-        Object.defineProperty(Constructor, "prototype", { writable: false });
-        return Constructor;
-      }
-      function _inherits2(subClass, superClass) {
-        if (typeof superClass !== "function" && superClass !== null) {
-          throw new TypeError("Super expression must either be null or a function");
-        }
-        subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
-        Object.defineProperty(subClass, "prototype", { writable: false });
-        if (superClass)
-          _setPrototypeOf2(subClass, superClass);
-      }
-      function _setPrototypeOf2(o2, p2) {
-        _setPrototypeOf2 = Object.setPrototypeOf || function _setPrototypeOf3(o3, p3) {
-          o3.__proto__ = p3;
-          return o3;
-        };
-        return _setPrototypeOf2(o2, p2);
-      }
-      function _createSuper2(Derived) {
-        var hasNativeReflectConstruct = _isNativeReflectConstruct2();
-        return function _createSuperInternal() {
-          var Super = _getPrototypeOf2(Derived), result;
-          if (hasNativeReflectConstruct) {
-            var NewTarget = _getPrototypeOf2(this).constructor;
-            result = Reflect.construct(Super, arguments, NewTarget);
-          } else {
-            result = Super.apply(this, arguments);
-          }
-          return _possibleConstructorReturn2(this, result);
-        };
-      }
-      function _possibleConstructorReturn2(self2, call2) {
-        if (call2 && (_typeof3(call2) === "object" || typeof call2 === "function")) {
-          return call2;
-        } else if (call2 !== void 0) {
-          throw new TypeError("Derived constructors may only return object or undefined");
-        }
-        return _assertThisInitialized2(self2);
-      }
-      function _assertThisInitialized2(self2) {
-        if (self2 === void 0) {
-          throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-        }
-        return self2;
-      }
-      function _isNativeReflectConstruct2() {
-        if (typeof Reflect === "undefined" || !Reflect.construct)
-          return false;
-        if (Reflect.construct.sham)
-          return false;
-        if (typeof Proxy === "function")
-          return true;
-        try {
-          Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
-          }));
-          return true;
-        } catch (e2) {
-          return false;
-        }
-      }
-      function _getPrototypeOf2(o2) {
-        _getPrototypeOf2 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf3(o3) {
-          return o3.__proto__ || Object.getPrototypeOf(o3);
-        };
-        return _getPrototypeOf2(o2);
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      function _toConsumableArray2(arr) {
-        return _arrayWithoutHoles2(arr) || _iterableToArray2(arr) || _unsupportedIterableToArray3(arr) || _nonIterableSpread2();
-      }
-      function _nonIterableSpread2() {
-        throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-      function _unsupportedIterableToArray3(o2, minLen) {
-        if (!o2)
-          return;
-        if (typeof o2 === "string")
-          return _arrayLikeToArray3(o2, minLen);
-        var n2 = Object.prototype.toString.call(o2).slice(8, -1);
-        if (n2 === "Object" && o2.constructor)
-          n2 = o2.constructor.name;
-        if (n2 === "Map" || n2 === "Set")
-          return Array.from(o2);
-        if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
-          return _arrayLikeToArray3(o2, minLen);
-      }
-      function _iterableToArray2(iter) {
-        if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null)
-          return Array.from(iter);
-      }
-      function _arrayWithoutHoles2(arr) {
-        if (Array.isArray(arr))
-          return _arrayLikeToArray3(arr);
-      }
-      function _arrayLikeToArray3(arr, len) {
-        if (len == null || len > arr.length)
-          len = arr.length;
-        for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++) {
-          arr2[i2] = arr[i2];
-        }
-        return arr2;
-      }
-      var allViews = ["hour", "minute", "second"];
-      function hoursAreDifferent(date1, date2) {
-        return date1 && !date2 || !date1 && date2 || date1 && date2 && date1 !== date2;
-      }
-      function isValidInput(element) {
-        return element.tagName === "INPUT" && element.type === "number";
-      }
-      function findInput(element, property) {
-        var nextElement = element;
-        do {
-          nextElement = nextElement[property];
-        } while (nextElement && !isValidInput(nextElement));
-        return nextElement;
-      }
-      function focus(element) {
-        if (element) {
-          element.focus();
-        }
-      }
-      function _renderCustomInputs(placeholder, elementFunctions, allowMultipleInstances) {
-        var usedFunctions = [];
-        var pattern = new RegExp(Object.keys(elementFunctions).map(function(el) {
-          return "".concat(el, "+");
-        }).join("|"), "g");
-        var matches = placeholder.match(pattern);
-        return placeholder.split(pattern).reduce(function(arr, element, index) {
-          var divider = element && // eslint-disable-next-line react/no-array-index-key
-          /* @__PURE__ */ _react["default"].createElement(_Divider["default"], {
-            key: "separator_".concat(index)
-          }, element);
-          var res = [].concat(_toConsumableArray2(arr), [divider]);
-          var currentMatch = matches && matches[index];
-          if (currentMatch) {
-            var renderFunction = elementFunctions[currentMatch] || elementFunctions[Object.keys(elementFunctions).find(function(elementFunction) {
-              return currentMatch.match(elementFunction);
-            })];
-            if (!allowMultipleInstances && usedFunctions.includes(renderFunction)) {
-              res.push(currentMatch);
-            } else {
-              res.push(renderFunction(currentMatch, index));
-              usedFunctions.push(renderFunction);
-            }
-          }
-          return res;
-        }, []);
-      }
-      var formatNumber = (0, _dateFormatter.getNumberFormatter)({
-        useGrouping: false
-      });
-      var TimeInput = /* @__PURE__ */ function(_PureComponent) {
-        _inherits2(TimeInput2, _PureComponent);
-        var _super = _createSuper2(TimeInput2);
-        function TimeInput2() {
-          var _this;
-          _classCallCheck3(this, TimeInput2);
-          for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-          }
-          _this = _super.call.apply(_super, [this].concat(args));
-          _defineProperty4(_assertThisInitialized2(_this), "state", {
-            amPm: null,
-            hour: null,
-            minute: null,
-            second: null
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "amPmInput", /* @__PURE__ */ (0, _react.createRef)());
-          _defineProperty4(_assertThisInitialized2(_this), "hour12Input", /* @__PURE__ */ (0, _react.createRef)());
-          _defineProperty4(_assertThisInitialized2(_this), "hour24Input", /* @__PURE__ */ (0, _react.createRef)());
-          _defineProperty4(_assertThisInitialized2(_this), "minuteInput", /* @__PURE__ */ (0, _react.createRef)());
-          _defineProperty4(_assertThisInitialized2(_this), "secondInput", /* @__PURE__ */ (0, _react.createRef)());
-          _defineProperty4(_assertThisInitialized2(_this), "onClick", function(event) {
-            if (event.target === event.currentTarget) {
-              var firstInput = event.target.children[1];
-              focus(firstInput);
-            }
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onKeyDown", function(event) {
-            switch (event.key) {
-              case "ArrowLeft":
-              case "ArrowRight":
-              case _this.divider: {
-                event.preventDefault();
-                var input = event.target;
-                var property = event.key === "ArrowLeft" ? "previousElementSibling" : "nextElementSibling";
-                var nextInput = findInput(input, property);
-                focus(nextInput);
-                break;
-              }
-              default:
-            }
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onKeyUp", function(event) {
-            var key = event.key, input = event.target;
-            var isNumberKey = !isNaN(parseInt(key, 10));
-            if (!isNumberKey) {
-              return;
-            }
-            var value = input.value;
-            var max2 = input.getAttribute("max");
-            if (value * 10 > max2 || value.length >= max2.length) {
-              var property = "nextElementSibling";
-              var nextInput = findInput(input, property);
-              focus(nextInput);
-            }
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onChange", function(event) {
-            var _event$target = event.target, name = _event$target.name, value = _event$target.value;
-            switch (name) {
-              case "hour12": {
-                _this.setState(function(prevState) {
-                  return {
-                    hour: value ? (0, _dates.convert12to24)(parseInt(value, 10), prevState.amPm).toString() : ""
-                  };
-                }, _this.onChangeExternal);
-                break;
-              }
-              case "hour24": {
-                _this.setState({
-                  hour: value
-                }, _this.onChangeExternal);
-                break;
-              }
-              default: {
-                _this.setState(_defineProperty4({}, name, value), _this.onChangeExternal);
-              }
-            }
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onChangeNative", function(event) {
-            var onChange = _this.props.onChange;
-            var value = event.target.value;
-            if (!onChange) {
-              return;
-            }
-            var processedValue = function() {
-              if (!value) {
-                return null;
-              }
-              return value;
-            }();
-            onChange(processedValue, false);
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onChangeAmPm", function(event) {
-            var value = event.target.value;
-            _this.setState({
-              amPm: value
-            }, _this.onChangeExternal);
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onChangeExternal", function() {
-            var onChange = _this.props.onChange;
-            if (!onChange) {
-              return;
-            }
-            var formElements = [_this.amPmInput.current, _this.hour12Input.current, _this.hour24Input.current, _this.minuteInput.current, _this.secondInput.current].filter(Boolean);
-            var formElementsWithoutSelect = formElements.slice(1);
-            var values = {};
-            formElements.forEach(function(formElement) {
-              values[formElement.name] = formElement.value;
-            });
-            if (formElementsWithoutSelect.every(function(formElement) {
-              return !formElement.value;
-            })) {
-              onChange(null, false);
-            } else if (formElements.every(function(formElement) {
-              return formElement.value && formElement.validity.valid;
-            })) {
-              var hour = parseInt(values.hour24 || (0, _dates.convert12to24)(values.hour12, values.amPm) || 0, 10);
-              var minute = parseInt(values.minute || 0, 10);
-              var second = parseInt(values.second || 0, 10);
-              var padStart = function padStart2(num) {
-                return "0".concat(num).slice(-2);
-              };
-              var proposedValue = "".concat(padStart(hour), ":").concat(padStart(minute), ":").concat(padStart(second));
-              var processedValue = _this.getProcessedValue(proposedValue);
-              onChange(processedValue, false);
-            }
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "renderHour", function(currentMatch, index) {
-            if (/h/.test(currentMatch)) {
-              return _this.renderHour12(currentMatch, index);
-            }
-            return _this.renderHour24(currentMatch, index);
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "renderHour12", function(currentMatch, index) {
-            var _this$props = _this.props, autoFocus = _this$props.autoFocus, hourAriaLabel = _this$props.hourAriaLabel, hourPlaceholder = _this$props.hourPlaceholder;
-            var _this$state = _this.state, amPm = _this$state.amPm, hour = _this$state.hour;
-            if (currentMatch && currentMatch.length > 2) {
-              throw new Error("Unsupported token: ".concat(currentMatch));
-            }
-            var showLeadingZeros = currentMatch && currentMatch.length === 2;
-            return /* @__PURE__ */ _react["default"].createElement(_Hour12Input["default"], _extends2({
-              key: "hour12"
-            }, _this.commonInputProps, {
-              amPm,
-              ariaLabel: hourAriaLabel,
-              autoFocus: index === 0 && autoFocus,
-              inputRef: _this.hour12Input,
-              placeholder: hourPlaceholder,
-              showLeadingZeros,
-              value: hour
-            }));
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "renderHour24", function(currentMatch, index) {
-            var _this$props2 = _this.props, autoFocus = _this$props2.autoFocus, hourAriaLabel = _this$props2.hourAriaLabel, hourPlaceholder = _this$props2.hourPlaceholder;
-            var hour = _this.state.hour;
-            if (currentMatch && currentMatch.length > 2) {
-              throw new Error("Unsupported token: ".concat(currentMatch));
-            }
-            var showLeadingZeros = currentMatch && currentMatch.length === 2;
-            return /* @__PURE__ */ _react["default"].createElement(_Hour24Input["default"], _extends2({
-              key: "hour24"
-            }, _this.commonInputProps, {
-              ariaLabel: hourAriaLabel,
-              autoFocus: index === 0 && autoFocus,
-              inputRef: _this.hour24Input,
-              placeholder: hourPlaceholder,
-              showLeadingZeros,
-              value: hour
-            }));
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "renderMinute", function(currentMatch, index) {
-            var _this$props3 = _this.props, autoFocus = _this$props3.autoFocus, minuteAriaLabel = _this$props3.minuteAriaLabel, minutePlaceholder = _this$props3.minutePlaceholder;
-            var _this$state2 = _this.state, hour = _this$state2.hour, minute = _this$state2.minute;
-            if (currentMatch && currentMatch.length > 2) {
-              throw new Error("Unsupported token: ".concat(currentMatch));
-            }
-            var showLeadingZeros = currentMatch && currentMatch.length === 2;
-            return /* @__PURE__ */ _react["default"].createElement(_MinuteInput["default"], _extends2({
-              key: "minute"
-            }, _this.commonInputProps, {
-              ariaLabel: minuteAriaLabel,
-              autoFocus: index === 0 && autoFocus,
-              hour,
-              inputRef: _this.minuteInput,
-              placeholder: minutePlaceholder,
-              showLeadingZeros,
-              value: minute
-            }));
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "renderSecond", function(currentMatch, index) {
-            var _this$props4 = _this.props, autoFocus = _this$props4.autoFocus, secondAriaLabel = _this$props4.secondAriaLabel, secondPlaceholder = _this$props4.secondPlaceholder;
-            var _this$state3 = _this.state, hour = _this$state3.hour, minute = _this$state3.minute, second = _this$state3.second;
-            if (currentMatch && currentMatch.length > 2) {
-              throw new Error("Unsupported token: ".concat(currentMatch));
-            }
-            var showLeadingZeros = currentMatch ? currentMatch.length === 2 : true;
-            return /* @__PURE__ */ _react["default"].createElement(_SecondInput["default"], _extends2({
-              key: "second"
-            }, _this.commonInputProps, {
-              ariaLabel: secondAriaLabel,
-              autoFocus: index === 0 && autoFocus,
-              hour,
-              inputRef: _this.secondInput,
-              minute,
-              placeholder: secondPlaceholder,
-              showLeadingZeros,
-              value: second
-            }));
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "renderAmPm", function(currentMatch, index) {
-            var _this$props5 = _this.props, amPmAriaLabel = _this$props5.amPmAriaLabel, autoFocus = _this$props5.autoFocus, locale = _this$props5.locale;
-            var amPm = _this.state.amPm;
-            return /* @__PURE__ */ _react["default"].createElement(_AmPm["default"], _extends2({
-              key: "ampm"
-            }, _this.commonInputProps, {
-              ariaLabel: amPmAriaLabel,
-              autoFocus: index === 0 && autoFocus,
-              inputRef: _this.amPmInput,
-              locale,
-              onChange: _this.onChangeAmPm,
-              value: amPm
-            }));
-          });
-          return _this;
-        }
-        _createClass3(TimeInput2, [{
-          key: "formatTime",
-          get: function get3() {
-            var maxDetail = this.props.maxDetail;
-            var options = {
-              hour: "numeric"
-            };
-            var level = allViews.indexOf(maxDetail);
-            if (level >= 1) {
-              options.minute = "numeric";
-            }
-            if (level >= 2) {
-              options.second = "numeric";
-            }
-            return (0, _dateFormatter.getFormatter)(options);
-          }
-        }, {
-          key: "formatNumber",
-          get: function get3() {
-            return formatNumber;
-          }
-          /**
-           * Gets current value in a desired format.
-           */
-        }, {
-          key: "getProcessedValue",
-          value: function getProcessedValue(value) {
-            var _this2 = this;
-            var processFunction = function() {
-              switch (_this2.valueType) {
-                case "hour":
-                case "minute":
-                  return _dateUtils.getHoursMinutes;
-                case "second":
-                  return _dateUtils.getHoursMinutesSeconds;
-                default:
-                  throw new Error("Invalid valueType.");
-              }
-            }();
-            return processFunction(value);
-          }
-          /**
-           * Returns value type that can be returned with currently applied settings.
-           */
-        }, {
-          key: "valueType",
-          get: function get3() {
-            var maxDetail = this.props.maxDetail;
-            return maxDetail;
-          }
-        }, {
-          key: "divider",
-          get: function get3() {
-            var dividers = this.placeholder.match(/[^0-9a-z]/i);
-            return dividers ? dividers[0] : null;
-          }
-        }, {
-          key: "placeholder",
-          get: function get3() {
-            var _this$props6 = this.props, format = _this$props6.format, locale = _this$props6.locale;
-            if (format) {
-              return format;
-            }
-            var hour24 = 21;
-            var hour12 = 9;
-            var minute = 13;
-            var second = 14;
-            var date = new Date(2017, 0, 1, hour24, minute, second);
-            return this.formatTime(locale, date).replace(this.formatNumber(locale, hour12), "h").replace(this.formatNumber(locale, hour24), "H").replace(this.formatNumber(locale, minute), "mm").replace(this.formatNumber(locale, second), "ss").replace(new RegExp((0, _utils.getAmPmLabels)(locale).join("|")), "a");
-          }
-        }, {
-          key: "commonInputProps",
-          get: function get3() {
-            var _this$props7 = this.props, className = _this$props7.className, disabled = _this$props7.disabled, isClockOpen = _this$props7.isClockOpen, maxTime = _this$props7.maxTime, minTime = _this$props7.minTime, required = _this$props7.required;
-            return {
-              className,
-              disabled,
-              maxTime,
-              minTime,
-              onChange: this.onChange,
-              onKeyDown: this.onKeyDown,
-              onKeyUp: this.onKeyUp,
-              placeholder: "--",
-              // This is only for showing validity when editing
-              required: required || isClockOpen
-            };
-          }
-        }, {
-          key: "renderCustomInputs",
-          value: function renderCustomInputs() {
-            var placeholder = this.placeholder;
-            var format = this.props.format;
-            var elementFunctions = {
-              h: this.renderHour,
-              H: this.renderHour,
-              m: this.renderMinute,
-              s: this.renderSecond,
-              a: this.renderAmPm
-            };
-            var allowMultipleInstances = typeof format !== "undefined";
-            return _renderCustomInputs(placeholder, elementFunctions, allowMultipleInstances);
-          }
-        }, {
-          key: "renderNativeInput",
-          value: function renderNativeInput() {
-            var _this$props8 = this.props, disabled = _this$props8.disabled, maxTime = _this$props8.maxTime, minTime = _this$props8.minTime, name = _this$props8.name, nativeInputAriaLabel = _this$props8.nativeInputAriaLabel, required = _this$props8.required, value = _this$props8.value;
-            return /* @__PURE__ */ _react["default"].createElement(_NativeInput["default"], {
-              key: "time",
-              ariaLabel: nativeInputAriaLabel,
-              disabled,
-              maxTime,
-              minTime,
-              name,
-              onChange: this.onChangeNative,
-              required,
-              value,
-              valueType: this.valueType
-            });
-          }
-        }, {
-          key: "render",
-          value: function render() {
-            var className = this.props.className;
-            return (
-              // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-              /* @__PURE__ */ _react["default"].createElement("div", {
-                className,
-                onClick: this.onClick
-              }, this.renderNativeInput(), this.renderCustomInputs())
-            );
-          }
-        }], [{
-          key: "getDerivedStateFromProps",
-          value: function getDerivedStateFromProps(nextProps, prevState) {
-            var nextState = {};
-            if (nextProps.isClockOpen !== prevState.isClockOpen) {
-              nextState.isClockOpen = nextProps.isClockOpen;
-            }
-            var nextValue = nextProps.value;
-            if (
-              // Toggling calendar visibility resets values
-              nextState.isClockOpen || // Flag was toggled
-              hoursAreDifferent(nextValue, prevState.value)
-            ) {
-              if (nextValue) {
-                var _convert24to = (0, _dates.convert24to12)((0, _dateUtils.getHours)(nextValue));
-                var _convert24to2 = _slicedToArray2(_convert24to, 2);
-                nextState.amPm = _convert24to2[1];
-                nextState.hour = (0, _dateUtils.getHours)(nextValue).toString();
-                nextState.minute = (0, _dateUtils.getMinutes)(nextValue).toString();
-                nextState.second = (0, _dateUtils.getSeconds)(nextValue).toString();
-              } else {
-                nextState.amPm = null;
-                nextState.hour = null;
-                nextState.minute = null;
-                nextState.second = null;
-              }
-              nextState.value = nextValue;
-            }
-            return nextState;
-          }
-        }]);
-        return TimeInput2;
-      }(_react.PureComponent);
-      exports["default"] = TimeInput;
-      TimeInput.defaultProps = {
-        maxDetail: "minute",
-        name: "time"
-      };
-      TimeInput.propTypes = {
-        amPmAriaLabel: _propTypes["default"].string,
-        autoFocus: _propTypes["default"].bool,
-        className: _propTypes["default"].string.isRequired,
-        disabled: _propTypes["default"].bool,
-        format: _propTypes["default"].string,
-        hourAriaLabel: _propTypes["default"].string,
-        hourPlaceholder: _propTypes["default"].string,
-        isClockOpen: _propTypes["default"].bool,
-        locale: _propTypes["default"].string,
-        maxDetail: _propTypes["default"].oneOf(allViews),
-        maxTime: _propTypes2.isTime,
-        minTime: _propTypes2.isTime,
-        minuteAriaLabel: _propTypes["default"].string,
-        minutePlaceholder: _propTypes["default"].string,
-        name: _propTypes["default"].string,
-        nativeInputAriaLabel: _propTypes["default"].string,
-        onChange: _propTypes["default"].func,
-        required: _propTypes["default"].bool,
-        secondAriaLabel: _propTypes["default"].string,
-        secondPlaceholder: _propTypes["default"].string,
-        value: _propTypes["default"].oneOfType([_propTypes2.isTime, _propTypes["default"].instanceOf(Date)])
-      };
-    }
-  });
-
-  // node_modules/react-time-picker/dist/TimePicker.js
-  var require_TimePicker = __commonJS({
-    "node_modules/react-time-picker/dist/TimePicker.js"(exports) {
-      "use strict";
-      function _typeof3(obj) {
-        "@babel/helpers - typeof";
-        return _typeof3 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj2) {
-          return typeof obj2;
-        } : function(obj2) {
-          return obj2 && "function" == typeof Symbol && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        }, _typeof3(obj);
-      }
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = void 0;
-      var _react = _interopRequireWildcard(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _makeEventProps = _interopRequireDefault(require_cjs());
-      var _mergeClassNames = _interopRequireDefault(require_umd());
-      var _reactFit = _interopRequireDefault(require_cjs3());
-      var _reactClock = _interopRequireDefault(require_umd3());
-      var _TimeInput = _interopRequireDefault(require_TimeInput());
-      var _propTypes2 = require_propTypes2();
-      var _excluded2 = ["clockClassName", "className", "maxDetail", "onChange", "value"];
-      var _excluded22 = ["onChange"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _getRequireWildcardCache(nodeInterop) {
-        if (typeof WeakMap !== "function")
-          return null;
-        var cacheBabelInterop = /* @__PURE__ */ new WeakMap();
-        var cacheNodeInterop = /* @__PURE__ */ new WeakMap();
-        return (_getRequireWildcardCache = function _getRequireWildcardCache2(nodeInterop2) {
-          return nodeInterop2 ? cacheNodeInterop : cacheBabelInterop;
-        })(nodeInterop);
-      }
-      function _interopRequireWildcard(obj, nodeInterop) {
-        if (!nodeInterop && obj && obj.__esModule) {
-          return obj;
-        }
-        if (obj === null || _typeof3(obj) !== "object" && typeof obj !== "function") {
-          return { "default": obj };
-        }
-        var cache = _getRequireWildcardCache(nodeInterop);
-        if (cache && cache.has(obj)) {
-          return cache.get(obj);
-        }
-        var newObj = {};
-        var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-        for (var key in obj) {
-          if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-            var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-            if (desc && (desc.get || desc.set)) {
-              Object.defineProperty(newObj, key, desc);
-            } else {
-              newObj[key] = obj[key];
-            }
-          }
-        }
-        newObj["default"] = obj;
-        if (cache) {
-          cache.set(obj, newObj);
-        }
-        return newObj;
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      function _extends2() {
-        _extends2 = Object.assign || function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _slicedToArray2(arr, i2) {
-        return _arrayWithHoles2(arr) || _iterableToArrayLimit2(arr, i2) || _unsupportedIterableToArray3(arr, i2) || _nonIterableRest2();
-      }
-      function _nonIterableRest2() {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-      function _unsupportedIterableToArray3(o2, minLen) {
-        if (!o2)
-          return;
-        if (typeof o2 === "string")
-          return _arrayLikeToArray3(o2, minLen);
-        var n2 = Object.prototype.toString.call(o2).slice(8, -1);
-        if (n2 === "Object" && o2.constructor)
-          n2 = o2.constructor.name;
-        if (n2 === "Map" || n2 === "Set")
-          return Array.from(o2);
-        if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
-          return _arrayLikeToArray3(o2, minLen);
-      }
-      function _arrayLikeToArray3(arr, len) {
-        if (len == null || len > arr.length)
-          len = arr.length;
-        for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++) {
-          arr2[i2] = arr[i2];
-        }
-        return arr2;
-      }
-      function _iterableToArrayLimit2(arr, i2) {
-        var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-        if (_i == null)
-          return;
-        var _arr = [];
-        var _n = true;
-        var _d = false;
-        var _s, _e2;
-        try {
-          for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-            _arr.push(_s.value);
-            if (i2 && _arr.length === i2)
-              break;
-          }
-        } catch (err) {
-          _d = true;
-          _e2 = err;
-        } finally {
-          try {
-            if (!_n && _i["return"] != null)
-              _i["return"]();
-          } finally {
-            if (_d)
-              throw _e2;
-          }
-        }
-        return _arr;
-      }
-      function _arrayWithHoles2(arr) {
-        if (Array.isArray(arr))
-          return arr;
-      }
-      function _classCallCheck3(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-          throw new TypeError("Cannot call a class as a function");
-        }
-      }
-      function _defineProperties3(target, props) {
-        for (var i2 = 0; i2 < props.length; i2++) {
-          var descriptor = props[i2];
-          descriptor.enumerable = descriptor.enumerable || false;
-          descriptor.configurable = true;
-          if ("value" in descriptor)
-            descriptor.writable = true;
-          Object.defineProperty(target, descriptor.key, descriptor);
-        }
-      }
-      function _createClass3(Constructor, protoProps, staticProps) {
-        if (protoProps)
-          _defineProperties3(Constructor.prototype, protoProps);
-        if (staticProps)
-          _defineProperties3(Constructor, staticProps);
-        Object.defineProperty(Constructor, "prototype", { writable: false });
-        return Constructor;
-      }
-      function _inherits2(subClass, superClass) {
-        if (typeof superClass !== "function" && superClass !== null) {
-          throw new TypeError("Super expression must either be null or a function");
-        }
-        subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
-        Object.defineProperty(subClass, "prototype", { writable: false });
-        if (superClass)
-          _setPrototypeOf2(subClass, superClass);
-      }
-      function _setPrototypeOf2(o2, p2) {
-        _setPrototypeOf2 = Object.setPrototypeOf || function _setPrototypeOf3(o3, p3) {
-          o3.__proto__ = p3;
-          return o3;
-        };
-        return _setPrototypeOf2(o2, p2);
-      }
-      function _createSuper2(Derived) {
-        var hasNativeReflectConstruct = _isNativeReflectConstruct2();
-        return function _createSuperInternal() {
-          var Super = _getPrototypeOf2(Derived), result;
-          if (hasNativeReflectConstruct) {
-            var NewTarget = _getPrototypeOf2(this).constructor;
-            result = Reflect.construct(Super, arguments, NewTarget);
-          } else {
-            result = Super.apply(this, arguments);
-          }
-          return _possibleConstructorReturn2(this, result);
-        };
-      }
-      function _possibleConstructorReturn2(self2, call2) {
-        if (call2 && (_typeof3(call2) === "object" || typeof call2 === "function")) {
-          return call2;
-        } else if (call2 !== void 0) {
-          throw new TypeError("Derived constructors may only return object or undefined");
-        }
-        return _assertThisInitialized2(self2);
-      }
-      function _assertThisInitialized2(self2) {
-        if (self2 === void 0) {
-          throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-        }
-        return self2;
-      }
-      function _isNativeReflectConstruct2() {
-        if (typeof Reflect === "undefined" || !Reflect.construct)
-          return false;
-        if (Reflect.construct.sham)
-          return false;
-        if (typeof Proxy === "function")
-          return true;
-        try {
-          Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
-          }));
-          return true;
-        } catch (e2) {
-          return false;
-        }
-      }
-      function _getPrototypeOf2(o2) {
-        _getPrototypeOf2 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf3(o3) {
-          return o3.__proto__ || Object.getPrototypeOf(o3);
-        };
-        return _getPrototypeOf2(o2);
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      var allViews = ["hour", "minute", "second"];
-      var baseClassName = "react-time-picker";
-      var outsideActionEvents = ["mousedown", "focusin", "touchstart"];
-      var TimePicker3 = /* @__PURE__ */ function(_PureComponent) {
-        _inherits2(TimePicker4, _PureComponent);
-        var _super = _createSuper2(TimePicker4);
-        function TimePicker4() {
-          var _this;
-          _classCallCheck3(this, TimePicker4);
-          for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-          }
-          _this = _super.call.apply(_super, [this].concat(args));
-          _defineProperty4(_assertThisInitialized2(_this), "state", {});
-          _defineProperty4(_assertThisInitialized2(_this), "onOutsideAction", function(event) {
-            var target = "composedPath" in event ? event.composedPath()[0] : event.target;
-            if (_this.wrapper && !_this.wrapper.contains(target)) {
-              _this.closeClock();
-            }
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onChange", function(value) {
-            var closeClock = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : _this.props.closeClock;
-            var onChange = _this.props.onChange;
-            if (closeClock) {
-              _this.closeClock();
-            }
-            if (onChange) {
-              onChange(value);
-            }
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onFocus", function(event) {
-            var _this$props = _this.props, disabled = _this$props.disabled, onFocus = _this$props.onFocus, openClockOnFocus = _this$props.openClockOnFocus;
-            if (onFocus) {
-              onFocus(event);
-            }
-            if (disabled) {
-              return;
-            }
-            if (openClockOnFocus) {
-              if (event.target.getAttribute("data-select") === "true") {
-                return;
-              }
-              _this.openClock();
-            }
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onKeyDown", function(event) {
-            if (event.key === "Escape") {
-              _this.closeClock();
-            }
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "openClock", function() {
-            _this.setState({
-              isOpen: true
-            });
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "closeClock", function() {
-            _this.setState(function(prevState) {
-              if (!prevState.isOpen) {
-                return null;
-              }
-              return {
-                isOpen: false
-              };
-            });
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "toggleClock", function() {
-            _this.setState(function(prevState) {
-              return {
-                isOpen: !prevState.isOpen
-              };
-            });
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "stopPropagation", function(event) {
-            return event.stopPropagation();
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "clear", function() {
-            return _this.onChange(null);
-          });
-          return _this;
-        }
-        _createClass3(TimePicker4, [{
-          key: "componentDidMount",
-          value: function componentDidMount() {
-            this.handleOutsideActionListeners();
-          }
-        }, {
-          key: "componentDidUpdate",
-          value: function componentDidUpdate(prevProps, prevState) {
-            var isOpen = this.state.isOpen;
-            var _this$props2 = this.props, onClockClose = _this$props2.onClockClose, onClockOpen = _this$props2.onClockOpen;
-            if (isOpen !== prevState.isOpen) {
-              this.handleOutsideActionListeners();
-              var callback = isOpen ? onClockOpen : onClockClose;
-              if (callback)
-                callback();
-            }
-          }
-        }, {
-          key: "componentWillUnmount",
-          value: function componentWillUnmount() {
-            this.handleOutsideActionListeners(false);
-          }
-        }, {
-          key: "eventProps",
-          get: function get3() {
-            return (0, _makeEventProps["default"])(this.props);
-          }
-        }, {
-          key: "handleOutsideActionListeners",
-          value: function handleOutsideActionListeners(shouldListen) {
-            var _this2 = this;
-            var isOpen = this.state.isOpen;
-            var shouldListenWithFallback = typeof shouldListen !== "undefined" ? shouldListen : isOpen;
-            var fnName = shouldListenWithFallback ? "addEventListener" : "removeEventListener";
-            outsideActionEvents.forEach(function(eventName) {
-              return document[fnName](eventName, _this2.onOutsideAction);
-            });
-            document[fnName]("keydown", this.onKeyDown);
-          }
-        }, {
-          key: "renderInputs",
-          value: function renderInputs() {
-            var _this$props3 = this.props, amPmAriaLabel = _this$props3.amPmAriaLabel, autoFocus = _this$props3.autoFocus, clearAriaLabel = _this$props3.clearAriaLabel, clearIcon = _this$props3.clearIcon, clockAriaLabel = _this$props3.clockAriaLabel, clockIcon = _this$props3.clockIcon, disableClock = _this$props3.disableClock, disabled = _this$props3.disabled, format = _this$props3.format, hourAriaLabel = _this$props3.hourAriaLabel, hourPlaceholder = _this$props3.hourPlaceholder, isOpen = _this$props3.isOpen, locale = _this$props3.locale, maxDetail = _this$props3.maxDetail, maxTime = _this$props3.maxTime, minTime = _this$props3.minTime, minuteAriaLabel = _this$props3.minuteAriaLabel, minutePlaceholder = _this$props3.minutePlaceholder, name = _this$props3.name, nativeInputAriaLabel = _this$props3.nativeInputAriaLabel, required = _this$props3.required, secondAriaLabel = _this$props3.secondAriaLabel, secondPlaceholder = _this$props3.secondPlaceholder, value = _this$props3.value;
-            var _concat = [].concat(value), _concat2 = _slicedToArray2(_concat, 1), valueFrom = _concat2[0];
-            var ariaLabelProps = {
-              amPmAriaLabel,
-              hourAriaLabel,
-              minuteAriaLabel,
-              nativeInputAriaLabel,
-              secondAriaLabel
-            };
-            var placeholderProps = {
-              hourPlaceholder,
-              minutePlaceholder,
-              secondPlaceholder
-            };
-            return /* @__PURE__ */ _react["default"].createElement("div", {
-              className: "".concat(baseClassName, "__wrapper")
-            }, /* @__PURE__ */ _react["default"].createElement(_TimeInput["default"], _extends2({}, ariaLabelProps, placeholderProps, {
-              // eslint-disable-next-line jsx-a11y/no-autofocus
-              autoFocus,
-              className: "".concat(baseClassName, "__inputGroup"),
-              disabled,
-              format,
-              isClockOpen: isOpen,
-              locale,
-              maxDetail,
-              maxTime,
-              minTime,
-              name,
-              onChange: this.onChange,
-              placeholder: this.placeholder,
-              required,
-              value: valueFrom
-            })), clearIcon !== null && /* @__PURE__ */ _react["default"].createElement("button", {
-              "aria-label": clearAriaLabel,
-              className: "".concat(baseClassName, "__clear-button ").concat(baseClassName, "__button"),
-              disabled,
-              onClick: this.clear,
-              onFocus: this.stopPropagation,
-              type: "button"
-            }, clearIcon), clockIcon !== null && !disableClock && /* @__PURE__ */ _react["default"].createElement("button", {
-              "aria-label": clockAriaLabel,
-              className: "".concat(baseClassName, "__clock-button ").concat(baseClassName, "__button"),
-              disabled,
-              onBlur: this.resetValue,
-              onClick: this.toggleClock,
-              onFocus: this.stopPropagation,
-              type: "button"
-            }, clockIcon));
-          }
-        }, {
-          key: "renderClock",
-          value: function renderClock() {
-            var disableClock = this.props.disableClock;
-            var isOpen = this.state.isOpen;
-            if (isOpen === null || disableClock) {
-              return null;
-            }
-            var _this$props4 = this.props, clockClassName = _this$props4.clockClassName, timePickerClassName = _this$props4.className, maxDetail = _this$props4.maxDetail, onChange = _this$props4.onChange, value = _this$props4.value, clockProps = _objectWithoutProperties2(_this$props4, _excluded2);
-            var className = "".concat(baseClassName, "__clock");
-            var _concat3 = [].concat(value), _concat4 = _slicedToArray2(_concat3, 1), valueFrom = _concat4[0];
-            var maxDetailIndex = allViews.indexOf(maxDetail);
-            return /* @__PURE__ */ _react["default"].createElement(_reactFit["default"], null, /* @__PURE__ */ _react["default"].createElement("div", {
-              ref: function ref(_ref2) {
-                if (_ref2 && !isOpen) {
-                  _ref2.removeAttribute("style");
-                }
-              },
-              className: (0, _mergeClassNames["default"])(className, "".concat(className, "--").concat(isOpen ? "open" : "closed"))
-            }, /* @__PURE__ */ _react["default"].createElement(_reactClock["default"], _extends2({
-              className: clockClassName,
-              renderMinuteHand: maxDetailIndex > 0,
-              renderSecondHand: maxDetailIndex > 1,
-              value: valueFrom
-            }, clockProps))));
-          }
-        }, {
-          key: "render",
-          value: function render() {
-            var _this3 = this;
-            var eventProps = this.eventProps;
-            var _this$props5 = this.props, className = _this$props5.className, disabled = _this$props5.disabled;
-            var isOpen = this.state.isOpen;
-            var onChange = eventProps.onChange, eventPropsWithoutOnChange = _objectWithoutProperties2(eventProps, _excluded22);
-            return /* @__PURE__ */ _react["default"].createElement("div", _extends2({
-              className: (0, _mergeClassNames["default"])(baseClassName, "".concat(baseClassName, "--").concat(isOpen ? "open" : "closed"), "".concat(baseClassName, "--").concat(disabled ? "disabled" : "enabled"), className)
-            }, eventPropsWithoutOnChange, {
-              onFocus: this.onFocus,
-              ref: function ref(_ref2) {
-                if (!_ref2) {
-                  return;
-                }
-                _this3.wrapper = _ref2;
-              }
-            }), this.renderInputs(), this.renderClock());
-          }
-        }], [{
-          key: "getDerivedStateFromProps",
-          value: function getDerivedStateFromProps(nextProps, prevState) {
-            if (nextProps.isOpen !== prevState.isOpenProps) {
-              return {
-                isOpen: nextProps.isOpen,
-                isOpenProps: nextProps.isOpen
-              };
-            }
-            return null;
-          }
-        }]);
-        return TimePicker4;
-      }(_react.PureComponent);
-      exports["default"] = TimePicker3;
-      var iconProps = {
-        xmlns: "http://www.w3.org/2000/svg",
-        width: 19,
-        height: 19,
-        viewBox: "0 0 19 19",
-        stroke: "black",
-        strokeWidth: 2
-      };
-      var ClockIcon = /* @__PURE__ */ _react["default"].createElement("svg", _extends2({}, iconProps, {
-        className: "".concat(baseClassName, "__clock-button__icon ").concat(baseClassName, "__button__icon"),
-        fill: "none"
-      }), /* @__PURE__ */ _react["default"].createElement("circle", {
-        cx: "9.5",
-        cy: "9.5",
-        r: "7.5"
-      }), /* @__PURE__ */ _react["default"].createElement("path", {
-        d: "M9.5 4.5 v5 h4"
-      }));
-      var ClearIcon = /* @__PURE__ */ _react["default"].createElement("svg", _extends2({}, iconProps, {
-        className: "".concat(baseClassName, "__clear-button__icon ").concat(baseClassName, "__button__icon")
-      }), /* @__PURE__ */ _react["default"].createElement("line", {
-        x1: "4",
-        x2: "15",
-        y1: "4",
-        y2: "15"
-      }), /* @__PURE__ */ _react["default"].createElement("line", {
-        x1: "15",
-        x2: "4",
-        y1: "4",
-        y2: "15"
-      }));
-      TimePicker3.defaultProps = {
-        clearIcon: ClearIcon,
-        clockIcon: ClockIcon,
-        closeClock: true,
-        isOpen: null,
-        maxDetail: "minute",
-        openClockOnFocus: true
-      };
-      var isValue = _propTypes["default"].oneOfType([_propTypes2.isTime, _propTypes["default"].instanceOf(Date)]);
-      TimePicker3.propTypes = {
-        amPmAriaLabel: _propTypes["default"].string,
-        autoFocus: _propTypes["default"].bool,
-        className: _propTypes["default"].oneOfType([_propTypes["default"].string, _propTypes["default"].arrayOf(_propTypes["default"].string)]),
-        clearAriaLabel: _propTypes["default"].string,
-        clearIcon: _propTypes["default"].node,
-        clockAriaLabel: _propTypes["default"].string,
-        clockClassName: _propTypes["default"].oneOfType([_propTypes["default"].string, _propTypes["default"].arrayOf(_propTypes["default"].string)]),
-        clockIcon: _propTypes["default"].node,
-        closeClock: _propTypes["default"].bool,
-        disableClock: _propTypes["default"].bool,
-        disabled: _propTypes["default"].bool,
-        format: _propTypes["default"].string,
-        hourAriaLabel: _propTypes["default"].string,
-        hourPlaceholder: _propTypes["default"].string,
-        isOpen: _propTypes["default"].bool,
-        locale: _propTypes["default"].string,
-        maxDetail: _propTypes["default"].oneOf(allViews),
-        maxTime: _propTypes2.isTime,
-        minTime: _propTypes2.isTime,
-        minuteAriaLabel: _propTypes["default"].string,
-        minutePlaceholder: _propTypes["default"].string,
-        name: _propTypes["default"].string,
-        nativeInputAriaLabel: _propTypes["default"].string,
-        onChange: _propTypes["default"].func,
-        onClockClose: _propTypes["default"].func,
-        onClockOpen: _propTypes["default"].func,
-        onFocus: _propTypes["default"].func,
-        openClockOnFocus: _propTypes["default"].bool,
-        required: _propTypes["default"].bool,
-        secondAriaLabel: _propTypes["default"].string,
-        secondPlaceholder: _propTypes["default"].string,
-        value: _propTypes["default"].oneOfType([isValue, _propTypes["default"].arrayOf(isValue)])
-      };
-    }
-  });
-
-  // node_modules/react-time-picker/dist/TimePicker.css
-  var require_TimePicker2 = __commonJS({
-    "node_modules/react-time-picker/dist/TimePicker.css"(exports, module) {
-      module.exports = {};
-    }
-  });
-
-  // node_modules/react-time-picker/dist/entry.js
-  var require_entry = __commonJS({
-    "node_modules/react-time-picker/dist/entry.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = void 0;
-      require_Clock();
-      var _TimePicker = _interopRequireDefault(require_TimePicker());
-      require_TimePicker2();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      var _default2 = _TimePicker["default"];
-      exports["default"] = _default2;
-    }
-  });
-
-  // node_modules/react-calendar/dist/Calendar.css
-  var require_Calendar = __commonJS({
-    "node_modules/react-calendar/dist/Calendar.css"(exports, module) {
-      module.exports = {};
-    }
-  });
-
-  // node_modules/react-calendar/node_modules/get-user-locale/dist/umd/index.js
-  var require_umd4 = __commonJS({
-    "node_modules/react-calendar/node_modules/get-user-locale/dist/umd/index.js"(exports) {
-      "use strict";
-      exports.__esModule = true;
-      exports.getUserLocales = exports.getUserLocale = exports["default"] = void 0;
-      var _lodash = _interopRequireDefault(require_lodash3());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function resolver(options) {
-        return JSON.stringify(options);
-      }
-      function uniqDefined(arr) {
-        return arr.filter(function(el, index) {
-          return el && arr.indexOf(el) === index;
-        });
-      }
-      function normalizeLocales(arr) {
-        return arr.map(function(el) {
-          if (!el || el.indexOf("-") === -1 || el.toLowerCase() !== el) {
-            return el;
-          }
-          var splitEl = el.split("-");
-          return splitEl[0] + "-" + splitEl[1].toUpperCase();
-        });
-      }
-      function getUserLocalesInternal(_temp) {
-        var _ref2 = _temp === void 0 ? {} : _temp, _ref$useFallbackLocal = _ref2.useFallbackLocale, useFallbackLocale = _ref$useFallbackLocal === void 0 ? true : _ref$useFallbackLocal, _ref$fallbackLocale = _ref2.fallbackLocale, fallbackLocale = _ref$fallbackLocale === void 0 ? "en-US" : _ref$fallbackLocale;
-        var languageList = [];
-        if (typeof window !== "undefined") {
-          var _window = window, navigator2 = _window.navigator;
-          languageList = languageList.concat(navigator2.languages, navigator2.language, navigator2.userLanguage, navigator2.browserLanguage, navigator2.systemLanguage);
-        }
-        if (useFallbackLocale) {
-          languageList.push(fallbackLocale);
-        }
-        return normalizeLocales(uniqDefined(languageList));
-      }
-      var getUserLocales = (0, _lodash["default"])(getUserLocalesInternal, resolver);
-      exports.getUserLocales = getUserLocales;
-      function getUserLocaleInternal(options) {
-        return getUserLocales(options)[0] || null;
-      }
-      var getUserLocale = (0, _lodash["default"])(getUserLocaleInternal, resolver);
-      exports.getUserLocale = getUserLocale;
-      var _default2 = getUserLocale;
-      exports["default"] = _default2;
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/shared/const.js
-  var require_const = __commonJS({
-    "node_modules/react-calendar/dist/umd/shared/const.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.WEEKDAYS = exports.CALENDAR_TYPE_LOCALES = exports.CALENDAR_TYPES = void 0;
-      var _CALENDAR_TYPE_LOCALE;
-      function _toConsumableArray2(arr) {
-        return _arrayWithoutHoles2(arr) || _iterableToArray2(arr) || _unsupportedIterableToArray3(arr) || _nonIterableSpread2();
-      }
-      function _nonIterableSpread2() {
-        throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-      function _unsupportedIterableToArray3(o2, minLen) {
-        if (!o2)
-          return;
-        if (typeof o2 === "string")
-          return _arrayLikeToArray3(o2, minLen);
-        var n2 = Object.prototype.toString.call(o2).slice(8, -1);
-        if (n2 === "Object" && o2.constructor)
-          n2 = o2.constructor.name;
-        if (n2 === "Map" || n2 === "Set")
-          return Array.from(o2);
-        if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
-          return _arrayLikeToArray3(o2, minLen);
-      }
-      function _iterableToArray2(iter) {
-        if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null)
-          return Array.from(iter);
-      }
-      function _arrayWithoutHoles2(arr) {
-        if (Array.isArray(arr))
-          return _arrayLikeToArray3(arr);
-      }
-      function _arrayLikeToArray3(arr, len) {
-        if (len == null || len > arr.length)
-          len = arr.length;
-        for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++) {
-          arr2[i2] = arr[i2];
-        }
-        return arr2;
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      var CALENDAR_TYPES = {
-        ARABIC: "Arabic",
-        HEBREW: "Hebrew",
-        ISO_8601: "ISO 8601",
-        US: "US"
-      };
-      exports.CALENDAR_TYPES = CALENDAR_TYPES;
-      var CALENDAR_TYPE_LOCALES = (_CALENDAR_TYPE_LOCALE = {}, _defineProperty4(_CALENDAR_TYPE_LOCALE, CALENDAR_TYPES.US, ["en-CA", "en-US", "es-AR", "es-BO", "es-CL", "es-CO", "es-CR", "es-DO", "es-EC", "es-GT", "es-HN", "es-MX", "es-NI", "es-PA", "es-PE", "es-PR", "es-SV", "es-VE", "pt-BR"]), _defineProperty4(_CALENDAR_TYPE_LOCALE, CALENDAR_TYPES.ARABIC, [
-        // ar-LB, ar-MA intentionally missing
-        "ar",
-        "ar-AE",
-        "ar-BH",
-        "ar-DZ",
-        "ar-EG",
-        "ar-IQ",
-        "ar-JO",
-        "ar-KW",
-        "ar-LY",
-        "ar-OM",
-        "ar-QA",
-        "ar-SA",
-        "ar-SD",
-        "ar-SY",
-        "ar-YE",
-        "dv",
-        "dv-MV",
-        "ps",
-        "ps-AR"
-      ]), _defineProperty4(_CALENDAR_TYPE_LOCALE, CALENDAR_TYPES.HEBREW, ["he", "he-IL"]), _CALENDAR_TYPE_LOCALE);
-      exports.CALENDAR_TYPE_LOCALES = CALENDAR_TYPE_LOCALES;
-      var WEEKDAYS = _toConsumableArray2(Array(7)).map(function(el, index) {
-        return index;
-      });
-      exports.WEEKDAYS = WEEKDAYS;
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/shared/dateFormatter.js
-  var require_dateFormatter2 = __commonJS({
-    "node_modules/react-calendar/dist/umd/shared/dateFormatter.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.formatYear = exports.formatWeekday = exports.formatShortWeekday = exports.formatMonthYear = exports.formatMonth = exports.formatLongDate = exports.formatDay = exports.formatDate = void 0;
-      var _getUserLocale = _interopRequireDefault(require_umd4());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      var formatterCache = /* @__PURE__ */ new Map();
-      function getFormatter(options) {
-        return function(locale, date) {
-          var localeWithDefault = locale || (0, _getUserLocale["default"])();
-          if (!formatterCache.has(localeWithDefault)) {
-            formatterCache.set(localeWithDefault, /* @__PURE__ */ new Map());
-          }
-          var formatterCacheLocale = formatterCache.get(localeWithDefault);
-          if (!formatterCacheLocale.has(options)) {
-            formatterCacheLocale.set(options, new Intl.DateTimeFormat(localeWithDefault, options).format);
-          }
-          return formatterCacheLocale.get(options)(date);
-        };
-      }
-      function toSafeHour(date) {
-        var safeDate = new Date(date);
-        return new Date(safeDate.setHours(12));
-      }
-      function getSafeFormatter(options) {
-        return function(locale, date) {
-          return getFormatter(options)(locale, toSafeHour(date));
-        };
-      }
-      var formatDateOptions = {
-        day: "numeric",
-        month: "numeric",
-        year: "numeric"
-      };
-      var formatDayOptions = {
-        day: "numeric"
-      };
-      var formatLongDateOptions = {
-        day: "numeric",
-        month: "long",
-        year: "numeric"
-      };
-      var formatMonthOptions = {
-        month: "long"
-      };
-      var formatMonthYearOptions = {
-        month: "long",
-        year: "numeric"
-      };
-      var formatShortWeekdayOptions = {
-        weekday: "short"
-      };
-      var formatWeekdayOptions = {
-        weekday: "long"
-      };
-      var formatYearOptions = {
-        year: "numeric"
-      };
-      var formatDate = getSafeFormatter(formatDateOptions);
-      exports.formatDate = formatDate;
-      var formatDay = getSafeFormatter(formatDayOptions);
-      exports.formatDay = formatDay;
-      var formatLongDate = getSafeFormatter(formatLongDateOptions);
-      exports.formatLongDate = formatLongDate;
-      var formatMonth = getSafeFormatter(formatMonthOptions);
-      exports.formatMonth = formatMonth;
-      var formatMonthYear = getSafeFormatter(formatMonthYearOptions);
-      exports.formatMonthYear = formatMonthYear;
-      var formatShortWeekday = getSafeFormatter(formatShortWeekdayOptions);
-      exports.formatShortWeekday = formatShortWeekday;
-      var formatWeekday = getSafeFormatter(formatWeekdayOptions);
-      exports.formatWeekday = formatWeekday;
-      var formatYear = getSafeFormatter(formatYearOptions);
-      exports.formatYear = formatYear;
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/shared/dates.js
-  var require_dates2 = __commonJS({
-    "node_modules/react-calendar/dist/umd/shared/dates.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.getBegin = getBegin;
-      exports.getBeginNext = getBeginNext;
-      exports.getBeginNext2 = void 0;
-      exports.getBeginOfCenturyYear = getBeginOfCenturyYear;
-      exports.getBeginOfDecadeYear = getBeginOfDecadeYear;
-      exports.getBeginOfWeek = getBeginOfWeek;
-      exports.getBeginPrevious = getBeginPrevious;
-      exports.getBeginPrevious2 = void 0;
-      exports.getCenturyLabel = getCenturyLabel;
-      exports.getDayOfWeek = getDayOfWeek;
-      exports.getDecadeLabel = getDecadeLabel;
-      exports.getEnd = getEnd;
-      exports.getEndPrevious = getEndPrevious;
-      exports.getEndPrevious2 = void 0;
-      exports.getRange = getRange;
-      exports.getValueRange = getValueRange;
-      exports.getWeekNumber = getWeekNumber;
-      exports.isWeekend = isWeekend;
-      var _dateUtils = require_cjs4();
-      var _const = require_const();
-      var _dateFormatter = require_dateFormatter2();
-      var SUNDAY = _const.WEEKDAYS[0];
-      var FRIDAY = _const.WEEKDAYS[5];
-      var SATURDAY = _const.WEEKDAYS[6];
-      function getDayOfWeek(date) {
-        var calendarType = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : _const.CALENDAR_TYPES.ISO_8601;
-        var weekday = date.getDay();
-        switch (calendarType) {
-          case _const.CALENDAR_TYPES.ISO_8601:
-            return (weekday + 6) % 7;
-          case _const.CALENDAR_TYPES.ARABIC:
-            return (weekday + 1) % 7;
-          case _const.CALENDAR_TYPES.HEBREW:
-          case _const.CALENDAR_TYPES.US:
-            return weekday;
-          default:
-            throw new Error("Unsupported calendar type.");
-        }
-      }
-      function getBeginOfCenturyYear(date) {
-        var beginOfCentury = (0, _dateUtils.getCenturyStart)(date);
-        return (0, _dateUtils.getYear)(beginOfCentury);
-      }
-      function getBeginOfDecadeYear(date) {
-        var beginOfDecade = (0, _dateUtils.getDecadeStart)(date);
-        return (0, _dateUtils.getYear)(beginOfDecade);
-      }
-      function getBeginOfWeek(date) {
-        var calendarType = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : _const.CALENDAR_TYPES.ISO_8601;
-        var year = (0, _dateUtils.getYear)(date);
-        var monthIndex = (0, _dateUtils.getMonth)(date);
-        var day = date.getDate() - getDayOfWeek(date, calendarType);
-        return new Date(year, monthIndex, day);
-      }
-      function getWeekNumber(date) {
-        var calendarType = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : _const.CALENDAR_TYPES.ISO_8601;
-        var calendarTypeForWeekNumber = calendarType === _const.CALENDAR_TYPES.US ? _const.CALENDAR_TYPES.US : _const.CALENDAR_TYPES.ISO_8601;
-        var beginOfWeek = getBeginOfWeek(date, calendarType);
-        var year = (0, _dateUtils.getYear)(date) + 1;
-        var dayInWeekOne;
-        var beginOfFirstWeek;
-        do {
-          dayInWeekOne = new Date(year, 0, calendarTypeForWeekNumber === _const.CALENDAR_TYPES.ISO_8601 ? 4 : 1);
-          beginOfFirstWeek = getBeginOfWeek(dayInWeekOne, calendarType);
-          year -= 1;
-        } while (date < beginOfFirstWeek);
-        return Math.round((beginOfWeek - beginOfFirstWeek) / (864e5 * 7)) + 1;
-      }
-      function getBegin(rangeType, date) {
-        switch (rangeType) {
-          case "century":
-            return (0, _dateUtils.getCenturyStart)(date);
-          case "decade":
-            return (0, _dateUtils.getDecadeStart)(date);
-          case "year":
-            return (0, _dateUtils.getYearStart)(date);
-          case "month":
-            return (0, _dateUtils.getMonthStart)(date);
-          case "day":
-            return (0, _dateUtils.getDayStart)(date);
-          default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-        }
-      }
-      function getBeginPrevious(rangeType, date) {
-        switch (rangeType) {
-          case "century":
-            return (0, _dateUtils.getPreviousCenturyStart)(date);
-          case "decade":
-            return (0, _dateUtils.getPreviousDecadeStart)(date);
-          case "year":
-            return (0, _dateUtils.getPreviousYearStart)(date);
-          case "month":
-            return (0, _dateUtils.getPreviousMonthStart)(date);
-          default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-        }
-      }
-      function getBeginNext(rangeType, date) {
-        switch (rangeType) {
-          case "century":
-            return (0, _dateUtils.getNextCenturyStart)(date);
-          case "decade":
-            return (0, _dateUtils.getNextDecadeStart)(date);
-          case "year":
-            return (0, _dateUtils.getNextYearStart)(date);
-          case "month":
-            return (0, _dateUtils.getNextMonthStart)(date);
-          default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-        }
-      }
-      var getBeginPrevious2 = function getBeginPrevious22(rangeType, date) {
-        switch (rangeType) {
-          case "decade":
-            return (0, _dateUtils.getPreviousDecadeStart)(date, -100);
-          case "year":
-            return (0, _dateUtils.getPreviousYearStart)(date, -10);
-          case "month":
-            return (0, _dateUtils.getPreviousMonthStart)(date, -12);
-          default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-        }
-      };
-      exports.getBeginPrevious2 = getBeginPrevious2;
-      var getBeginNext2 = function getBeginNext22(rangeType, date) {
-        switch (rangeType) {
-          case "decade":
-            return (0, _dateUtils.getNextDecadeStart)(date, 100);
-          case "year":
-            return (0, _dateUtils.getNextYearStart)(date, 10);
-          case "month":
-            return (0, _dateUtils.getNextMonthStart)(date, 12);
-          default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-        }
-      };
-      exports.getBeginNext2 = getBeginNext2;
-      function getEnd(rangeType, date) {
-        switch (rangeType) {
-          case "century":
-            return (0, _dateUtils.getCenturyEnd)(date);
-          case "decade":
-            return (0, _dateUtils.getDecadeEnd)(date);
-          case "year":
-            return (0, _dateUtils.getYearEnd)(date);
-          case "month":
-            return (0, _dateUtils.getMonthEnd)(date);
-          case "day":
-            return (0, _dateUtils.getDayEnd)(date);
-          default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-        }
-      }
-      function getEndPrevious(rangeType, date) {
-        switch (rangeType) {
-          case "century":
-            return (0, _dateUtils.getPreviousCenturyEnd)(date);
-          case "decade":
-            return (0, _dateUtils.getPreviousDecadeEnd)(date);
-          case "year":
-            return (0, _dateUtils.getPreviousYearEnd)(date);
-          case "month":
-            return (0, _dateUtils.getPreviousMonthEnd)(date);
-          default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-        }
-      }
-      var getEndPrevious2 = function getEndPrevious22(rangeType, date) {
-        switch (rangeType) {
-          case "decade":
-            return (0, _dateUtils.getPreviousDecadeEnd)(date, -100);
-          case "year":
-            return (0, _dateUtils.getPreviousYearEnd)(date, -10);
-          case "month":
-            return (0, _dateUtils.getPreviousMonthEnd)(date, -12);
-          default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-        }
-      };
-      exports.getEndPrevious2 = getEndPrevious2;
-      function getRange(rangeType, date) {
-        switch (rangeType) {
-          case "century":
-            return (0, _dateUtils.getCenturyRange)(date);
-          case "decade":
-            return (0, _dateUtils.getDecadeRange)(date);
-          case "year":
-            return (0, _dateUtils.getYearRange)(date);
-          case "month":
-            return (0, _dateUtils.getMonthRange)(date);
-          case "day":
-            return (0, _dateUtils.getDayRange)(date);
-          default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-        }
-      }
-      function getValueRange(rangeType, date1, date2) {
-        var rawNextValue = [date1, date2].sort(function(a2, b2) {
-          return a2 - b2;
-        });
-        return [getBegin(rangeType, rawNextValue[0]), getEnd(rangeType, rawNextValue[1])];
-      }
-      function toYearLabel(locale) {
-        var formatYear = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : _dateFormatter.formatYear;
-        var dates = arguments.length > 2 ? arguments[2] : void 0;
-        return dates.map(function(date) {
-          return formatYear(locale, date);
-        }).join(" \u2013 ");
-      }
-      function getCenturyLabel(locale, formatYear, date) {
-        return toYearLabel(locale, formatYear, (0, _dateUtils.getCenturyRange)(date));
-      }
-      function getDecadeLabel(locale, formatYear, date) {
-        return toYearLabel(locale, formatYear, (0, _dateUtils.getDecadeRange)(date));
-      }
-      function isWeekend(date) {
-        var calendarType = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : _const.CALENDAR_TYPES.ISO_8601;
-        var weekday = date.getDay();
-        switch (calendarType) {
-          case _const.CALENDAR_TYPES.ARABIC:
-          case _const.CALENDAR_TYPES.HEBREW:
-            return weekday === FRIDAY || weekday === SATURDAY;
-          case _const.CALENDAR_TYPES.ISO_8601:
-          case _const.CALENDAR_TYPES.US:
-            return weekday === SATURDAY || weekday === SUNDAY;
-          default:
-            throw new Error("Unsupported calendar type.");
-        }
-      }
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/shared/propTypes.js
-  var require_propTypes3 = __commonJS({
-    "node_modules/react-calendar/dist/umd/shared/propTypes.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.tileProps = exports.tileGroupProps = exports.isViews = exports.isView = exports.isValue = exports.isRef = exports.isMinDate = exports.isMaxDate = exports.isClassName = exports.isCalendarType = void 0;
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _const = require_const();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _typeof3(obj) {
-        "@babel/helpers - typeof";
-        return _typeof3 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj2) {
-          return typeof obj2;
-        } : function(obj2) {
-          return obj2 && "function" == typeof Symbol && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        }, _typeof3(obj);
-      }
-      var calendarTypes = Object.values(_const.CALENDAR_TYPES);
-      var allViews = ["century", "decade", "year", "month"];
-      var isCalendarType = _propTypes["default"].oneOf(calendarTypes);
-      exports.isCalendarType = isCalendarType;
-      var isClassName = _propTypes["default"].oneOfType([_propTypes["default"].string, _propTypes["default"].arrayOf(_propTypes["default"].string)]);
-      exports.isClassName = isClassName;
-      var isMinDate = function isMinDate2(props, propName, componentName) {
-        var minDate2 = props[propName];
-        if (!minDate2) {
-          return null;
-        }
-        if (!(minDate2 instanceof Date)) {
-          return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof3(minDate2), "` supplied to `").concat(componentName, "`, expected instance of `Date`."));
-        }
-        var maxDate = props.maxDate;
-        if (maxDate && minDate2 > maxDate) {
-          return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof3(minDate2), "` supplied to `").concat(componentName, "`, minDate cannot be larger than maxDate."));
-        }
-        return null;
-      };
-      exports.isMinDate = isMinDate;
-      var isMaxDate = function isMaxDate2(props, propName, componentName) {
-        var maxDate = props[propName];
-        if (!maxDate) {
-          return null;
-        }
-        if (!(maxDate instanceof Date)) {
-          return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof3(maxDate), "` supplied to `").concat(componentName, "`, expected instance of `Date`."));
-        }
-        var minDate2 = props.minDate;
-        if (minDate2 && maxDate < minDate2) {
-          return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof3(maxDate), "` supplied to `").concat(componentName, "`, maxDate cannot be smaller than minDate."));
-        }
-        return null;
-      };
-      exports.isMaxDate = isMaxDate;
-      var isRef = _propTypes["default"].oneOfType([_propTypes["default"].func, _propTypes["default"].shape({
-        current: _propTypes["default"].any
-      })]);
-      exports.isRef = isRef;
-      var isValue = _propTypes["default"].oneOfType([_propTypes["default"].instanceOf(Date), _propTypes["default"].arrayOf(_propTypes["default"].instanceOf(Date))]);
-      exports.isValue = isValue;
-      var isViews = _propTypes["default"].arrayOf(_propTypes["default"].oneOf(allViews));
-      exports.isViews = isViews;
-      var isView = function isView2(props, propName, componentName) {
-        var view = props[propName];
-        var views = props.views;
-        var allowedViews = views || allViews;
-        if (view !== void 0 && allowedViews.indexOf(view) === -1) {
-          return new Error("Invalid prop `".concat(propName, "` of value `").concat(view, "` supplied to `").concat(componentName, "`, expected one of [").concat(allowedViews.map(function(a2) {
-            return '"'.concat(a2, '"');
-          }).join(", "), "]."));
-        }
-        return null;
-      };
-      exports.isView = isView;
-      isView.isRequired = function(props, propName, componentName) {
-        var view = props[propName];
-        if (!view) {
-          return new Error("The prop `".concat(propName, "` is marked as required in `").concat(componentName, "`, but its value is `").concat(view, "`."));
-        }
-        return isView(props, propName, componentName);
-      };
-      var tileGroupProps = {
-        activeStartDate: _propTypes["default"].instanceOf(Date).isRequired,
-        hover: _propTypes["default"].instanceOf(Date),
-        locale: _propTypes["default"].string,
-        maxDate: isMaxDate,
-        minDate: isMinDate,
-        onClick: _propTypes["default"].func,
-        onMouseOver: _propTypes["default"].func,
-        tileClassName: _propTypes["default"].oneOfType([_propTypes["default"].func, isClassName]),
-        tileContent: _propTypes["default"].oneOfType([_propTypes["default"].func, _propTypes["default"].node]),
-        value: isValue,
-        valueType: _propTypes["default"].string
-      };
-      exports.tileGroupProps = tileGroupProps;
-      var tileProps = {
-        activeStartDate: _propTypes["default"].instanceOf(Date).isRequired,
-        classes: _propTypes["default"].arrayOf(_propTypes["default"].string).isRequired,
-        date: _propTypes["default"].instanceOf(Date).isRequired,
-        locale: _propTypes["default"].string,
-        maxDate: isMaxDate,
-        minDate: isMinDate,
-        onClick: _propTypes["default"].func,
-        onMouseOver: _propTypes["default"].func,
-        style: _propTypes["default"].objectOf(_propTypes["default"].oneOfType([_propTypes["default"].string, _propTypes["default"].number])),
-        tileClassName: _propTypes["default"].oneOfType([_propTypes["default"].func, isClassName]),
-        tileContent: _propTypes["default"].oneOfType([_propTypes["default"].func, _propTypes["default"].node]),
-        tileDisabled: _propTypes["default"].func
-      };
-      exports.tileProps = tileProps;
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/Calendar/Navigation.js
-  var require_Navigation = __commonJS({
-    "node_modules/react-calendar/dist/umd/Calendar/Navigation.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Navigation;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _getUserLocale = require_umd4();
-      var _dates = require_dates2();
-      var _dateFormatter = require_dateFormatter2();
-      var _propTypes2 = require_propTypes3();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      var className = "react-calendar__navigation";
-      function Navigation(_ref2) {
-        var activeStartDate = _ref2.activeStartDate, drillUp = _ref2.drillUp, _ref$formatMonthYear = _ref2.formatMonthYear, formatMonthYear = _ref$formatMonthYear === void 0 ? _dateFormatter.formatMonthYear : _ref$formatMonthYear, _ref$formatYear = _ref2.formatYear, formatYear = _ref$formatYear === void 0 ? _dateFormatter.formatYear : _ref$formatYear, locale = _ref2.locale, maxDate = _ref2.maxDate, minDate2 = _ref2.minDate, _ref$navigationAriaLa = _ref2.navigationAriaLabel, navigationAriaLabel = _ref$navigationAriaLa === void 0 ? "" : _ref$navigationAriaLa, navigationAriaLive = _ref2.navigationAriaLive, navigationLabel = _ref2.navigationLabel, _ref$next2AriaLabel = _ref2.next2AriaLabel, next2AriaLabel = _ref$next2AriaLabel === void 0 ? "" : _ref$next2AriaLabel, _ref$next2Label = _ref2.next2Label, next2Label = _ref$next2Label === void 0 ? "\xBB" : _ref$next2Label, _ref$nextAriaLabel = _ref2.nextAriaLabel, nextAriaLabel = _ref$nextAriaLabel === void 0 ? "" : _ref$nextAriaLabel, _ref$nextLabel = _ref2.nextLabel, nextLabel = _ref$nextLabel === void 0 ? "\u203A" : _ref$nextLabel, _ref$prev2AriaLabel = _ref2.prev2AriaLabel, prev2AriaLabel = _ref$prev2AriaLabel === void 0 ? "" : _ref$prev2AriaLabel, _ref$prev2Label = _ref2.prev2Label, prev2Label = _ref$prev2Label === void 0 ? "\xAB" : _ref$prev2Label, _ref$prevAriaLabel = _ref2.prevAriaLabel, prevAriaLabel = _ref$prevAriaLabel === void 0 ? "" : _ref$prevAriaLabel, _ref$prevLabel = _ref2.prevLabel, prevLabel = _ref$prevLabel === void 0 ? "\u2039" : _ref$prevLabel, setActiveStartDate = _ref2.setActiveStartDate, showDoubleView = _ref2.showDoubleView, view = _ref2.view, views = _ref2.views;
-        var drillUpAvailable = views.indexOf(view) > 0;
-        var shouldShowPrevNext2Buttons = view !== "century";
-        var previousActiveStartDate = (0, _dates.getBeginPrevious)(view, activeStartDate);
-        var previousActiveStartDate2 = shouldShowPrevNext2Buttons && (0, _dates.getBeginPrevious2)(view, activeStartDate);
-        var nextActiveStartDate = (0, _dates.getBeginNext)(view, activeStartDate);
-        var nextActiveStartDate2 = shouldShowPrevNext2Buttons && (0, _dates.getBeginNext2)(view, activeStartDate);
-        var prevButtonDisabled = function() {
-          if (previousActiveStartDate.getFullYear() < 0) {
-            return true;
-          }
-          var previousActiveEndDate = (0, _dates.getEndPrevious)(view, activeStartDate);
-          return minDate2 && minDate2 >= previousActiveEndDate;
-        }();
-        var prev2ButtonDisabled = shouldShowPrevNext2Buttons && function() {
-          if (previousActiveStartDate2.getFullYear() < 0) {
-            return true;
-          }
-          var previousActiveEndDate = (0, _dates.getEndPrevious2)(view, activeStartDate);
-          return minDate2 && minDate2 >= previousActiveEndDate;
-        }();
-        var nextButtonDisabled = maxDate && maxDate < nextActiveStartDate;
-        var next2ButtonDisabled = shouldShowPrevNext2Buttons && maxDate && maxDate < nextActiveStartDate2;
-        function onClickPrevious() {
-          setActiveStartDate(previousActiveStartDate, "prev");
-        }
-        function onClickPrevious2() {
-          setActiveStartDate(previousActiveStartDate2, "prev2");
-        }
-        function onClickNext() {
-          setActiveStartDate(nextActiveStartDate, "next");
-        }
-        function onClickNext2() {
-          setActiveStartDate(nextActiveStartDate2, "next2");
-        }
-        function renderLabel(date) {
-          var label = function() {
-            switch (view) {
-              case "century":
-                return (0, _dates.getCenturyLabel)(locale, formatYear, date);
-              case "decade":
-                return (0, _dates.getDecadeLabel)(locale, formatYear, date);
-              case "year":
-                return formatYear(locale, date);
-              case "month":
-                return formatMonthYear(locale, date);
-              default:
-                throw new Error("Invalid view: ".concat(view, "."));
-            }
-          }();
-          return navigationLabel ? navigationLabel({
-            date,
-            label,
-            locale: locale || (0, _getUserLocale.getUserLocale)(),
-            view
-          }) : label;
-        }
-        function renderButton() {
-          var labelClassName = "".concat(className, "__label");
-          return /* @__PURE__ */ _react["default"].createElement("button", {
-            "aria-label": navigationAriaLabel,
-            "aria-live": navigationAriaLive,
-            className: labelClassName,
-            disabled: !drillUpAvailable,
-            onClick: drillUp,
-            style: {
-              flexGrow: 1
-            },
-            type: "button"
-          }, /* @__PURE__ */ _react["default"].createElement("span", {
-            className: "".concat(labelClassName, "__labelText ").concat(labelClassName, "__labelText--from")
-          }, renderLabel(activeStartDate)), showDoubleView && /* @__PURE__ */ _react["default"].createElement(_react["default"].Fragment, null, /* @__PURE__ */ _react["default"].createElement("span", {
-            className: "".concat(labelClassName, "__divider")
-          }, " \u2013 "), /* @__PURE__ */ _react["default"].createElement("span", {
-            className: "".concat(labelClassName, "__labelText ").concat(labelClassName, "__labelText--to")
-          }, renderLabel(nextActiveStartDate))));
-        }
-        return /* @__PURE__ */ _react["default"].createElement("div", {
-          className
-        }, prev2Label !== null && shouldShowPrevNext2Buttons && /* @__PURE__ */ _react["default"].createElement("button", {
-          "aria-label": prev2AriaLabel,
-          className: "".concat(className, "__arrow ").concat(className, "__prev2-button"),
-          disabled: prev2ButtonDisabled,
-          onClick: onClickPrevious2,
-          type: "button"
-        }, prev2Label), prevLabel !== null && /* @__PURE__ */ _react["default"].createElement("button", {
-          "aria-label": prevAriaLabel,
-          className: "".concat(className, "__arrow ").concat(className, "__prev-button"),
-          disabled: prevButtonDisabled,
-          onClick: onClickPrevious,
-          type: "button"
-        }, prevLabel), renderButton(), nextLabel !== null && /* @__PURE__ */ _react["default"].createElement("button", {
-          "aria-label": nextAriaLabel,
-          className: "".concat(className, "__arrow ").concat(className, "__next-button"),
-          disabled: nextButtonDisabled,
-          onClick: onClickNext,
-          type: "button"
-        }, nextLabel), next2Label !== null && shouldShowPrevNext2Buttons && /* @__PURE__ */ _react["default"].createElement("button", {
-          "aria-label": next2AriaLabel,
-          className: "".concat(className, "__arrow ").concat(className, "__next2-button"),
-          disabled: next2ButtonDisabled,
-          onClick: onClickNext2,
-          type: "button"
-        }, next2Label));
-      }
-      Navigation.propTypes = {
-        activeStartDate: _propTypes["default"].instanceOf(Date).isRequired,
-        drillUp: _propTypes["default"].func.isRequired,
-        formatMonthYear: _propTypes["default"].func,
-        formatYear: _propTypes["default"].func,
-        locale: _propTypes["default"].string,
-        maxDate: _propTypes["default"].instanceOf(Date),
-        minDate: _propTypes["default"].instanceOf(Date),
-        navigationAriaLabel: _propTypes["default"].string,
-        navigationAriaLive: _propTypes["default"].string,
-        navigationLabel: _propTypes["default"].func,
-        next2AriaLabel: _propTypes["default"].string,
-        next2Label: _propTypes["default"].node,
-        nextAriaLabel: _propTypes["default"].string,
-        nextLabel: _propTypes["default"].node,
-        prev2AriaLabel: _propTypes["default"].string,
-        prev2Label: _propTypes["default"].node,
-        prevAriaLabel: _propTypes["default"].string,
-        prevLabel: _propTypes["default"].node,
-        setActiveStartDate: _propTypes["default"].func.isRequired,
-        showDoubleView: _propTypes["default"].bool,
-        view: _propTypes2.isView.isRequired,
-        views: _propTypes2.isViews.isRequired
-      };
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/Flex.js
-  var require_Flex = __commonJS({
-    "node_modules/react-calendar/dist/umd/Flex.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Flex;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _excluded2 = ["children", "className", "direction", "count", "offset", "style", "wrap"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _extends2() {
-        _extends2 = Object.assign ? Object.assign.bind() : function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function ownKeys4(object, enumerableOnly) {
-        var keys3 = Object.keys(object);
-        if (Object.getOwnPropertySymbols) {
-          var symbols = Object.getOwnPropertySymbols(object);
-          enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-          })), keys3.push.apply(keys3, symbols);
-        }
-        return keys3;
-      }
-      function _objectSpread3(target) {
-        for (var i2 = 1; i2 < arguments.length; i2++) {
-          var source = null != arguments[i2] ? arguments[i2] : {};
-          i2 % 2 ? ownKeys4(Object(source), true).forEach(function(key) {
-            _defineProperty4(target, key, source[key]);
-          }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys4(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-          });
-        }
-        return target;
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      function toPercent(num) {
-        return "".concat(num, "%");
-      }
-      function Flex(_ref2) {
-        var children = _ref2.children, className = _ref2.className, direction = _ref2.direction, count = _ref2.count, offset = _ref2.offset, style = _ref2.style, wrap = _ref2.wrap, otherProps = _objectWithoutProperties2(_ref2, _excluded2);
-        return /* @__PURE__ */ _react["default"].createElement("div", _extends2({
-          className,
-          style: _objectSpread3({
-            display: "flex",
-            flexDirection: direction,
-            flexWrap: wrap ? "wrap" : "no-wrap"
-          }, style)
-        }, otherProps), _react["default"].Children.map(children, function(child, index) {
-          return /* @__PURE__ */ _react["default"].cloneElement(child, _objectSpread3(_objectSpread3({}, child.props), {}, {
-            style: {
-              flexBasis: toPercent(100 / count),
-              flexShrink: 0,
-              flexGrow: 0,
-              overflow: "hidden",
-              marginLeft: offset && index === 0 ? toPercent(100 * offset / count) : null
-            }
-          }));
-        }));
-      }
-      Flex.propTypes = {
-        children: _propTypes["default"].node,
-        className: _propTypes["default"].string,
-        count: _propTypes["default"].number.isRequired,
-        direction: _propTypes["default"].string,
-        offset: _propTypes["default"].number,
-        style: _propTypes["default"].objectOf(_propTypes["default"].oneOfType([_propTypes["default"].string, _propTypes["default"].number])),
-        wrap: _propTypes["default"].bool
-      };
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/shared/utils.js
-  var require_utils3 = __commonJS({
-    "node_modules/react-calendar/dist/umd/shared/utils.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.between = between;
-      exports.doRangesOverlap = doRangesOverlap;
-      exports.getTileClasses = getTileClasses;
-      exports.isRangeWithinRange = isRangeWithinRange;
-      exports.isValueWithinRange = isValueWithinRange;
-      var _dates = require_dates2();
-      function _toConsumableArray2(arr) {
-        return _arrayWithoutHoles2(arr) || _iterableToArray2(arr) || _unsupportedIterableToArray3(arr) || _nonIterableSpread2();
-      }
-      function _nonIterableSpread2() {
-        throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-      function _unsupportedIterableToArray3(o2, minLen) {
-        if (!o2)
-          return;
-        if (typeof o2 === "string")
-          return _arrayLikeToArray3(o2, minLen);
-        var n2 = Object.prototype.toString.call(o2).slice(8, -1);
-        if (n2 === "Object" && o2.constructor)
-          n2 = o2.constructor.name;
-        if (n2 === "Map" || n2 === "Set")
-          return Array.from(o2);
-        if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
-          return _arrayLikeToArray3(o2, minLen);
-      }
-      function _iterableToArray2(iter) {
-        if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null)
-          return Array.from(iter);
-      }
-      function _arrayWithoutHoles2(arr) {
-        if (Array.isArray(arr))
-          return _arrayLikeToArray3(arr);
-      }
-      function _arrayLikeToArray3(arr, len) {
-        if (len == null || len > arr.length)
-          len = arr.length;
-        for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++) {
-          arr2[i2] = arr[i2];
-        }
-        return arr2;
-      }
-      function between(value, min2, max2) {
-        if (min2 && min2 > value) {
-          return min2;
-        }
-        if (max2 && max2 < value) {
-          return max2;
-        }
-        return value;
-      }
-      function isValueWithinRange(value, range) {
-        return range[0] <= value && range[1] >= value;
-      }
-      function isRangeWithinRange(greaterRange, smallerRange) {
-        return greaterRange[0] <= smallerRange[0] && greaterRange[1] >= smallerRange[1];
-      }
-      function doRangesOverlap(range1, range2) {
-        return isValueWithinRange(range1[0], range2) || isValueWithinRange(range1[1], range2);
-      }
-      function getRangeClassNames(valueRange, dateRange, baseClassName) {
-        var isRange = doRangesOverlap(dateRange, valueRange);
-        var classes = [];
-        if (isRange) {
-          classes.push(baseClassName);
-          var isRangeStart = isValueWithinRange(valueRange[0], dateRange);
-          var isRangeEnd = isValueWithinRange(valueRange[1], dateRange);
-          if (isRangeStart) {
-            classes.push("".concat(baseClassName, "Start"));
-          }
-          if (isRangeEnd) {
-            classes.push("".concat(baseClassName, "End"));
-          }
-          if (isRangeStart && isRangeEnd) {
-            classes.push("".concat(baseClassName, "BothEnds"));
-          }
-        }
-        return classes;
-      }
-      function getTileClasses() {
-        var _ref2 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {}, value = _ref2.value, valueType = _ref2.valueType, date = _ref2.date, dateType = _ref2.dateType, hover = _ref2.hover;
-        var className = "react-calendar__tile";
-        var classes = [className];
-        if (!date) {
-          return classes;
-        }
-        if (!Array.isArray(date) && !dateType) {
-          throw new Error("getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.");
-        }
-        var now = /* @__PURE__ */ new Date();
-        var dateRange = Array.isArray(date) ? date : (0, _dates.getRange)(dateType, date);
-        if (isValueWithinRange(now, dateRange)) {
-          classes.push("".concat(className, "--now"));
-        }
-        if (!value) {
-          return classes;
-        }
-        if (!Array.isArray(value) && !valueType) {
-          throw new Error("getTileClasses(): Unable to get tile activity classes because one or more required arguments were not passed.");
-        }
-        var valueRange = Array.isArray(value) ? value : (0, _dates.getRange)(valueType, value);
-        if (isRangeWithinRange(valueRange, dateRange)) {
-          classes.push("".concat(className, "--active"));
-        } else if (doRangesOverlap(valueRange, dateRange)) {
-          classes.push("".concat(className, "--hasActive"));
-        }
-        var valueRangeClassNames = getRangeClassNames(valueRange, dateRange, "".concat(className, "--range"));
-        classes.push.apply(classes, _toConsumableArray2(valueRangeClassNames));
-        var valueArray = [].concat(value);
-        if (hover && valueArray.length === 1) {
-          var hoverRange = hover > valueRange[0] ? [valueRange[0], hover] : [hover, valueRange[0]];
-          var hoverRangeClassNames = getRangeClassNames(hoverRange, dateRange, "".concat(className, "--hover"));
-          classes.push.apply(classes, _toConsumableArray2(hoverRangeClassNames));
-        }
-        return classes;
-      }
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/TileGroup.js
-  var require_TileGroup = __commonJS({
-    "node_modules/react-calendar/dist/umd/TileGroup.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = TileGroup;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _Flex = _interopRequireDefault(require_Flex());
-      var _utils = require_utils3();
-      var _propTypes2 = require_propTypes3();
-      var _excluded2 = ["className", "count", "dateTransform", "dateType", "end", "hover", "offset", "start", "step", "tile", "value", "valueType"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function ownKeys4(object, enumerableOnly) {
-        var keys3 = Object.keys(object);
-        if (Object.getOwnPropertySymbols) {
-          var symbols = Object.getOwnPropertySymbols(object);
-          enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-          })), keys3.push.apply(keys3, symbols);
-        }
-        return keys3;
-      }
-      function _objectSpread3(target) {
-        for (var i2 = 1; i2 < arguments.length; i2++) {
-          var source = null != arguments[i2] ? arguments[i2] : {};
-          i2 % 2 ? ownKeys4(Object(source), true).forEach(function(key) {
-            _defineProperty4(target, key, source[key]);
-          }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys4(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-          });
-        }
-        return target;
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      function _extends2() {
-        _extends2 = Object.assign ? Object.assign.bind() : function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      function TileGroup(_ref2) {
-        var className = _ref2.className, _ref$count = _ref2.count, count = _ref$count === void 0 ? 3 : _ref$count, dateTransform = _ref2.dateTransform, dateType = _ref2.dateType, end = _ref2.end, hover = _ref2.hover, offset = _ref2.offset, start = _ref2.start, _ref$step = _ref2.step, step = _ref$step === void 0 ? 1 : _ref$step, Tile = _ref2.tile, value = _ref2.value, valueType = _ref2.valueType, tileProps = _objectWithoutProperties2(_ref2, _excluded2);
-        var tiles = [];
-        for (var point = start; point <= end; point += step) {
-          var date = dateTransform(point);
-          tiles.push(/* @__PURE__ */ _react["default"].createElement(Tile, _extends2({
-            key: date.getTime(),
-            classes: (0, _utils.getTileClasses)({
-              value,
-              valueType,
-              date,
-              dateType,
-              hover
-            }),
-            date,
-            point
-          }, tileProps)));
-        }
-        return /* @__PURE__ */ _react["default"].createElement(_Flex["default"], {
-          className,
-          count,
-          offset,
-          wrap: true
-        }, tiles);
-      }
-      TileGroup.propTypes = _objectSpread3(_objectSpread3({}, _propTypes2.tileGroupProps), {}, {
-        activeStartDate: _propTypes["default"].instanceOf(Date),
-        count: _propTypes["default"].number,
-        dateTransform: _propTypes["default"].func.isRequired,
-        dateType: _propTypes["default"].string,
-        offset: _propTypes["default"].number,
-        step: _propTypes["default"].number,
-        tile: _propTypes["default"].func.isRequired
-      });
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/Tile.js
-  var require_Tile = __commonJS({
-    "node_modules/react-calendar/dist/umd/Tile.js"(exports) {
-      "use strict";
-      function _typeof3(obj) {
-        "@babel/helpers - typeof";
-        return _typeof3 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj2) {
-          return typeof obj2;
-        } : function(obj2) {
-          return obj2 && "function" == typeof Symbol && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        }, _typeof3(obj);
-      }
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = void 0;
-      var _react = _interopRequireWildcard(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _mergeClassNames = _interopRequireDefault(require_umd());
-      var _propTypes2 = require_propTypes3();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _getRequireWildcardCache(nodeInterop) {
-        if (typeof WeakMap !== "function")
-          return null;
-        var cacheBabelInterop = /* @__PURE__ */ new WeakMap();
-        var cacheNodeInterop = /* @__PURE__ */ new WeakMap();
-        return (_getRequireWildcardCache = function _getRequireWildcardCache2(nodeInterop2) {
-          return nodeInterop2 ? cacheNodeInterop : cacheBabelInterop;
-        })(nodeInterop);
-      }
-      function _interopRequireWildcard(obj, nodeInterop) {
-        if (!nodeInterop && obj && obj.__esModule) {
-          return obj;
-        }
-        if (obj === null || _typeof3(obj) !== "object" && typeof obj !== "function") {
-          return { "default": obj };
-        }
-        var cache = _getRequireWildcardCache(nodeInterop);
-        if (cache && cache.has(obj)) {
-          return cache.get(obj);
-        }
-        var newObj = {};
-        var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-        for (var key in obj) {
-          if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-            var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-            if (desc && (desc.get || desc.set)) {
-              Object.defineProperty(newObj, key, desc);
-            } else {
-              newObj[key] = obj[key];
-            }
-          }
-        }
-        newObj["default"] = obj;
-        if (cache) {
-          cache.set(obj, newObj);
-        }
-        return newObj;
-      }
-      function ownKeys4(object, enumerableOnly) {
-        var keys3 = Object.keys(object);
-        if (Object.getOwnPropertySymbols) {
-          var symbols = Object.getOwnPropertySymbols(object);
-          enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-          })), keys3.push.apply(keys3, symbols);
-        }
-        return keys3;
-      }
-      function _objectSpread3(target) {
-        for (var i2 = 1; i2 < arguments.length; i2++) {
-          var source = null != arguments[i2] ? arguments[i2] : {};
-          i2 % 2 ? ownKeys4(Object(source), true).forEach(function(key) {
-            _defineProperty4(target, key, source[key]);
-          }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys4(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-          });
-        }
-        return target;
-      }
-      function _classCallCheck3(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-          throw new TypeError("Cannot call a class as a function");
-        }
-      }
-      function _defineProperties3(target, props) {
-        for (var i2 = 0; i2 < props.length; i2++) {
-          var descriptor = props[i2];
-          descriptor.enumerable = descriptor.enumerable || false;
-          descriptor.configurable = true;
-          if ("value" in descriptor)
-            descriptor.writable = true;
-          Object.defineProperty(target, descriptor.key, descriptor);
-        }
-      }
-      function _createClass3(Constructor, protoProps, staticProps) {
-        if (protoProps)
-          _defineProperties3(Constructor.prototype, protoProps);
-        if (staticProps)
-          _defineProperties3(Constructor, staticProps);
-        Object.defineProperty(Constructor, "prototype", { writable: false });
-        return Constructor;
-      }
-      function _inherits2(subClass, superClass) {
-        if (typeof superClass !== "function" && superClass !== null) {
-          throw new TypeError("Super expression must either be null or a function");
-        }
-        subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
-        Object.defineProperty(subClass, "prototype", { writable: false });
-        if (superClass)
-          _setPrototypeOf2(subClass, superClass);
-      }
-      function _setPrototypeOf2(o2, p2) {
-        _setPrototypeOf2 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf3(o3, p3) {
-          o3.__proto__ = p3;
-          return o3;
-        };
-        return _setPrototypeOf2(o2, p2);
-      }
-      function _createSuper2(Derived) {
-        var hasNativeReflectConstruct = _isNativeReflectConstruct2();
-        return function _createSuperInternal() {
-          var Super = _getPrototypeOf2(Derived), result;
-          if (hasNativeReflectConstruct) {
-            var NewTarget = _getPrototypeOf2(this).constructor;
-            result = Reflect.construct(Super, arguments, NewTarget);
-          } else {
-            result = Super.apply(this, arguments);
-          }
-          return _possibleConstructorReturn2(this, result);
-        };
-      }
-      function _possibleConstructorReturn2(self2, call2) {
-        if (call2 && (_typeof3(call2) === "object" || typeof call2 === "function")) {
-          return call2;
-        } else if (call2 !== void 0) {
-          throw new TypeError("Derived constructors may only return object or undefined");
-        }
-        return _assertThisInitialized2(self2);
-      }
-      function _assertThisInitialized2(self2) {
-        if (self2 === void 0) {
-          throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-        }
-        return self2;
-      }
-      function _isNativeReflectConstruct2() {
-        if (typeof Reflect === "undefined" || !Reflect.construct)
-          return false;
-        if (Reflect.construct.sham)
-          return false;
-        if (typeof Proxy === "function")
-          return true;
-        try {
-          Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
-          }));
-          return true;
-        } catch (e2) {
-          return false;
-        }
-      }
-      function _getPrototypeOf2(o2) {
-        _getPrototypeOf2 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf3(o3) {
-          return o3.__proto__ || Object.getPrototypeOf(o3);
-        };
-        return _getPrototypeOf2(o2);
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      function datesAreDifferent(date1, date2) {
-        return date1 && !date2 || !date1 && date2 || date1 && date2 && date1.getTime() !== date2.getTime();
-      }
-      function getValue(nextProps, prop) {
-        var activeStartDate = nextProps.activeStartDate, date = nextProps.date, view = nextProps.view;
-        return typeof prop === "function" ? prop({
-          activeStartDate,
-          date,
-          view
-        }) : prop;
-      }
-      var Tile = /* @__PURE__ */ function(_Component) {
-        _inherits2(Tile2, _Component);
-        var _super = _createSuper2(Tile2);
-        function Tile2() {
-          var _this;
-          _classCallCheck3(this, Tile2);
-          for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-          }
-          _this = _super.call.apply(_super, [this].concat(args));
-          _defineProperty4(_assertThisInitialized2(_this), "state", {});
-          return _this;
-        }
-        _createClass3(Tile2, [{
-          key: "render",
-          value: function render() {
-            var _this$props = this.props, activeStartDate = _this$props.activeStartDate, children = _this$props.children, classes = _this$props.classes, date = _this$props.date, formatAbbr = _this$props.formatAbbr, locale = _this$props.locale, maxDate = _this$props.maxDate, maxDateTransform = _this$props.maxDateTransform, minDate2 = _this$props.minDate, minDateTransform = _this$props.minDateTransform, onClick = _this$props.onClick, onMouseOver = _this$props.onMouseOver, style = _this$props.style, tileDisabled = _this$props.tileDisabled, view = _this$props.view;
-            var _this$state = this.state, tileClassName = _this$state.tileClassName, tileContent = _this$state.tileContent;
-            return /* @__PURE__ */ _react["default"].createElement("button", {
-              className: (0, _mergeClassNames["default"])(classes, tileClassName),
-              disabled: minDate2 && minDateTransform(minDate2) > date || maxDate && maxDateTransform(maxDate) < date || tileDisabled && tileDisabled({
-                activeStartDate,
-                date,
-                view
-              }),
-              onClick: onClick && function(event) {
-                return onClick(date, event);
-              },
-              onFocus: onMouseOver && function() {
-                return onMouseOver(date);
-              },
-              onMouseOver: onMouseOver && function() {
-                return onMouseOver(date);
-              },
-              style,
-              type: "button"
-            }, formatAbbr ? /* @__PURE__ */ _react["default"].createElement("abbr", {
-              "aria-label": formatAbbr(locale, date)
-            }, children) : children, tileContent);
-          }
-        }], [{
-          key: "getDerivedStateFromProps",
-          value: function getDerivedStateFromProps(nextProps, prevState) {
-            var activeStartDate = nextProps.activeStartDate, tileClassName = nextProps.tileClassName, tileContent = nextProps.tileContent;
-            var nextState = {};
-            if (tileClassName !== prevState.tileClassNameProps || datesAreDifferent(activeStartDate, prevState.activeStartDateProps)) {
-              nextState.tileClassName = getValue(nextProps, tileClassName);
-              nextState.tileClassNameProps = tileClassName;
-            }
-            if (tileContent !== prevState.tileContentProps || datesAreDifferent(activeStartDate, prevState.activeStartDateProps)) {
-              nextState.tileContent = getValue(nextProps, tileContent);
-              nextState.tileContentProps = tileContent;
-            }
-            nextState.activeStartDateProps = activeStartDate;
-            return nextState;
-          }
-        }]);
-        return Tile2;
-      }(_react.Component);
-      exports["default"] = Tile;
-      Tile.propTypes = _objectSpread3(_objectSpread3({}, _propTypes2.tileProps), {}, {
-        children: _propTypes["default"].node.isRequired,
-        formatAbbr: _propTypes["default"].func,
-        maxDateTransform: _propTypes["default"].func.isRequired,
-        minDateTransform: _propTypes["default"].func.isRequired
-      });
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/CenturyView/Decade.js
-  var require_Decade = __commonJS({
-    "node_modules/react-calendar/dist/umd/CenturyView/Decade.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Decade;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _Tile = _interopRequireDefault(require_Tile());
-      var _dates = require_dates2();
-      var _dateFormatter = require_dateFormatter2();
-      var _propTypes2 = require_propTypes3();
-      var _excluded2 = ["classes", "formatYear"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function ownKeys4(object, enumerableOnly) {
-        var keys3 = Object.keys(object);
-        if (Object.getOwnPropertySymbols) {
-          var symbols = Object.getOwnPropertySymbols(object);
-          enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-          })), keys3.push.apply(keys3, symbols);
-        }
-        return keys3;
-      }
-      function _objectSpread3(target) {
-        for (var i2 = 1; i2 < arguments.length; i2++) {
-          var source = null != arguments[i2] ? arguments[i2] : {};
-          i2 % 2 ? ownKeys4(Object(source), true).forEach(function(key) {
-            _defineProperty4(target, key, source[key]);
-          }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys4(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-          });
-        }
-        return target;
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      function _extends2() {
-        _extends2 = Object.assign ? Object.assign.bind() : function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      var className = "react-calendar__century-view__decades__decade";
-      function Decade(_ref2) {
-        var classes = _ref2.classes, _ref$formatYear = _ref2.formatYear, formatYear = _ref$formatYear === void 0 ? _dateFormatter.formatYear : _ref$formatYear, otherProps = _objectWithoutProperties2(_ref2, _excluded2);
-        var date = otherProps.date, locale = otherProps.locale;
-        return /* @__PURE__ */ _react["default"].createElement(_Tile["default"], _extends2({}, otherProps, {
-          classes: [].concat(classes, className),
-          maxDateTransform: _dateUtils.getDecadeEnd,
-          minDateTransform: _dateUtils.getDecadeStart,
-          view: "century"
-        }), (0, _dates.getDecadeLabel)(locale, formatYear, date));
-      }
-      Decade.propTypes = _objectSpread3(_objectSpread3({}, _propTypes2.tileProps), {}, {
-        formatYear: _propTypes["default"].func
-      });
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/CenturyView/Decades.js
-  var require_Decades = __commonJS({
-    "node_modules/react-calendar/dist/umd/CenturyView/Decades.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Decades;
-      var _react = _interopRequireDefault(require_react());
-      var _dateUtils = require_cjs4();
-      var _TileGroup = _interopRequireDefault(require_TileGroup());
-      var _Decade = _interopRequireDefault(require_Decade());
-      var _dates = require_dates2();
-      var _propTypes = require_propTypes3();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function ownKeys4(object, enumerableOnly) {
-        var keys3 = Object.keys(object);
-        if (Object.getOwnPropertySymbols) {
-          var symbols = Object.getOwnPropertySymbols(object);
-          enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-          })), keys3.push.apply(keys3, symbols);
-        }
-        return keys3;
-      }
-      function _objectSpread3(target) {
-        for (var i2 = 1; i2 < arguments.length; i2++) {
-          var source = null != arguments[i2] ? arguments[i2] : {};
-          i2 % 2 ? ownKeys4(Object(source), true).forEach(function(key) {
-            _defineProperty4(target, key, source[key]);
-          }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys4(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-          });
-        }
-        return target;
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      function _extends2() {
-        _extends2 = Object.assign ? Object.assign.bind() : function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function Decades(props) {
-        var activeStartDate = props.activeStartDate;
-        var start = (0, _dates.getBeginOfCenturyYear)(activeStartDate);
-        var end = start + 99;
-        return /* @__PURE__ */ _react["default"].createElement(_TileGroup["default"], _extends2({}, props, {
-          className: "react-calendar__century-view__decades",
-          dateTransform: _dateUtils.getDecadeStart,
-          dateType: "decade",
-          end,
-          start,
-          step: 10,
-          tile: _Decade["default"]
-        }));
-      }
-      Decades.propTypes = _objectSpread3({}, _propTypes.tileGroupProps);
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/CenturyView.js
-  var require_CenturyView = __commonJS({
-    "node_modules/react-calendar/dist/umd/CenturyView.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = CenturyView;
-      var _react = _interopRequireDefault(require_react());
-      var _Decades = _interopRequireDefault(require_Decades());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function CenturyView(props) {
-        function renderDecades() {
-          return /* @__PURE__ */ _react["default"].createElement(_Decades["default"], props);
-        }
-        return /* @__PURE__ */ _react["default"].createElement("div", {
-          className: "react-calendar__century-view"
-        }, renderDecades());
-      }
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/DecadeView/Year.js
-  var require_Year = __commonJS({
-    "node_modules/react-calendar/dist/umd/DecadeView/Year.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Year;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _Tile = _interopRequireDefault(require_Tile());
-      var _dateFormatter = require_dateFormatter2();
-      var _propTypes2 = require_propTypes3();
-      var _excluded2 = ["classes", "formatYear"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function ownKeys4(object, enumerableOnly) {
-        var keys3 = Object.keys(object);
-        if (Object.getOwnPropertySymbols) {
-          var symbols = Object.getOwnPropertySymbols(object);
-          enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-          })), keys3.push.apply(keys3, symbols);
-        }
-        return keys3;
-      }
-      function _objectSpread3(target) {
-        for (var i2 = 1; i2 < arguments.length; i2++) {
-          var source = null != arguments[i2] ? arguments[i2] : {};
-          i2 % 2 ? ownKeys4(Object(source), true).forEach(function(key) {
-            _defineProperty4(target, key, source[key]);
-          }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys4(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-          });
-        }
-        return target;
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      function _extends2() {
-        _extends2 = Object.assign ? Object.assign.bind() : function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      var className = "react-calendar__decade-view__years__year";
-      function Year(_ref2) {
-        var classes = _ref2.classes, _ref$formatYear = _ref2.formatYear, formatYear = _ref$formatYear === void 0 ? _dateFormatter.formatYear : _ref$formatYear, otherProps = _objectWithoutProperties2(_ref2, _excluded2);
-        var date = otherProps.date, locale = otherProps.locale;
-        return /* @__PURE__ */ _react["default"].createElement(_Tile["default"], _extends2({}, otherProps, {
-          classes: [].concat(classes, className),
-          maxDateTransform: _dateUtils.getYearEnd,
-          minDateTransform: _dateUtils.getYearStart,
-          view: "decade"
-        }), formatYear(locale, date));
-      }
-      Year.propTypes = _objectSpread3(_objectSpread3({}, _propTypes2.tileProps), {}, {
-        formatYear: _propTypes["default"].func
-      });
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/DecadeView/Years.js
-  var require_Years = __commonJS({
-    "node_modules/react-calendar/dist/umd/DecadeView/Years.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Years;
-      var _react = _interopRequireDefault(require_react());
-      var _TileGroup = _interopRequireDefault(require_TileGroup());
-      var _Year = _interopRequireDefault(require_Year());
-      var _dates = require_dates2();
-      var _propTypes = require_propTypes3();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function ownKeys4(object, enumerableOnly) {
-        var keys3 = Object.keys(object);
-        if (Object.getOwnPropertySymbols) {
-          var symbols = Object.getOwnPropertySymbols(object);
-          enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-          })), keys3.push.apply(keys3, symbols);
-        }
-        return keys3;
-      }
-      function _objectSpread3(target) {
-        for (var i2 = 1; i2 < arguments.length; i2++) {
-          var source = null != arguments[i2] ? arguments[i2] : {};
-          i2 % 2 ? ownKeys4(Object(source), true).forEach(function(key) {
-            _defineProperty4(target, key, source[key]);
-          }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys4(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-          });
-        }
-        return target;
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      function _extends2() {
-        _extends2 = Object.assign ? Object.assign.bind() : function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function Years(props) {
-        var activeStartDate = props.activeStartDate;
-        var start = (0, _dates.getBeginOfDecadeYear)(activeStartDate);
-        var end = start + 9;
-        return /* @__PURE__ */ _react["default"].createElement(_TileGroup["default"], _extends2({}, props, {
-          className: "react-calendar__decade-view__years",
-          dateTransform: function dateTransform(year) {
-            var date = /* @__PURE__ */ new Date();
-            date.setFullYear(year, 0, 1);
-            date.setHours(0, 0, 0, 0);
-            return date;
-          },
-          dateType: "year",
-          end,
-          start,
-          tile: _Year["default"]
-        }));
-      }
-      Years.propTypes = _objectSpread3({}, _propTypes.tileGroupProps);
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/DecadeView.js
-  var require_DecadeView = __commonJS({
-    "node_modules/react-calendar/dist/umd/DecadeView.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = DecadeView;
-      var _react = _interopRequireDefault(require_react());
-      var _Years = _interopRequireDefault(require_Years());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function DecadeView(props) {
-        function renderYears() {
-          return /* @__PURE__ */ _react["default"].createElement(_Years["default"], props);
-        }
-        return /* @__PURE__ */ _react["default"].createElement("div", {
-          className: "react-calendar__decade-view"
-        }, renderYears());
-      }
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/YearView/Month.js
-  var require_Month = __commonJS({
-    "node_modules/react-calendar/dist/umd/YearView/Month.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Month;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _Tile = _interopRequireDefault(require_Tile());
-      var _dateFormatter = require_dateFormatter2();
-      var _propTypes2 = require_propTypes3();
-      var _excluded2 = ["classes", "formatMonth", "formatMonthYear"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function ownKeys4(object, enumerableOnly) {
-        var keys3 = Object.keys(object);
-        if (Object.getOwnPropertySymbols) {
-          var symbols = Object.getOwnPropertySymbols(object);
-          enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-          })), keys3.push.apply(keys3, symbols);
-        }
-        return keys3;
-      }
-      function _objectSpread3(target) {
-        for (var i2 = 1; i2 < arguments.length; i2++) {
-          var source = null != arguments[i2] ? arguments[i2] : {};
-          i2 % 2 ? ownKeys4(Object(source), true).forEach(function(key) {
-            _defineProperty4(target, key, source[key]);
-          }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys4(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-          });
-        }
-        return target;
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      function _extends2() {
-        _extends2 = Object.assign ? Object.assign.bind() : function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      var className = "react-calendar__year-view__months__month";
-      function Month(_ref2) {
-        var classes = _ref2.classes, _ref$formatMonth = _ref2.formatMonth, formatMonth = _ref$formatMonth === void 0 ? _dateFormatter.formatMonth : _ref$formatMonth, _ref$formatMonthYear = _ref2.formatMonthYear, formatMonthYear = _ref$formatMonthYear === void 0 ? _dateFormatter.formatMonthYear : _ref$formatMonthYear, otherProps = _objectWithoutProperties2(_ref2, _excluded2);
-        var date = otherProps.date, locale = otherProps.locale;
-        return /* @__PURE__ */ _react["default"].createElement(_Tile["default"], _extends2({}, otherProps, {
-          classes: [].concat(classes, className),
-          formatAbbr: formatMonthYear,
-          maxDateTransform: _dateUtils.getMonthEnd,
-          minDateTransform: _dateUtils.getMonthStart,
-          view: "year"
-        }), formatMonth(locale, date));
-      }
-      Month.propTypes = _objectSpread3(_objectSpread3({}, _propTypes2.tileProps), {}, {
-        formatMonth: _propTypes["default"].func,
-        formatMonthYear: _propTypes["default"].func
-      });
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/YearView/Months.js
-  var require_Months = __commonJS({
-    "node_modules/react-calendar/dist/umd/YearView/Months.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Months;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _TileGroup = _interopRequireDefault(require_TileGroup());
-      var _Month = _interopRequireDefault(require_Month());
-      var _propTypes2 = require_propTypes3();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function ownKeys4(object, enumerableOnly) {
-        var keys3 = Object.keys(object);
-        if (Object.getOwnPropertySymbols) {
-          var symbols = Object.getOwnPropertySymbols(object);
-          enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-          })), keys3.push.apply(keys3, symbols);
-        }
-        return keys3;
-      }
-      function _objectSpread3(target) {
-        for (var i2 = 1; i2 < arguments.length; i2++) {
-          var source = null != arguments[i2] ? arguments[i2] : {};
-          i2 % 2 ? ownKeys4(Object(source), true).forEach(function(key) {
-            _defineProperty4(target, key, source[key]);
-          }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys4(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-          });
-        }
-        return target;
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      function _extends2() {
-        _extends2 = Object.assign ? Object.assign.bind() : function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function Months(props) {
-        var activeStartDate = props.activeStartDate;
-        var start = 0;
-        var end = 11;
-        var year = (0, _dateUtils.getYear)(activeStartDate);
-        return /* @__PURE__ */ _react["default"].createElement(_TileGroup["default"], _extends2({}, props, {
-          className: "react-calendar__year-view__months",
-          dateTransform: function dateTransform(monthIndex) {
-            var date = /* @__PURE__ */ new Date();
-            date.setFullYear(year, monthIndex, 1);
-            date.setHours(0, 0, 0, 0);
-            return date;
-          },
-          dateType: "month",
-          end,
-          start,
-          tile: _Month["default"]
-        }));
-      }
-      Months.propTypes = _objectSpread3(_objectSpread3({}, _propTypes2.tileGroupProps), {}, {
-        locale: _propTypes["default"].string
-      });
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/YearView.js
-  var require_YearView = __commonJS({
-    "node_modules/react-calendar/dist/umd/YearView.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = YearView;
-      var _react = _interopRequireDefault(require_react());
-      var _Months = _interopRequireDefault(require_Months());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function YearView(props) {
-        function renderMonths() {
-          return /* @__PURE__ */ _react["default"].createElement(_Months["default"], props);
-        }
-        return /* @__PURE__ */ _react["default"].createElement("div", {
-          className: "react-calendar__year-view"
-        }, renderMonths());
-      }
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/MonthView/Day.js
-  var require_Day = __commonJS({
-    "node_modules/react-calendar/dist/umd/MonthView/Day.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Day;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _Tile = _interopRequireDefault(require_Tile());
-      var _dates = require_dates2();
-      var _dateFormatter = require_dateFormatter2();
-      var _propTypes2 = require_propTypes3();
-      var _excluded2 = ["formatDay", "formatLongDate", "calendarType", "classes", "currentMonthIndex"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function ownKeys4(object, enumerableOnly) {
-        var keys3 = Object.keys(object);
-        if (Object.getOwnPropertySymbols) {
-          var symbols = Object.getOwnPropertySymbols(object);
-          enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-          })), keys3.push.apply(keys3, symbols);
-        }
-        return keys3;
-      }
-      function _objectSpread3(target) {
-        for (var i2 = 1; i2 < arguments.length; i2++) {
-          var source = null != arguments[i2] ? arguments[i2] : {};
-          i2 % 2 ? ownKeys4(Object(source), true).forEach(function(key) {
-            _defineProperty4(target, key, source[key]);
-          }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys4(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-          });
-        }
-        return target;
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      function _extends2() {
-        _extends2 = Object.assign ? Object.assign.bind() : function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      var className = "react-calendar__month-view__days__day";
-      function Day(_ref2) {
-        var _ref$formatDay = _ref2.formatDay, formatDay = _ref$formatDay === void 0 ? _dateFormatter.formatDay : _ref$formatDay, _ref$formatLongDate = _ref2.formatLongDate, formatLongDate = _ref$formatLongDate === void 0 ? _dateFormatter.formatLongDate : _ref$formatLongDate, calendarType = _ref2.calendarType, classes = _ref2.classes, currentMonthIndex = _ref2.currentMonthIndex, otherProps = _objectWithoutProperties2(_ref2, _excluded2);
-        var date = otherProps.date, locale = otherProps.locale;
-        return /* @__PURE__ */ _react["default"].createElement(_Tile["default"], _extends2({}, otherProps, {
-          classes: [].concat(classes, className, (0, _dates.isWeekend)(date, calendarType) ? "".concat(className, "--weekend") : null, date.getMonth() !== currentMonthIndex ? "".concat(className, "--neighboringMonth") : null),
-          formatAbbr: formatLongDate,
-          maxDateTransform: _dateUtils.getDayEnd,
-          minDateTransform: _dateUtils.getDayStart,
-          view: "month"
-        }), formatDay(locale, date));
-      }
-      Day.propTypes = _objectSpread3(_objectSpread3({}, _propTypes2.tileProps), {}, {
-        currentMonthIndex: _propTypes["default"].number.isRequired,
-        formatDay: _propTypes["default"].func,
-        formatLongDate: _propTypes["default"].func
-      });
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/MonthView/Days.js
-  var require_Days = __commonJS({
-    "node_modules/react-calendar/dist/umd/MonthView/Days.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Days;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _TileGroup = _interopRequireDefault(require_TileGroup());
-      var _Day = _interopRequireDefault(require_Day());
-      var _dates = require_dates2();
-      var _propTypes2 = require_propTypes3();
-      var _excluded2 = ["showFixedNumberOfWeeks", "showNeighboringMonth"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function ownKeys4(object, enumerableOnly) {
-        var keys3 = Object.keys(object);
-        if (Object.getOwnPropertySymbols) {
-          var symbols = Object.getOwnPropertySymbols(object);
-          enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-          })), keys3.push.apply(keys3, symbols);
-        }
-        return keys3;
-      }
-      function _objectSpread3(target) {
-        for (var i2 = 1; i2 < arguments.length; i2++) {
-          var source = null != arguments[i2] ? arguments[i2] : {};
-          i2 % 2 ? ownKeys4(Object(source), true).forEach(function(key) {
-            _defineProperty4(target, key, source[key]);
-          }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys4(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-          });
-        }
-        return target;
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      function _extends2() {
-        _extends2 = Object.assign ? Object.assign.bind() : function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      function Days(props) {
-        var activeStartDate = props.activeStartDate, calendarType = props.calendarType;
-        var showFixedNumberOfWeeks = props.showFixedNumberOfWeeks, showNeighboringMonth = props.showNeighboringMonth, otherProps = _objectWithoutProperties2(props, _excluded2);
-        var year = (0, _dateUtils.getYear)(activeStartDate);
-        var monthIndex = (0, _dateUtils.getMonth)(activeStartDate);
-        var hasFixedNumberOfWeeks = showFixedNumberOfWeeks || showNeighboringMonth;
-        var dayOfWeek = (0, _dates.getDayOfWeek)(activeStartDate, calendarType);
-        var offset = hasFixedNumberOfWeeks ? 0 : dayOfWeek;
-        var start = (hasFixedNumberOfWeeks ? -dayOfWeek : 0) + 1;
-        var end = function() {
-          if (showFixedNumberOfWeeks) {
-            return start + 6 * 7 - 1;
-          }
-          var daysInMonth = (0, _dateUtils.getDaysInMonth)(activeStartDate);
-          if (showNeighboringMonth) {
-            var activeEndDate = /* @__PURE__ */ new Date();
-            activeEndDate.setFullYear(year, monthIndex, daysInMonth);
-            activeEndDate.setHours(0, 0, 0, 0);
-            var daysUntilEndOfTheWeek = 7 - (0, _dates.getDayOfWeek)(activeEndDate, calendarType) - 1;
-            return daysInMonth + daysUntilEndOfTheWeek;
-          }
-          return daysInMonth;
-        }();
-        return /* @__PURE__ */ _react["default"].createElement(_TileGroup["default"], _extends2({}, otherProps, {
-          className: "react-calendar__month-view__days",
-          count: 7,
-          currentMonthIndex: monthIndex,
-          dateTransform: function dateTransform(day) {
-            var date = /* @__PURE__ */ new Date();
-            date.setFullYear(year, monthIndex, day);
-            date.setHours(0, 0, 0, 0);
-            return date;
-          },
-          dateType: "day",
-          end,
-          offset,
-          start,
-          tile: _Day["default"]
-        }));
-      }
-      Days.propTypes = _objectSpread3({
-        calendarType: _propTypes2.isCalendarType.isRequired,
-        showFixedNumberOfWeeks: _propTypes["default"].bool,
-        showNeighboringMonth: _propTypes["default"].bool
-      }, _propTypes2.tileGroupProps);
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/MonthView/Weekdays.js
-  var require_Weekdays = __commonJS({
-    "node_modules/react-calendar/dist/umd/MonthView/Weekdays.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Weekdays;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _mergeClassNames = _interopRequireDefault(require_umd());
-      var _dateUtils = require_cjs4();
-      var _Flex = _interopRequireDefault(require_Flex());
-      var _dates = require_dates2();
-      var _dateFormatter = require_dateFormatter2();
-      var _propTypes2 = require_propTypes3();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      var className = "react-calendar__month-view__weekdays";
-      var weekdayClassName = "".concat(className, "__weekday");
-      function Weekdays(props) {
-        var calendarType = props.calendarType, _props$formatShortWee = props.formatShortWeekday, formatShortWeekday = _props$formatShortWee === void 0 ? _dateFormatter.formatShortWeekday : _props$formatShortWee, _props$formatWeekday = props.formatWeekday, formatWeekday = _props$formatWeekday === void 0 ? _dateFormatter.formatWeekday : _props$formatWeekday, locale = props.locale, onMouseLeave = props.onMouseLeave;
-        var anyDate = /* @__PURE__ */ new Date();
-        var beginOfMonth = (0, _dateUtils.getMonthStart)(anyDate);
-        var year = (0, _dateUtils.getYear)(beginOfMonth);
-        var monthIndex = (0, _dateUtils.getMonth)(beginOfMonth);
-        var weekdays = [];
-        for (var weekday = 1; weekday <= 7; weekday += 1) {
-          var weekdayDate = new Date(year, monthIndex, weekday - (0, _dates.getDayOfWeek)(beginOfMonth, calendarType));
-          var abbr = formatWeekday(locale, weekdayDate);
-          weekdays.push(/* @__PURE__ */ _react["default"].createElement("div", {
-            key: weekday,
-            className: (0, _mergeClassNames["default"])(weekdayClassName, (0, _dates.isWeekend)(weekdayDate, calendarType) && "".concat(weekdayClassName, "--weekend"))
-          }, /* @__PURE__ */ _react["default"].createElement("abbr", {
-            "aria-label": abbr,
-            title: abbr
-          }, formatShortWeekday(locale, weekdayDate).replace(".", ""))));
-        }
-        return /* @__PURE__ */ _react["default"].createElement(_Flex["default"], {
-          className,
-          count: 7,
-          onFocus: onMouseLeave,
-          onMouseOver: onMouseLeave
-        }, weekdays);
-      }
-      Weekdays.propTypes = {
-        calendarType: _propTypes2.isCalendarType.isRequired,
-        formatShortWeekday: _propTypes["default"].func,
-        formatWeekday: _propTypes["default"].func,
-        locale: _propTypes["default"].string,
-        onMouseLeave: _propTypes["default"].func
-      };
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/MonthView/WeekNumber.js
-  var require_WeekNumber = __commonJS({
-    "node_modules/react-calendar/dist/umd/MonthView/WeekNumber.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = WeekNumber;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _excluded2 = ["date", "onClickWeekNumber", "weekNumber"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _extends2() {
-        _extends2 = Object.assign ? Object.assign.bind() : function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function ownKeys4(object, enumerableOnly) {
-        var keys3 = Object.keys(object);
-        if (Object.getOwnPropertySymbols) {
-          var symbols = Object.getOwnPropertySymbols(object);
-          enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-          })), keys3.push.apply(keys3, symbols);
-        }
-        return keys3;
-      }
-      function _objectSpread3(target) {
-        for (var i2 = 1; i2 < arguments.length; i2++) {
-          var source = null != arguments[i2] ? arguments[i2] : {};
-          i2 % 2 ? ownKeys4(Object(source), true).forEach(function(key) {
-            _defineProperty4(target, key, source[key]);
-          }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys4(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-          });
-        }
-        return target;
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      var className = "react-calendar__tile";
-      function WeekNumber(_ref2) {
-        var date = _ref2.date, onClickWeekNumber = _ref2.onClickWeekNumber, weekNumber = _ref2.weekNumber, otherProps = _objectWithoutProperties2(_ref2, _excluded2);
-        var props = _objectSpread3({
-          className
-        }, otherProps);
-        var children = /* @__PURE__ */ _react["default"].createElement("span", null, weekNumber);
-        return onClickWeekNumber ? /* @__PURE__ */ _react["default"].createElement("button", _extends2({}, props, {
-          onClick: function onClick(event) {
-            return onClickWeekNumber(weekNumber, date, event);
-          },
-          type: "button"
-        }), children) : /* @__PURE__ */ _react["default"].createElement("div", props, children);
-      }
-      WeekNumber.propTypes = {
-        date: _propTypes["default"].instanceOf(Date).isRequired,
-        onClickWeekNumber: _propTypes["default"].func,
-        weekNumber: _propTypes["default"].node.isRequired
-      };
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/MonthView/WeekNumbers.js
-  var require_WeekNumbers = __commonJS({
-    "node_modules/react-calendar/dist/umd/MonthView/WeekNumbers.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = WeekNumbers;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _WeekNumber = _interopRequireDefault(require_WeekNumber());
-      var _Flex = _interopRequireDefault(require_Flex());
-      var _dates = require_dates2();
-      var _propTypes2 = require_propTypes3();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function WeekNumbers(props) {
-        var activeStartDate = props.activeStartDate, calendarType = props.calendarType, onClickWeekNumber = props.onClickWeekNumber, onMouseLeave = props.onMouseLeave, showFixedNumberOfWeeks = props.showFixedNumberOfWeeks;
-        var numberOfWeeks = function() {
-          if (showFixedNumberOfWeeks) {
-            return 6;
-          }
-          var numberOfDays = (0, _dateUtils.getDaysInMonth)(activeStartDate);
-          var startWeekday = (0, _dates.getDayOfWeek)(activeStartDate, calendarType);
-          var days = numberOfDays - (7 - startWeekday);
-          return 1 + Math.ceil(days / 7);
-        }();
-        var dates = function() {
-          var year = (0, _dateUtils.getYear)(activeStartDate);
-          var monthIndex = (0, _dateUtils.getMonth)(activeStartDate);
-          var day = (0, _dateUtils.getDate)(activeStartDate);
-          var result = [];
-          for (var index = 0; index < numberOfWeeks; index += 1) {
-            result.push((0, _dates.getBeginOfWeek)(new Date(year, monthIndex, day + index * 7), calendarType));
-          }
-          return result;
-        }();
-        var weekNumbers = dates.map(function(date) {
-          return (0, _dates.getWeekNumber)(date, calendarType);
-        });
-        return /* @__PURE__ */ _react["default"].createElement(_Flex["default"], {
-          className: "react-calendar__month-view__weekNumbers",
-          count: numberOfWeeks,
-          direction: "column",
-          onFocus: onMouseLeave,
-          onMouseOver: onMouseLeave,
-          style: {
-            flexBasis: "calc(100% * (1 / 8)",
-            flexShrink: 0
-          }
-        }, weekNumbers.map(function(weekNumber, weekIndex) {
-          return /* @__PURE__ */ _react["default"].createElement(_WeekNumber["default"], {
-            key: weekNumber,
-            date: dates[weekIndex],
-            onClickWeekNumber,
-            weekNumber
-          });
-        }));
-      }
-      WeekNumbers.propTypes = {
-        activeStartDate: _propTypes["default"].instanceOf(Date).isRequired,
-        calendarType: _propTypes2.isCalendarType.isRequired,
-        onClickWeekNumber: _propTypes["default"].func,
-        onMouseLeave: _propTypes["default"].func,
-        showFixedNumberOfWeeks: _propTypes["default"].bool
-      };
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/MonthView.js
-  var require_MonthView = __commonJS({
-    "node_modules/react-calendar/dist/umd/MonthView.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = MonthView;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _mergeClassNames = _interopRequireDefault(require_umd());
-      var _Days = _interopRequireDefault(require_Days());
-      var _Weekdays = _interopRequireDefault(require_Weekdays());
-      var _WeekNumbers = _interopRequireDefault(require_WeekNumbers());
-      var _const = require_const();
-      var _propTypes2 = require_propTypes3();
-      var _excluded2 = ["calendarType", "formatShortWeekday", "formatWeekday", "onClickWeekNumber", "showWeekNumbers"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _extends2() {
-        _extends2 = Object.assign ? Object.assign.bind() : function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      function getCalendarTypeFromLocale(locale) {
-        return Object.keys(_const.CALENDAR_TYPE_LOCALES).find(function(calendarType) {
-          return _const.CALENDAR_TYPE_LOCALES[calendarType].includes(locale);
-        }) || _const.CALENDAR_TYPES.ISO_8601;
-      }
-      function MonthView(props) {
-        var activeStartDate = props.activeStartDate, locale = props.locale, onMouseLeave = props.onMouseLeave, showFixedNumberOfWeeks = props.showFixedNumberOfWeeks;
-        var _props$calendarType = props.calendarType, calendarType = _props$calendarType === void 0 ? getCalendarTypeFromLocale(locale) : _props$calendarType, formatShortWeekday = props.formatShortWeekday, formatWeekday = props.formatWeekday, onClickWeekNumber = props.onClickWeekNumber, showWeekNumbers = props.showWeekNumbers, childProps = _objectWithoutProperties2(props, _excluded2);
-        function renderWeekdays() {
-          return /* @__PURE__ */ _react["default"].createElement(_Weekdays["default"], {
-            calendarType,
-            formatShortWeekday,
-            formatWeekday,
-            locale,
-            onMouseLeave
-          });
-        }
-        function renderWeekNumbers() {
-          if (!showWeekNumbers) {
-            return null;
-          }
-          return /* @__PURE__ */ _react["default"].createElement(_WeekNumbers["default"], {
-            activeStartDate,
-            calendarType,
-            onClickWeekNumber,
-            onMouseLeave,
-            showFixedNumberOfWeeks
-          });
-        }
-        function renderDays() {
-          return /* @__PURE__ */ _react["default"].createElement(_Days["default"], _extends2({
-            calendarType
-          }, childProps));
-        }
-        var className = "react-calendar__month-view";
-        return /* @__PURE__ */ _react["default"].createElement("div", {
-          className: (0, _mergeClassNames["default"])(className, showWeekNumbers ? "".concat(className, "--weekNumbers") : "")
-        }, /* @__PURE__ */ _react["default"].createElement("div", {
-          style: {
-            display: "flex",
-            alignItems: "flex-end"
-          }
-        }, renderWeekNumbers(), /* @__PURE__ */ _react["default"].createElement("div", {
-          style: {
-            flexGrow: 1,
-            width: "100%"
-          }
-        }, renderWeekdays(), renderDays())));
-      }
-      MonthView.propTypes = {
-        activeStartDate: _propTypes["default"].instanceOf(Date).isRequired,
-        calendarType: _propTypes2.isCalendarType,
-        formatShortWeekday: _propTypes["default"].func,
-        formatWeekday: _propTypes["default"].func,
-        locale: _propTypes["default"].string,
-        onClickWeekNumber: _propTypes["default"].func,
-        onMouseLeave: _propTypes["default"].func,
-        showFixedNumberOfWeeks: _propTypes["default"].bool,
-        showWeekNumbers: _propTypes["default"].bool
-      };
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/Calendar.js
-  var require_Calendar2 = __commonJS({
-    "node_modules/react-calendar/dist/umd/Calendar.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = void 0;
-      var _react = _interopRequireWildcard(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _mergeClassNames = _interopRequireDefault(require_umd());
-      var _Navigation = _interopRequireDefault(require_Navigation());
-      var _CenturyView = _interopRequireDefault(require_CenturyView());
-      var _DecadeView = _interopRequireDefault(require_DecadeView());
-      var _YearView = _interopRequireDefault(require_YearView());
-      var _MonthView = _interopRequireDefault(require_MonthView());
-      var _dates = require_dates2();
-      var _propTypes2 = require_propTypes3();
-      var _utils = require_utils3();
-      var _excluded2 = ["activeStartDate", "defaultActiveStartDate", "defaultValue", "defaultView", "maxDetail", "minDetail", "value", "view"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _getRequireWildcardCache(nodeInterop) {
-        if (typeof WeakMap !== "function")
-          return null;
-        var cacheBabelInterop = /* @__PURE__ */ new WeakMap();
-        var cacheNodeInterop = /* @__PURE__ */ new WeakMap();
-        return (_getRequireWildcardCache = function _getRequireWildcardCache2(nodeInterop2) {
-          return nodeInterop2 ? cacheNodeInterop : cacheBabelInterop;
-        })(nodeInterop);
-      }
-      function _interopRequireWildcard(obj, nodeInterop) {
-        if (!nodeInterop && obj && obj.__esModule) {
-          return obj;
-        }
-        if (obj === null || _typeof3(obj) !== "object" && typeof obj !== "function") {
-          return { "default": obj };
-        }
-        var cache = _getRequireWildcardCache(nodeInterop);
-        if (cache && cache.has(obj)) {
-          return cache.get(obj);
-        }
-        var newObj = {};
-        var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-        for (var key in obj) {
-          if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-            var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-            if (desc && (desc.get || desc.set)) {
-              Object.defineProperty(newObj, key, desc);
-            } else {
-              newObj[key] = obj[key];
-            }
-          }
-        }
-        newObj["default"] = obj;
-        if (cache) {
-          cache.set(obj, newObj);
-        }
-        return newObj;
-      }
-      function _extends2() {
-        _extends2 = Object.assign ? Object.assign.bind() : function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _typeof3(obj) {
-        "@babel/helpers - typeof";
-        return _typeof3 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj2) {
-          return typeof obj2;
-        } : function(obj2) {
-          return obj2 && "function" == typeof Symbol && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        }, _typeof3(obj);
-      }
-      function _classCallCheck3(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-          throw new TypeError("Cannot call a class as a function");
-        }
-      }
-      function _defineProperties3(target, props) {
-        for (var i2 = 0; i2 < props.length; i2++) {
-          var descriptor = props[i2];
-          descriptor.enumerable = descriptor.enumerable || false;
-          descriptor.configurable = true;
-          if ("value" in descriptor)
-            descriptor.writable = true;
-          Object.defineProperty(target, descriptor.key, descriptor);
-        }
-      }
-      function _createClass3(Constructor, protoProps, staticProps) {
-        if (protoProps)
-          _defineProperties3(Constructor.prototype, protoProps);
-        if (staticProps)
-          _defineProperties3(Constructor, staticProps);
-        Object.defineProperty(Constructor, "prototype", { writable: false });
-        return Constructor;
-      }
-      function _inherits2(subClass, superClass) {
-        if (typeof superClass !== "function" && superClass !== null) {
-          throw new TypeError("Super expression must either be null or a function");
-        }
-        subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
-        Object.defineProperty(subClass, "prototype", { writable: false });
-        if (superClass)
-          _setPrototypeOf2(subClass, superClass);
-      }
-      function _setPrototypeOf2(o2, p2) {
-        _setPrototypeOf2 = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf3(o3, p3) {
-          o3.__proto__ = p3;
-          return o3;
-        };
-        return _setPrototypeOf2(o2, p2);
-      }
-      function _createSuper2(Derived) {
-        var hasNativeReflectConstruct = _isNativeReflectConstruct2();
-        return function _createSuperInternal() {
-          var Super = _getPrototypeOf2(Derived), result;
-          if (hasNativeReflectConstruct) {
-            var NewTarget = _getPrototypeOf2(this).constructor;
-            result = Reflect.construct(Super, arguments, NewTarget);
-          } else {
-            result = Super.apply(this, arguments);
-          }
-          return _possibleConstructorReturn2(this, result);
-        };
-      }
-      function _possibleConstructorReturn2(self2, call2) {
-        if (call2 && (_typeof3(call2) === "object" || typeof call2 === "function")) {
-          return call2;
-        } else if (call2 !== void 0) {
-          throw new TypeError("Derived constructors may only return object or undefined");
-        }
-        return _assertThisInitialized2(self2);
-      }
-      function _assertThisInitialized2(self2) {
-        if (self2 === void 0) {
-          throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-        }
-        return self2;
-      }
-      function _isNativeReflectConstruct2() {
-        if (typeof Reflect === "undefined" || !Reflect.construct)
-          return false;
-        if (Reflect.construct.sham)
-          return false;
-        if (typeof Proxy === "function")
-          return true;
-        try {
-          Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
-          }));
-          return true;
-        } catch (e2) {
-          return false;
-        }
-      }
-      function _getPrototypeOf2(o2) {
-        _getPrototypeOf2 = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf3(o3) {
-          return o3.__proto__ || Object.getPrototypeOf(o3);
-        };
-        return _getPrototypeOf2(o2);
-      }
-      function ownKeys4(object, enumerableOnly) {
-        var keys3 = Object.keys(object);
-        if (Object.getOwnPropertySymbols) {
-          var symbols = Object.getOwnPropertySymbols(object);
-          enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-          })), keys3.push.apply(keys3, symbols);
-        }
-        return keys3;
-      }
-      function _objectSpread3(target) {
-        for (var i2 = 1; i2 < arguments.length; i2++) {
-          var source = null != arguments[i2] ? arguments[i2] : {};
-          i2 % 2 ? ownKeys4(Object(source), true).forEach(function(key) {
-            _defineProperty4(target, key, source[key]);
-          }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys4(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-          });
-        }
-        return target;
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      function _toConsumableArray2(arr) {
-        return _arrayWithoutHoles2(arr) || _iterableToArray2(arr) || _unsupportedIterableToArray3(arr) || _nonIterableSpread2();
-      }
-      function _nonIterableSpread2() {
-        throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-      function _unsupportedIterableToArray3(o2, minLen) {
-        if (!o2)
-          return;
-        if (typeof o2 === "string")
-          return _arrayLikeToArray3(o2, minLen);
-        var n2 = Object.prototype.toString.call(o2).slice(8, -1);
-        if (n2 === "Object" && o2.constructor)
-          n2 = o2.constructor.name;
-        if (n2 === "Map" || n2 === "Set")
-          return Array.from(o2);
-        if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
-          return _arrayLikeToArray3(o2, minLen);
-      }
-      function _iterableToArray2(iter) {
-        if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null)
-          return Array.from(iter);
-      }
-      function _arrayWithoutHoles2(arr) {
-        if (Array.isArray(arr))
-          return _arrayLikeToArray3(arr);
-      }
-      function _arrayLikeToArray3(arr, len) {
-        if (len == null || len > arr.length)
-          len = arr.length;
-        for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++) {
-          arr2[i2] = arr[i2];
-        }
-        return arr2;
-      }
-      var defaultMinDate = /* @__PURE__ */ new Date();
-      defaultMinDate.setFullYear(1, 0, 1);
-      defaultMinDate.setHours(0, 0, 0, 0);
-      var defaultMaxDate = /* @__PURE__ */ new Date(864e13);
-      var baseClassName = "react-calendar";
-      var allViews = ["century", "decade", "year", "month"];
-      var allValueTypes = [].concat(_toConsumableArray2(allViews.slice(1)), ["day"]);
-      function toDate(value) {
-        if (value instanceof Date) {
-          return value;
-        }
-        return new Date(value);
-      }
-      function getLimitedViews(minDetail, maxDetail) {
-        return allViews.slice(allViews.indexOf(minDetail), allViews.indexOf(maxDetail) + 1);
-      }
-      function isViewAllowed(view, minDetail, maxDetail) {
-        var views = getLimitedViews(minDetail, maxDetail);
-        return views.indexOf(view) !== -1;
-      }
-      function getView(view, minDetail, maxDetail) {
-        if (isViewAllowed(view, minDetail, maxDetail)) {
-          return view;
-        }
-        return maxDetail;
-      }
-      function getValueType(maxDetail) {
-        return allValueTypes[allViews.indexOf(maxDetail)];
-      }
-      function getValue(value, index) {
-        if (!value) {
-          return null;
-        }
-        var rawValue = Array.isArray(value) && value.length === 2 ? value[index] : value;
-        if (!rawValue) {
-          return null;
-        }
-        var valueDate = toDate(rawValue);
-        if (isNaN(valueDate.getTime())) {
-          throw new Error("Invalid date: ".concat(value));
-        }
-        return valueDate;
-      }
-      function getDetailValue(_ref2, index) {
-        var value = _ref2.value, minDate2 = _ref2.minDate, maxDate = _ref2.maxDate, maxDetail = _ref2.maxDetail;
-        var valuePiece = getValue(value, index);
-        if (!valuePiece) {
-          return null;
-        }
-        var valueType = getValueType(maxDetail);
-        var detailValueFrom = [_dates.getBegin, _dates.getEnd][index](valueType, valuePiece);
-        return (0, _utils.between)(detailValueFrom, minDate2, maxDate);
-      }
-      var getDetailValueFrom = function getDetailValueFrom2(args) {
-        return getDetailValue(args, 0);
-      };
-      var getDetailValueTo = function getDetailValueTo2(args) {
-        return getDetailValue(args, 1);
-      };
-      var getDetailValueArray = function getDetailValueArray2(args) {
-        var value = args.value;
-        if (Array.isArray(value)) {
-          return value;
-        }
-        return [getDetailValueFrom, getDetailValueTo].map(function(fn) {
-          return fn(args);
-        });
-      };
-      function getActiveStartDate(props) {
-        var maxDate = props.maxDate, maxDetail = props.maxDetail, minDate2 = props.minDate, minDetail = props.minDetail, value = props.value, view = props.view;
-        var rangeType = getView(view, minDetail, maxDetail);
-        var valueFrom = getDetailValueFrom({
-          value,
-          minDate: minDate2,
-          maxDate,
-          maxDetail
-        }) || /* @__PURE__ */ new Date();
-        return (0, _dates.getBegin)(rangeType, valueFrom);
-      }
-      function getInitialActiveStartDate(props) {
-        var activeStartDate = props.activeStartDate, defaultActiveStartDate = props.defaultActiveStartDate, defaultValue = props.defaultValue, defaultView = props.defaultView, maxDetail = props.maxDetail, minDetail = props.minDetail, value = props.value, view = props.view, otherProps = _objectWithoutProperties2(props, _excluded2);
-        var rangeType = getView(view, minDetail, maxDetail);
-        var valueFrom = activeStartDate || defaultActiveStartDate;
-        if (valueFrom) {
-          return (0, _dates.getBegin)(rangeType, valueFrom);
-        }
-        return getActiveStartDate(_objectSpread3({
-          maxDetail,
-          minDetail,
-          value: value || defaultValue,
-          view: view || defaultView
-        }, otherProps));
-      }
-      var getIsSingleValue = function getIsSingleValue2(value) {
-        return value && [].concat(value).length === 1;
-      };
-      var Calendar = /* @__PURE__ */ function(_Component) {
-        _inherits2(Calendar2, _Component);
-        var _super = _createSuper2(Calendar2);
-        function Calendar2() {
-          var _this;
-          _classCallCheck3(this, Calendar2);
-          for (var _len = arguments.length, _args = new Array(_len), _key = 0; _key < _len; _key++) {
-            _args[_key] = arguments[_key];
-          }
-          _this = _super.call.apply(_super, [this].concat(_args));
-          _defineProperty4(_assertThisInitialized2(_this), "state", {
-            activeStartDate: _this.props.defaultActiveStartDate,
-            value: _this.props.defaultValue,
-            view: _this.props.defaultView
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "setStateAndCallCallbacks", function(nextState, event, callback) {
-            var _assertThisInitialize = _assertThisInitialized2(_this), previousActiveStartDate = _assertThisInitialize.activeStartDate, previousView = _assertThisInitialize.view;
-            var _this$props = _this.props, allowPartialRange = _this$props.allowPartialRange, onActiveStartDateChange = _this$props.onActiveStartDateChange, onChange = _this$props.onChange, onViewChange = _this$props.onViewChange, selectRange = _this$props.selectRange;
-            var prevArgs = {
-              activeStartDate: previousActiveStartDate,
-              view: previousView
-            };
-            _this.setState(nextState, function() {
-              var args = {
-                action: nextState.action,
-                activeStartDate: nextState.activeStartDate || _this.activeStartDate,
-                value: nextState.value || _this.value,
-                view: nextState.view || _this.view
-              };
-              function shouldUpdate(key) {
-                return (
-                  // Key must exist, and…
-                  key in nextState && // …key changed from undefined to defined or the other way around, or…
-                  (_typeof3(nextState[key]) !== _typeof3(prevArgs[key]) || // …value changed.
-                  (nextState[key] instanceof Date ? nextState[key].getTime() !== prevArgs[key].getTime() : nextState[key] !== prevArgs[key]))
-                );
-              }
-              if (shouldUpdate("activeStartDate")) {
-                if (onActiveStartDateChange)
-                  onActiveStartDateChange(args);
-              }
-              if (shouldUpdate("view")) {
-                if (onViewChange)
-                  onViewChange(args);
-              }
-              if (shouldUpdate("value")) {
-                if (onChange) {
-                  if (selectRange) {
-                    var isSingleValue = getIsSingleValue(nextState.value);
-                    if (!isSingleValue) {
-                      onChange(nextState.value, event);
-                    } else if (allowPartialRange) {
-                      onChange([nextState.value], event);
-                    }
-                  } else {
-                    onChange(nextState.value, event);
-                  }
-                }
-              }
-              if (callback)
-                callback(args);
-            });
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "setActiveStartDate", function(nextActiveStartDate, action) {
-            _this.setStateAndCallCallbacks({
-              action,
-              activeStartDate: nextActiveStartDate
-            });
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "drillDown", function(nextActiveStartDate, event) {
-            if (!_this.drillDownAvailable) {
-              return;
-            }
-            _this.onClickTile(nextActiveStartDate, event);
-            var _assertThisInitialize2 = _assertThisInitialized2(_this), view = _assertThisInitialize2.view, views = _assertThisInitialize2.views;
-            var onDrillDown = _this.props.onDrillDown;
-            var nextView = views[views.indexOf(view) + 1];
-            _this.setStateAndCallCallbacks({
-              action: "drillDown",
-              activeStartDate: nextActiveStartDate,
-              view: nextView
-            }, void 0, onDrillDown);
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "drillUp", function() {
-            if (!_this.drillUpAvailable) {
-              return;
-            }
-            var _assertThisInitialize3 = _assertThisInitialized2(_this), activeStartDate = _assertThisInitialize3.activeStartDate, view = _assertThisInitialize3.view, views = _assertThisInitialize3.views;
-            var onDrillUp = _this.props.onDrillUp;
-            var nextView = views[views.indexOf(view) - 1];
-            var nextActiveStartDate = (0, _dates.getBegin)(nextView, activeStartDate);
-            _this.setStateAndCallCallbacks({
-              action: "drillUp",
-              activeStartDate: nextActiveStartDate,
-              view: nextView
-            }, void 0, onDrillUp);
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onChange", function(value, event) {
-            var _assertThisInitialize4 = _assertThisInitialized2(_this), previousValue = _assertThisInitialize4.value;
-            var _this$props2 = _this.props, goToRangeStartOnSelect = _this$props2.goToRangeStartOnSelect, selectRange = _this$props2.selectRange;
-            _this.onClickTile(value, event);
-            var isFirstValueInRange = selectRange && !getIsSingleValue(previousValue);
-            var nextValue;
-            if (selectRange) {
-              var _assertThisInitialize5 = _assertThisInitialized2(_this), valueType = _assertThisInitialize5.valueType;
-              if (isFirstValueInRange) {
-                nextValue = (0, _dates.getBegin)(valueType, value);
-              } else {
-                nextValue = (0, _dates.getValueRange)(valueType, previousValue, value);
-              }
-            } else {
-              nextValue = _this.getProcessedValue(value);
-            }
-            var nextActiveStartDate = (
-              // Range selection turned off
-              !selectRange || // Range selection turned on, first value
-              isFirstValueInRange || // Range selection turned on, second value, goToRangeStartOnSelect toggled on
-              goToRangeStartOnSelect ? getActiveStartDate(_objectSpread3(_objectSpread3({}, _this.props), {}, {
-                value: nextValue
-              })) : null
-            );
-            event.persist();
-            _this.setStateAndCallCallbacks({
-              action: "onChange",
-              activeStartDate: nextActiveStartDate,
-              value: nextValue
-            }, event);
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onClickTile", function(value, event) {
-            var _assertThisInitialize6 = _assertThisInitialized2(_this), view = _assertThisInitialize6.view;
-            var _this$props3 = _this.props, onClickDay = _this$props3.onClickDay, onClickDecade = _this$props3.onClickDecade, onClickMonth = _this$props3.onClickMonth, onClickYear = _this$props3.onClickYear;
-            var callback = function() {
-              switch (view) {
-                case "century":
-                  return onClickDecade;
-                case "decade":
-                  return onClickYear;
-                case "year":
-                  return onClickMonth;
-                case "month":
-                  return onClickDay;
-                default:
-                  throw new Error("Invalid view: ".concat(view, "."));
-              }
-            }();
-            if (callback)
-              callback(value, event);
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onMouseOver", function(value) {
-            _this.setState(function(prevState) {
-              if (prevState.hover && prevState.hover.getTime() === value.getTime()) {
-                return null;
-              }
-              return {
-                hover: value
-              };
-            });
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onMouseLeave", function() {
-            _this.setState({
-              hover: null
-            });
-          });
-          return _this;
-        }
-        _createClass3(Calendar2, [{
-          key: "activeStartDate",
-          get: function get3() {
-            var activeStartDateProps = this.props.activeStartDate;
-            var activeStartDateState = this.state.activeStartDate;
-            return activeStartDateProps || activeStartDateState || getInitialActiveStartDate(this.props);
-          }
-        }, {
-          key: "value",
-          get: function get3() {
-            var _this$props4 = this.props, selectRange = _this$props4.selectRange, valueProps = _this$props4.value;
-            var valueState = this.state.value;
-            if (selectRange && getIsSingleValue(valueState)) {
-              return valueState;
-            }
-            return valueProps !== void 0 ? valueProps : valueState;
-          }
-        }, {
-          key: "valueType",
-          get: function get3() {
-            var maxDetail = this.props.maxDetail;
-            return getValueType(maxDetail);
-          }
-        }, {
-          key: "view",
-          get: function get3() {
-            var _this$props5 = this.props, minDetail = _this$props5.minDetail, maxDetail = _this$props5.maxDetail, viewProps = _this$props5.view;
-            var viewState = this.state.view;
-            return getView(viewProps || viewState, minDetail, maxDetail);
-          }
-        }, {
-          key: "views",
-          get: function get3() {
-            var _this$props6 = this.props, minDetail = _this$props6.minDetail, maxDetail = _this$props6.maxDetail;
-            return getLimitedViews(minDetail, maxDetail);
-          }
-        }, {
-          key: "hover",
-          get: function get3() {
-            var selectRange = this.props.selectRange;
-            var hover = this.state.hover;
-            return selectRange ? hover : null;
-          }
-        }, {
-          key: "drillDownAvailable",
-          get: function get3() {
-            var view = this.view, views = this.views;
-            return views.indexOf(view) < views.length - 1;
-          }
-        }, {
-          key: "drillUpAvailable",
-          get: function get3() {
-            var view = this.view, views = this.views;
-            return views.indexOf(view) > 0;
-          }
-          /**
-           * Gets current value in a desired format.
-           */
-        }, {
-          key: "getProcessedValue",
-          value: function getProcessedValue(value) {
-            var _this$props7 = this.props, minDate2 = _this$props7.minDate, maxDate = _this$props7.maxDate, maxDetail = _this$props7.maxDetail, returnValue = _this$props7.returnValue;
-            var processFunction = function() {
-              switch (returnValue) {
-                case "start":
-                  return getDetailValueFrom;
-                case "end":
-                  return getDetailValueTo;
-                case "range":
-                  return getDetailValueArray;
-                default:
-                  throw new Error("Invalid returnValue.");
-              }
-            }();
-            return processFunction({
-              value,
-              minDate: minDate2,
-              maxDate,
-              maxDetail
-            });
-          }
-        }, {
-          key: "renderContent",
-          value: function renderContent(next) {
-            var currentActiveStartDate = this.activeStartDate, onMouseOver = this.onMouseOver, valueType = this.valueType, value = this.value, view = this.view;
-            var _this$props8 = this.props, calendarType = _this$props8.calendarType, locale = _this$props8.locale, maxDate = _this$props8.maxDate, minDate2 = _this$props8.minDate, selectRange = _this$props8.selectRange, tileClassName = _this$props8.tileClassName, tileContent = _this$props8.tileContent, tileDisabled = _this$props8.tileDisabled;
-            var hover = this.hover;
-            var activeStartDate = next ? (0, _dates.getBeginNext)(view, currentActiveStartDate) : (0, _dates.getBegin)(view, currentActiveStartDate);
-            var onClick = this.drillDownAvailable ? this.drillDown : this.onChange;
-            var commonProps = {
-              activeStartDate,
-              hover,
-              locale,
-              maxDate,
-              minDate: minDate2,
-              onClick,
-              onMouseOver: selectRange ? onMouseOver : null,
-              tileClassName,
-              tileContent,
-              tileDisabled,
-              value,
-              valueType
-            };
-            switch (view) {
-              case "century": {
-                var formatYear = this.props.formatYear;
-                return /* @__PURE__ */ _react["default"].createElement(_CenturyView["default"], _extends2({
-                  formatYear
-                }, commonProps));
-              }
-              case "decade": {
-                var _formatYear = this.props.formatYear;
-                return /* @__PURE__ */ _react["default"].createElement(_DecadeView["default"], _extends2({
-                  formatYear: _formatYear
-                }, commonProps));
-              }
-              case "year": {
-                var _this$props9 = this.props, formatMonth = _this$props9.formatMonth, formatMonthYear = _this$props9.formatMonthYear;
-                return /* @__PURE__ */ _react["default"].createElement(_YearView["default"], _extends2({
-                  formatMonth,
-                  formatMonthYear
-                }, commonProps));
-              }
-              case "month": {
-                var _this$props10 = this.props, formatDay = _this$props10.formatDay, formatLongDate = _this$props10.formatLongDate, formatShortWeekday = _this$props10.formatShortWeekday, formatWeekday = _this$props10.formatWeekday, onClickWeekNumber = _this$props10.onClickWeekNumber, showDoubleView = _this$props10.showDoubleView, showFixedNumberOfWeeks = _this$props10.showFixedNumberOfWeeks, showNeighboringMonth = _this$props10.showNeighboringMonth, showWeekNumbers = _this$props10.showWeekNumbers;
-                var onMouseLeave = this.onMouseLeave;
-                return /* @__PURE__ */ _react["default"].createElement(_MonthView["default"], _extends2({
-                  calendarType,
-                  formatDay,
-                  formatLongDate,
-                  formatShortWeekday,
-                  formatWeekday,
-                  onClickWeekNumber,
-                  onMouseLeave: selectRange ? onMouseLeave : null,
-                  showFixedNumberOfWeeks: typeof showFixedNumberOfWeeks !== "undefined" ? showFixedNumberOfWeeks : showDoubleView,
-                  showNeighboringMonth,
-                  showWeekNumbers
-                }, commonProps));
-              }
-              default:
-                throw new Error("Invalid view: ".concat(view, "."));
-            }
-          }
-        }, {
-          key: "renderNavigation",
-          value: function renderNavigation() {
-            var showNavigation = this.props.showNavigation;
-            if (!showNavigation) {
-              return null;
-            }
-            var activeStartDate = this.activeStartDate, view = this.view, views = this.views;
-            var _this$props11 = this.props, formatMonthYear = _this$props11.formatMonthYear, formatYear = _this$props11.formatYear, locale = _this$props11.locale, maxDate = _this$props11.maxDate, minDate2 = _this$props11.minDate, navigationAriaLabel = _this$props11.navigationAriaLabel, navigationAriaLive = _this$props11.navigationAriaLive, navigationLabel = _this$props11.navigationLabel, next2AriaLabel = _this$props11.next2AriaLabel, next2Label = _this$props11.next2Label, nextAriaLabel = _this$props11.nextAriaLabel, nextLabel = _this$props11.nextLabel, prev2AriaLabel = _this$props11.prev2AriaLabel, prev2Label = _this$props11.prev2Label, prevAriaLabel = _this$props11.prevAriaLabel, prevLabel = _this$props11.prevLabel, showDoubleView = _this$props11.showDoubleView;
-            return /* @__PURE__ */ _react["default"].createElement(_Navigation["default"], {
-              activeStartDate,
-              drillUp: this.drillUp,
-              formatMonthYear,
-              formatYear,
-              locale,
-              maxDate,
-              minDate: minDate2,
-              navigationAriaLabel,
-              navigationAriaLive,
-              navigationLabel,
-              next2AriaLabel,
-              next2Label,
-              nextAriaLabel,
-              nextLabel,
-              prev2AriaLabel,
-              prev2Label,
-              prevAriaLabel,
-              prevLabel,
-              setActiveStartDate: this.setActiveStartDate,
-              showDoubleView,
-              view,
-              views
-            });
-          }
-        }, {
-          key: "render",
-          value: function render() {
-            var _this$props12 = this.props, className = _this$props12.className, inputRef = _this$props12.inputRef, selectRange = _this$props12.selectRange, showDoubleView = _this$props12.showDoubleView;
-            var onMouseLeave = this.onMouseLeave, value = this.value;
-            var valueArray = [].concat(value);
-            return /* @__PURE__ */ _react["default"].createElement("div", {
-              className: (0, _mergeClassNames["default"])(baseClassName, selectRange && valueArray.length === 1 && "".concat(baseClassName, "--selectRange"), showDoubleView && "".concat(baseClassName, "--doubleView"), className),
-              ref: inputRef
-            }, this.renderNavigation(), /* @__PURE__ */ _react["default"].createElement("div", {
-              className: "".concat(baseClassName, "__viewContainer"),
-              onBlur: selectRange ? onMouseLeave : null,
-              onMouseLeave: selectRange ? onMouseLeave : null
-            }, this.renderContent(), showDoubleView && this.renderContent(true)));
-          }
-        }]);
-        return Calendar2;
-      }(_react.Component);
-      exports["default"] = Calendar;
-      Calendar.defaultProps = {
-        goToRangeStartOnSelect: true,
-        maxDate: defaultMaxDate,
-        maxDetail: "month",
-        minDate: defaultMinDate,
-        minDetail: "century",
-        returnValue: "start",
-        showNavigation: true,
-        showNeighboringMonth: true
-      };
-      var isActiveStartDate = _propTypes["default"].instanceOf(Date);
-      var isLooseValue = _propTypes["default"].oneOfType([_propTypes["default"].string, _propTypes2.isValue]);
-      Calendar.propTypes = {
-        activeStartDate: isActiveStartDate,
-        allowPartialRange: _propTypes["default"].bool,
-        calendarType: _propTypes2.isCalendarType,
-        className: _propTypes2.isClassName,
-        defaultActiveStartDate: isActiveStartDate,
-        defaultValue: isLooseValue,
-        defaultView: _propTypes2.isView,
-        formatDay: _propTypes["default"].func,
-        formatLongDate: _propTypes["default"].func,
-        formatMonth: _propTypes["default"].func,
-        formatMonthYear: _propTypes["default"].func,
-        formatShortWeekday: _propTypes["default"].func,
-        formatWeekday: _propTypes["default"].func,
-        formatYear: _propTypes["default"].func,
-        goToRangeStartOnSelect: _propTypes["default"].bool,
-        inputRef: _propTypes2.isRef,
-        locale: _propTypes["default"].string,
-        maxDate: _propTypes2.isMaxDate,
-        maxDetail: _propTypes["default"].oneOf(allViews),
-        minDate: _propTypes2.isMinDate,
-        minDetail: _propTypes["default"].oneOf(allViews),
-        navigationAriaLabel: _propTypes["default"].string,
-        navigationAriaLive: _propTypes["default"].oneOf(["off", "polite", "assertive"]),
-        navigationLabel: _propTypes["default"].func,
-        next2AriaLabel: _propTypes["default"].string,
-        next2Label: _propTypes["default"].node,
-        nextAriaLabel: _propTypes["default"].string,
-        nextLabel: _propTypes["default"].node,
-        onActiveStartDateChange: _propTypes["default"].func,
-        onChange: _propTypes["default"].func,
-        onClickDay: _propTypes["default"].func,
-        onClickDecade: _propTypes["default"].func,
-        onClickMonth: _propTypes["default"].func,
-        onClickWeekNumber: _propTypes["default"].func,
-        onClickYear: _propTypes["default"].func,
-        onDrillDown: _propTypes["default"].func,
-        onDrillUp: _propTypes["default"].func,
-        onViewChange: _propTypes["default"].func,
-        prev2AriaLabel: _propTypes["default"].string,
-        prev2Label: _propTypes["default"].node,
-        prevAriaLabel: _propTypes["default"].string,
-        prevLabel: _propTypes["default"].node,
-        returnValue: _propTypes["default"].oneOf(["start", "end", "range"]),
-        selectRange: _propTypes["default"].bool,
-        showDoubleView: _propTypes["default"].bool,
-        showFixedNumberOfWeeks: _propTypes["default"].bool,
-        showNavigation: _propTypes["default"].bool,
-        showNeighboringMonth: _propTypes["default"].bool,
-        showWeekNumbers: _propTypes["default"].bool,
-        tileClassName: _propTypes["default"].oneOfType([_propTypes["default"].func, _propTypes2.isClassName]),
-        tileContent: _propTypes["default"].oneOfType([_propTypes["default"].func, _propTypes["default"].node]),
-        tileDisabled: _propTypes["default"].func,
-        value: isLooseValue,
-        view: _propTypes2.isView
-      };
-    }
-  });
-
-  // node_modules/react-calendar/dist/umd/index.js
-  var require_umd5 = __commonJS({
-    "node_modules/react-calendar/dist/umd/index.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      Object.defineProperty(exports, "Calendar", {
-        enumerable: true,
-        get: function get3() {
-          return _Calendar["default"];
-        }
-      });
-      Object.defineProperty(exports, "CenturyView", {
-        enumerable: true,
-        get: function get3() {
-          return _CenturyView["default"];
-        }
-      });
-      Object.defineProperty(exports, "DecadeView", {
-        enumerable: true,
-        get: function get3() {
-          return _DecadeView["default"];
-        }
-      });
-      Object.defineProperty(exports, "MonthView", {
-        enumerable: true,
-        get: function get3() {
-          return _MonthView["default"];
-        }
-      });
-      Object.defineProperty(exports, "Navigation", {
-        enumerable: true,
-        get: function get3() {
-          return _Navigation["default"];
-        }
-      });
-      Object.defineProperty(exports, "YearView", {
-        enumerable: true,
-        get: function get3() {
-          return _YearView["default"];
-        }
-      });
-      exports["default"] = void 0;
-      var _Calendar = _interopRequireDefault(require_Calendar2());
-      var _Navigation = _interopRequireDefault(require_Navigation());
-      var _CenturyView = _interopRequireDefault(require_CenturyView());
-      var _DecadeView = _interopRequireDefault(require_DecadeView());
-      var _YearView = _interopRequireDefault(require_YearView());
-      var _MonthView = _interopRequireDefault(require_MonthView());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      var _default2 = _Calendar["default"];
-      exports["default"] = _default2;
-    }
-  });
-
-  // node_modules/react-date-picker/dist/Divider.js
-  var require_Divider2 = __commonJS({
-    "node_modules/react-date-picker/dist/Divider.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Divider;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function Divider(_ref2) {
-        var children = _ref2.children;
-        return /* @__PURE__ */ _react["default"].createElement("span", {
-          className: "react-date-picker__inputGroup__divider"
-        }, children);
-      }
-      Divider.propTypes = {
-        children: _propTypes["default"].node
-      };
-    }
-  });
-
-  // node_modules/react-date-picker/dist/shared/propTypes.js
-  var require_propTypes4 = __commonJS({
-    "node_modules/react-date-picker/dist/shared/propTypes.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.isValueType = exports.isRef = exports.isMinDate = exports.isMaxDate = void 0;
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _typeof3(obj) {
-        "@babel/helpers - typeof";
-        return _typeof3 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj2) {
-          return typeof obj2;
-        } : function(obj2) {
-          return obj2 && "function" == typeof Symbol && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        }, _typeof3(obj);
-      }
-      function _toConsumableArray2(arr) {
-        return _arrayWithoutHoles2(arr) || _iterableToArray2(arr) || _unsupportedIterableToArray3(arr) || _nonIterableSpread2();
-      }
-      function _nonIterableSpread2() {
-        throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-      function _unsupportedIterableToArray3(o2, minLen) {
-        if (!o2)
-          return;
-        if (typeof o2 === "string")
-          return _arrayLikeToArray3(o2, minLen);
-        var n2 = Object.prototype.toString.call(o2).slice(8, -1);
-        if (n2 === "Object" && o2.constructor)
-          n2 = o2.constructor.name;
-        if (n2 === "Map" || n2 === "Set")
-          return Array.from(o2);
-        if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
-          return _arrayLikeToArray3(o2, minLen);
-      }
-      function _iterableToArray2(iter) {
-        if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null)
-          return Array.from(iter);
-      }
-      function _arrayWithoutHoles2(arr) {
-        if (Array.isArray(arr))
-          return _arrayLikeToArray3(arr);
-      }
-      function _arrayLikeToArray3(arr, len) {
-        if (len == null || len > arr.length)
-          len = arr.length;
-        for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++) {
-          arr2[i2] = arr[i2];
-        }
-        return arr2;
-      }
-      var allViews = ["century", "decade", "year", "month"];
-      var allValueTypes = [].concat(_toConsumableArray2(allViews.slice(1)), ["day"]);
-      var isValueType = _propTypes["default"].oneOf(allValueTypes);
-      exports.isValueType = isValueType;
-      var isMinDate = function isMinDate2(props, propName, componentName) {
-        var minDate2 = props[propName];
-        if (!minDate2) {
-          return null;
-        }
-        if (!(minDate2 instanceof Date)) {
-          return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof3(minDate2), "` supplied to `").concat(componentName, "`, expected instance of `Date`."));
-        }
-        var maxDate = props.maxDate;
-        if (maxDate && minDate2 > maxDate) {
-          return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof3(minDate2), "` supplied to `").concat(componentName, "`, minDate cannot be larger than maxDate."));
-        }
-        return null;
-      };
-      exports.isMinDate = isMinDate;
-      var isMaxDate = function isMaxDate2(props, propName, componentName) {
-        var maxDate = props[propName];
-        if (!maxDate) {
-          return null;
-        }
-        if (!(maxDate instanceof Date)) {
-          return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof3(maxDate), "` supplied to `").concat(componentName, "`, expected instance of `Date`."));
-        }
-        var minDate2 = props.minDate;
-        if (minDate2 && maxDate < minDate2) {
-          return new Error("Invalid prop `".concat(propName, "` of type `").concat(_typeof3(maxDate), "` supplied to `").concat(componentName, "`, maxDate cannot be smaller than minDate."));
-        }
-        return null;
-      };
-      exports.isMaxDate = isMaxDate;
-      var isRef = _propTypes["default"].oneOfType([_propTypes["default"].func, _propTypes["default"].shape({
-        current: _propTypes["default"].any
-      })]);
-      exports.isRef = isRef;
-    }
-  });
-
-  // node_modules/react-date-picker/dist/DateInput/Input.js
-  var require_Input2 = __commonJS({
-    "node_modules/react-date-picker/dist/DateInput/Input.js"(exports) {
-      "use strict";
-      function _typeof3(obj) {
-        "@babel/helpers - typeof";
-        return _typeof3 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj2) {
-          return typeof obj2;
-        } : function(obj2) {
-          return obj2 && "function" == typeof Symbol && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        }, _typeof3(obj);
-      }
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = Input6;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _mergeClassNames = _interopRequireDefault(require_umd());
-      var _mergeRefs = _interopRequireDefault(require_cjs5());
-      var _updateInputWidth = _interopRequireWildcard(require_cjs6());
-      var _propTypes2 = require_propTypes4();
-      function _getRequireWildcardCache(nodeInterop) {
-        if (typeof WeakMap !== "function")
-          return null;
-        var cacheBabelInterop = /* @__PURE__ */ new WeakMap();
-        var cacheNodeInterop = /* @__PURE__ */ new WeakMap();
-        return (_getRequireWildcardCache = function _getRequireWildcardCache2(nodeInterop2) {
-          return nodeInterop2 ? cacheNodeInterop : cacheBabelInterop;
-        })(nodeInterop);
-      }
-      function _interopRequireWildcard(obj, nodeInterop) {
-        if (!nodeInterop && obj && obj.__esModule) {
-          return obj;
-        }
-        if (obj === null || _typeof3(obj) !== "object" && typeof obj !== "function") {
-          return { "default": obj };
-        }
-        var cache = _getRequireWildcardCache(nodeInterop);
-        if (cache && cache.has(obj)) {
-          return cache.get(obj);
-        }
-        var newObj = {};
-        var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-        for (var key in obj) {
-          if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-            var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-            if (desc && (desc.get || desc.set)) {
-              Object.defineProperty(newObj, key, desc);
-            } else {
-              newObj[key] = obj[key];
-            }
-          }
-        }
-        newObj["default"] = obj;
-        if (cache) {
-          cache.set(obj, newObj);
-        }
-        return newObj;
-      }
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      var isIEOrEdgeLegacy = typeof window !== "undefined" && /(MSIE|Trident\/|Edge\/)/.test(window.navigator.userAgent);
-      var isFirefox = typeof window !== "undefined" && /Firefox/.test(window.navigator.userAgent);
-      function onFocus(event) {
-        var target = event.target;
-        if (isIEOrEdgeLegacy) {
-          requestAnimationFrame(function() {
-            return target.select();
-          });
-        } else {
-          target.select();
-        }
-      }
-      function updateInputWidthOnFontLoad(element) {
-        if (!document.fonts) {
-          return;
-        }
-        var font = (0, _updateInputWidth.getFontShorthand)(element);
-        if (!font) {
-          return;
-        }
-        var isFontLoaded = document.fonts.check(font);
-        if (isFontLoaded) {
-          return;
-        }
-        function onLoadingDone() {
-          (0, _updateInputWidth["default"])(element);
-        }
-        document.fonts.addEventListener("loadingdone", onLoadingDone);
-      }
-      function getSelectionString(input) {
-        if (input && "selectionStart" in input && input.selectionStart !== null) {
-          return input.value.slice(input.selectionStart, input.selectionEnd);
-        }
-        if ("getSelection" in window) {
-          return window.getSelection().toString();
-        }
-        return null;
-      }
-      function makeOnKeyPress(maxLength) {
-        return function onKeyPress(event) {
-          if (isFirefox) {
-            return;
-          }
-          var key = event.key, input = event.target;
-          var value = input.value;
-          var isNumberKey = key.length === 1 && /\d/.test(key);
-          var selection = getSelectionString(input);
-          if (!isNumberKey || !(selection || value.length < maxLength)) {
-            event.preventDefault();
-          }
-        };
-      }
-      function Input6(_ref2) {
-        var ariaLabel = _ref2.ariaLabel, autoFocus = _ref2.autoFocus, className = _ref2.className, disabled = _ref2.disabled, inputRef = _ref2.inputRef, max2 = _ref2.max, min2 = _ref2.min, name = _ref2.name, nameForClass = _ref2.nameForClass, onChange = _ref2.onChange, onKeyDown = _ref2.onKeyDown, _onKeyUp = _ref2.onKeyUp, _ref$placeholder = _ref2.placeholder, placeholder = _ref$placeholder === void 0 ? "--" : _ref$placeholder, required = _ref2.required, showLeadingZeros = _ref2.showLeadingZeros, step = _ref2.step, value = _ref2.value;
-        var hasLeadingZero = showLeadingZeros && value && value < 10 && (value === "0" || !value.toString().startsWith("0"));
-        var maxLength = max2 ? max2.toString().length : null;
-        return [hasLeadingZero && /* @__PURE__ */ _react["default"].createElement("span", {
-          key: "leadingZero",
-          className: "".concat(className, "__leadingZero")
-        }, "0"), /* @__PURE__ */ _react["default"].createElement("input", {
-          key: "input",
-          "aria-label": ariaLabel,
-          autoComplete: "off",
-          autoFocus,
-          className: (0, _mergeClassNames["default"])("".concat(className, "__input"), "".concat(className, "__").concat(nameForClass || name), hasLeadingZero && "".concat(className, "__input--hasLeadingZero")),
-          "data-input": "true",
-          disabled,
-          inputMode: "numeric",
-          max: max2,
-          min: min2,
-          name,
-          onChange,
-          onFocus,
-          onKeyDown,
-          onKeyPress: makeOnKeyPress(maxLength),
-          onKeyUp: function onKeyUp(event) {
-            (0, _updateInputWidth["default"])(event.target);
-            if (_onKeyUp) {
-              _onKeyUp(event);
-            }
-          },
-          placeholder,
-          ref: (0, _mergeRefs["default"])(_updateInputWidth["default"], updateInputWidthOnFontLoad, inputRef),
-          required,
-          step,
-          type: "number",
-          value: value !== null ? value : ""
-        })];
-      }
-      Input6.propTypes = {
-        ariaLabel: _propTypes["default"].string,
-        autoFocus: _propTypes["default"].bool,
-        className: _propTypes["default"].string.isRequired,
-        disabled: _propTypes["default"].bool,
-        inputRef: _propTypes2.isRef,
-        max: _propTypes["default"].number,
-        min: _propTypes["default"].number,
-        name: _propTypes["default"].string,
-        nameForClass: _propTypes["default"].string,
-        onChange: _propTypes["default"].func,
-        onKeyDown: _propTypes["default"].func,
-        onKeyUp: _propTypes["default"].func,
-        placeholder: _propTypes["default"].string,
-        required: _propTypes["default"].bool,
-        showLeadingZeros: _propTypes["default"].bool,
-        step: _propTypes["default"].number,
-        value: _propTypes["default"].string
-      };
-    }
-  });
-
-  // node_modules/react-date-picker/dist/shared/utils.js
-  var require_utils4 = __commonJS({
-    "node_modules/react-date-picker/dist/shared/utils.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.between = between;
-      exports.safeMax = safeMax;
-      exports.safeMin = safeMin;
-      function _toConsumableArray2(arr) {
-        return _arrayWithoutHoles2(arr) || _iterableToArray2(arr) || _unsupportedIterableToArray3(arr) || _nonIterableSpread2();
-      }
-      function _nonIterableSpread2() {
-        throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-      function _unsupportedIterableToArray3(o2, minLen) {
-        if (!o2)
-          return;
-        if (typeof o2 === "string")
-          return _arrayLikeToArray3(o2, minLen);
-        var n2 = Object.prototype.toString.call(o2).slice(8, -1);
-        if (n2 === "Object" && o2.constructor)
-          n2 = o2.constructor.name;
-        if (n2 === "Map" || n2 === "Set")
-          return Array.from(o2);
-        if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
-          return _arrayLikeToArray3(o2, minLen);
-      }
-      function _iterableToArray2(iter) {
-        if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null)
-          return Array.from(iter);
-      }
-      function _arrayWithoutHoles2(arr) {
-        if (Array.isArray(arr))
-          return _arrayLikeToArray3(arr);
-      }
-      function _arrayLikeToArray3(arr, len) {
-        if (len == null || len > arr.length)
-          len = arr.length;
-        for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++) {
-          arr2[i2] = arr[i2];
-        }
-        return arr2;
-      }
-      function between(value, min2, max2) {
-        if (min2 && min2 > value) {
-          return min2;
-        }
-        if (max2 && max2 < value) {
-          return max2;
-        }
-        return value;
-      }
-      function isValidNumber(num) {
-        return num !== null && num !== false && !Number.isNaN(Number(num));
-      }
-      function safeMin() {
-        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-          args[_key] = arguments[_key];
-        }
-        return Math.min.apply(Math, _toConsumableArray2(args.filter(isValidNumber)));
-      }
-      function safeMax() {
-        for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-          args[_key2] = arguments[_key2];
-        }
-        return Math.max.apply(Math, _toConsumableArray2(args.filter(isValidNumber)));
-      }
-    }
-  });
-
-  // node_modules/react-date-picker/dist/DateInput/DayInput.js
-  var require_DayInput = __commonJS({
-    "node_modules/react-date-picker/dist/DateInput/DayInput.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = DayInput;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _Input = _interopRequireDefault(require_Input2());
-      var _propTypes2 = require_propTypes4();
-      var _utils = require_utils4();
-      var _excluded2 = ["maxDate", "minDate", "month", "year"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _extends2() {
-        _extends2 = Object.assign || function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      function DayInput(_ref2) {
-        var maxDate = _ref2.maxDate, minDate2 = _ref2.minDate, month = _ref2.month, year = _ref2.year, otherProps = _objectWithoutProperties2(_ref2, _excluded2);
-        var currentMonthMaxDays = function() {
-          if (!month) {
-            return 31;
-          }
-          return (0, _dateUtils.getDaysInMonth)(new Date(year, month - 1, 1));
-        }();
-        function isSameMonth(date) {
-          return date && year === (0, _dateUtils.getYear)(date).toString() && month === (0, _dateUtils.getMonthHuman)(date).toString();
-        }
-        var maxDay = (0, _utils.safeMin)(currentMonthMaxDays, isSameMonth(maxDate) && (0, _dateUtils.getDate)(maxDate));
-        var minDay = (0, _utils.safeMax)(1, isSameMonth(minDate2) && (0, _dateUtils.getDate)(minDate2));
-        return /* @__PURE__ */ _react["default"].createElement(_Input["default"], _extends2({
-          max: maxDay,
-          min: minDay,
-          name: "day"
-        }, otherProps));
-      }
-      DayInput.propTypes = {
-        ariaLabel: _propTypes["default"].string,
-        className: _propTypes["default"].string.isRequired,
-        disabled: _propTypes["default"].bool,
-        inputRef: _propTypes2.isRef,
-        maxDate: _propTypes2.isMaxDate,
-        minDate: _propTypes2.isMinDate,
-        month: _propTypes["default"].string,
-        onChange: _propTypes["default"].func,
-        onKeyDown: _propTypes["default"].func,
-        onKeyUp: _propTypes["default"].func,
-        placeholder: _propTypes["default"].string,
-        required: _propTypes["default"].bool,
-        showLeadingZeros: _propTypes["default"].bool,
-        value: _propTypes["default"].string,
-        year: _propTypes["default"].string
-      };
-    }
-  });
-
-  // node_modules/react-date-picker/dist/DateInput/MonthInput.js
-  var require_MonthInput = __commonJS({
-    "node_modules/react-date-picker/dist/DateInput/MonthInput.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = MonthInput;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _Input = _interopRequireDefault(require_Input2());
-      var _propTypes2 = require_propTypes4();
-      var _utils = require_utils4();
-      var _excluded2 = ["maxDate", "minDate", "year"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _extends2() {
-        _extends2 = Object.assign || function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      function MonthInput(_ref2) {
-        var maxDate = _ref2.maxDate, minDate2 = _ref2.minDate, year = _ref2.year, otherProps = _objectWithoutProperties2(_ref2, _excluded2);
-        function isSameYear(date) {
-          return date && year === (0, _dateUtils.getYear)(date).toString();
-        }
-        var maxMonth = (0, _utils.safeMin)(12, isSameYear(maxDate) && (0, _dateUtils.getMonthHuman)(maxDate));
-        var minMonth = (0, _utils.safeMax)(1, isSameYear(minDate2) && (0, _dateUtils.getMonthHuman)(minDate2));
-        return /* @__PURE__ */ _react["default"].createElement(_Input["default"], _extends2({
-          max: maxMonth,
-          min: minMonth,
-          name: "month"
-        }, otherProps));
-      }
-      MonthInput.propTypes = {
-        ariaLabel: _propTypes["default"].string,
-        className: _propTypes["default"].string.isRequired,
-        disabled: _propTypes["default"].bool,
-        inputRef: _propTypes2.isRef,
-        maxDate: _propTypes2.isMaxDate,
-        minDate: _propTypes2.isMinDate,
-        onChange: _propTypes["default"].func,
-        onKeyDown: _propTypes["default"].func,
-        onKeyUp: _propTypes["default"].func,
-        placeholder: _propTypes["default"].string,
-        required: _propTypes["default"].bool,
-        showLeadingZeros: _propTypes["default"].bool,
-        value: _propTypes["default"].string,
-        year: _propTypes["default"].string
-      };
-    }
-  });
-
-  // node_modules/react-date-picker/node_modules/get-user-locale/dist/umd/index.js
-  var require_umd6 = __commonJS({
-    "node_modules/react-date-picker/node_modules/get-user-locale/dist/umd/index.js"(exports) {
-      "use strict";
-      exports.__esModule = true;
-      exports.getUserLocales = exports.getUserLocale = exports["default"] = void 0;
-      var _lodash = _interopRequireDefault(require_lodash3());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function resolver(options) {
-        return JSON.stringify(options);
-      }
-      function uniqDefined(arr) {
-        return arr.filter(function(el, index) {
-          return el && arr.indexOf(el) === index;
-        });
-      }
-      function normalizeLocales(arr) {
-        return arr.map(function(el) {
-          if (!el || el.indexOf("-") === -1 || el.toLowerCase() !== el) {
-            return el;
-          }
-          var splitEl = el.split("-");
-          return splitEl[0] + "-" + splitEl[1].toUpperCase();
-        });
-      }
-      function getUserLocalesInternal(_temp) {
-        var _ref2 = _temp === void 0 ? {} : _temp, _ref$useFallbackLocal = _ref2.useFallbackLocale, useFallbackLocale = _ref$useFallbackLocal === void 0 ? true : _ref$useFallbackLocal, _ref$fallbackLocale = _ref2.fallbackLocale, fallbackLocale = _ref$fallbackLocale === void 0 ? "en-US" : _ref$fallbackLocale;
-        var languageList = [];
-        if (typeof window !== "undefined") {
-          var _window = window, navigator2 = _window.navigator;
-          languageList = languageList.concat(navigator2.languages, navigator2.language, navigator2.userLanguage, navigator2.browserLanguage, navigator2.systemLanguage);
-        }
-        if (useFallbackLocale) {
-          languageList.push(fallbackLocale);
-        }
-        return normalizeLocales(uniqDefined(languageList));
-      }
-      var getUserLocales = (0, _lodash["default"])(getUserLocalesInternal, resolver);
-      exports.getUserLocales = getUserLocales;
-      function getUserLocaleInternal(options) {
-        return getUserLocales(options)[0] || null;
-      }
-      var getUserLocale = (0, _lodash["default"])(getUserLocaleInternal, resolver);
-      exports.getUserLocale = getUserLocale;
-      var _default2 = getUserLocale;
-      exports["default"] = _default2;
-    }
-  });
-
-  // node_modules/react-date-picker/dist/shared/dateFormatter.js
-  var require_dateFormatter3 = __commonJS({
-    "node_modules/react-date-picker/dist/shared/dateFormatter.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.formatShortMonth = exports.formatMonth = void 0;
-      exports.getFormatter = getFormatter;
-      var _getUserLocale = _interopRequireDefault(require_umd6());
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      var formatterCache = /* @__PURE__ */ new Map();
-      function getFormatter(options) {
-        return function(locale, date) {
-          var localeWithDefault = locale || (0, _getUserLocale["default"])();
-          if (!formatterCache.has(localeWithDefault)) {
-            formatterCache.set(localeWithDefault, /* @__PURE__ */ new Map());
-          }
-          var formatterCacheLocale = formatterCache.get(localeWithDefault);
-          if (!formatterCacheLocale.has(options)) {
-            formatterCacheLocale.set(options, new Intl.DateTimeFormat(localeWithDefault, options).format);
-          }
-          return formatterCacheLocale.get(options)(date);
-        };
-      }
-      function toSafeHour(date) {
-        var safeDate = new Date(date);
-        return new Date(safeDate.setHours(12));
-      }
-      function getSafeFormatter(options) {
-        return function(locale, date) {
-          return getFormatter(options)(locale, toSafeHour(date));
-        };
-      }
-      var formatMonthOptions = {
-        month: "long"
-      };
-      var formatShortMonthOptions = {
-        month: "short"
-      };
-      var formatMonth = getSafeFormatter(formatMonthOptions);
-      exports.formatMonth = formatMonth;
-      var formatShortMonth = getSafeFormatter(formatShortMonthOptions);
-      exports.formatShortMonth = formatShortMonth;
-    }
-  });
-
-  // node_modules/react-date-picker/dist/DateInput/MonthSelect.js
-  var require_MonthSelect = __commonJS({
-    "node_modules/react-date-picker/dist/DateInput/MonthSelect.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = MonthSelect;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _mergeClassNames = _interopRequireDefault(require_umd());
-      var _dateUtils = require_cjs4();
-      var _dateFormatter = require_dateFormatter3();
-      var _propTypes2 = require_propTypes4();
-      var _utils = require_utils4();
-      var _excluded2 = ["ariaLabel", "className", "inputRef", "locale", "maxDate", "minDate", "placeholder", "short", "value", "year"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _extends2() {
-        _extends2 = Object.assign || function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _toConsumableArray2(arr) {
-        return _arrayWithoutHoles2(arr) || _iterableToArray2(arr) || _unsupportedIterableToArray3(arr) || _nonIterableSpread2();
-      }
-      function _nonIterableSpread2() {
-        throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-      function _unsupportedIterableToArray3(o2, minLen) {
-        if (!o2)
-          return;
-        if (typeof o2 === "string")
-          return _arrayLikeToArray3(o2, minLen);
-        var n2 = Object.prototype.toString.call(o2).slice(8, -1);
-        if (n2 === "Object" && o2.constructor)
-          n2 = o2.constructor.name;
-        if (n2 === "Map" || n2 === "Set")
-          return Array.from(o2);
-        if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
-          return _arrayLikeToArray3(o2, minLen);
-      }
-      function _iterableToArray2(iter) {
-        if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null)
-          return Array.from(iter);
-      }
-      function _arrayWithoutHoles2(arr) {
-        if (Array.isArray(arr))
-          return _arrayLikeToArray3(arr);
-      }
-      function _arrayLikeToArray3(arr, len) {
-        if (len == null || len > arr.length)
-          len = arr.length;
-        for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++) {
-          arr2[i2] = arr[i2];
-        }
-        return arr2;
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      function MonthSelect(_ref2) {
-        var ariaLabel = _ref2.ariaLabel, className = _ref2.className, inputRef = _ref2.inputRef, locale = _ref2.locale, maxDate = _ref2.maxDate, minDate2 = _ref2.minDate, _ref$placeholder = _ref2.placeholder, placeholder = _ref$placeholder === void 0 ? "--" : _ref$placeholder, _short = _ref2["short"], value = _ref2.value, year = _ref2.year, otherProps = _objectWithoutProperties2(_ref2, _excluded2);
-        function isSameYear(date) {
-          return date && year === (0, _dateUtils.getYear)(date).toString();
-        }
-        var maxMonth = (0, _utils.safeMin)(12, isSameYear(maxDate) && (0, _dateUtils.getMonthHuman)(maxDate));
-        var minMonth = (0, _utils.safeMax)(1, isSameYear(minDate2) && (0, _dateUtils.getMonthHuman)(minDate2));
-        var dates = _toConsumableArray2(Array(12)).map(function(el, index) {
-          return new Date(2019, index, 1);
-        });
-        var name = "month";
-        var formatter = _short ? _dateFormatter.formatShortMonth : _dateFormatter.formatMonth;
-        return /* @__PURE__ */ _react["default"].createElement("select", _extends2({
-          "aria-label": ariaLabel,
-          className: (0, _mergeClassNames["default"])("".concat(className, "__input"), "".concat(className, "__").concat(name)),
-          "data-input": "true",
-          "data-select": "true",
-          name,
-          ref: inputRef,
-          value: value !== null ? value : ""
-        }, otherProps), !value && /* @__PURE__ */ _react["default"].createElement("option", {
-          value: ""
-        }, placeholder), dates.map(function(date) {
-          var month = (0, _dateUtils.getMonthHuman)(date);
-          var disabled = month < minMonth || month > maxMonth;
-          return /* @__PURE__ */ _react["default"].createElement("option", {
-            key: month,
-            disabled,
-            value: month
-          }, formatter(locale, date));
-        }));
-      }
-      MonthSelect.propTypes = {
-        ariaLabel: _propTypes["default"].string,
-        className: _propTypes["default"].string.isRequired,
-        disabled: _propTypes["default"].bool,
-        inputRef: _propTypes2.isRef,
-        locale: _propTypes["default"].string,
-        maxDate: _propTypes2.isMaxDate,
-        minDate: _propTypes2.isMinDate,
-        onChange: _propTypes["default"].func,
-        onKeyDown: _propTypes["default"].func,
-        onKeyUp: _propTypes["default"].func,
-        placeholder: _propTypes["default"].string,
-        required: _propTypes["default"].bool,
-        "short": _propTypes["default"].bool,
-        value: _propTypes["default"].string,
-        year: _propTypes["default"].string
-      };
-    }
-  });
-
-  // node_modules/react-date-picker/dist/DateInput/YearInput.js
-  var require_YearInput = __commonJS({
-    "node_modules/react-date-picker/dist/DateInput/YearInput.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = YearInput;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _Input = _interopRequireDefault(require_Input2());
-      var _propTypes2 = require_propTypes4();
-      var _utils = require_utils4();
-      var _excluded2 = ["maxDate", "minDate", "placeholder", "valueType"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _extends2() {
-        _extends2 = Object.assign || function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      function YearInput(_ref2) {
-        var maxDate = _ref2.maxDate, minDate2 = _ref2.minDate, _ref$placeholder = _ref2.placeholder, placeholder = _ref$placeholder === void 0 ? "----" : _ref$placeholder, valueType = _ref2.valueType, otherProps = _objectWithoutProperties2(_ref2, _excluded2);
-        var maxYear = (0, _utils.safeMin)(275760, maxDate && (0, _dateUtils.getYear)(maxDate));
-        var minYear = (0, _utils.safeMax)(1, minDate2 && (0, _dateUtils.getYear)(minDate2));
-        var yearStep = function() {
-          if (valueType === "century") {
-            return 10;
-          }
-          return 1;
-        }();
-        return /* @__PURE__ */ _react["default"].createElement(_Input["default"], _extends2({
-          max: maxYear,
-          min: minYear,
-          name: "year",
-          placeholder,
-          step: yearStep
-        }, otherProps));
-      }
-      YearInput.propTypes = {
-        ariaLabel: _propTypes["default"].string,
-        className: _propTypes["default"].string.isRequired,
-        disabled: _propTypes["default"].bool,
-        inputRef: _propTypes2.isRef,
-        maxDate: _propTypes2.isMaxDate,
-        minDate: _propTypes2.isMinDate,
-        onChange: _propTypes["default"].func,
-        onKeyDown: _propTypes["default"].func,
-        onKeyUp: _propTypes["default"].func,
-        placeholder: _propTypes["default"].string,
-        required: _propTypes["default"].bool,
-        value: _propTypes["default"].string,
-        valueType: _propTypes2.isValueType
-      };
-    }
-  });
-
-  // node_modules/react-date-picker/dist/DateInput/NativeInput.js
-  var require_NativeInput2 = __commonJS({
-    "node_modules/react-date-picker/dist/DateInput/NativeInput.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = NativeInput;
-      var _react = _interopRequireDefault(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _propTypes2 = require_propTypes4();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function NativeInput(_ref2) {
-        var ariaLabel = _ref2.ariaLabel, disabled = _ref2.disabled, maxDate = _ref2.maxDate, minDate2 = _ref2.minDate, name = _ref2.name, onChange = _ref2.onChange, required = _ref2.required, value = _ref2.value, valueType = _ref2.valueType;
-        var nativeInputType = function() {
-          switch (valueType) {
-            case "decade":
-            case "year":
-              return "number";
-            case "month":
-              return "month";
-            case "day":
-              return "date";
-            default:
-              throw new Error("Invalid valueType.");
-          }
-        }();
-        var nativeValueParser = function() {
-          switch (valueType) {
-            case "century":
-            case "decade":
-            case "year":
-              return _dateUtils.getYear;
-            case "month":
-              return _dateUtils.getISOLocalMonth;
-            case "day":
-              return _dateUtils.getISOLocalDate;
-            default:
-              throw new Error("Invalid valueType.");
-          }
-        }();
-        function stopPropagation(event) {
-          event.stopPropagation();
-        }
-        return /* @__PURE__ */ _react["default"].createElement("input", {
-          "aria-label": ariaLabel,
-          disabled,
-          max: maxDate ? nativeValueParser(maxDate) : null,
-          min: minDate2 ? nativeValueParser(minDate2) : null,
-          name,
-          onChange,
-          onFocus: stopPropagation,
-          required,
-          style: {
-            visibility: "hidden",
-            position: "absolute",
-            zIndex: "-999"
-          },
-          type: nativeInputType,
-          value: value ? nativeValueParser(value) : ""
-        });
-      }
-      NativeInput.propTypes = {
-        ariaLabel: _propTypes["default"].string,
-        disabled: _propTypes["default"].bool,
-        maxDate: _propTypes2.isMaxDate,
-        minDate: _propTypes2.isMinDate,
-        name: _propTypes["default"].string,
-        onChange: _propTypes["default"].func,
-        required: _propTypes["default"].bool,
-        value: _propTypes["default"].oneOfType([_propTypes["default"].string, _propTypes["default"].instanceOf(Date)]),
-        valueType: _propTypes2.isValueType
-      };
-    }
-  });
-
-  // node_modules/react-date-picker/dist/shared/dates.js
-  var require_dates3 = __commonJS({
-    "node_modules/react-date-picker/dist/shared/dates.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports.getBegin = getBegin;
-      exports.getEnd = getEnd;
-      var _dateUtils = require_cjs4();
-      function getBegin(rangeType, date) {
-        switch (rangeType) {
-          case "century":
-            return (0, _dateUtils.getCenturyStart)(date);
-          case "decade":
-            return (0, _dateUtils.getDecadeStart)(date);
-          case "year":
-            return (0, _dateUtils.getYearStart)(date);
-          case "month":
-            return (0, _dateUtils.getMonthStart)(date);
-          case "day":
-            return (0, _dateUtils.getDayStart)(date);
-          default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-        }
-      }
-      function getEnd(rangeType, date) {
-        switch (rangeType) {
-          case "century":
-            return (0, _dateUtils.getCenturyEnd)(date);
-          case "decade":
-            return (0, _dateUtils.getDecadeEnd)(date);
-          case "year":
-            return (0, _dateUtils.getYearEnd)(date);
-          case "month":
-            return (0, _dateUtils.getMonthEnd)(date);
-          case "day":
-            return (0, _dateUtils.getDayEnd)(date);
-          default:
-            throw new Error("Invalid rangeType: ".concat(rangeType));
-        }
-      }
-    }
-  });
-
-  // node_modules/react-date-picker/dist/DateInput.js
-  var require_DateInput = __commonJS({
-    "node_modules/react-date-picker/dist/DateInput.js"(exports) {
-      "use strict";
-      function _typeof3(obj) {
-        "@babel/helpers - typeof";
-        return _typeof3 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj2) {
-          return typeof obj2;
-        } : function(obj2) {
-          return obj2 && "function" == typeof Symbol && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        }, _typeof3(obj);
-      }
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = void 0;
-      var _react = _interopRequireWildcard(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _dateUtils = require_cjs4();
-      var _Divider = _interopRequireDefault(require_Divider2());
-      var _DayInput = _interopRequireDefault(require_DayInput());
-      var _MonthInput = _interopRequireDefault(require_MonthInput());
-      var _MonthSelect = _interopRequireDefault(require_MonthSelect());
-      var _YearInput = _interopRequireDefault(require_YearInput());
-      var _NativeInput = _interopRequireDefault(require_NativeInput2());
-      var _dateFormatter = require_dateFormatter3();
-      var _dates = require_dates3();
-      var _propTypes2 = require_propTypes4();
-      var _utils = require_utils4();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _getRequireWildcardCache(nodeInterop) {
-        if (typeof WeakMap !== "function")
-          return null;
-        var cacheBabelInterop = /* @__PURE__ */ new WeakMap();
-        var cacheNodeInterop = /* @__PURE__ */ new WeakMap();
-        return (_getRequireWildcardCache = function _getRequireWildcardCache2(nodeInterop2) {
-          return nodeInterop2 ? cacheNodeInterop : cacheBabelInterop;
-        })(nodeInterop);
-      }
-      function _interopRequireWildcard(obj, nodeInterop) {
-        if (!nodeInterop && obj && obj.__esModule) {
-          return obj;
-        }
-        if (obj === null || _typeof3(obj) !== "object" && typeof obj !== "function") {
-          return { "default": obj };
-        }
-        var cache = _getRequireWildcardCache(nodeInterop);
-        if (cache && cache.has(obj)) {
-          return cache.get(obj);
-        }
-        var newObj = {};
-        var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-        for (var key in obj) {
-          if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-            var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-            if (desc && (desc.get || desc.set)) {
-              Object.defineProperty(newObj, key, desc);
-            } else {
-              newObj[key] = obj[key];
-            }
-          }
-        }
-        newObj["default"] = obj;
-        if (cache) {
-          cache.set(obj, newObj);
-        }
-        return newObj;
-      }
-      function _extends2() {
-        _extends2 = Object.assign || function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _slicedToArray2(arr, i2) {
-        return _arrayWithHoles2(arr) || _iterableToArrayLimit2(arr, i2) || _unsupportedIterableToArray3(arr, i2) || _nonIterableRest2();
-      }
-      function _nonIterableRest2() {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-      function _iterableToArrayLimit2(arr, i2) {
-        var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-        if (_i == null)
-          return;
-        var _arr = [];
-        var _n = true;
-        var _d = false;
-        var _s, _e2;
-        try {
-          for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-            _arr.push(_s.value);
-            if (i2 && _arr.length === i2)
-              break;
-          }
-        } catch (err) {
-          _d = true;
-          _e2 = err;
-        } finally {
-          try {
-            if (!_n && _i["return"] != null)
-              _i["return"]();
-          } finally {
-            if (_d)
-              throw _e2;
-          }
-        }
-        return _arr;
-      }
-      function _arrayWithHoles2(arr) {
-        if (Array.isArray(arr))
-          return arr;
-      }
-      function _classCallCheck3(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-          throw new TypeError("Cannot call a class as a function");
-        }
-      }
-      function _defineProperties3(target, props) {
-        for (var i2 = 0; i2 < props.length; i2++) {
-          var descriptor = props[i2];
-          descriptor.enumerable = descriptor.enumerable || false;
-          descriptor.configurable = true;
-          if ("value" in descriptor)
-            descriptor.writable = true;
-          Object.defineProperty(target, descriptor.key, descriptor);
-        }
-      }
-      function _createClass3(Constructor, protoProps, staticProps) {
-        if (protoProps)
-          _defineProperties3(Constructor.prototype, protoProps);
-        if (staticProps)
-          _defineProperties3(Constructor, staticProps);
-        Object.defineProperty(Constructor, "prototype", { writable: false });
-        return Constructor;
-      }
-      function _inherits2(subClass, superClass) {
-        if (typeof superClass !== "function" && superClass !== null) {
-          throw new TypeError("Super expression must either be null or a function");
-        }
-        subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
-        Object.defineProperty(subClass, "prototype", { writable: false });
-        if (superClass)
-          _setPrototypeOf2(subClass, superClass);
-      }
-      function _setPrototypeOf2(o2, p2) {
-        _setPrototypeOf2 = Object.setPrototypeOf || function _setPrototypeOf3(o3, p3) {
-          o3.__proto__ = p3;
-          return o3;
-        };
-        return _setPrototypeOf2(o2, p2);
-      }
-      function _createSuper2(Derived) {
-        var hasNativeReflectConstruct = _isNativeReflectConstruct2();
-        return function _createSuperInternal() {
-          var Super = _getPrototypeOf2(Derived), result;
-          if (hasNativeReflectConstruct) {
-            var NewTarget = _getPrototypeOf2(this).constructor;
-            result = Reflect.construct(Super, arguments, NewTarget);
-          } else {
-            result = Super.apply(this, arguments);
-          }
-          return _possibleConstructorReturn2(this, result);
-        };
-      }
-      function _possibleConstructorReturn2(self2, call2) {
-        if (call2 && (_typeof3(call2) === "object" || typeof call2 === "function")) {
-          return call2;
-        } else if (call2 !== void 0) {
-          throw new TypeError("Derived constructors may only return object or undefined");
-        }
-        return _assertThisInitialized2(self2);
-      }
-      function _assertThisInitialized2(self2) {
-        if (self2 === void 0) {
-          throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-        }
-        return self2;
-      }
-      function _isNativeReflectConstruct2() {
-        if (typeof Reflect === "undefined" || !Reflect.construct)
-          return false;
-        if (Reflect.construct.sham)
-          return false;
-        if (typeof Proxy === "function")
-          return true;
-        try {
-          Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
-          }));
-          return true;
-        } catch (e2) {
-          return false;
-        }
-      }
-      function _getPrototypeOf2(o2) {
-        _getPrototypeOf2 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf3(o3) {
-          return o3.__proto__ || Object.getPrototypeOf(o3);
-        };
-        return _getPrototypeOf2(o2);
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      function _toConsumableArray2(arr) {
-        return _arrayWithoutHoles2(arr) || _iterableToArray2(arr) || _unsupportedIterableToArray3(arr) || _nonIterableSpread2();
-      }
-      function _nonIterableSpread2() {
-        throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-      function _unsupportedIterableToArray3(o2, minLen) {
-        if (!o2)
-          return;
-        if (typeof o2 === "string")
-          return _arrayLikeToArray3(o2, minLen);
-        var n2 = Object.prototype.toString.call(o2).slice(8, -1);
-        if (n2 === "Object" && o2.constructor)
-          n2 = o2.constructor.name;
-        if (n2 === "Map" || n2 === "Set")
-          return Array.from(o2);
-        if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
-          return _arrayLikeToArray3(o2, minLen);
-      }
-      function _iterableToArray2(iter) {
-        if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null)
-          return Array.from(iter);
-      }
-      function _arrayWithoutHoles2(arr) {
-        if (Array.isArray(arr))
-          return _arrayLikeToArray3(arr);
-      }
-      function _arrayLikeToArray3(arr, len) {
-        if (len == null || len > arr.length)
-          len = arr.length;
-        for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++) {
-          arr2[i2] = arr[i2];
-        }
-        return arr2;
-      }
-      var defaultMinDate = /* @__PURE__ */ new Date();
-      defaultMinDate.setFullYear(1, 0, 1);
-      defaultMinDate.setHours(0, 0, 0, 0);
-      var defaultMaxDate = /* @__PURE__ */ new Date(864e13);
-      var allViews = ["century", "decade", "year", "month"];
-      var allValueTypes = [].concat(_toConsumableArray2(allViews.slice(1)), ["day"]);
-      function toDate(value) {
-        if (value instanceof Date) {
-          return value;
-        }
-        return new Date(value);
-      }
-      function datesAreDifferent(date1, date2) {
-        return date1 && !date2 || !date1 && date2 || date1 && date2 && date1.getTime() !== date2.getTime();
-      }
-      function getValueType(maxDetail) {
-        return allValueTypes[allViews.indexOf(maxDetail)];
-      }
-      function getValue(value, index) {
-        if (!value) {
-          return null;
-        }
-        var rawValue = Array.isArray(value) && value.length === 2 ? value[index] : value;
-        if (!rawValue) {
-          return null;
-        }
-        var valueDate = toDate(rawValue);
-        if (isNaN(valueDate.getTime())) {
-          throw new Error("Invalid date: ".concat(value));
-        }
-        return valueDate;
-      }
-      function getDetailValue(_ref2, index) {
-        var value = _ref2.value, minDate2 = _ref2.minDate, maxDate = _ref2.maxDate, maxDetail = _ref2.maxDetail;
-        var valuePiece = getValue(value, index);
-        if (!valuePiece) {
-          return null;
-        }
-        var valueType = getValueType(maxDetail);
-        var detailValueFrom = [_dates.getBegin, _dates.getEnd][index](valueType, valuePiece);
-        return (0, _utils.between)(detailValueFrom, minDate2, maxDate);
-      }
-      var getDetailValueFrom = function getDetailValueFrom2(args) {
-        return getDetailValue(args, 0);
-      };
-      var getDetailValueTo = function getDetailValueTo2(args) {
-        return getDetailValue(args, 1);
-      };
-      var getDetailValueArray = function getDetailValueArray2(args) {
-        var value = args.value;
-        if (Array.isArray(value)) {
-          return value;
-        }
-        return [getDetailValueFrom, getDetailValueTo].map(function(fn) {
-          return fn(args);
-        });
-      };
-      function isInternalInput(element) {
-        return element.getAttribute("data-input") === "true";
-      }
-      function findInput(element, property) {
-        var nextElement = element;
-        do {
-          nextElement = nextElement[property];
-        } while (nextElement && !isInternalInput(nextElement));
-        return nextElement;
-      }
-      function focus(element) {
-        if (element) {
-          element.focus();
-        }
-      }
-      function _renderCustomInputs(placeholder, elementFunctions, allowMultipleInstances) {
-        var usedFunctions = [];
-        var pattern = new RegExp(Object.keys(elementFunctions).map(function(el) {
-          return "".concat(el, "+");
-        }).join("|"), "g");
-        var matches = placeholder.match(pattern);
-        return placeholder.split(pattern).reduce(function(arr, element, index) {
-          var divider = element && // eslint-disable-next-line react/no-array-index-key
-          /* @__PURE__ */ _react["default"].createElement(_Divider["default"], {
-            key: "separator_".concat(index)
-          }, element);
-          var res = [].concat(_toConsumableArray2(arr), [divider]);
-          var currentMatch = matches && matches[index];
-          if (currentMatch) {
-            var renderFunction = elementFunctions[currentMatch] || elementFunctions[Object.keys(elementFunctions).find(function(elementFunction) {
-              return currentMatch.match(elementFunction);
-            })];
-            if (!allowMultipleInstances && usedFunctions.includes(renderFunction)) {
-              res.push(currentMatch);
-            } else {
-              res.push(renderFunction(currentMatch, index));
-              usedFunctions.push(renderFunction);
-            }
-          }
-          return res;
-        }, []);
-      }
-      var DateInput = /* @__PURE__ */ function(_PureComponent) {
-        _inherits2(DateInput2, _PureComponent);
-        var _super = _createSuper2(DateInput2);
-        function DateInput2() {
-          var _this;
-          _classCallCheck3(this, DateInput2);
-          for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-          }
-          _this = _super.call.apply(_super, [this].concat(args));
-          _defineProperty4(_assertThisInitialized2(_this), "state", {
-            year: null,
-            month: null,
-            day: null
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "dayInput", /* @__PURE__ */ (0, _react.createRef)());
-          _defineProperty4(_assertThisInitialized2(_this), "monthInput", /* @__PURE__ */ (0, _react.createRef)());
-          _defineProperty4(_assertThisInitialized2(_this), "yearInput", /* @__PURE__ */ (0, _react.createRef)());
-          _defineProperty4(_assertThisInitialized2(_this), "onClick", function(event) {
-            if (event.target === event.currentTarget) {
-              var firstInput = event.target.children[1];
-              focus(firstInput);
-            }
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onKeyDown", function(event) {
-            switch (event.key) {
-              case "ArrowLeft":
-              case "ArrowRight":
-              case _this.divider: {
-                event.preventDefault();
-                var input = event.target;
-                var property = event.key === "ArrowLeft" ? "previousElementSibling" : "nextElementSibling";
-                var nextInput = findInput(input, property);
-                focus(nextInput);
-                break;
-              }
-              default:
-            }
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onKeyUp", function(event) {
-            var key = event.key, input = event.target;
-            var isNumberKey = !isNaN(parseInt(key, 10));
-            if (!isNumberKey) {
-              return;
-            }
-            var value = input.value;
-            var max2 = input.getAttribute("max");
-            if (value * 10 > max2 || value.length >= max2.length) {
-              var property = "nextElementSibling";
-              var nextInput = findInput(input, property);
-              focus(nextInput);
-            }
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onChange", function(event) {
-            var _event$target = event.target, name = _event$target.name, value = _event$target.value;
-            _this.setState(_defineProperty4({}, name, value), _this.onChangeExternal);
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onChangeNative", function(event) {
-            var onChange = _this.props.onChange;
-            var value = event.target.value;
-            if (!onChange) {
-              return;
-            }
-            var processedValue = function() {
-              if (!value) {
-                return null;
-              }
-              var _value$split = value.split("-"), _value$split2 = _slicedToArray2(_value$split, 3), yearString = _value$split2[0], monthString = _value$split2[1], dayString = _value$split2[2];
-              var year = parseInt(yearString, 10);
-              var monthIndex = parseInt(monthString, 10) - 1 || 0;
-              var day = parseInt(dayString, 10) || 1;
-              var proposedValue = /* @__PURE__ */ new Date();
-              proposedValue.setFullYear(year, monthIndex, day);
-              proposedValue.setHours(0, 0, 0, 0);
-              return proposedValue;
-            }();
-            onChange(processedValue, false);
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onChangeExternal", function() {
-            var onChange = _this.props.onChange;
-            if (!onChange) {
-              return;
-            }
-            var formElements = [_this.dayInput.current, _this.monthInput.current, _this.yearInput.current].filter(Boolean);
-            var values = {};
-            formElements.forEach(function(formElement) {
-              values[formElement.name] = formElement.value;
-            });
-            if (formElements.every(function(formElement) {
-              return !formElement.value;
-            })) {
-              onChange(null, false);
-            } else if (formElements.every(function(formElement) {
-              return formElement.value && formElement.validity.valid;
-            })) {
-              var year = parseInt(values.year, 10) || (/* @__PURE__ */ new Date()).getFullYear();
-              var monthIndex = parseInt(values.month || 1, 10) - 1;
-              var day = parseInt(values.day || 1, 10);
-              var proposedValue = /* @__PURE__ */ new Date();
-              proposedValue.setFullYear(year, monthIndex, day);
-              proposedValue.setHours(0, 0, 0, 0);
-              var processedValue = _this.getProcessedValue(proposedValue);
-              onChange(processedValue, false);
-            }
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "renderDay", function(currentMatch, index) {
-            var _this$props = _this.props, autoFocus = _this$props.autoFocus, dayAriaLabel = _this$props.dayAriaLabel, dayPlaceholder = _this$props.dayPlaceholder, showLeadingZeros = _this$props.showLeadingZeros;
-            var _this$state = _this.state, day = _this$state.day, month = _this$state.month, year = _this$state.year;
-            if (currentMatch && currentMatch.length > 2) {
-              throw new Error("Unsupported token: ".concat(currentMatch));
-            }
-            var showLeadingZerosFromFormat = currentMatch && currentMatch.length === 2;
-            return /* @__PURE__ */ _react["default"].createElement(_DayInput["default"], _extends2({
-              key: "day"
-            }, _this.commonInputProps, {
-              ariaLabel: dayAriaLabel,
-              autoFocus: index === 0 && autoFocus,
-              inputRef: _this.dayInput,
-              month,
-              placeholder: dayPlaceholder,
-              showLeadingZeros: showLeadingZerosFromFormat || showLeadingZeros,
-              value: day,
-              year
-            }));
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "renderMonth", function(currentMatch, index) {
-            var _this$props2 = _this.props, autoFocus = _this$props2.autoFocus, locale = _this$props2.locale, monthAriaLabel = _this$props2.monthAriaLabel, monthPlaceholder = _this$props2.monthPlaceholder, showLeadingZeros = _this$props2.showLeadingZeros;
-            var _this$state2 = _this.state, month = _this$state2.month, year = _this$state2.year;
-            if (currentMatch && currentMatch.length > 4) {
-              throw new Error("Unsupported token: ".concat(currentMatch));
-            }
-            if (currentMatch.length > 2) {
-              return /* @__PURE__ */ _react["default"].createElement(_MonthSelect["default"], _extends2({
-                key: "month"
-              }, _this.commonInputProps, {
-                ariaLabel: monthAriaLabel,
-                autoFocus: index === 0 && autoFocus,
-                inputRef: _this.monthInput,
-                locale,
-                placeholder: monthPlaceholder,
-                "short": currentMatch.length === 3,
-                value: month,
-                year
-              }));
-            }
-            var showLeadingZerosFromFormat = currentMatch && currentMatch.length === 2;
-            return /* @__PURE__ */ _react["default"].createElement(_MonthInput["default"], _extends2({
-              key: "month"
-            }, _this.commonInputProps, {
-              ariaLabel: monthAriaLabel,
-              autoFocus: index === 0 && autoFocus,
-              inputRef: _this.monthInput,
-              placeholder: monthPlaceholder,
-              showLeadingZeros: showLeadingZerosFromFormat || showLeadingZeros,
-              value: month,
-              year
-            }));
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "renderYear", function(currentMatch, index) {
-            var _this$props3 = _this.props, autoFocus = _this$props3.autoFocus, yearAriaLabel = _this$props3.yearAriaLabel, yearPlaceholder = _this$props3.yearPlaceholder;
-            var year = _this.state.year;
-            return /* @__PURE__ */ _react["default"].createElement(_YearInput["default"], _extends2({
-              key: "year"
-            }, _this.commonInputProps, {
-              ariaLabel: yearAriaLabel,
-              autoFocus: index === 0 && autoFocus,
-              inputRef: _this.yearInput,
-              placeholder: yearPlaceholder,
-              value: year,
-              valueType: _this.valueType
-            }));
-          });
-          return _this;
-        }
-        _createClass3(DateInput2, [{
-          key: "formatDate",
-          get: function get3() {
-            var maxDetail = this.props.maxDetail;
-            var options = {
-              year: "numeric"
-            };
-            var level = allViews.indexOf(maxDetail);
-            if (level >= 2) {
-              options.month = "numeric";
-            }
-            if (level >= 3) {
-              options.day = "numeric";
-            }
-            return (0, _dateFormatter.getFormatter)(options);
-          }
-          /**
-           * Gets current value in a desired format.
-           */
-        }, {
-          key: "getProcessedValue",
-          value: function getProcessedValue(value) {
-            var _this$props4 = this.props, minDate2 = _this$props4.minDate, maxDate = _this$props4.maxDate, maxDetail = _this$props4.maxDetail, returnValue = _this$props4.returnValue;
-            var processFunction = function() {
-              switch (returnValue) {
-                case "start":
-                  return getDetailValueFrom;
-                case "end":
-                  return getDetailValueTo;
-                case "range":
-                  return getDetailValueArray;
-                default:
-                  throw new Error("Invalid returnValue.");
-              }
-            }();
-            return processFunction({
-              value,
-              minDate: minDate2,
-              maxDate,
-              maxDetail
-            });
-          }
-        }, {
-          key: "divider",
-          get: function get3() {
-            var dividers = this.placeholder.match(/[^0-9a-z]/i);
-            return dividers ? dividers[0] : null;
-          }
-        }, {
-          key: "placeholder",
-          get: function get3() {
-            var _this$props5 = this.props, format = _this$props5.format, locale = _this$props5.locale;
-            if (format) {
-              return format;
-            }
-            var year = 2017;
-            var monthIndex = 11;
-            var day = 11;
-            var date = new Date(year, monthIndex, day);
-            var formattedDate = this.formatDate(locale, date);
-            var datePieces = ["year", "month", "day"];
-            var datePieceReplacements = ["y", "M", "d"];
-            function formatDatePiece(name, dateToFormat) {
-              return (0, _dateFormatter.getFormatter)(_defineProperty4({
-                useGrouping: false
-              }, name, "numeric"))(locale, dateToFormat).match(/\d{1,}/);
-            }
-            var placeholder = formattedDate;
-            datePieces.forEach(function(datePiece, index) {
-              var formattedDatePiece = formatDatePiece(datePiece, date);
-              var datePieceReplacement = datePieceReplacements[index];
-              placeholder = placeholder.replace(formattedDatePiece, datePieceReplacement);
-            });
-            placeholder = placeholder.replace("17", "y");
-            return placeholder;
-          }
-        }, {
-          key: "commonInputProps",
-          get: function get3() {
-            var _this$props6 = this.props, className = _this$props6.className, disabled = _this$props6.disabled, isCalendarOpen = _this$props6.isCalendarOpen, maxDate = _this$props6.maxDate, minDate2 = _this$props6.minDate, required = _this$props6.required;
-            return {
-              className,
-              disabled,
-              maxDate: maxDate || defaultMaxDate,
-              minDate: minDate2 || defaultMinDate,
-              onChange: this.onChange,
-              onKeyDown: this.onKeyDown,
-              onKeyUp: this.onKeyUp,
-              // This is only for showing validity when editing
-              required: required || isCalendarOpen
-            };
-          }
-        }, {
-          key: "valueType",
-          get: function get3() {
-            var maxDetail = this.props.maxDetail;
-            return getValueType(maxDetail);
-          }
-        }, {
-          key: "renderCustomInputs",
-          value: function renderCustomInputs() {
-            var placeholder = this.placeholder;
-            var format = this.props.format;
-            var elementFunctions = {
-              d: this.renderDay,
-              M: this.renderMonth,
-              y: this.renderYear
-            };
-            var allowMultipleInstances = typeof format !== "undefined";
-            return _renderCustomInputs(placeholder, elementFunctions, allowMultipleInstances);
-          }
-        }, {
-          key: "renderNativeInput",
-          value: function renderNativeInput() {
-            var _this$props7 = this.props, disabled = _this$props7.disabled, maxDate = _this$props7.maxDate, minDate2 = _this$props7.minDate, name = _this$props7.name, nativeInputAriaLabel = _this$props7.nativeInputAriaLabel, required = _this$props7.required;
-            var value = this.state.value;
-            return /* @__PURE__ */ _react["default"].createElement(_NativeInput["default"], {
-              key: "date",
-              ariaLabel: nativeInputAriaLabel,
-              disabled,
-              maxDate: maxDate || defaultMaxDate,
-              minDate: minDate2 || defaultMinDate,
-              name,
-              onChange: this.onChangeNative,
-              required,
-              value,
-              valueType: this.valueType
-            });
-          }
-        }, {
-          key: "render",
-          value: function render() {
-            var className = this.props.className;
-            return (
-              // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-              /* @__PURE__ */ _react["default"].createElement("div", {
-                className,
-                onClick: this.onClick
-              }, this.renderNativeInput(), this.renderCustomInputs())
-            );
-          }
-        }], [{
-          key: "getDerivedStateFromProps",
-          value: function getDerivedStateFromProps(nextProps, prevState) {
-            var minDate2 = nextProps.minDate, maxDate = nextProps.maxDate, maxDetail = nextProps.maxDetail;
-            var nextState = {};
-            if (nextProps.isCalendarOpen !== prevState.isCalendarOpen) {
-              nextState.isCalendarOpen = nextProps.isCalendarOpen;
-            }
-            var nextValue = getDetailValueFrom({
-              value: nextProps.value,
-              minDate: minDate2,
-              maxDate,
-              maxDetail
-            });
-            var values = [nextValue, prevState.value];
-            if (
-              // Toggling calendar visibility resets values
-              nextState.isCalendarOpen || // Flag was toggled
-              datesAreDifferent.apply(void 0, _toConsumableArray2(values.map(function(value) {
-                return getDetailValueFrom({
-                  value,
-                  minDate: minDate2,
-                  maxDate,
-                  maxDetail
-                });
-              }))) || datesAreDifferent.apply(void 0, _toConsumableArray2(values.map(function(value) {
-                return getDetailValueTo({
-                  value,
-                  minDate: minDate2,
-                  maxDate,
-                  maxDetail
-                });
-              })))
-            ) {
-              if (nextValue) {
-                nextState.year = (0, _dateUtils.getYear)(nextValue).toString();
-                nextState.month = (0, _dateUtils.getMonthHuman)(nextValue).toString();
-                nextState.day = (0, _dateUtils.getDate)(nextValue).toString();
-              } else {
-                nextState.year = null;
-                nextState.month = null;
-                nextState.day = null;
-              }
-              nextState.value = nextValue;
-            }
-            return nextState;
-          }
-        }]);
-        return DateInput2;
-      }(_react.PureComponent);
-      exports["default"] = DateInput;
-      DateInput.defaultProps = {
-        maxDetail: "month",
-        name: "date",
-        returnValue: "start"
-      };
-      var isValue = _propTypes["default"].oneOfType([_propTypes["default"].string, _propTypes["default"].instanceOf(Date)]);
-      DateInput.propTypes = {
-        autoFocus: _propTypes["default"].bool,
-        className: _propTypes["default"].string.isRequired,
-        dayAriaLabel: _propTypes["default"].string,
-        dayPlaceholder: _propTypes["default"].string,
-        disabled: _propTypes["default"].bool,
-        format: _propTypes["default"].string,
-        isCalendarOpen: _propTypes["default"].bool,
-        locale: _propTypes["default"].string,
-        maxDate: _propTypes2.isMaxDate,
-        maxDetail: _propTypes["default"].oneOf(allViews),
-        minDate: _propTypes2.isMinDate,
-        monthAriaLabel: _propTypes["default"].string,
-        monthPlaceholder: _propTypes["default"].string,
-        name: _propTypes["default"].string,
-        nativeInputAriaLabel: _propTypes["default"].string,
-        onChange: _propTypes["default"].func,
-        required: _propTypes["default"].bool,
-        returnValue: _propTypes["default"].oneOf(["start", "end", "range"]),
-        showLeadingZeros: _propTypes["default"].bool,
-        value: _propTypes["default"].oneOfType([isValue, _propTypes["default"].arrayOf(isValue)]),
-        yearAriaLabel: _propTypes["default"].string,
-        yearPlaceholder: _propTypes["default"].string
-      };
-    }
-  });
-
-  // node_modules/react-date-picker/dist/DatePicker.js
-  var require_DatePicker = __commonJS({
-    "node_modules/react-date-picker/dist/DatePicker.js"(exports) {
-      "use strict";
-      function _typeof3(obj) {
-        "@babel/helpers - typeof";
-        return _typeof3 = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj2) {
-          return typeof obj2;
-        } : function(obj2) {
-          return obj2 && "function" == typeof Symbol && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-        }, _typeof3(obj);
-      }
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = void 0;
-      var _react = _interopRequireWildcard(require_react());
-      var _propTypes = _interopRequireDefault(require_prop_types());
-      var _makeEventProps = _interopRequireDefault(require_cjs());
-      var _mergeClassNames = _interopRequireDefault(require_umd());
-      var _reactCalendar = _interopRequireDefault(require_umd5());
-      var _reactFit = _interopRequireDefault(require_cjs3());
-      var _DateInput = _interopRequireDefault(require_DateInput());
-      var _propTypes2 = require_propTypes4();
-      var _excluded2 = ["calendarClassName", "className", "onChange", "value"];
-      var _excluded22 = ["onChange"];
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      function _getRequireWildcardCache(nodeInterop) {
-        if (typeof WeakMap !== "function")
-          return null;
-        var cacheBabelInterop = /* @__PURE__ */ new WeakMap();
-        var cacheNodeInterop = /* @__PURE__ */ new WeakMap();
-        return (_getRequireWildcardCache = function _getRequireWildcardCache2(nodeInterop2) {
-          return nodeInterop2 ? cacheNodeInterop : cacheBabelInterop;
-        })(nodeInterop);
-      }
-      function _interopRequireWildcard(obj, nodeInterop) {
-        if (!nodeInterop && obj && obj.__esModule) {
-          return obj;
-        }
-        if (obj === null || _typeof3(obj) !== "object" && typeof obj !== "function") {
-          return { "default": obj };
-        }
-        var cache = _getRequireWildcardCache(nodeInterop);
-        if (cache && cache.has(obj)) {
-          return cache.get(obj);
-        }
-        var newObj = {};
-        var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-        for (var key in obj) {
-          if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
-            var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-            if (desc && (desc.get || desc.set)) {
-              Object.defineProperty(newObj, key, desc);
-            } else {
-              newObj[key] = obj[key];
-            }
-          }
-        }
-        newObj["default"] = obj;
-        if (cache) {
-          cache.set(obj, newObj);
-        }
-        return newObj;
-      }
-      function _objectWithoutProperties2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = _objectWithoutPropertiesLoose2(source, excluded);
-        var key, i2;
-        if (Object.getOwnPropertySymbols) {
-          var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-          for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-            key = sourceSymbolKeys[i2];
-            if (excluded.indexOf(key) >= 0)
-              continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key))
-              continue;
-            target[key] = source[key];
-          }
-        }
-        return target;
-      }
-      function _objectWithoutPropertiesLoose2(source, excluded) {
-        if (source == null)
-          return {};
-        var target = {};
-        var sourceKeys = Object.keys(source);
-        var key, i2;
-        for (i2 = 0; i2 < sourceKeys.length; i2++) {
-          key = sourceKeys[i2];
-          if (excluded.indexOf(key) >= 0)
-            continue;
-          target[key] = source[key];
-        }
-        return target;
-      }
-      function _extends2() {
-        _extends2 = Object.assign || function(target) {
-          for (var i2 = 1; i2 < arguments.length; i2++) {
-            var source = arguments[i2];
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-          return target;
-        };
-        return _extends2.apply(this, arguments);
-      }
-      function _slicedToArray2(arr, i2) {
-        return _arrayWithHoles2(arr) || _iterableToArrayLimit2(arr, i2) || _unsupportedIterableToArray3(arr, i2) || _nonIterableRest2();
-      }
-      function _nonIterableRest2() {
-        throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-      }
-      function _unsupportedIterableToArray3(o2, minLen) {
-        if (!o2)
-          return;
-        if (typeof o2 === "string")
-          return _arrayLikeToArray3(o2, minLen);
-        var n2 = Object.prototype.toString.call(o2).slice(8, -1);
-        if (n2 === "Object" && o2.constructor)
-          n2 = o2.constructor.name;
-        if (n2 === "Map" || n2 === "Set")
-          return Array.from(o2);
-        if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
-          return _arrayLikeToArray3(o2, minLen);
-      }
-      function _arrayLikeToArray3(arr, len) {
-        if (len == null || len > arr.length)
-          len = arr.length;
-        for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++) {
-          arr2[i2] = arr[i2];
-        }
-        return arr2;
-      }
-      function _iterableToArrayLimit2(arr, i2) {
-        var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-        if (_i == null)
-          return;
-        var _arr = [];
-        var _n = true;
-        var _d = false;
-        var _s, _e2;
-        try {
-          for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-            _arr.push(_s.value);
-            if (i2 && _arr.length === i2)
-              break;
-          }
-        } catch (err) {
-          _d = true;
-          _e2 = err;
-        } finally {
-          try {
-            if (!_n && _i["return"] != null)
-              _i["return"]();
-          } finally {
-            if (_d)
-              throw _e2;
-          }
-        }
-        return _arr;
-      }
-      function _arrayWithHoles2(arr) {
-        if (Array.isArray(arr))
-          return arr;
-      }
-      function _classCallCheck3(instance, Constructor) {
-        if (!(instance instanceof Constructor)) {
-          throw new TypeError("Cannot call a class as a function");
-        }
-      }
-      function _defineProperties3(target, props) {
-        for (var i2 = 0; i2 < props.length; i2++) {
-          var descriptor = props[i2];
-          descriptor.enumerable = descriptor.enumerable || false;
-          descriptor.configurable = true;
-          if ("value" in descriptor)
-            descriptor.writable = true;
-          Object.defineProperty(target, descriptor.key, descriptor);
-        }
-      }
-      function _createClass3(Constructor, protoProps, staticProps) {
-        if (protoProps)
-          _defineProperties3(Constructor.prototype, protoProps);
-        if (staticProps)
-          _defineProperties3(Constructor, staticProps);
-        Object.defineProperty(Constructor, "prototype", { writable: false });
-        return Constructor;
-      }
-      function _inherits2(subClass, superClass) {
-        if (typeof superClass !== "function" && superClass !== null) {
-          throw new TypeError("Super expression must either be null or a function");
-        }
-        subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } });
-        Object.defineProperty(subClass, "prototype", { writable: false });
-        if (superClass)
-          _setPrototypeOf2(subClass, superClass);
-      }
-      function _setPrototypeOf2(o2, p2) {
-        _setPrototypeOf2 = Object.setPrototypeOf || function _setPrototypeOf3(o3, p3) {
-          o3.__proto__ = p3;
-          return o3;
-        };
-        return _setPrototypeOf2(o2, p2);
-      }
-      function _createSuper2(Derived) {
-        var hasNativeReflectConstruct = _isNativeReflectConstruct2();
-        return function _createSuperInternal() {
-          var Super = _getPrototypeOf2(Derived), result;
-          if (hasNativeReflectConstruct) {
-            var NewTarget = _getPrototypeOf2(this).constructor;
-            result = Reflect.construct(Super, arguments, NewTarget);
-          } else {
-            result = Super.apply(this, arguments);
-          }
-          return _possibleConstructorReturn2(this, result);
-        };
-      }
-      function _possibleConstructorReturn2(self2, call2) {
-        if (call2 && (_typeof3(call2) === "object" || typeof call2 === "function")) {
-          return call2;
-        } else if (call2 !== void 0) {
-          throw new TypeError("Derived constructors may only return object or undefined");
-        }
-        return _assertThisInitialized2(self2);
-      }
-      function _assertThisInitialized2(self2) {
-        if (self2 === void 0) {
-          throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-        }
-        return self2;
-      }
-      function _isNativeReflectConstruct2() {
-        if (typeof Reflect === "undefined" || !Reflect.construct)
-          return false;
-        if (Reflect.construct.sham)
-          return false;
-        if (typeof Proxy === "function")
-          return true;
-        try {
-          Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
-          }));
-          return true;
-        } catch (e2) {
-          return false;
-        }
-      }
-      function _getPrototypeOf2(o2) {
-        _getPrototypeOf2 = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf3(o3) {
-          return o3.__proto__ || Object.getPrototypeOf(o3);
-        };
-        return _getPrototypeOf2(o2);
-      }
-      function _defineProperty4(obj, key, value) {
-        if (key in obj) {
-          Object.defineProperty(obj, key, { value, enumerable: true, configurable: true, writable: true });
-        } else {
-          obj[key] = value;
-        }
-        return obj;
-      }
-      var baseClassName = "react-date-picker";
-      var outsideActionEvents = ["mousedown", "focusin", "touchstart"];
-      var allViews = ["century", "decade", "year", "month"];
-      var DatePicker3 = /* @__PURE__ */ function(_PureComponent) {
-        _inherits2(DatePicker4, _PureComponent);
-        var _super = _createSuper2(DatePicker4);
-        function DatePicker4() {
-          var _this;
-          _classCallCheck3(this, DatePicker4);
-          for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-          }
-          _this = _super.call.apply(_super, [this].concat(args));
-          _defineProperty4(_assertThisInitialized2(_this), "state", {});
-          _defineProperty4(_assertThisInitialized2(_this), "onOutsideAction", function(event) {
-            var target = "composedPath" in event ? event.composedPath()[0] : event.target;
-            if (_this.wrapper && !_this.wrapper.contains(target)) {
-              _this.closeCalendar();
-            }
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onChange", function(value) {
-            var closeCalendar = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : _this.props.closeCalendar;
-            var onChange = _this.props.onChange;
-            if (closeCalendar) {
-              _this.closeCalendar();
-            }
-            if (onChange) {
-              onChange(value);
-            }
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onFocus", function(event) {
-            var _this$props = _this.props, disabled = _this$props.disabled, onFocus = _this$props.onFocus, openCalendarOnFocus = _this$props.openCalendarOnFocus;
-            if (onFocus) {
-              onFocus(event);
-            }
-            if (disabled) {
-              return;
-            }
-            if (openCalendarOnFocus) {
-              if (event.target.getAttribute("data-select") === "true") {
-                return;
-              }
-              _this.openCalendar();
-            }
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "onKeyDown", function(event) {
-            if (event.key === "Escape") {
-              _this.closeCalendar();
-            }
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "openCalendar", function() {
-            _this.setState({
-              isOpen: true
-            });
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "closeCalendar", function() {
-            _this.setState(function(prevState) {
-              if (!prevState.isOpen) {
-                return null;
-              }
-              return {
-                isOpen: false
-              };
-            });
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "toggleCalendar", function() {
-            _this.setState(function(prevState) {
-              return {
-                isOpen: !prevState.isOpen
-              };
-            });
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "stopPropagation", function(event) {
-            return event.stopPropagation();
-          });
-          _defineProperty4(_assertThisInitialized2(_this), "clear", function() {
-            return _this.onChange(null);
-          });
-          return _this;
-        }
-        _createClass3(DatePicker4, [{
-          key: "componentDidMount",
-          value: function componentDidMount() {
-            this.handleOutsideActionListeners();
-          }
-        }, {
-          key: "componentDidUpdate",
-          value: function componentDidUpdate(prevProps, prevState) {
-            var isOpen = this.state.isOpen;
-            var _this$props2 = this.props, onCalendarClose = _this$props2.onCalendarClose, onCalendarOpen = _this$props2.onCalendarOpen;
-            if (isOpen !== prevState.isOpen) {
-              this.handleOutsideActionListeners();
-              var callback = isOpen ? onCalendarOpen : onCalendarClose;
-              if (callback)
-                callback();
-            }
-          }
-        }, {
-          key: "componentWillUnmount",
-          value: function componentWillUnmount() {
-            this.handleOutsideActionListeners(false);
-          }
-        }, {
-          key: "eventProps",
-          get: function get3() {
-            return (0, _makeEventProps["default"])(this.props);
-          }
-        }, {
-          key: "handleOutsideActionListeners",
-          value: function handleOutsideActionListeners(shouldListen) {
-            var _this2 = this;
-            var isOpen = this.state.isOpen;
-            var shouldListenWithFallback = typeof shouldListen !== "undefined" ? shouldListen : isOpen;
-            var fnName = shouldListenWithFallback ? "addEventListener" : "removeEventListener";
-            outsideActionEvents.forEach(function(eventName) {
-              return document[fnName](eventName, _this2.onOutsideAction);
-            });
-            document[fnName]("keydown", this.onKeyDown);
-          }
-        }, {
-          key: "renderInputs",
-          value: function renderInputs() {
-            var _this$props3 = this.props, autoFocus = _this$props3.autoFocus, calendarAriaLabel = _this$props3.calendarAriaLabel, calendarIcon = _this$props3.calendarIcon, clearAriaLabel = _this$props3.clearAriaLabel, clearIcon = _this$props3.clearIcon, dayAriaLabel = _this$props3.dayAriaLabel, dayPlaceholder = _this$props3.dayPlaceholder, disableCalendar = _this$props3.disableCalendar, disabled = _this$props3.disabled, format = _this$props3.format, locale = _this$props3.locale, maxDate = _this$props3.maxDate, maxDetail = _this$props3.maxDetail, minDate2 = _this$props3.minDate, monthAriaLabel = _this$props3.monthAriaLabel, monthPlaceholder = _this$props3.monthPlaceholder, name = _this$props3.name, nativeInputAriaLabel = _this$props3.nativeInputAriaLabel, required = _this$props3.required, returnValue = _this$props3.returnValue, showLeadingZeros = _this$props3.showLeadingZeros, value = _this$props3.value, yearAriaLabel = _this$props3.yearAriaLabel, yearPlaceholder = _this$props3.yearPlaceholder;
-            var isOpen = this.state.isOpen;
-            var _concat = [].concat(value), _concat2 = _slicedToArray2(_concat, 1), valueFrom = _concat2[0];
-            var ariaLabelProps = {
-              dayAriaLabel,
-              monthAriaLabel,
-              nativeInputAriaLabel,
-              yearAriaLabel
-            };
-            var placeholderProps = {
-              dayPlaceholder,
-              monthPlaceholder,
-              yearPlaceholder
-            };
-            return /* @__PURE__ */ _react["default"].createElement("div", {
-              className: "".concat(baseClassName, "__wrapper")
-            }, /* @__PURE__ */ _react["default"].createElement(_DateInput["default"], _extends2({}, ariaLabelProps, placeholderProps, {
-              // eslint-disable-next-line jsx-a11y/no-autofocus
-              autoFocus,
-              className: "".concat(baseClassName, "__inputGroup"),
-              disabled,
-              format,
-              isCalendarOpen: isOpen,
-              locale,
-              maxDate,
-              maxDetail,
-              minDate: minDate2,
-              name,
-              onChange: this.onChange,
-              required,
-              returnValue,
-              showLeadingZeros,
-              value: valueFrom
-            })), clearIcon !== null && /* @__PURE__ */ _react["default"].createElement("button", {
-              "aria-label": clearAriaLabel,
-              className: "".concat(baseClassName, "__clear-button ").concat(baseClassName, "__button"),
-              disabled,
-              onClick: this.clear,
-              onFocus: this.stopPropagation,
-              type: "button"
-            }, clearIcon), calendarIcon !== null && !disableCalendar && /* @__PURE__ */ _react["default"].createElement("button", {
-              "aria-label": calendarAriaLabel,
-              className: "".concat(baseClassName, "__calendar-button ").concat(baseClassName, "__button"),
-              disabled,
-              onBlur: this.resetValue,
-              onClick: this.toggleCalendar,
-              onFocus: this.stopPropagation,
-              type: "button"
-            }, calendarIcon));
-          }
-        }, {
-          key: "renderCalendar",
-          value: function renderCalendar() {
-            var disableCalendar = this.props.disableCalendar;
-            var isOpen = this.state.isOpen;
-            if (isOpen === null || disableCalendar) {
-              return null;
-            }
-            var _this$props4 = this.props, calendarClassName = _this$props4.calendarClassName, datePickerClassName = _this$props4.className, onChange = _this$props4.onChange, value = _this$props4.value, calendarProps = _objectWithoutProperties2(_this$props4, _excluded2);
-            var className = "".concat(baseClassName, "__calendar");
-            return /* @__PURE__ */ _react["default"].createElement(_reactFit["default"], null, /* @__PURE__ */ _react["default"].createElement("div", {
-              ref: function ref(_ref2) {
-                if (_ref2 && !isOpen) {
-                  _ref2.removeAttribute("style");
-                }
-              },
-              className: (0, _mergeClassNames["default"])(className, "".concat(className, "--").concat(isOpen ? "open" : "closed")),
-              style: isOpen ? void 0 : {}
-            }, /* @__PURE__ */ _react["default"].createElement(_reactCalendar["default"], _extends2({
-              className: calendarClassName,
-              onChange: this.onChange,
-              value: value || null
-            }, calendarProps))));
-          }
-        }, {
-          key: "render",
-          value: function render() {
-            var _this3 = this;
-            var eventProps = this.eventProps;
-            var _this$props5 = this.props, className = _this$props5.className, disabled = _this$props5.disabled;
-            var isOpen = this.state.isOpen;
-            var onChange = eventProps.onChange, eventPropsWithoutOnChange = _objectWithoutProperties2(eventProps, _excluded22);
-            return /* @__PURE__ */ _react["default"].createElement("div", _extends2({
-              className: (0, _mergeClassNames["default"])(baseClassName, "".concat(baseClassName, "--").concat(isOpen ? "open" : "closed"), "".concat(baseClassName, "--").concat(disabled ? "disabled" : "enabled"), className)
-            }, eventPropsWithoutOnChange, {
-              onFocus: this.onFocus,
-              ref: function ref(_ref2) {
-                if (!_ref2) {
-                  return;
-                }
-                _this3.wrapper = _ref2;
-              }
-            }), this.renderInputs(), this.renderCalendar());
-          }
-        }], [{
-          key: "getDerivedStateFromProps",
-          value: function getDerivedStateFromProps(nextProps, prevState) {
-            if (nextProps.isOpen !== prevState.isOpenProps) {
-              return {
-                isOpen: nextProps.isOpen,
-                isOpenProps: nextProps.isOpen
-              };
-            }
-            return null;
-          }
-        }]);
-        return DatePicker4;
-      }(_react.PureComponent);
-      exports["default"] = DatePicker3;
-      var iconProps = {
-        xmlns: "http://www.w3.org/2000/svg",
-        width: 19,
-        height: 19,
-        viewBox: "0 0 19 19",
-        stroke: "black",
-        strokeWidth: 2
-      };
-      var CalendarIcon = /* @__PURE__ */ _react["default"].createElement("svg", _extends2({}, iconProps, {
-        className: "".concat(baseClassName, "__calendar-button__icon ").concat(baseClassName, "__button__icon")
-      }), /* @__PURE__ */ _react["default"].createElement("rect", {
-        fill: "none",
-        height: "15",
-        width: "15",
-        x: "2",
-        y: "2"
-      }), /* @__PURE__ */ _react["default"].createElement("line", {
-        x1: "6",
-        x2: "6",
-        y1: "0",
-        y2: "4"
-      }), /* @__PURE__ */ _react["default"].createElement("line", {
-        x1: "13",
-        x2: "13",
-        y1: "0",
-        y2: "4"
-      }));
-      var ClearIcon = /* @__PURE__ */ _react["default"].createElement("svg", _extends2({}, iconProps, {
-        className: "".concat(baseClassName, "__clear-button__icon ").concat(baseClassName, "__button__icon")
-      }), /* @__PURE__ */ _react["default"].createElement("line", {
-        x1: "4",
-        x2: "15",
-        y1: "4",
-        y2: "15"
-      }), /* @__PURE__ */ _react["default"].createElement("line", {
-        x1: "15",
-        x2: "4",
-        y1: "4",
-        y2: "15"
-      }));
-      DatePicker3.defaultProps = {
-        calendarIcon: CalendarIcon,
-        clearIcon: ClearIcon,
-        closeCalendar: true,
-        isOpen: null,
-        openCalendarOnFocus: true,
-        returnValue: "start"
-      };
-      var isValue = _propTypes["default"].oneOfType([_propTypes["default"].string, _propTypes["default"].instanceOf(Date)]);
-      DatePicker3.propTypes = {
-        autoFocus: _propTypes["default"].bool,
-        calendarAriaLabel: _propTypes["default"].string,
-        calendarClassName: _propTypes["default"].oneOfType([_propTypes["default"].string, _propTypes["default"].arrayOf(_propTypes["default"].string)]),
-        calendarIcon: _propTypes["default"].node,
-        className: _propTypes["default"].oneOfType([_propTypes["default"].string, _propTypes["default"].arrayOf(_propTypes["default"].string)]),
-        clearAriaLabel: _propTypes["default"].string,
-        clearIcon: _propTypes["default"].node,
-        closeCalendar: _propTypes["default"].bool,
-        dayAriaLabel: _propTypes["default"].string,
-        dayPlaceholder: _propTypes["default"].string,
-        disableCalendar: _propTypes["default"].bool,
-        disabled: _propTypes["default"].bool,
-        format: _propTypes["default"].string,
-        isOpen: _propTypes["default"].bool,
-        locale: _propTypes["default"].string,
-        maxDate: _propTypes2.isMaxDate,
-        maxDetail: _propTypes["default"].oneOf(allViews),
-        minDate: _propTypes2.isMinDate,
-        monthAriaLabel: _propTypes["default"].string,
-        monthPlaceholder: _propTypes["default"].string,
-        name: _propTypes["default"].string,
-        nativeInputAriaLabel: _propTypes["default"].string,
-        onCalendarClose: _propTypes["default"].func,
-        onCalendarOpen: _propTypes["default"].func,
-        onChange: _propTypes["default"].func,
-        onFocus: _propTypes["default"].func,
-        openCalendarOnFocus: _propTypes["default"].bool,
-        required: _propTypes["default"].bool,
-        returnValue: _propTypes["default"].oneOf(["start", "end", "range"]),
-        showLeadingZeros: _propTypes["default"].bool,
-        value: _propTypes["default"].oneOfType([isValue, _propTypes["default"].arrayOf(isValue)]),
-        yearAriaLabel: _propTypes["default"].string,
-        yearPlaceholder: _propTypes["default"].string
-      };
-    }
-  });
-
-  // node_modules/react-date-picker/dist/DatePicker.css
-  var require_DatePicker2 = __commonJS({
-    "node_modules/react-date-picker/dist/DatePicker.css"(exports, module) {
-      module.exports = {};
-    }
-  });
-
-  // node_modules/react-date-picker/dist/entry.js
-  var require_entry2 = __commonJS({
-    "node_modules/react-date-picker/dist/entry.js"(exports) {
-      "use strict";
-      Object.defineProperty(exports, "__esModule", {
-        value: true
-      });
-      exports["default"] = void 0;
-      require_Calendar();
-      var _DatePicker = _interopRequireDefault(require_DatePicker());
-      require_DatePicker2();
-      function _interopRequireDefault(obj) {
-        return obj && obj.__esModule ? obj : { "default": obj };
-      }
-      var _default2 = _DatePicker["default"];
-      exports["default"] = _default2;
-    }
-  });
-
   // node_modules/prettysize/index.js
   var require_prettysize = __commonJS({
     "node_modules/prettysize/index.js"(exports, module) {
@@ -62873,11 +52593,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   });
 
   // src/client/index.tsx
-  var import_react29 = __toESM(require_react());
+  var import_react27 = __toESM(require_react());
   var import_react_dom = __toESM(require_react_dom());
 
   // src/client/App.tsx
-  var import_react28 = __toESM(require_react());
+  var import_react26 = __toESM(require_react());
 
   // src/shared/audioProcessor.ts
   var import_lodash = __toESM(require_lodash());
@@ -62890,14 +52610,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var Logger = class {
     static getTime() {
       const date = import_moment.default.utc().toDate();
-      const text = (0, import_moment.default)(date).format("MMMM Do YYYY, HH:mm:ss");
-      return text;
+      const text2 = (0, import_moment.default)(date).format("MMMM Do YYYY, HH:mm:ss");
+      return text2;
     }
     static debug(message, ...optionalParams) {
       if (false)
         return;
-      const text = this.getTime();
-      const args = [yellow(`${text}`), white("[debug]"), message, ...optionalParams].filter((a2) => a2);
+      const text2 = this.getTime();
+      const args = [yellow(`${text2}`), white("[debug]"), message, ...optionalParams].filter((a2) => a2);
       if (nextFunction) {
         nextFunction.apply(null, ["debug", message, ...optionalParams]);
       }
@@ -62906,40 +52626,40 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     static log(message, ...optionalParams) {
       if (false)
         return;
-      const text = this.getTime();
-      const args = [yellow(`${text}`), white("[log]"), message, ...optionalParams].filter((a2) => a2);
+      const text2 = this.getTime();
+      const args = [yellow(`${text2}`), white("[log]"), message, ...optionalParams].filter((a2) => a2);
       if (nextFunction) {
         nextFunction.apply(null, ["log", message, ...optionalParams]);
       }
       console.log.apply(null, args);
     }
     static info(message, ...optionalParams) {
-      const text = this.getTime();
-      const args = [yellow(`${text}`), yellow("[INFO]"), message, ...optionalParams].filter((a2) => a2);
+      const text2 = this.getTime();
+      const args = [yellow(`${text2}`), yellow("[INFO]"), message, ...optionalParams].filter((a2) => a2);
       if (nextFunction) {
         nextFunction.apply(null, ["info", message, ...optionalParams]);
       }
       console.info.apply(null, args);
     }
     static warn(message, ...optionalParams) {
-      const text = this.getTime();
-      const args = [yellow(`${text}`), red("[WARN]"), message, ...optionalParams].filter((a2) => a2);
+      const text2 = this.getTime();
+      const args = [yellow(`${text2}`), red("[WARN]"), message, ...optionalParams].filter((a2) => a2);
       if (nextFunction) {
         nextFunction.apply(null, ["warn", message, ...optionalParams]);
       }
       console.warn.apply(null, args);
     }
     static error(message, ...optionalParams) {
-      const text = this.getTime();
-      const args = [yellow(`${text}`), red("[ERROR]"), message, ...optionalParams].filter((a2) => a2);
+      const text2 = this.getTime();
+      const args = [yellow(`${text2}`), red("[ERROR]"), message, ...optionalParams].filter((a2) => a2);
       if (nextFunction) {
         nextFunction.apply(null, ["error", message, ...optionalParams]);
       }
       console.error.apply(null, [...args, new Error().stack]);
     }
     static fatal(message, ...optionalParams) {
-      const text = this.getTime();
-      const args = [yellow(`${text}`), red("[FATAL]"), message, ...optionalParams].filter((a2) => a2);
+      const text2 = this.getTime();
+      const args = [yellow(`${text2}`), red("[FATAL]"), message, ...optionalParams].filter((a2) => a2);
       if (nextFunction) {
         nextFunction.apply(null, ["fatal", message, ...optionalParams]);
       }
@@ -63210,9 +52930,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
   };
 
-  // src/client/Utils/Socket.ts
-  var import_events = __toESM(require_events());
-
   // src/client/Utils/BrowserStorage.ts
   var BrowserStorage = class {
     static getString(key) {
@@ -63254,68 +52971,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
   };
 
-  // src/shared/clientSocket.ts
-  var import_lodash2 = __toESM(require_lodash());
-
-  // src/shared/Messages.ts
-  var ServerMessagesRaw = /* @__PURE__ */ ((ServerMessagesRaw2) => {
-    ServerMessagesRaw2[ServerMessagesRaw2["Login"] = 0] = "Login";
-    ServerMessagesRaw2[ServerMessagesRaw2["RGBSet"] = 1] = "RGBSet";
-    ServerMessagesRaw2[ServerMessagesRaw2["RGBGet"] = 2] = "RGBGet";
-    ServerMessagesRaw2[ServerMessagesRaw2["ModeSet"] = 3] = "ModeSet";
-    ServerMessagesRaw2[ServerMessagesRaw2["ModeGet"] = 4] = "ModeGet";
-    ServerMessagesRaw2[ServerMessagesRaw2["Settings"] = 5] = "Settings";
-    ServerMessagesRaw2[ServerMessagesRaw2["Config"] = 6] = "Config";
-    ServerMessagesRaw2[ServerMessagesRaw2["DoorLog"] = 7] = "DoorLog";
-    ServerMessagesRaw2[ServerMessagesRaw2["DoorClear"] = 8] = "DoorClear";
-    ServerMessagesRaw2[ServerMessagesRaw2["CamGet"] = 9] = "CamGet";
-    ServerMessagesRaw2[ServerMessagesRaw2["CamTake"] = 10] = "CamTake";
-    ServerMessagesRaw2[ServerMessagesRaw2["DeviceInfo"] = 11] = "DeviceInfo";
-    ServerMessagesRaw2[ServerMessagesRaw2["AudioIsAudioServerConnected"] = 12] = "AudioIsAudioServerConnected";
-    ServerMessagesRaw2[ServerMessagesRaw2["AudioGetDevices"] = 13] = "AudioGetDevices";
-    ServerMessagesRaw2[ServerMessagesRaw2["AudioPcm"] = 14] = "AudioPcm";
-    ServerMessagesRaw2[ServerMessagesRaw2["AudioPcmReport"] = 15] = "AudioPcmReport";
-    ServerMessagesRaw2[ServerMessagesRaw2["AudioActiveDevice"] = 16] = "AudioActiveDevice";
-    ServerMessagesRaw2[ServerMessagesRaw2["AudioAllDevices"] = 17] = "AudioAllDevices";
-    ServerMessagesRaw2[ServerMessagesRaw2["AudioAudioSettingsUpdate"] = 18] = "AudioAudioSettingsUpdate";
-    ServerMessagesRaw2[ServerMessagesRaw2["AudioIsInternalAudioProcessing"] = 19] = "AudioIsInternalAudioProcessing";
-    ServerMessagesRaw2[ServerMessagesRaw2["AudioApis"] = 20] = "AudioApis";
-    return ServerMessagesRaw2;
-  })(ServerMessagesRaw || {});
-  var ClientMessagesRaw = /* @__PURE__ */ ((ClientMessagesRaw2) => {
-    ClientMessagesRaw2[ClientMessagesRaw2["Login"] = 0] = "Login";
-    ClientMessagesRaw2[ClientMessagesRaw2["RGBUpdate"] = 1] = "RGBUpdate";
-    ClientMessagesRaw2[ClientMessagesRaw2["ModeUpdate"] = 2] = "ModeUpdate";
-    ClientMessagesRaw2[ClientMessagesRaw2["DoorOpen"] = 3] = "DoorOpen";
-    ClientMessagesRaw2[ClientMessagesRaw2["DoorImageAvailable"] = 4] = "DoorImageAvailable";
-    ClientMessagesRaw2[ClientMessagesRaw2["SocketLog"] = 5] = "SocketLog";
-    ClientMessagesRaw2[ClientMessagesRaw2["SettingsUpdate"] = 6] = "SettingsUpdate";
-    ClientMessagesRaw2[ClientMessagesRaw2["PCM"] = 7] = "PCM";
-    ClientMessagesRaw2[ClientMessagesRaw2["AudioGetDevices"] = 8] = "AudioGetDevices";
-    ClientMessagesRaw2[ClientMessagesRaw2["AudioActiveDevice"] = 9] = "AudioActiveDevice";
-    ClientMessagesRaw2[ClientMessagesRaw2["AudioAllDevices"] = 10] = "AudioAllDevices";
-    ClientMessagesRaw2[ClientMessagesRaw2["AudioApis"] = 11] = "AudioApis";
-    ClientMessagesRaw2[ClientMessagesRaw2["AudioSettingsUpdate"] = 12] = "AudioSettingsUpdate";
-    ClientMessagesRaw2[ClientMessagesRaw2["AudioIsInternalAudioProcessing"] = 13] = "AudioIsInternalAudioProcessing";
-    return ClientMessagesRaw2;
-  })(ClientMessagesRaw || {});
-  var SpecialEvents = /* @__PURE__ */ ((SpecialEvents3) => {
-    SpecialEvents3[SpecialEvents3["Connect"] = 251] = "Connect";
-    SpecialEvents3[SpecialEvents3["Disconnect"] = 252] = "Disconnect";
-    SpecialEvents3[SpecialEvents3["PromiseError"] = 253] = "PromiseError";
-    SpecialEvents3[SpecialEvents3["PromiseResolve"] = 254] = "PromiseResolve";
-    SpecialEvents3[SpecialEvents3["Promise"] = 255] = "Promise";
-    return SpecialEvents3;
-  })(SpecialEvents || {});
-  var ClientMessages = {
-    ...ClientMessagesRaw,
-    ...SpecialEvents
-  };
-  var ServerMessages = {
-    ...ServerMessagesRaw,
-    ...SpecialEvents
-  };
-
   // src/shared/eventEmitter.ts
   var EventEmitter = class {
     constructor() {
@@ -63326,6 +52981,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       if (data2.indexOf(handler) === -1) {
         data2.push(handler);
       }
+      this.map.set(key, data2);
     }
     off(key, handler) {
       const data2 = this.map.get(key) || [];
@@ -63367,68 +53023,78 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       if (data2) {
         return data2(...args);
       }
-      throw new Error(`Function ${key} not reistered`);
+      throw new Error(`Single function ${key} not registered`);
     }
   };
 
-  // src/shared/utils.ts
-  function cloneDeep(object) {
-    return JSON.parse(JSON.stringify(object));
-  }
-  function randomString(length) {
-    let result = "";
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    const charactersLength = characters.length;
-    for (let i2 = 0; i2 < length; i2++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-  }
-  function removeFromArray(array, item) {
-    const indexOf2 = array.indexOf(item);
-    if (indexOf2 === -1) {
-      return false;
-    }
-    array.splice(indexOf2, 1);
-    return true;
-  }
-  function pushUniqToArray(array, item) {
-    const indexOf2 = array.indexOf(item);
-    if (indexOf2 === -1) {
-      array.push(item);
-      return true;
-    }
-    return false;
-  }
-  function toInt(number, fallback = 0) {
-    const type = typeof number;
-    switch (type) {
-      case "bigint":
-      case "number":
-        return Math.round(number);
-      case "string":
-        const parsed = parseInt(number);
-        return isNaN(parsed) ? fallback : parsed;
-    }
-    return fallback;
-  }
-  function getDayString(date) {
-    const dateString = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
-    return dateString;
-  }
-  function deffer() {
-    let resolve2;
-    let reject2;
-    const promise = new Promise((_resolve, _reject) => {
-      resolve2 = _resolve;
-      reject2 = _reject;
-    });
-    return {
-      promise,
-      reject: reject2,
-      resolve: resolve2
-    };
-  }
+  // src/shared/clientSocket.ts
+  var import_lodash2 = __toESM(require_lodash());
+
+  // src/shared/Messages.ts
+  var ServerMessagesRaw = /* @__PURE__ */ ((ServerMessagesRaw2) => {
+    ServerMessagesRaw2[ServerMessagesRaw2["RGBSet"] = 0] = "RGBSet";
+    ServerMessagesRaw2[ServerMessagesRaw2["RGBGet"] = 1] = "RGBGet";
+    ServerMessagesRaw2[ServerMessagesRaw2["ModeSet"] = 2] = "ModeSet";
+    ServerMessagesRaw2[ServerMessagesRaw2["ModeGet"] = 3] = "ModeGet";
+    ServerMessagesRaw2[ServerMessagesRaw2["Settings"] = 4] = "Settings";
+    ServerMessagesRaw2[ServerMessagesRaw2["Config"] = 5] = "Config";
+    ServerMessagesRaw2[ServerMessagesRaw2["DoorLog"] = 6] = "DoorLog";
+    ServerMessagesRaw2[ServerMessagesRaw2["DoorClear"] = 7] = "DoorClear";
+    ServerMessagesRaw2[ServerMessagesRaw2["CamGet"] = 8] = "CamGet";
+    ServerMessagesRaw2[ServerMessagesRaw2["CamTake"] = 9] = "CamTake";
+    ServerMessagesRaw2[ServerMessagesRaw2["DeviceInfo"] = 10] = "DeviceInfo";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioGetDevices"] = 11] = "AudioGetDevices";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioPcm"] = 12] = "AudioPcm";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioPcmReport"] = 13] = "AudioPcmReport";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioActiveDevice"] = 14] = "AudioActiveDevice";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioAllDevices"] = 15] = "AudioAllDevices";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioSettingsUpdate"] = 16] = "AudioSettingsUpdate";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioIsServerConnected"] = 17] = "AudioIsServerConnected";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioIsInternalAudioProcessing"] = 18] = "AudioIsInternalAudioProcessing";
+    ServerMessagesRaw2[ServerMessagesRaw2["AudioApis"] = 19] = "AudioApis";
+    ServerMessagesRaw2[ServerMessagesRaw2["PatternGet"] = 20] = "PatternGet";
+    ServerMessagesRaw2[ServerMessagesRaw2["PatternSet"] = 21] = "PatternSet";
+    ServerMessagesRaw2[ServerMessagesRaw2["ScheduleGet"] = 22] = "ScheduleGet";
+    ServerMessagesRaw2[ServerMessagesRaw2["ScheduleSet"] = 23] = "ScheduleSet";
+    return ServerMessagesRaw2;
+  })(ServerMessagesRaw || {});
+  var ClientMessagesRaw = /* @__PURE__ */ ((ClientMessagesRaw3) => {
+    ClientMessagesRaw3[ClientMessagesRaw3["Login"] = 0] = "Login";
+    ClientMessagesRaw3[ClientMessagesRaw3["RGBUpdate"] = 1] = "RGBUpdate";
+    ClientMessagesRaw3[ClientMessagesRaw3["ModeUpdate"] = 2] = "ModeUpdate";
+    ClientMessagesRaw3[ClientMessagesRaw3["DoorOpen"] = 3] = "DoorOpen";
+    ClientMessagesRaw3[ClientMessagesRaw3["DoorImageAvailable"] = 4] = "DoorImageAvailable";
+    ClientMessagesRaw3[ClientMessagesRaw3["SocketLog"] = 5] = "SocketLog";
+    ClientMessagesRaw3[ClientMessagesRaw3["SettingsUpdate"] = 6] = "SettingsUpdate";
+    ClientMessagesRaw3[ClientMessagesRaw3["PCM"] = 7] = "PCM";
+    ClientMessagesRaw3[ClientMessagesRaw3["AudioGetDevices"] = 8] = "AudioGetDevices";
+    ClientMessagesRaw3[ClientMessagesRaw3["AudioActiveDevice"] = 9] = "AudioActiveDevice";
+    ClientMessagesRaw3[ClientMessagesRaw3["AudioAllDevices"] = 10] = "AudioAllDevices";
+    ClientMessagesRaw3[ClientMessagesRaw3["AudioApis"] = 11] = "AudioApis";
+    ClientMessagesRaw3[ClientMessagesRaw3["AudioSettingsUpdate"] = 12] = "AudioSettingsUpdate";
+    ClientMessagesRaw3[ClientMessagesRaw3["AudioIsInternalAudioProcessing"] = 13] = "AudioIsInternalAudioProcessing";
+    ClientMessagesRaw3[ClientMessagesRaw3["AudioServerConnected"] = 14] = "AudioServerConnected";
+    ClientMessagesRaw3[ClientMessagesRaw3["AudioServerDisconnected"] = 15] = "AudioServerDisconnected";
+    ClientMessagesRaw3[ClientMessagesRaw3["PatternUpdate"] = 16] = "PatternUpdate";
+    ClientMessagesRaw3[ClientMessagesRaw3["ScheduleUpdate"] = 17] = "ScheduleUpdate";
+    return ClientMessagesRaw3;
+  })(ClientMessagesRaw || {});
+  var SpecialEvents = /* @__PURE__ */ ((SpecialEvents3) => {
+    SpecialEvents3[SpecialEvents3["Connect"] = 251] = "Connect";
+    SpecialEvents3[SpecialEvents3["Disconnect"] = 252] = "Disconnect";
+    SpecialEvents3[SpecialEvents3["PromiseError"] = 253] = "PromiseError";
+    SpecialEvents3[SpecialEvents3["PromiseResolve"] = 254] = "PromiseResolve";
+    SpecialEvents3[SpecialEvents3["Promise"] = 255] = "Promise";
+    return SpecialEvents3;
+  })(SpecialEvents || {});
+  var ClientMessages = {
+    ...ClientMessagesRaw,
+    ...SpecialEvents
+  };
+  var ServerMessages = {
+    ...ServerMessagesRaw,
+    ...SpecialEvents
+  };
 
   // src/shared/messages/BinaryBuffer.ts
   var BinaryBuffer = class {
@@ -63745,8 +53411,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     getBuffer() {
       return new Uint8Array(this.view.buffer, this.view.byteOffset, this.offset);
     }
-    getRestOfTheBuferBuffer() {
-      return new Uint8Array(this.view.buffer.slice(this.offset), this.view.byteOffset, this.view.byteLength);
+    getRestOfTheBuffer() {
+      return new Uint8Array(this.view.buffer.slice(this.offset));
     }
   };
   function utf8StringLen(str) {
@@ -63780,38 +53446,114 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     return len;
   }
 
+  // src/shared/utils.ts
+  function cloneDeep(object) {
+    return JSON.parse(JSON.stringify(object));
+  }
+  function randomString(length) {
+    let result = "";
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    for (let i2 = 0; i2 < length; i2++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+  function removeFromArray(array, item) {
+    const indexOf2 = array.indexOf(item);
+    if (indexOf2 === -1) {
+      return false;
+    }
+    array.splice(indexOf2, 1);
+    return true;
+  }
+  function pushUniqToArray(array, item) {
+    const indexOf2 = array.indexOf(item);
+    if (indexOf2 === -1) {
+      array.push(item);
+      return true;
+    }
+    return false;
+  }
+  function toInt(number, fallback = 0) {
+    const type = typeof number;
+    switch (type) {
+      case "bigint":
+      case "number":
+        return Math.round(number);
+      case "string":
+        const parsed = parseInt(number);
+        return isNaN(parsed) ? fallback : parsed;
+    }
+    return fallback;
+  }
+  function getDayString(date) {
+    const dateString = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
+    return dateString;
+  }
+  function deffer() {
+    let resolve;
+    let reject;
+    const promise = new Promise((_resolve, _reject) => {
+      resolve = _resolve;
+      reject = _reject;
+    });
+    return {
+      promise,
+      reject,
+      resolve
+    };
+  }
+  function quickBuffer(value) {
+    switch (typeof value) {
+      case "boolean":
+        return new BinaryBuffer(1).setBool(value).getBuffer();
+      case "string":
+        return new BinaryBuffer(utf8StringLen(value)).setUtf8String(value).getBuffer();
+      case "number": {
+        return new BinaryBuffer(1).setUint8(value).getBuffer();
+      }
+      case "object": {
+        return quickBuffer(JSON.stringify(value));
+      }
+    }
+    return new Uint8Array();
+  }
+
   // src/shared/messages/messageHandle.ts
   var emptyMessage = new Uint8Array();
   var MessageHandleBase = class {
     constructor(handle, client) {
       this.handle = handle;
+      this.client = client;
       this.events = new EventEmitter();
       this.promiseEvents = new EventEmitterSingle();
       this.deffered = /* @__PURE__ */ new Map();
       this.messageId = 0;
       this.onConnect = () => {
-        this.events.emit(251 /* Connect */);
+        return this.events.emit(251 /* Connect */, null, this.client);
       };
       this.onDisconnect = () => {
-        this.events.emit(252 /* Disconnect */);
-        this.deffered.forEach((value) => value.reject(new Error("Disonnected")));
+        this.deffered.forEach((value) => value.reject(new Error("Disconnected")));
         this.deffered.clear();
+        return this.events.emit(252 /* Disconnect */, null, this.client);
       };
       this.onMessage = async (reader) => {
         const type = reader.getUint8();
         switch (type) {
           case 255 /* Promise */: {
             const promiseType = reader.getUint8();
-            const messageId = reader.getUint8();
-            const bufferObj = new BinaryBuffer(reader.getU8Arr());
+            const messageId = reader.getUint32LE();
+            const bufferObj = new BinaryBuffer(reader.getRestOfTheBuffer());
             try {
-              const data2 = await this.promiseEvents.emit(promiseType, bufferObj);
+              const data2 = await this.promiseEvents.emit(promiseType, bufferObj, this.client);
               const buff = new Uint8Array(5 + data2.byteLength);
               const buffer = new BinaryBuffer(buff);
               buffer.setUint32LE(messageId);
               buffer.setBytes(data2);
               this.send(254 /* PromiseResolve */, buffer.getBuffer());
             } catch (error) {
+              Logger.debug(error);
               const errorEncoded = new SocketError(error.message).toBuffer();
               const buff = new Uint8Array(5 + errorEncoded.byteLength);
               const buffer = new BinaryBuffer(buff);
@@ -63822,29 +53564,27 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             return true;
           }
           case 254 /* PromiseResolve */: {
-            const promiseType = reader.getUint8();
-            const messageId = reader.getUint8();
+            const messageId = reader.getUint32LE();
             const data2 = this.deffered.get(messageId);
             this.deffered.delete(messageId);
             if (data2) {
-              const res = this.onPromiseData(promiseType, reader);
-              data2.resolve(res);
+              data2.resolve(reader);
             }
             return true;
           }
           case 253 /* PromiseError */: {
-            reader.getUint8();
-            const messageId = reader.getUint8();
+            const messageId = reader.getUint32LE();
             const data2 = this.deffered.get(messageId);
             this.deffered.delete(messageId);
             if (data2) {
+              console.log(reader["view"]);
               const res = SocketError.fromBuffer(reader);
               data2.reject(res);
             }
             return true;
           }
           default:
-            const count = this.events.emit(type, reader);
+            const count = this.events.emit(type, reader, this.client);
             return !!count;
         }
       };
@@ -63864,18 +53604,16 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     offPromise(key) {
       this.promiseEvents.off(key);
     }
-    onPromiseData(type, data2) {
-      return null;
-    }
     sendPromise(type, message = emptyMessage) {
       const deffered = deffer();
       const id2 = this.messageId++;
       this.deffered.set(id2, deffered);
-      const buffer = new BinaryBuffer(message.byteLength + 1 + 4);
+      const buffer = new BinaryBuffer(message.byteLength + 1 + 1 + 4);
+      buffer.setUint8(255 /* Promise */);
       buffer.setUint8(type);
-      buffer.setUint32LE(this.messageId);
-      buffer.setU8Arr(message);
-      this.handle.send(buffer.getU8Arr());
+      buffer.setUint32LE(id2);
+      buffer.setBytes(message);
+      this.handle.send(buffer.getBuffer());
       return deffered.promise;
     }
     send(type, message = emptyMessage) {
@@ -63890,16 +53628,42 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       super(message);
     }
     static fromBuffer(reader) {
-      return new _SocketError(reader.getUtf8String());
+      const error = new _SocketError(reader.getUtf8String());
+      return error;
     }
     static fromU8Array(arr) {
       return _SocketError.fromBuffer(new BinaryBuffer(arr));
     }
     toBuffer() {
-      const writer = new BinaryBuffer(utf8StringLen(this.message));
-      return writer.getBuffer();
+      return new BinaryBuffer(
+        utf8StringLen(this.message)
+        /* + utf8StringLen(stack)*/
+      ).setUtf8String(this.message).getBuffer();
     }
   };
+
+  // src/shared/post.ts
+  async function post(url, payload) {
+    const res = await fetch(url, {
+      body: JSON.stringify(payload),
+      method: "POST",
+      headers: {
+        "Content-Type": "Application/json"
+      }
+    });
+    if (!res.ok) {
+      const json = await res.json();
+      if (json.error) {
+        throw new Error(json.error);
+      } else {
+        throw new Error("Request error");
+      }
+    }
+    if (res.status < 200 && res.status > 300) {
+      throw new Error(`Request responded with ${res.status}`);
+    }
+    return res.json();
+  }
 
   // src/shared/clientSocket.ts
   var ClientSocket = class {
@@ -63915,7 +53679,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       this.onMessage = (event) => {
         const data2 = event.data;
         if (typeof data2 === "string") {
-          console.error("Recived string!", data2);
+          console.error("Received string!", data2);
         } else {
           const buffer = new BinaryBuffer(new Uint8Array(data2));
           this.handle.message(buffer);
@@ -63925,10 +53689,13 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         console.log(event);
       };
     }
-    createSocket(url) {
+    async createSocket(url, password) {
+      if (this.socket)
+        return;
+      const res = await post("/api/v1/request-token", { clientType: "browser-client", password });
       const urlObj = new URL(url);
       const prefix = urlObj.protocol.startsWith("https") ? "wss" : "ws";
-      const socketUrl = `${prefix}://${urlObj.host}/`;
+      const socketUrl = `${prefix}://${urlObj.host}/?t=${res.data.token}`;
       const socket = new WebSocket(socketUrl);
       socket.binaryType = "arraybuffer";
       socket.addEventListener("open", (event) => {
@@ -63937,25 +53704,25 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           this.socket.send(message);
           return true;
         };
-        this.handle.connect();
+        this.onOpen(event);
       });
       socket.addEventListener("message", this.onMessage);
       socket.addEventListener("error", this.onError);
       socket.addEventListener("close", (event) => {
-        this.handle.disconnect();
+        Logger.info("Socket Closed");
         this.socket = void 0;
+        this.onClose(event);
       });
     }
-    disconnect() {
+    disconnect(code, reason) {
       if (this.socket) {
-        this.socket.close();
+        this.socket.close(code, reason);
       }
       this.socket = void 0;
       this.handle = void 0;
       this.clientHandle = void 0;
     }
     get connected() {
-      console.log(!!this.socket);
       return !!this.socket;
     }
   };
@@ -63984,6 +53751,28 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var HASH = randomString(16);
 
   // src/shared/interfaces.ts
+  function modeToString(mode) {
+    switch (mode) {
+      case 0 /* Manual */:
+        return "Manual";
+      case 1 /* ManualForce */:
+        return "Manual Force";
+      case 2 /* ManualLocked */:
+        return "Manual Locked";
+      case 3 /* AutoPilot */:
+        return "Auto Pilot";
+      case 4 /* Pattern */:
+        return "Pattern";
+      case 5 /* Audio */:
+        return "Audio";
+      case 6 /* AudioRaw */:
+        return "Audio Raw";
+      case 7 /* Door */:
+        return "Door";
+      default:
+        break;
+    }
+  }
   var clientKeys = [
     "audio-server",
     "browser-client",
@@ -63993,41 +53782,45 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   ];
 
   // src/client/Utils/Socket.ts
-  var import_lodash3 = __toESM(require_lodash());
+  var empty = new Uint8Array();
   var LightSocket = class {
     constructor(version2, raiseNotification) {
       this.version = version2;
       this.raiseNotification = raiseNotification;
       this.TIMEOUT = MINUTE;
-      this.eventEmitter = new import_events.EventEmitter();
-      this._authenticated = false;
+      this.eventEmitter = new EventEmitter();
       this.queue = [];
       this._magicHome = false;
       this._activeCamera = false;
       this._doorSensor = false;
       this._mode = 0 /* Manual */;
       this.STORAGE_KEY = "socket-password";
-      this.onModeUpdateBin = (_2, data2) => {
+      this.onModeUpdateBin = (data2) => {
         this.onModeUpdate(data2.getUint8());
+      };
+      this.onRGBUpdate = (data2) => {
+        const r2 = data2.getUint8();
+        const g2 = data2.getUint8();
+        const b2 = data2.getUint8();
+        this.eventEmitter.emit("rgb-update", { r: r2, g: g2, b: b2 });
       };
       this.onModeUpdate = (mode) => {
         this._mode = mode;
         this.eventEmitter.emit("mode-update", this._mode);
       };
       this._clientSocket = new ClientSocket();
-      this._clientSocket.createSocket(location.href);
       this._clientSocket.clientHandle.on(2 /* ModeUpdate */, this.onModeUpdateBin);
+      this._clientSocket.clientHandle.on(1 /* RGBUpdate */, this.onRGBUpdate);
       this._clientSocket.clientHandle.on(251 /* Connect */, async (msg) => {
         this.getSettings();
         this.eventEmitter.emit("connect");
       });
       this._clientSocket.clientHandle.on(252 /* Disconnect */, (msg) => {
         this.eventEmitter.emit("disconnect");
-        this._authenticated = false;
         this._magicHome = false;
         this.emptyQueue();
       });
-      this.authenticate().catch(import_lodash3.noop);
+      this.authenticate();
     }
     on(value, listener3) {
       this.eventEmitter.on(value, listener3);
@@ -64036,47 +53829,56 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       this.eventEmitter.off(value, listener3);
     }
     async getSettings() {
+      const settingsBuffer = await this._clientSocket.clientHandle.sendPromise(4 /* Settings */);
+      this._settings = JSON.parse(settingsBuffer.getUtf8String());
+      try {
+        const resultBuffer = await this._clientSocket.clientHandle.sendPromise(5 /* Config */);
+        const mode = resultBuffer.getUint8();
+        const doorSensor = resultBuffer.getBool();
+        const activeCamera = resultBuffer.getBool();
+        const magicController = resultBuffer.getBool();
+        const version2 = resultBuffer.getUtf8String();
+        console.log(
+          mode,
+          doorSensor,
+          activeCamera,
+          magicController,
+          version2
+        );
+        this._magicHome = magicController;
+        this._doorSensor = doorSensor;
+        this._activeCamera = activeCamera;
+        if (this._mode !== mode) {
+          this._mode = mode;
+          this.onModeUpdate(this._mode);
+        }
+        if (this.version !== version2) {
+          this.raiseNotification("Invalid app version", `Expected ${version2}v using ${this.version}v`);
+        }
+      } catch (_error) {
+        console.log(_error);
+        this._magicHome = false;
+        this._doorSensor = false;
+      }
     }
     async authenticate(password) {
-      return new Promise((resolve2, reject2) => {
-        if (this._authenticated) {
-          resolve2();
-        } else {
-          const pass = password || BrowserStorage.getString(this.STORAGE_KEY);
-          if (!pass) {
-            reject2(new Error("No password provided"));
-            return;
-          }
-          this._clientSocket.clientHandle.on(0 /* Login */, (_2, data2) => {
-            const ok = data2.setBool(false);
-            const message = data2.getUtf8String();
-            if (ok) {
-              this._authenticated = true;
-              BrowserStorage.setString(this.STORAGE_KEY, pass);
-              resolve2();
-            } else {
-              if (message) {
-                reject2(new Error(message));
-              } else {
-                reject2(new Error("Unknown error"));
-              }
-            }
-          });
-          const type = "browser-client";
-          const binary = new BinaryBuffer(utf8StringLen(pass) + utf8StringLen(type)).setUtf8String(pass).setUtf8String(type).getBuffer();
-          this._clientSocket.clientHandle.send(0 /* Login */, binary);
-          this.sendQueue();
-        }
-      });
+      const pass = password || BrowserStorage.getString(this.STORAGE_KEY);
+      if (!pass) {
+        new Error("No password provided");
+        return;
+      }
+      await this._clientSocket.createSocket(location.href, pass);
+      BrowserStorage.setString(this.STORAGE_KEY, pass);
+      this.sendQueue();
     }
     setColor(red2, green, blue) {
-      return this._clientSocket.clientHandle.sendPromise(1 /* RGBSet */, new BinaryBuffer(3).setUint8(red2).setUint8(green).setUint8(blue).getBuffer());
+      return this._clientSocket.clientHandle.send(
+        0 /* RGBSet */,
+        new BinaryBuffer(3).setUint8(red2).setUint8(green).setUint8(blue).getBuffer()
+      );
     }
     get socket() {
       return this._clientSocket;
-    }
-    get authenticated() {
-      return this._authenticated;
     }
     get clientSocket() {
       return this._clientSocket;
@@ -64084,12 +53886,55 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     get mode() {
       return this._mode;
     }
-    emitIfPossible(event, ...args) {
+    emitIfPossible(event, buffer = empty) {
+      if (this.connected) {
+        return this.clientSocket.clientHandle.sendPromise(event, buffer);
+      } else {
+        this.queue.push({
+          promise: false,
+          args: {
+            event,
+            buffer
+          },
+          date: Date.now()
+        });
+      }
     }
-    async emitPromiseIfPossible(event, ...args) {
-      return Promise.resolve({});
+    async emitPromiseIfPossible(event, buffer = empty) {
+      if (this.socket.connected) {
+        return this.clientSocket.clientHandle.sendPromise(event, buffer);
+      } else {
+        return new Promise((resolve, reject) => {
+          this.queue.push({ promise: true, resolve, reject, args: { event, buffer }, date: Date.now() });
+        });
+      }
     }
     async sendQueue() {
+      if (!this.queue.length) {
+        return;
+      }
+      const item = this.queue.shift();
+      const args = item.args;
+      const dateNow = Date.now();
+      const promise = item.promise;
+      if (item.date + MINUTE < dateNow) {
+        if (promise) {
+          item.reject(new Error("Request timed out"));
+        }
+        this.sendQueue();
+        return;
+      }
+      if (promise) {
+        try {
+          const result = await this.clientSocket.clientHandle.sendPromise(args.event, args.buffer);
+          item.resolve(result);
+        } catch (error) {
+          item.reject(error);
+        }
+      } else {
+        this.clientSocket.clientHandle.send(args.event, args.buffer);
+      }
+      this.sendQueue();
     }
     async emptyQueue() {
       if (!this.queue.length) {
@@ -64111,7 +53956,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       return this._doorSensor;
     }
     get connected() {
-      return this._clientSocket && this._clientSocket.connected && this.authenticated;
+      return this._clientSocket && this._clientSocket.connected;
     }
     get settings() {
       return this._settings;
@@ -64119,20 +53964,20 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   };
 
   // src/client/Utils/AudioSystem.ts
-  var import_events4 = __toESM(require_events());
+  var import_events3 = __toESM(require_events());
 
   // src/shared/colour.ts
-  var import_lodash4 = __toESM(require_lodash());
+  var import_lodash3 = __toESM(require_lodash());
   var MAX_RGB = 16777215;
   function componentToHex(c2) {
-    c2 = (0, import_lodash4.clamp)(c2, 0, 255);
+    c2 = (0, import_lodash3.clamp)(c2, 0, 255);
     const hex = c2.toString(16);
     return hex.length == 1 ? "0" + hex : hex;
   }
   function rgb2hex(r2, g2, b2) {
-    r2 = (0, import_lodash4.clamp)(r2, 0, 255);
-    g2 = (0, import_lodash4.clamp)(g2, 0, 255);
-    b2 = (0, import_lodash4.clamp)(b2, 0, 255);
+    r2 = (0, import_lodash3.clamp)(r2, 0, 255);
+    g2 = (0, import_lodash3.clamp)(g2, 0, 255);
+    b2 = (0, import_lodash3.clamp)(b2, 0, 255);
     return "#" + componentToHex(r2) + componentToHex(g2) + componentToHex(b2);
   }
   function rgbObj2Hex(obj) {
@@ -64201,18 +54046,18 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     const max2 = Math.max(r2, g2, b2);
     const min2 = Math.min(r2, g2, b2);
     const v2 = max2;
-    const d2 = max2 - min2;
-    const s2 = max2 === 0 ? 0 : d2 / max2;
+    const d3 = max2 - min2;
+    const s2 = max2 === 0 ? 0 : d3 / max2;
     if (max2 !== min2) {
       switch (max2) {
         case r2:
-          h = (g2 - b2) / d2 + (g2 < b2 ? 6 : 0);
+          h = (g2 - b2) / d3 + (g2 < b2 ? 6 : 0);
           break;
         case g2:
-          h = (b2 - r2) / d2 + 2;
+          h = (b2 - r2) / d3 + 2;
           break;
         case b2:
-          h = (r2 - g2) / d2 + 4;
+          h = (r2 - g2) / d3 + 4;
           break;
       }
       h /= 6;
@@ -64350,8 +54195,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     getRGB() {
       const buffer = this.getArrayBuffer("merged");
       const sample2 = import_frequencyjs.default.Transform.toSpectrum([...buffer], { sampling: 2048, method: "dft" });
-      const dom = sample2.dominantFrequency();
-      const amp = Math.round(dom.amplitude);
+      const dom2 = sample2.dominantFrequency();
+      const amp = Math.round(dom2.amplitude);
       if (this.maxAmplitude < amp) {
         this.maxAmplitude = amp;
       }
@@ -64407,26 +54252,30 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   };
 
   // src/client/Utils/Patterns.ts
-  var import_events2 = __toESM(require_events());
-  var import_lodash5 = __toESM(require_lodash());
+  var import_events = __toESM(require_events());
+  var import_lodash4 = __toESM(require_lodash());
   var PatternService = class {
     constructor(lightSocket) {
       this.lightSocket = lightSocket;
       this.ledPattern = [];
       this.fetched = false;
-      this.eventEmitter = new import_events2.EventEmitter();
+      this.eventEmitter = new import_events.EventEmitter();
+      this.patternUpdateBin = (buffer) => {
+        this.patternUpdate(JSON.parse(buffer.getUtf8String()));
+      };
       this.patternUpdate = (ledPattern) => {
         this.ledPattern = ledPattern;
         this.eventEmitter.emit("update", this.ledPattern);
       };
+      lightSocket.clientSocket.clientHandle.on(16 /* PatternUpdate */, this.patternUpdateBin);
     }
     async fetchPattern(force = false) {
       if (this.fetched && !force) {
         return this.ledPattern;
       }
       try {
-        const result = await this.lightSocket.emitPromiseIfPossible("patterns-get");
-        this.ledPattern = result;
+        const result = await this.lightSocket.emitPromiseIfPossible(20 /* PatternGet */);
+        this.ledPattern = JSON.parse(result.getUtf8String());
       } catch (error) {
         Logger.debug("Fetch pattern", error);
       }
@@ -64439,7 +54288,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       return this.eventEmitter.off(type, listener3);
     }
     update() {
-      return this.lightSocket.emitPromiseIfPossible("pattern-set", this.ledPattern);
+      const json = JSON.stringify(this.ledPattern);
+      return this.lightSocket.emitPromiseIfPossible(
+        21 /* PatternSet */,
+        new BinaryBuffer(utf8StringLen(json)).setUtf8String(json).getBuffer()
+      );
     }
     get patterns() {
       return this.ledPattern;
@@ -64453,7 +54306,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       }
     }
     async sendPatterns() {
-      await this.lightSocket.emitPromiseIfPossible("patterns-set", this.ledPattern);
+      await this.lightSocket.emitPromiseIfPossible(21 /* PatternSet */, quickBuffer(this.ledPattern));
     }
     deletePattern(name) {
       const led = this.ledPattern.find((e2) => e2.name === name);
@@ -64463,12 +54316,12 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
     getRandomPatternItem() {
       const ledPattern = {
-        delay: (0, import_lodash5.random)(500, 1e3),
-        mode: (0, import_lodash5.sample)(MODES),
+        delay: (0, import_lodash4.random)(500, 1e3),
+        mode: (0, import_lodash4.sample)(MODES),
         rgb: {
-          r: (0, import_lodash5.random)(0, 255),
-          g: (0, import_lodash5.random)(0, 255),
-          b: (0, import_lodash5.random)(0, 255)
+          r: (0, import_lodash4.random)(0, 255),
+          g: (0, import_lodash4.random)(0, 255),
+          b: (0, import_lodash4.random)(0, 255)
         }
       };
       return ledPattern;
@@ -64505,7 +54358,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   };
 
   // src/client/Utils/ScheduleService.ts
-  var import_events3 = __toESM(require_events());
+  var import_events2 = __toESM(require_events());
 
   // src/shared/PatternAnimator.ts
   var PatternAnimator = class {
@@ -64669,8 +54522,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       const someDate = this.getMockDate(date.getHours(), date.getMinutes(), date.getSeconds());
       const range = times.filter((o2) => {
         const start = this.getMockDate(o2.start[0], o2.start[1], o2.start[2]);
-        const end = this.getMockDate(o2.end[0], o2.end[1], o2.end[2]);
-        return someDate >= start && someDate <= end;
+        const end3 = this.getMockDate(o2.end[0], o2.end[1], o2.end[2]);
+        return someDate >= start && someDate <= end3;
       });
       const value = range[0];
       if (value) {
@@ -64846,7 +54699,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         mode: "fade"
       };
       this.fetched = false;
-      this.eventEmitter = new import_events3.EventEmitter();
+      this.eventEmitter = new import_events2.EventEmitter();
       this._updated = true;
       this.scheduleUpdate = async (schedulerDescription) => {
         this.schedulerDescription = schedulerDescription;
@@ -64860,8 +54713,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       }
       try {
         await this.patternService.fetchPattern();
-        const result = await this.lightSocket.emitPromiseIfPossible("schedule-get");
-        this.schedulerDescription = result;
+        const result = await this.lightSocket.emitPromiseIfPossible(22 /* ScheduleGet */);
+        this.schedulerDescription = JSON.parse(result.getUtf8String());
       } catch (error) {
         Logger.debug("Fetch Schedule", error);
       }
@@ -64877,9 +54730,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       return this.schedulerDescription;
     }
     async sendSchedule() {
+      console.log(this.schedulerDescription);
       await this.lightSocket.emitPromiseIfPossible(
-        "schedule-set",
-        this.schedulerDescription
+        23 /* ScheduleSet */,
+        quickBuffer(this.schedulerDescription)
       );
       this.setUpdate(true);
     }
@@ -64913,7 +54767,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   // src/client/Utils/AudioSystem.ts
   var AudioLightSystem = class {
     constructor() {
-      this.eventEmitter = new import_events4.EventEmitter();
+      this.eventEmitter = new import_events3.EventEmitter();
       this._audioProcessor = new AudioProcessor();
       this._audioAnalyser = new AudioAnalyser(this._audioProcessor);
       this.version = "Unknown";
@@ -64926,7 +54780,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         const rgbBuffer = this._audioProcessor.rgbBuffer;
         this.eventEmitter.emit("audioUpdate", { leftBuffer, rightBuffer, mergedBuffer, rgbBuffer });
       };
-      this._raiseNotificationBin = (client, binary) => {
+      this._raiseNotificationBin = (binary) => {
         const type = binary.getUtf8String();
         const str = binary.getUtf8String();
         const des = binary.getUtf8String();
@@ -64988,7 +54842,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
 
   // node_modules/@emotion/stylis/dist/stylis.browser.esm.js
   function stylis_min(W2) {
-    function M2(d2, c2, e2, h, a2) {
+    function M2(d3, c2, e2, h, a2) {
       for (var m2 = 0, b2 = 0, v2 = 0, n2 = 0, q2, g2, x2 = 0, K2 = 0, k2, u2 = k2 = q2 = 0, l2 = 0, r2 = 0, I2 = 0, t2 = 0, B3 = e2.length, J2 = B3 - 1, y2, f = "", p2 = "", F3 = "", G3 = "", C2; l2 < B3; ) {
         g2 = e2.charCodeAt(l2);
         l2 === J2 && 0 !== b2 + n2 + v2 + m2 && (0 !== b2 && (g2 = 47 === b2 ? 10 : 47), n2 = v2 = m2 = 0, B3++, J2++);
@@ -65107,7 +54961,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             case 59:
               f = (0 < r2 ? f.replace(N2, "") : f).trim();
               if (1 < (t2 = f.length))
-                switch (0 === u2 && (q2 = f.charCodeAt(0), 45 === q2 || 96 < q2 && 123 > q2) && (t2 = (f = f.replace(" ", ":")).length), 0 < A && void 0 !== (C2 = H2(1, f, c2, d2, D2, z2, p2.length, h, a2, h)) && 0 === (t2 = (f = C2.trim()).length) && (f = "\0\0"), q2 = f.charCodeAt(0), g2 = f.charCodeAt(1), q2) {
+                switch (0 === u2 && (q2 = f.charCodeAt(0), 45 === q2 || 96 < q2 && 123 > q2) && (t2 = (f = f.replace(" ", ":")).length), 0 < A && void 0 !== (C2 = H2(1, f, c2, d3, D2, z2, p2.length, h, a2, h)) && 0 === (t2 = (f = C2.trim()).length) && (f = "\0\0"), q2 = f.charCodeAt(0), g2 = f.charCodeAt(1), q2) {
                   case 0:
                     break;
                   case 64:
@@ -65116,7 +54970,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                       break;
                     }
                   default:
-                    58 !== f.charCodeAt(t2 - 1) && (p2 += P2(f, q2, g2, f.charCodeAt(2)));
+                    58 !== f.charCodeAt(t2 - 1) && (p2 += P(f, q2, g2, f.charCodeAt(2)));
                 }
               I2 = r2 = u2 = q2 = 0;
               f = "";
@@ -65127,7 +54981,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           case 13:
           case 10:
             47 === b2 ? b2 = 0 : 0 === 1 + q2 && 107 !== h && 0 < f.length && (r2 = 1, f += "\0");
-            0 < A * Y2 && H2(0, f, c2, d2, D2, z2, p2.length, h, a2, h);
+            0 < A * Y2 && H2(0, f, c2, d3, D2, z2, p2.length, h, a2, h);
             z2 = 1;
             D2++;
             break;
@@ -65236,7 +55090,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       t2 = p2.length;
       if (0 < t2) {
         r2 = c2;
-        if (0 < A && (C2 = H2(2, p2, r2, d2, D2, z2, t2, h, a2, h), void 0 !== C2 && 0 === (p2 = C2).length))
+        if (0 < A && (C2 = H2(2, p2, r2, d3, D2, z2, t2, h, a2, h), void 0 !== C2 && 0 === (p2 = C2).length))
           return G3 + p2 + F3;
         p2 = r2.join(",") + "{" + p2 + "}";
         if (0 !== w3 * E2) {
@@ -65253,48 +55107,48 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       }
       return G3 + p2 + F3;
     }
-    function X2(d2, c2, e2) {
+    function X2(d3, c2, e2) {
       var h = c2.trim().split(ia);
       c2 = h;
-      var a2 = h.length, m2 = d2.length;
+      var a2 = h.length, m2 = d3.length;
       switch (m2) {
         case 0:
         case 1:
           var b2 = 0;
-          for (d2 = 0 === m2 ? "" : d2[0] + " "; b2 < a2; ++b2) {
-            c2[b2] = Z2(d2, c2[b2], e2).trim();
+          for (d3 = 0 === m2 ? "" : d3[0] + " "; b2 < a2; ++b2) {
+            c2[b2] = Z2(d3, c2[b2], e2).trim();
           }
           break;
         default:
           var v2 = b2 = 0;
           for (c2 = []; b2 < a2; ++b2) {
             for (var n2 = 0; n2 < m2; ++n2) {
-              c2[v2++] = Z2(d2[n2] + " ", h[b2], e2).trim();
+              c2[v2++] = Z2(d3[n2] + " ", h[b2], e2).trim();
             }
           }
       }
       return c2;
     }
-    function Z2(d2, c2, e2) {
+    function Z2(d3, c2, e2) {
       var h = c2.charCodeAt(0);
       33 > h && (h = (c2 = c2.trim()).charCodeAt(0));
       switch (h) {
         case 38:
-          return c2.replace(F2, "$1" + d2.trim());
+          return c2.replace(F2, "$1" + d3.trim());
         case 58:
-          return d2.trim() + c2.replace(F2, "$1" + d2.trim());
+          return d3.trim() + c2.replace(F2, "$1" + d3.trim());
         default:
           if (0 < 1 * e2 && 0 < c2.indexOf("\f"))
-            return c2.replace(F2, (58 === d2.charCodeAt(0) ? "" : "$1") + d2.trim());
+            return c2.replace(F2, (58 === d3.charCodeAt(0) ? "" : "$1") + d3.trim());
       }
-      return d2 + c2;
+      return d3 + c2;
     }
-    function P2(d2, c2, e2, h) {
-      var a2 = d2 + ";", m2 = 2 * c2 + 3 * e2 + 4 * h;
+    function P(d3, c2, e2, h) {
+      var a2 = d3 + ";", m2 = 2 * c2 + 3 * e2 + 4 * h;
       if (944 === m2) {
-        d2 = a2.indexOf(":", 9) + 1;
-        var b2 = a2.substring(d2, a2.length - 1).trim();
-        b2 = a2.substring(0, d2).trim() + b2 + ";";
+        d3 = a2.indexOf(":", 9) + 1;
+        var b2 = a2.substring(d3, a2.length - 1).trim();
+        b2 = a2.substring(0, d3).trim() + b2 + ";";
         return 1 === w3 || 2 === w3 && L2(b2, 1) ? "-webkit-" + b2 + b2 : b2;
       }
       if (0 === w3 || 2 === w3 && !L2(a2, 1))
@@ -65364,8 +55218,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           if (-1 === a2.indexOf("sticky", 9))
             break;
         case 975:
-          c2 = (a2 = d2).length - 10;
-          b2 = (33 === a2.charCodeAt(c2) ? a2.substring(0, c2) : a2).substring(d2.indexOf(":", 7) + 1).trim();
+          c2 = (a2 = d3).length - 10;
+          b2 = (33 === a2.charCodeAt(c2) ? a2.substring(0, c2) : a2).substring(d3.indexOf(":", 7) + 1).trim();
           switch (m2 = b2.charCodeAt(0) + (b2.charCodeAt(7) | 0)) {
             case 203:
               if (111 > b2.charCodeAt(8))
@@ -65395,8 +55249,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             break;
         case 931:
         case 953:
-          if (true === la.test(d2))
-            return 115 === (b2 = d2.substring(d2.indexOf(":") + 1)).charCodeAt(0) ? P2(d2.replace("stretch", "fill-available"), c2, e2, h).replace(":fill-available", ":stretch") : a2.replace(b2, "-webkit-" + b2) + a2.replace(b2, "-moz-" + b2.replace("fill-", "")) + a2;
+          if (true === la.test(d3))
+            return 115 === (b2 = d3.substring(d3.indexOf(":") + 1)).charCodeAt(0) ? P(d3.replace("stretch", "fill-available"), c2, e2, h).replace(":fill-available", ":stretch") : a2.replace(b2, "-webkit-" + b2) + a2.replace(b2, "-moz-" + b2.replace("fill-", "")) + a2;
           break;
         case 962:
           if (a2 = "-webkit-" + a2 + (102 === a2.charCodeAt(5) ? "-ms-" + a2 : "") + a2, 211 === e2 + h && 105 === a2.charCodeAt(13) && 0 < a2.indexOf("transform", 10))
@@ -65404,18 +55258,18 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       }
       return a2;
     }
-    function L2(d2, c2) {
-      var e2 = d2.indexOf(1 === c2 ? ":" : "{"), h = d2.substring(0, 3 !== c2 ? e2 : 10);
-      e2 = d2.substring(e2 + 1, d2.length - 1);
+    function L2(d3, c2) {
+      var e2 = d3.indexOf(1 === c2 ? ":" : "{"), h = d3.substring(0, 3 !== c2 ? e2 : 10);
+      e2 = d3.substring(e2 + 1, d3.length - 1);
       return R2(2 !== c2 ? h : h.replace(na, "$1"), e2, c2);
     }
-    function ea(d2, c2) {
-      var e2 = P2(c2, c2.charCodeAt(0), c2.charCodeAt(1), c2.charCodeAt(2));
+    function ea(d3, c2) {
+      var e2 = P(c2, c2.charCodeAt(0), c2.charCodeAt(1), c2.charCodeAt(2));
       return e2 !== c2 + ";" ? e2.replace(oa, " or ($1)").substring(4) : "(" + c2 + ")";
     }
-    function H2(d2, c2, e2, h, a2, m2, b2, v2, n2, q2) {
+    function H2(d3, c2, e2, h, a2, m2, b2, v2, n2, q2) {
       for (var g2 = 0, x2 = c2, w4; g2 < A; ++g2) {
-        switch (w4 = S2[g2].call(B2, d2, x2, e2, h, a2, m2, b2, v2, n2, q2)) {
+        switch (w4 = S2[g2].call(B2, d3, x2, e2, h, a2, m2, b2, v2, n2, q2)) {
           case void 0:
           case false:
           case true:
@@ -65428,31 +55282,31 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       if (x2 !== c2)
         return x2;
     }
-    function T2(d2) {
-      switch (d2) {
+    function T2(d3) {
+      switch (d3) {
         case void 0:
         case null:
           A = S2.length = 0;
           break;
         default:
-          if ("function" === typeof d2)
-            S2[A++] = d2;
-          else if ("object" === typeof d2)
-            for (var c2 = 0, e2 = d2.length; c2 < e2; ++c2) {
-              T2(d2[c2]);
+          if ("function" === typeof d3)
+            S2[A++] = d3;
+          else if ("object" === typeof d3)
+            for (var c2 = 0, e2 = d3.length; c2 < e2; ++c2) {
+              T2(d3[c2]);
             }
           else
-            Y2 = !!d2 | 0;
+            Y2 = !!d3 | 0;
       }
       return T2;
     }
-    function U2(d2) {
-      d2 = d2.prefix;
-      void 0 !== d2 && (R2 = null, d2 ? "function" !== typeof d2 ? w3 = 1 : (w3 = 2, R2 = d2) : w3 = 0);
+    function U2(d3) {
+      d3 = d3.prefix;
+      void 0 !== d3 && (R2 = null, d3 ? "function" !== typeof d3 ? w3 = 1 : (w3 = 2, R2 = d3) : w3 = 0);
       return U2;
     }
-    function B2(d2, c2) {
-      var e2 = d2;
+    function B2(d3, c2) {
+      var e2 = d3;
       33 > e2.charCodeAt(0) && (e2 = e2.trim());
       V2 = e2;
       e2 = [V2];
@@ -65839,13 +55693,13 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           o2.push(i2), this.staticRulesId = i2;
         }
       else {
-        for (var c2 = this.rules.length, u2 = ee(this.baseHash, n2.hash), l2 = "", d2 = 0; d2 < c2; d2++) {
-          var h = this.rules[d2];
+        for (var c2 = this.rules.length, u2 = ee(this.baseHash, n2.hash), l2 = "", d3 = 0; d3 < c2; d3++) {
+          var h = this.rules[d3];
           if ("string" == typeof h)
-            l2 += h, u2 = ee(u2, h + d2);
+            l2 += h, u2 = ee(u2, h + d3);
           else if (h) {
             var p2 = _e(h, e3, t2, n2), f = Array.isArray(p2) ? p2.join("") : p2;
-            u2 = ee(u2, f + d2), l2 += f;
+            u2 = ee(u2, f + d3), l2 += f;
           }
         }
         if (l2) {
@@ -65863,7 +55717,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var se = /^\s*\/\/.*$/gm;
   var ie = [":", "[", ".", "#"];
   function ae(e2) {
-    var t2, n2, r2, o2, s2 = void 0 === e2 ? w : e2, i2 = s2.options, a2 = void 0 === i2 ? w : i2, c2 = s2.plugins, u2 = void 0 === c2 ? S : c2, l2 = new stylis_browser_esm_default(a2), d2 = [], p2 = function(e3) {
+    var t2, n2, r2, o2, s2 = void 0 === e2 ? w : e2, i2 = s2.options, a2 = void 0 === i2 ? w : i2, c2 = s2.plugins, u2 = void 0 === c2 ? S : c2, l2 = new stylis_browser_esm_default(a2), d3 = [], p2 = function(e3) {
       function t3(t4) {
         if (t4)
           try {
@@ -65871,7 +55725,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           } catch (e4) {
           }
       }
-      return function(n3, r3, o3, s3, i3, a3, c3, u3, l3, d3) {
+      return function(n3, r3, o3, s3, i3, a3, c3, u3, l3, d4) {
         switch (n3) {
           case 1:
             if (0 === l3 && 64 === r3.charCodeAt(0))
@@ -65887,14 +55741,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               case 112:
                 return e3(o3[0] + r3), "";
               default:
-                return r3 + (0 === d3 ? "/*|*/" : "");
+                return r3 + (0 === d4 ? "/*|*/" : "");
             }
           case -2:
             r3.split("/*|*/}").forEach(t3);
         }
       };
     }(function(e3) {
-      d2.push(e3);
+      d3.push(e3);
     }), f = function(e3, r3, s3) {
       return 0 === r3 && -1 !== ie.indexOf(s3[n2.length]) || s3.match(o2) ? e3 : "." + t2;
     };
@@ -65907,8 +55761,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       2 === e3 && o3.length && o3[0].lastIndexOf(n2) > 0 && (o3[0] = o3[0].replace(r2, f));
     }, p2, function(e3) {
       if (-2 === e3) {
-        var t3 = d2;
-        return d2 = [], t3;
+        var t3 = d3;
+        return d3 = [], t3;
       }
     }])), m2.hash = u2.length ? u2.reduce(function(e3, t3) {
       return t3.name || D(15), ee(e3, t3.name);
@@ -66057,20 +55911,20 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var Ge = Me.Consumer;
   var Fe = {};
   function Ye(e2, t2, n2) {
-    var o2 = _(e2), i2 = !xe(e2), a2 = t2.attrs, c2 = void 0 === a2 ? S : a2, l2 = t2.componentId, d2 = void 0 === l2 ? function(e3, t3) {
+    var o2 = _(e2), i2 = !xe(e2), a2 = t2.attrs, c2 = void 0 === a2 ? S : a2, l2 = t2.componentId, d3 = void 0 === l2 ? function(e3, t3) {
       var n3 = "string" != typeof e3 ? "sc" : je(e3);
       Fe[n3] = (Fe[n3] || 0) + 1;
       var r2 = n3 + "-" + Te("5.3.11" + n3 + Fe[n3]);
       return t3 ? t3 + "-" + r2 : r2;
     }(t2.displayName, t2.parentComponentId) : l2, h = t2.displayName, p2 = void 0 === h ? function(e3) {
       return xe(e3) ? "styled." + e3 : "Styled(" + b(e3) + ")";
-    }(e2) : h, v2 = t2.displayName && t2.componentId ? je(t2.displayName) + "-" + t2.componentId : t2.componentId || d2, g2 = o2 && e2.attrs ? Array.prototype.concat(e2.attrs, c2).filter(Boolean) : c2, N2 = t2.shouldForwardProp;
+    }(e2) : h, v2 = t2.displayName && t2.componentId ? je(t2.displayName) + "-" + t2.componentId : t2.componentId || d3, g2 = o2 && e2.attrs ? Array.prototype.concat(e2.attrs, c2).filter(Boolean) : c2, N2 = t2.shouldForwardProp;
     o2 && e2.shouldForwardProp && (N2 = t2.shouldForwardProp ? function(n3, r2, o3) {
       return e2.shouldForwardProp(n3, r2, o3) && t2.shouldForwardProp(n3, r2, o3);
     } : e2.shouldForwardProp);
-    var A, C2 = new oe(n2, v2, o2 ? e2.componentStyle : void 0), I2 = C2.isStatic && 0 === c2.length, P2 = function(e3, t3) {
+    var A, C2 = new oe(n2, v2, o2 ? e2.componentStyle : void 0), I2 = C2.isStatic && 0 === c2.length, P = function(e3, t3) {
       return function(e4, t4, n3, r2) {
-        var o3 = e4.attrs, i3 = e4.componentStyle, a3 = e4.defaultProps, c3 = e4.foldedComponentIds, l3 = e4.shouldForwardProp, d3 = e4.styledComponentId, h2 = e4.target, p3 = function(e5, t5, n4) {
+        var o3 = e4.attrs, i3 = e4.componentStyle, a3 = e4.defaultProps, c3 = e4.foldedComponentIds, l3 = e4.shouldForwardProp, d4 = e4.styledComponentId, h2 = e4.target, p3 = function(e5, t5, n4) {
           void 0 === e5 && (e5 = w);
           var r3 = y({}, t5, { theme: e5 }), o4 = {};
           return n4.forEach(function(e6) {
@@ -66084,10 +55938,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }(i3, r2, m2, true ? e4.warnTooManyClasses : void 0), S2 = n3, b2 = v3.$as || t4.$as || v3.as || t4.as || h2, _2 = xe(b2), N3 = v3 !== t4 ? y({}, t4, {}, v3) : t4, A2 = {};
         for (var C3 in N3)
           "$" !== C3[0] && "as" !== C3 && ("forwardedAs" === C3 ? A2.as = N3[C3] : (l3 ? l3(C3, isPropValid, b2) : !_2 || isPropValid(C3)) && (A2[C3] = N3[C3]));
-        return t4.style && v3.style !== t4.style && (A2.style = y({}, t4.style, {}, v3.style)), A2.className = Array.prototype.concat(c3, d3, g3 !== d3 ? g3 : null, t4.className, v3.className).filter(Boolean).join(" "), A2.ref = S2, (0, import_react.createElement)(b2, A2);
+        return t4.style && v3.style !== t4.style && (A2.style = y({}, t4.style, {}, v3.style)), A2.className = Array.prototype.concat(c3, d4, g3 !== d4 ? g3 : null, t4.className, v3.className).filter(Boolean).join(" "), A2.ref = S2, (0, import_react.createElement)(b2, A2);
       }(A, e3, t3, I2);
     };
-    return P2.displayName = p2, (A = import_react.default.forwardRef(P2)).attrs = g2, A.componentStyle = C2, A.displayName = p2, A.shouldForwardProp = N2, A.foldedComponentIds = o2 ? Array.prototype.concat(e2.foldedComponentIds, e2.styledComponentId) : S, A.styledComponentId = v2, A.target = o2 ? e2.target : e2, A.withComponent = function(e3) {
+    return P.displayName = p2, (A = import_react.default.forwardRef(P)).attrs = g2, A.componentStyle = C2, A.displayName = p2, A.shouldForwardProp = N2, A.foldedComponentIds = o2 ? Array.prototype.concat(e2.foldedComponentIds, e2.styledComponentId) : S, A.styledComponentId = v2, A.target = o2 ? e2.target : e2, A.withComponent = function(e3) {
       var r2 = t2.componentId, o3 = function(e4, t3) {
         if (null == e4)
           return {};
@@ -66217,7 +56071,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   };
 
   // src/client/Components/Tabs/Tabs.tsx
-  var import_react25 = __toESM(require_react());
+  var import_react23 = __toESM(require_react());
 
   // src/client/Components/Tabs/Audio.tsx
   var import_react5 = __toESM(require_react());
@@ -66391,6 +56245,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var Warper = styled_components_browser_esm_default.div`
     display: inline-block;
     margin: 5px;
+    cursor: pointer;
 `;
   var Bar = styled_components_browser_esm_default.div`
     width: 50px;
@@ -66424,8 +56279,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       };
     }
     render() {
-      const text = this.props.text || "as";
-      return /* @__PURE__ */ import_react4.default.createElement(Warper, { onClick: () => this.props.onChange(!this.props.enabled) }, text, /* @__PURE__ */ import_react4.default.createElement(Bar, { style: this.backgroundStyle }, /* @__PURE__ */ import_react4.default.createElement(BallWarper, null, /* @__PURE__ */ import_react4.default.createElement(Ball, { style: this.ballStyle }))));
+      const text2 = this.props.text || "as";
+      return /* @__PURE__ */ import_react4.default.createElement(Warper, { onClick: () => this.props.onChange(!this.props.enabled) }, text2, /* @__PURE__ */ import_react4.default.createElement(Bar, { style: this.backgroundStyle }, /* @__PURE__ */ import_react4.default.createElement(BallWarper, null, /* @__PURE__ */ import_react4.default.createElement(Ball, { style: this.ballStyle }))));
     }
   };
 
@@ -66475,25 +56330,28 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         this.setState({ mode });
       };
       this.updateDevices = async () => {
-        const result = await this.props.als.lightSocket.emitPromiseIfPossible("is-audio-server-connected");
+        const result = await this.props.als.lightSocket.emitPromiseIfPossible(17 /* AudioIsServerConnected */);
         if (this.destroyed) {
           return;
         }
-        this.setState({ connected: result });
-        if (result) {
-          const deviceInfo = await this.props.als.lightSocket.emitPromiseIfPossible(
-            "active-device"
+        const connected = result.getBool();
+        this.setState({ connected });
+        if (connected) {
+          const deviceInfoBuffer = await this.props.als.lightSocket.emitPromiseIfPossible(
+            14 /* AudioActiveDevice */
           );
           if (this.destroyed) {
             return;
           }
+          const deviceInfo = JSON.parse(deviceInfoBuffer.getUtf8String());
           this.setState({ deviceInfo });
-          const allDevices = await this.props.als.lightSocket.emitPromiseIfPossible(
-            "all-devices"
+          const allDevicesBuffer = await this.props.als.lightSocket.emitPromiseIfPossible(
+            15 /* AudioAllDevices */
           );
           if (this.destroyed) {
             return;
           }
+          const allDevices = JSON.parse(allDevicesBuffer.getUtf8String());
           this.setState({ allDevices });
         }
       };
@@ -66503,13 +56361,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       this.fetchInfo = async () => {
         this.setState({ connected: true });
         const ls = this.props.als.lightSocket;
-        const deviceInfo = await ls.emitPromiseIfPossible("active-device");
-        const onDeviceProcessing = await ls.emitPromiseIfPossible("is-internal-audio-processing");
-        const apis = await ls.emitPromiseIfPossible("audio-apis");
+        const deviceInfoBuffer = await ls.emitPromiseIfPossible(14 /* AudioActiveDevice */);
+        const onDeviceProcessingBuffer = await ls.emitPromiseIfPossible(
+          18 /* AudioIsInternalAudioProcessing */
+        );
+        const apis = await ls.emitPromiseIfPossible(19 /* AudioApis */);
         if (this.destroyed) {
           return;
         }
         const values = Object.entries(apis);
+        const deviceInfo = JSON.parse(deviceInfoBuffer.getUtf8String());
+        const onDeviceProcessing = JSON.parse(onDeviceProcessingBuffer.getUtf8String());
         this.setState({ deviceInfo, onDeviceProcessing, apis: values });
         this.updateDevices();
       };
@@ -66530,7 +56392,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           }
         };
         try {
-          await this.props.als.lightSocket.emitPromiseIfPossible("audio-settings-update", deviceUpdate);
+          await this.props.als.lightSocket.emitPromiseIfPossible(
+            16 /* AudioSettingsUpdate */,
+            quickBuffer(deviceUpdate)
+          );
           this.setState({ change: void 0 });
           this.fetchInfo();
         } catch (error) {
@@ -66545,7 +56410,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         this.setState({ mode });
       };
       this.changeMode = (mode, on) => {
-        this.props.als.lightSocket.emitPromiseIfPossible("mode-set", mode);
+        this.props.als.lightSocket.emitPromiseIfPossible(2 /* ModeSet */, quickBuffer(mode));
       };
       this.state = {
         width: window.innerWidth,
@@ -66562,29 +56427,36 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       this.audioAnalyser = new AudioAnalyser(this.props.als.audioProcessor);
       window.addEventListener("resize", this.resize);
       this.socket.on("mode-update", this.onMode);
-      this.socket.clientSocket.on("audio-server-connected", this.fetchInfo);
-      this.socket.clientSocket.on("audio-server-disconnected", this.audioDisconnect);
+      this.socket.clientSocket.clientHandle.on(14 /* AudioServerConnected */, this.fetchInfo);
+      this.socket.clientSocket.clientHandle.on(15 /* AudioServerDisconnected */, this.audioDisconnect);
       if (this.socket.connected) {
         this.fetchInfo();
-      }
-      (async () => {
         try {
           this.updateDevices();
-          this.props.als.lightSocket.emitPromiseIfPossible("pcm-report", true);
+          this.props.als.lightSocket.emitPromiseIfPossible(13 /* AudioPcmReport */, quickBuffer(true));
         } catch (error) {
           Logger.debug("Socket error pcm-report", error);
         }
-      })();
+      }
     }
     componentWillUnmount() {
       this.destroyed = true;
       window.removeEventListener("resize", this.resize);
       this.props.als.lightSocket.off("mode-update", this.onMode);
-      this.props.als.lightSocket.clientSocket.off("audio-server-connected", this.fetchInfo);
-      this.props.als.lightSocket.clientSocket.off("audio-server-disconnected", this.audioDisconnect);
+      this.props.als.lightSocket.clientSocket.clientHandle.off(
+        14 /* AudioServerConnected */,
+        this.fetchInfo
+      );
+      this.props.als.lightSocket.clientSocket.clientHandle.off(
+        15 /* AudioServerDisconnected */,
+        this.audioDisconnect
+      );
       (async () => {
         try {
-          this.props.als.lightSocket.emitPromiseIfPossible("pcm-report", false);
+          await this.props.als.lightSocket.emitPromiseIfPossible(
+            13 /* AudioPcmReport */,
+            quickBuffer(false)
+          );
         } catch (error) {
           Logger.debug("Socket error pcm-report", error);
         }
@@ -66602,7 +56474,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         Button2,
         {
           onClick: () => {
-            const device = this.state.allDevices.find((d3) => d3.name === this.state.deviceInfo.device.name);
+            const device = this.state.allDevices.find((d4) => d4.name === this.state.deviceInfo.device.name);
             const id2 = this.state.allDevices.indexOf(device);
             this.setState({
               change: { ...device, id: id2, frameSize: s2.deviceInfo.frameSize, updating: false }
@@ -66620,12 +56492,15 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               const b2 = this.state.onDeviceProcessing;
               this.setState({ onDeviceProcessing: void 0 });
               try {
-                const result = await this.socket.emitPromiseIfPossible("audio-settings-update", {
-                  type: "audi-internal-processing",
-                  data: !b2
-                });
+                const result = await this.socket.emitPromiseIfPossible(
+                  16 /* AudioSettingsUpdate */,
+                  quickBuffer({
+                    type: "audi-internal-processing",
+                    data: !b2
+                  })
+                );
                 if (!this.destroyed) {
-                  this.setState({ onDeviceProcessing: result });
+                  this.setState({ onDeviceProcessing: JSON.parse(result.getUtf8String()) });
                 }
               } catch (error) {
                 console.error(error);
@@ -66638,9 +56513,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         },
         "on device processing"
       ) : null;
-      const d2 = this.state.deviceInfo.device;
+      const d3 = this.state.deviceInfo.device;
       const e2 = this.state.deviceInfo;
-      return /* @__PURE__ */ import_react5.default.createElement(Div2, null, /* @__PURE__ */ import_react5.default.createElement("span", null, "Computer name: ", /* @__PURE__ */ import_react5.default.createElement("b", null, e2.computerName)), /* @__PURE__ */ import_react5.default.createElement("span", null, "name: ", /* @__PURE__ */ import_react5.default.createElement("b", null, d2.name)), /* @__PURE__ */ import_react5.default.createElement("span", null, "inputChannels: ", /* @__PURE__ */ import_react5.default.createElement("b", null, d2.inputChannels)), /* @__PURE__ */ import_react5.default.createElement("span", null, "duplexChannels: ", /* @__PURE__ */ import_react5.default.createElement("b", null, d2.duplexChannels)), /* @__PURE__ */ import_react5.default.createElement("span", null, "isDefaultInput: ", /* @__PURE__ */ import_react5.default.createElement("b", null, d2.isDefaultInput ? "True" : "False")), /* @__PURE__ */ import_react5.default.createElement("span", null, "isDefaultOutput: ", /* @__PURE__ */ import_react5.default.createElement("b", null, d2.isDefaultOutput ? "True" : "False")), /* @__PURE__ */ import_react5.default.createElement("span", null, "nativeFormats: ", /* @__PURE__ */ import_react5.default.createElement("b", null, d2.nativeFormats)), /* @__PURE__ */ import_react5.default.createElement("span", null, "outputChannels: ", /* @__PURE__ */ import_react5.default.createElement("b", null, d2.outputChannels)), /* @__PURE__ */ import_react5.default.createElement("span", null, "preferredSampleRate: ", /* @__PURE__ */ import_react5.default.createElement("b", null, d2.preferredSampleRate)), /* @__PURE__ */ import_react5.default.createElement("span", null, "sampleRates:", " ", /* @__PURE__ */ import_react5.default.createElement("ul", null, d2.sampleRates.map((e3, i2) => /* @__PURE__ */ import_react5.default.createElement("li", { key: i2 }, /* @__PURE__ */ import_react5.default.createElement("b", null, e3))))), /* @__PURE__ */ import_react5.default.createElement("br", null), /* @__PURE__ */ import_react5.default.createElement("span", null, "frameSize: ", /* @__PURE__ */ import_react5.default.createElement("b", null, e2.frameSize)), /* @__PURE__ */ import_react5.default.createElement("span", null, "samplingRate: ", /* @__PURE__ */ import_react5.default.createElement("b", null, e2.samplingRate)), change, " ", updateInterProcessing);
+      return /* @__PURE__ */ import_react5.default.createElement(Div2, null, /* @__PURE__ */ import_react5.default.createElement("span", null, "Computer name: ", /* @__PURE__ */ import_react5.default.createElement("b", null, e2.computerName)), /* @__PURE__ */ import_react5.default.createElement("span", null, "name: ", /* @__PURE__ */ import_react5.default.createElement("b", null, d3.name)), /* @__PURE__ */ import_react5.default.createElement("span", null, "inputChannels: ", /* @__PURE__ */ import_react5.default.createElement("b", null, d3.inputChannels)), /* @__PURE__ */ import_react5.default.createElement("span", null, "duplexChannels: ", /* @__PURE__ */ import_react5.default.createElement("b", null, d3.duplexChannels)), /* @__PURE__ */ import_react5.default.createElement("span", null, "isDefaultInput: ", /* @__PURE__ */ import_react5.default.createElement("b", null, d3.isDefaultInput ? "True" : "False")), /* @__PURE__ */ import_react5.default.createElement("span", null, "isDefaultOutput: ", /* @__PURE__ */ import_react5.default.createElement("b", null, d3.isDefaultOutput ? "True" : "False")), /* @__PURE__ */ import_react5.default.createElement("span", null, "nativeFormats: ", /* @__PURE__ */ import_react5.default.createElement("b", null, d3.nativeFormats)), /* @__PURE__ */ import_react5.default.createElement("span", null, "outputChannels: ", /* @__PURE__ */ import_react5.default.createElement("b", null, d3.outputChannels)), /* @__PURE__ */ import_react5.default.createElement("span", null, "preferredSampleRate: ", /* @__PURE__ */ import_react5.default.createElement("b", null, d3.preferredSampleRate)), /* @__PURE__ */ import_react5.default.createElement("span", null, "sampleRates:", " ", /* @__PURE__ */ import_react5.default.createElement("ul", null, d3.sampleRates.map((e3, i2) => /* @__PURE__ */ import_react5.default.createElement("li", { key: i2 }, /* @__PURE__ */ import_react5.default.createElement("b", null, e3))))), /* @__PURE__ */ import_react5.default.createElement("br", null), /* @__PURE__ */ import_react5.default.createElement("span", null, "frameSize: ", /* @__PURE__ */ import_react5.default.createElement("b", null, e2.frameSize)), /* @__PURE__ */ import_react5.default.createElement("span", null, "samplingRate: ", /* @__PURE__ */ import_react5.default.createElement("b", null, e2.samplingRate)), change, " ", updateInterProcessing);
     }
     get changeDevice() {
       if (!this.state.change) {
@@ -66653,12 +56528,12 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         const id2 = this.state.allDevices.indexOf(device2);
         this.setState({ change: { ...device2, id: id2, frameSize: s2.deviceInfo.frameSize, updating: false } });
       };
-      const d2 = this.state.change;
-      const deviceDropDown = /* @__PURE__ */ import_react5.default.createElement("select", { name: "devices", id: "devices", onChange: device, value: d2.id }, this.state.allDevices.map((e2, i2) => /* @__PURE__ */ import_react5.default.createElement("option", { key: i2, value: i2 }, e2.name)));
+      const d3 = this.state.change;
+      const deviceDropDown = /* @__PURE__ */ import_react5.default.createElement("select", { name: "devices", id: "devices", onChange: device, value: d3.id }, this.state.allDevices.map((e2, i2) => /* @__PURE__ */ import_react5.default.createElement("option", { key: i2, value: i2 }, e2.name)));
       const sampleRate = (ev) => {
         const int = parseInt(ev.target.value);
-        const device2 = d2.sampleRates[int];
-        const update = { ...d2 };
+        const device2 = d3.sampleRates[int];
+        const update = { ...d3 };
         update.preferredSampleRate = device2;
         this.setState({ change: { ...update } });
       };
@@ -66672,7 +56547,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         change.frameSize = value;
         this.setState({ change });
       };
-      const buttons = d2.updating ? /* @__PURE__ */ import_react5.default.createElement(import_react_loading.default, { className: "m-2", type: "bars", color: "#ffffff", height: 50, width: 50 }) : /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement(Button2, { onClick: () => this.setState({ change: void 0 }) }, "Cancel"), /* @__PURE__ */ import_react5.default.createElement(Button2, { onClick: this.updateDevice }, "update"));
+      const buttons = d3.updating ? /* @__PURE__ */ import_react5.default.createElement(import_react_loading.default, { className: "m-2", type: "bars", color: "#ffffff", height: 50, width: 50 }) : /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement(Button2, { onClick: () => this.setState({ change: void 0 }) }, "Cancel"), /* @__PURE__ */ import_react5.default.createElement(Button2, { onClick: this.updateDevice }, "update"));
       return /* @__PURE__ */ import_react5.default.createElement(Div2, null, /* @__PURE__ */ import_react5.default.createElement("div", null, "APIs", this.state.apis.map((a2, i2) => {
         return /* @__PURE__ */ import_react5.default.createElement(
           Button2,
@@ -66681,11 +56556,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             onClick: async () => {
               try {
                 await this.socket.emitPromiseIfPossible(
-                  "audio-settings-update",
-                  {
+                  16 /* AudioSettingsUpdate */,
+                  quickBuffer({
                     type: "audio-api-update",
                     data: a2[1]
-                  }
+                  })
                 );
                 if (!this.destroyed) {
                   this.fetchInfo();
@@ -66697,7 +56572,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           },
           a2[0]
         );
-      })), /* @__PURE__ */ import_react5.default.createElement("span", null, "name: ", deviceDropDown), /* @__PURE__ */ import_react5.default.createElement("span", null, "Sample rate: ", sampleDropDown), /* @__PURE__ */ import_react5.default.createElement("span", null, "Frame size: ", /* @__PURE__ */ import_react5.default.createElement("input", { type: "text", onChange: updateFrameSize, value: d2.frameSize })), /* @__PURE__ */ import_react5.default.createElement("br", null), buttons);
+      })), /* @__PURE__ */ import_react5.default.createElement("span", null, "name: ", deviceDropDown), /* @__PURE__ */ import_react5.default.createElement("span", null, "Sample rate: ", sampleDropDown), /* @__PURE__ */ import_react5.default.createElement("span", null, "Frame size: ", /* @__PURE__ */ import_react5.default.createElement("input", { type: "text", onChange: updateFrameSize, value: d3.frameSize })), /* @__PURE__ */ import_react5.default.createElement("br", null), buttons);
     }
     render() {
       if (this.state.connected === null) {
@@ -66710,9 +56585,12 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         CheckBox,
         {
           text: "Audio",
-          enabled: this.state.mode === "AudioRaw" || this.state.mode === "Audio",
+          enabled: this.state.mode === 6 /* AudioRaw */ || this.state.mode === 5 /* Audio */,
           onChange: (on) => {
-            this.changeMode(this.state.onDeviceProcessing ? "Audio" : "AudioRaw", on);
+            this.changeMode(
+              this.state.onDeviceProcessing ? 5 /* Audio */ : 6 /* AudioRaw */,
+              on
+            );
           }
         }
       ), /* @__PURE__ */ import_react5.default.createElement(MaxDiv, null, this.activeDevice, this.changeDevice), /* @__PURE__ */ import_react5.default.createElement(
@@ -66728,7 +56606,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   };
 
   // src/client/Components/Tabs/AutoPilot.tsx
-  var import_react20 = __toESM(require_react());
+  var import_react18 = __toESM(require_react());
 
   // src/client/Components/CustomTab/PatternBuilder.tsx
   var import_react10 = __toESM(require_react());
@@ -66741,20 +56619,37 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
 
   // src/client/Components/ColourPicker/ColourPicker.tsx
   var import_react7 = __toESM(require_react());
-  var import_lodash6 = __toESM(require_lodash());
+  var import_lodash5 = __toESM(require_lodash());
 
   // node_modules/@fortawesome/fontawesome-svg-core/index.es.js
-  function _typeof(obj) {
-    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-      _typeof = function(obj2) {
-        return typeof obj2;
-      };
-    } else {
-      _typeof = function(obj2) {
-        return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-      };
+  function ownKeys(object, enumerableOnly) {
+    var keys3 = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      enumerableOnly && (symbols = symbols.filter(function(sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      })), keys3.push.apply(keys3, symbols);
     }
-    return _typeof(obj);
+    return keys3;
+  }
+  function _objectSpread2(target) {
+    for (var i2 = 1; i2 < arguments.length; i2++) {
+      var source = null != arguments[i2] ? arguments[i2] : {};
+      i2 % 2 ? ownKeys(Object(source), true).forEach(function(key) {
+        _defineProperty(target, key, source[key]);
+      }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+    return target;
+  }
+  function _typeof(obj) {
+    "@babel/helpers - typeof";
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj2) {
+      return typeof obj2;
+    } : function(obj2) {
+      return obj2 && "function" == typeof Symbol && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
+    }, _typeof(obj);
   }
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -66776,6 +56671,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       _defineProperties(Constructor.prototype, protoProps);
     if (staticProps)
       _defineProperties(Constructor, staticProps);
+    Object.defineProperty(Constructor, "prototype", {
+      writable: false
+    });
     return Constructor;
   }
   function _defineProperty(obj, key, value) {
@@ -66791,35 +56689,34 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
     return obj;
   }
-  function _objectSpread(target) {
-    for (var i2 = 1; i2 < arguments.length; i2++) {
-      var source = arguments[i2] != null ? arguments[i2] : {};
-      var ownKeys4 = Object.keys(source);
-      if (typeof Object.getOwnPropertySymbols === "function") {
-        ownKeys4 = ownKeys4.concat(Object.getOwnPropertySymbols(source).filter(function(sym) {
-          return Object.getOwnPropertyDescriptor(source, sym).enumerable;
-        }));
-      }
-      ownKeys4.forEach(function(key) {
-        _defineProperty(target, key, source[key]);
-      });
-    }
-    return target;
-  }
   function _slicedToArray(arr, i2) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i2) || _nonIterableRest();
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i2) || _unsupportedIterableToArray(arr, i2) || _nonIterableRest();
+  }
+  function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+  }
+  function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr))
+      return _arrayLikeToArray(arr);
   }
   function _arrayWithHoles(arr) {
     if (Array.isArray(arr))
       return arr;
   }
+  function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null)
+      return Array.from(iter);
+  }
   function _iterableToArrayLimit(arr, i2) {
+    var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+    if (_i == null)
+      return;
     var _arr = [];
     var _n = true;
     var _d = false;
-    var _e2 = void 0;
+    var _s, _e2;
     try {
-      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
         _arr.push(_s.value);
         if (i2 && _arr.length === i2)
           break;
@@ -66838,17 +56735,40 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
     return _arr;
   }
-  function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance");
+  function _unsupportedIterableToArray(o2, minLen) {
+    if (!o2)
+      return;
+    if (typeof o2 === "string")
+      return _arrayLikeToArray(o2, minLen);
+    var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+    if (n2 === "Object" && o2.constructor)
+      n2 = o2.constructor.name;
+    if (n2 === "Map" || n2 === "Set")
+      return Array.from(o2);
+    if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
+      return _arrayLikeToArray(o2, minLen);
   }
-  var noop3 = function noop4() {
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length)
+      len = arr.length;
+    for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++)
+      arr2[i2] = arr[i2];
+    return arr2;
+  }
+  function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  var noop2 = function noop3() {
   };
   var _WINDOW = {};
   var _DOCUMENT = {};
   var _MUTATION_OBSERVER = null;
   var _PERFORMANCE = {
-    mark: noop3,
-    measure: noop3
+    mark: noop2,
+    measure: noop2
   };
   try {
     if (typeof window !== "undefined")
@@ -66866,14 +56786,23 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var userAgent = _ref$userAgent === void 0 ? "" : _ref$userAgent;
   var WINDOW = _WINDOW;
   var DOCUMENT = _DOCUMENT;
+  var MUTATION_OBSERVER = _MUTATION_OBSERVER;
   var PERFORMANCE = _PERFORMANCE;
   var IS_BROWSER = !!WINDOW.document;
   var IS_DOM = !!DOCUMENT.documentElement && !!DOCUMENT.head && typeof DOCUMENT.addEventListener === "function" && typeof DOCUMENT.createElement === "function";
   var IS_IE = ~userAgent.indexOf("MSIE") || ~userAgent.indexOf("Trident/");
   var NAMESPACE_IDENTIFIER = "___FONT_AWESOME___";
+  var UNITS_IN_GRID = 16;
   var DEFAULT_FAMILY_PREFIX = "fa";
   var DEFAULT_REPLACEMENT_CLASS = "svg-inline--fa";
   var DATA_FA_I2SVG = "data-fa-i2svg";
+  var DATA_FA_PSEUDO_ELEMENT = "data-fa-pseudo-element";
+  var DATA_FA_PSEUDO_ELEMENT_PENDING = "data-fa-pseudo-element-pending";
+  var DATA_PREFIX = "data-prefix";
+  var DATA_ICON = "data-icon";
+  var HTML_CLASS_I2SVG_BASE_CLASS = "fontawesome-i2svg";
+  var MUTATION_APPROACH_ASYNC = "async";
+  var TAGNAMES_TO_SKIP_FOR_PSEUDOELEMENTS = ["HTML", "HEAD", "STYLE", "SCRIPT"];
   var PRODUCTION = function() {
     try {
       return false;
@@ -66881,15 +56810,70 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       return false;
     }
   }();
+  var PREFIX_TO_STYLE = {
+    "fas": "solid",
+    "fa-solid": "solid",
+    "far": "regular",
+    "fa-regular": "regular",
+    "fal": "light",
+    "fa-light": "light",
+    "fat": "thin",
+    "fa-thin": "thin",
+    "fad": "duotone",
+    "fa-duotone": "duotone",
+    "fab": "brands",
+    "fa-brands": "brands",
+    "fak": "kit",
+    "fa-kit": "kit",
+    "fa": "solid"
+  };
+  var STYLE_TO_PREFIX = {
+    "solid": "fas",
+    "regular": "far",
+    "light": "fal",
+    "thin": "fat",
+    "duotone": "fad",
+    "brands": "fab",
+    "kit": "fak"
+  };
+  var PREFIX_TO_LONG_STYLE = {
+    "fab": "fa-brands",
+    "fad": "fa-duotone",
+    "fak": "fa-kit",
+    "fal": "fa-light",
+    "far": "fa-regular",
+    "fas": "fa-solid",
+    "fat": "fa-thin"
+  };
+  var LONG_STYLE_TO_PREFIX = {
+    "fa-brands": "fab",
+    "fa-duotone": "fad",
+    "fa-kit": "fak",
+    "fa-light": "fal",
+    "fa-regular": "far",
+    "fa-solid": "fas",
+    "fa-thin": "fat"
+  };
+  var ICON_SELECTION_SYNTAX_PATTERN = /fa[srltdbk\-\ ]/;
+  var LAYERS_TEXT_CLASSNAME = "fa-layers-text";
+  var FONT_FAMILY_PATTERN = /Font ?Awesome ?([56 ]*)(Solid|Regular|Light|Thin|Duotone|Brands|Free|Pro|Kit)?.*/i;
+  var FONT_WEIGHT_TO_PREFIX = {
+    "900": "fas",
+    "400": "far",
+    "normal": "far",
+    "300": "fal",
+    "100": "fat"
+  };
   var oneToTen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   var oneToTwenty = oneToTen.concat([11, 12, 13, 14, 15, 16, 17, 18, 19, 20]);
+  var ATTRIBUTES_WATCHED_FOR_MUTATION = ["class", "data-prefix", "data-icon", "data-fa-transform", "data-fa-mask"];
   var DUOTONE_CLASSES = {
-    GROUP: "group",
+    GROUP: "duotone-group",
     SWAP_OPACITY: "swap-opacity",
     PRIMARY: "primary",
     SECONDARY: "secondary"
   };
-  var RESERVED_CLASSES = ["xs", "sm", "lg", "fw", "ul", "li", "border", "pull-left", "pull-right", "spin", "pulse", "rotate-90", "rotate-180", "rotate-270", "flip-horizontal", "flip-vertical", "flip-both", "stack", "stack-1x", "stack-2x", "inverse", "layers", "layers-text", "layers-counter", DUOTONE_CLASSES.GROUP, DUOTONE_CLASSES.SWAP_OPACITY, DUOTONE_CLASSES.PRIMARY, DUOTONE_CLASSES.SECONDARY].concat(oneToTen.map(function(n2) {
+  var RESERVED_CLASSES = [].concat(_toConsumableArray(Object.keys(STYLE_TO_PREFIX)), ["2xs", "xs", "sm", "lg", "xl", "2xl", "beat", "border", "fade", "beat-fade", "bounce", "flip-both", "flip-horizontal", "flip-vertical", "flip", "fw", "inverse", "layers-counter", "layers-text", "layers", "li", "pull-left", "pull-right", "pulse", "rotate-180", "rotate-270", "rotate-90", "rotate-by", "shake", "spin-pulse", "spin-reverse", "spin", "stack-1x", "stack-2x", "stack", "ul", DUOTONE_CLASSES.GROUP, DUOTONE_CLASSES.SWAP_OPACITY, DUOTONE_CLASSES.PRIMARY, DUOTONE_CLASSES.SECONDARY]).concat(oneToTen.map(function(n2) {
     return "".concat(n2, "x");
   })).concat(oneToTwenty.map(function(n2) {
     return "w-".concat(n2);
@@ -66911,7 +56895,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     return val;
   }
   if (DOCUMENT && typeof DOCUMENT.querySelector === "function") {
-    attrs = [["data-family-prefix", "familyPrefix"], ["data-replacement-class", "replacementClass"], ["data-auto-replace-svg", "autoReplaceSvg"], ["data-auto-add-css", "autoAddCss"], ["data-auto-a11y", "autoA11y"], ["data-search-pseudo-elements", "searchPseudoElements"], ["data-observe-mutations", "observeMutations"], ["data-mutate-approach", "mutateApproach"], ["data-keep-original-source", "keepOriginalSource"], ["data-measure-performance", "measurePerformance"], ["data-show-missing-icons", "showMissingIcons"]];
+    attrs = [["data-family-prefix", "familyPrefix"], ["data-style-default", "styleDefault"], ["data-replacement-class", "replacementClass"], ["data-auto-replace-svg", "autoReplaceSvg"], ["data-auto-add-css", "autoAddCss"], ["data-auto-a11y", "autoA11y"], ["data-search-pseudo-elements", "searchPseudoElements"], ["data-observe-mutations", "observeMutations"], ["data-mutate-approach", "mutateApproach"], ["data-keep-original-source", "keepOriginalSource"], ["data-measure-performance", "measurePerformance"], ["data-show-missing-icons", "showMissingIcons"]];
     attrs.forEach(function(_ref2) {
       var _ref22 = _slicedToArray(_ref2, 2), attr = _ref22[0], key = _ref22[1];
       var val = coerce(getAttrConfig(attr));
@@ -66923,6 +56907,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var attrs;
   var _default = {
     familyPrefix: DEFAULT_FAMILY_PREFIX,
+    styleDefault: "solid",
     replacementClass: DEFAULT_REPLACEMENT_CLASS,
     autoReplaceSvg: true,
     autoAddCss: true,
@@ -66934,263 +56919,33 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     measurePerformance: false,
     showMissingIcons: true
   };
-  var _config = _objectSpread({}, _default, initial);
+  var _config = _objectSpread2(_objectSpread2({}, _default), initial);
   if (!_config.autoReplaceSvg)
     _config.observeMutations = false;
-  var config = _objectSpread({}, _config);
+  var config = {};
+  Object.keys(_config).forEach(function(key) {
+    Object.defineProperty(config, key, {
+      enumerable: true,
+      set: function set3(val) {
+        _config[key] = val;
+        _onChangeCb.forEach(function(cb) {
+          return cb(config);
+        });
+      },
+      get: function get3() {
+        return _config[key];
+      }
+    });
+  });
   WINDOW.FontAwesomeConfig = config;
-  var w2 = WINDOW || {};
-  if (!w2[NAMESPACE_IDENTIFIER])
-    w2[NAMESPACE_IDENTIFIER] = {};
-  if (!w2[NAMESPACE_IDENTIFIER].styles)
-    w2[NAMESPACE_IDENTIFIER].styles = {};
-  if (!w2[NAMESPACE_IDENTIFIER].hooks)
-    w2[NAMESPACE_IDENTIFIER].hooks = {};
-  if (!w2[NAMESPACE_IDENTIFIER].shims)
-    w2[NAMESPACE_IDENTIFIER].shims = [];
-  var namespace = w2[NAMESPACE_IDENTIFIER];
-  var functions = [];
-  var listener = function listener2() {
-    DOCUMENT.removeEventListener("DOMContentLoaded", listener2);
-    loaded = 1;
-    functions.map(function(fn) {
-      return fn();
-    });
-  };
-  var loaded = false;
-  if (IS_DOM) {
-    loaded = (DOCUMENT.documentElement.doScroll ? /^loaded|^c/ : /^loaded|^i|^c/).test(DOCUMENT.readyState);
-    if (!loaded)
-      DOCUMENT.addEventListener("DOMContentLoaded", listener);
+  var _onChangeCb = [];
+  function onChange(cb) {
+    _onChangeCb.push(cb);
+    return function() {
+      _onChangeCb.splice(_onChangeCb.indexOf(cb), 1);
+    };
   }
-  var PENDING = "pending";
-  var SETTLED = "settled";
-  var FULFILLED = "fulfilled";
-  var REJECTED = "rejected";
-  var NOOP = function NOOP2() {
-  };
-  var isNode = typeof global !== "undefined" && typeof global.process !== "undefined" && typeof global.process.emit === "function";
-  var asyncSetTimer = typeof setImmediate === "undefined" ? setTimeout : setImmediate;
-  var asyncQueue = [];
-  var asyncTimer;
-  function asyncFlush() {
-    for (var i2 = 0; i2 < asyncQueue.length; i2++) {
-      asyncQueue[i2][0](asyncQueue[i2][1]);
-    }
-    asyncQueue = [];
-    asyncTimer = false;
-  }
-  function asyncCall(callback, arg) {
-    asyncQueue.push([callback, arg]);
-    if (!asyncTimer) {
-      asyncTimer = true;
-      asyncSetTimer(asyncFlush, 0);
-    }
-  }
-  function invokeResolver(resolver, promise) {
-    function resolvePromise(value) {
-      resolve(promise, value);
-    }
-    function rejectPromise(reason) {
-      reject(promise, reason);
-    }
-    try {
-      resolver(resolvePromise, rejectPromise);
-    } catch (e2) {
-      rejectPromise(e2);
-    }
-  }
-  function invokeCallback(subscriber) {
-    var owner = subscriber.owner;
-    var settled = owner._state;
-    var value = owner._data;
-    var callback = subscriber[settled];
-    var promise = subscriber.then;
-    if (typeof callback === "function") {
-      settled = FULFILLED;
-      try {
-        value = callback(value);
-      } catch (e2) {
-        reject(promise, e2);
-      }
-    }
-    if (!handleThenable(promise, value)) {
-      if (settled === FULFILLED) {
-        resolve(promise, value);
-      }
-      if (settled === REJECTED) {
-        reject(promise, value);
-      }
-    }
-  }
-  function handleThenable(promise, value) {
-    var resolved;
-    try {
-      if (promise === value) {
-        throw new TypeError("A promises callback cannot return that same promise.");
-      }
-      if (value && (typeof value === "function" || _typeof(value) === "object")) {
-        var then2 = value.then;
-        if (typeof then2 === "function") {
-          then2.call(value, function(val) {
-            if (!resolved) {
-              resolved = true;
-              if (value === val) {
-                fulfill(promise, val);
-              } else {
-                resolve(promise, val);
-              }
-            }
-          }, function(reason) {
-            if (!resolved) {
-              resolved = true;
-              reject(promise, reason);
-            }
-          });
-          return true;
-        }
-      }
-    } catch (e2) {
-      if (!resolved) {
-        reject(promise, e2);
-      }
-      return true;
-    }
-    return false;
-  }
-  function resolve(promise, value) {
-    if (promise === value || !handleThenable(promise, value)) {
-      fulfill(promise, value);
-    }
-  }
-  function fulfill(promise, value) {
-    if (promise._state === PENDING) {
-      promise._state = SETTLED;
-      promise._data = value;
-      asyncCall(publishFulfillment, promise);
-    }
-  }
-  function reject(promise, reason) {
-    if (promise._state === PENDING) {
-      promise._state = SETTLED;
-      promise._data = reason;
-      asyncCall(publishRejection, promise);
-    }
-  }
-  function publish(promise) {
-    promise._then = promise._then.forEach(invokeCallback);
-  }
-  function publishFulfillment(promise) {
-    promise._state = FULFILLED;
-    publish(promise);
-  }
-  function publishRejection(promise) {
-    promise._state = REJECTED;
-    publish(promise);
-    if (!promise._handled && isNode) {
-      global.process.emit("unhandledRejection", promise._data, promise);
-    }
-  }
-  function notifyRejectionHandled(promise) {
-    global.process.emit("rejectionHandled", promise);
-  }
-  function P(resolver) {
-    if (typeof resolver !== "function") {
-      throw new TypeError("Promise resolver " + resolver + " is not a function");
-    }
-    if (this instanceof P === false) {
-      throw new TypeError("Failed to construct 'Promise': Please use the 'new' operator, this object constructor cannot be called as a function.");
-    }
-    this._then = [];
-    invokeResolver(resolver, this);
-  }
-  P.prototype = {
-    constructor: P,
-    _state: PENDING,
-    _then: null,
-    _data: void 0,
-    _handled: false,
-    then: function then(onFulfillment, onRejection) {
-      var subscriber = {
-        owner: this,
-        then: new this.constructor(NOOP),
-        fulfilled: onFulfillment,
-        rejected: onRejection
-      };
-      if ((onRejection || onFulfillment) && !this._handled) {
-        this._handled = true;
-        if (this._state === REJECTED && isNode) {
-          asyncCall(notifyRejectionHandled, this);
-        }
-      }
-      if (this._state === FULFILLED || this._state === REJECTED) {
-        asyncCall(invokeCallback, subscriber);
-      } else {
-        this._then.push(subscriber);
-      }
-      return subscriber.then;
-    },
-    catch: function _catch(onRejection) {
-      return this.then(null, onRejection);
-    }
-  };
-  P.all = function(promises) {
-    if (!Array.isArray(promises)) {
-      throw new TypeError("You must pass an array to Promise.all().");
-    }
-    return new P(function(resolve2, reject2) {
-      var results = [];
-      var remaining = 0;
-      function resolver(index) {
-        remaining++;
-        return function(value) {
-          results[index] = value;
-          if (!--remaining) {
-            resolve2(results);
-          }
-        };
-      }
-      for (var i2 = 0, promise; i2 < promises.length; i2++) {
-        promise = promises[i2];
-        if (promise && typeof promise.then === "function") {
-          promise.then(resolver(i2), reject2);
-        } else {
-          results[i2] = promise;
-        }
-      }
-      if (!remaining) {
-        resolve2(results);
-      }
-    });
-  };
-  P.race = function(promises) {
-    if (!Array.isArray(promises)) {
-      throw new TypeError("You must pass an array to Promise.race().");
-    }
-    return new P(function(resolve2, reject2) {
-      for (var i2 = 0, promise; i2 < promises.length; i2++) {
-        promise = promises[i2];
-        if (promise && typeof promise.then === "function") {
-          promise.then(resolve2, reject2);
-        } else {
-          resolve2(promise);
-        }
-      }
-    });
-  };
-  P.resolve = function(value) {
-    if (value && _typeof(value) === "object" && value.constructor === P) {
-      return value;
-    }
-    return new P(function(resolve2) {
-      resolve2(value);
-    });
-  };
-  P.reject = function(reason) {
-    return new P(function(resolve2, reject2) {
-      reject2(reason);
-    });
-  };
+  var d2 = UNITS_IN_GRID;
   var meaninglessTransform = {
     size: 16,
     x: 0,
@@ -67227,6 +56982,22 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
     return id2;
   }
+  function toArray(obj) {
+    var array = [];
+    for (var i2 = (obj || []).length >>> 0; i2--; ) {
+      array[i2] = obj[i2];
+    }
+    return array;
+  }
+  function classArray(node) {
+    if (node.classList) {
+      return toArray(node.classList);
+    } else {
+      return (node.getAttribute("class") || "").split(" ").filter(function(i2) {
+        return i2;
+      });
+    }
+  }
   function htmlEscape(str) {
     return "".concat(str).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
@@ -67237,20 +57008,20 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   }
   function joinStyles(styles2) {
     return Object.keys(styles2 || {}).reduce(function(acc, styleName) {
-      return acc + "".concat(styleName, ": ").concat(styles2[styleName], ";");
+      return acc + "".concat(styleName, ": ").concat(styles2[styleName].trim(), ";");
     }, "");
   }
-  function transformIsMeaningful(transform2) {
-    return transform2.size !== meaninglessTransform.size || transform2.x !== meaninglessTransform.x || transform2.y !== meaninglessTransform.y || transform2.rotate !== meaninglessTransform.rotate || transform2.flipX || transform2.flipY;
+  function transformIsMeaningful(transform) {
+    return transform.size !== meaninglessTransform.size || transform.x !== meaninglessTransform.x || transform.y !== meaninglessTransform.y || transform.rotate !== meaninglessTransform.rotate || transform.flipX || transform.flipY;
   }
   function transformForSvg(_ref2) {
-    var transform2 = _ref2.transform, containerWidth = _ref2.containerWidth, iconWidth = _ref2.iconWidth;
+    var transform = _ref2.transform, containerWidth = _ref2.containerWidth, iconWidth = _ref2.iconWidth;
     var outer = {
       transform: "translate(".concat(containerWidth / 2, " 256)")
     };
-    var innerTranslate = "translate(".concat(transform2.x * 32, ", ").concat(transform2.y * 32, ") ");
-    var innerScale = "scale(".concat(transform2.size / 16 * (transform2.flipX ? -1 : 1), ", ").concat(transform2.size / 16 * (transform2.flipY ? -1 : 1), ") ");
-    var innerRotate = "rotate(".concat(transform2.rotate, " 0 0)");
+    var innerTranslate = "translate(".concat(transform.x * 32, ", ").concat(transform.y * 32, ") ");
+    var innerScale = "scale(".concat(transform.size / 16 * (transform.flipX ? -1 : 1), ", ").concat(transform.size / 16 * (transform.flipY ? -1 : 1), ") ");
+    var innerRotate = "rotate(".concat(transform.rotate, " 0 0)");
     var inner = {
       transform: "".concat(innerTranslate, " ").concat(innerScale, " ").concat(innerRotate)
     };
@@ -67263,134 +57034,614 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       path
     };
   }
-  var ALL_SPACE = {
-    x: 0,
-    y: 0,
-    width: "100%",
-    height: "100%"
-  };
-  function fillBlack(abstract) {
-    var force = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : true;
-    if (abstract.attributes && (abstract.attributes.fill || force)) {
-      abstract.attributes.fill = "black";
-    }
-    return abstract;
-  }
-  function deGroup(abstract) {
-    if (abstract.tag === "g") {
-      return abstract.children;
+  function transformForCss(_ref2) {
+    var transform = _ref2.transform, _ref2$width = _ref2.width, width = _ref2$width === void 0 ? UNITS_IN_GRID : _ref2$width, _ref2$height = _ref2.height, height = _ref2$height === void 0 ? UNITS_IN_GRID : _ref2$height, _ref2$startCentered = _ref2.startCentered, startCentered = _ref2$startCentered === void 0 ? false : _ref2$startCentered;
+    var val = "";
+    if (startCentered && IS_IE) {
+      val += "translate(".concat(transform.x / d2 - width / 2, "em, ").concat(transform.y / d2 - height / 2, "em) ");
+    } else if (startCentered) {
+      val += "translate(calc(-50% + ".concat(transform.x / d2, "em), calc(-50% + ").concat(transform.y / d2, "em)) ");
     } else {
-      return [abstract];
+      val += "translate(".concat(transform.x / d2, "em, ").concat(transform.y / d2, "em) ");
+    }
+    val += "scale(".concat(transform.size / d2 * (transform.flipX ? -1 : 1), ", ").concat(transform.size / d2 * (transform.flipY ? -1 : 1), ") ");
+    val += "rotate(".concat(transform.rotate, "deg) ");
+    return val;
+  }
+  var baseStyles = ':root, :host {\n  --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Solid";\n  --fa-font-regular: normal 400 1em/1 "Font Awesome 6 Regular";\n  --fa-font-light: normal 300 1em/1 "Font Awesome 6 Light";\n  --fa-font-thin: normal 100 1em/1 "Font Awesome 6 Thin";\n  --fa-font-duotone: normal 900 1em/1 "Font Awesome 6 Duotone";\n  --fa-font-brands: normal 400 1em/1 "Font Awesome 6 Brands";\n}\n\nsvg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {\n  overflow: visible;\n  box-sizing: content-box;\n}\n\n.svg-inline--fa {\n  display: var(--fa-display, inline-block);\n  height: 1em;\n  overflow: visible;\n  vertical-align: -0.125em;\n}\n.svg-inline--fa.fa-2xs {\n  vertical-align: 0.1em;\n}\n.svg-inline--fa.fa-xs {\n  vertical-align: 0em;\n}\n.svg-inline--fa.fa-sm {\n  vertical-align: -0.0714285705em;\n}\n.svg-inline--fa.fa-lg {\n  vertical-align: -0.2em;\n}\n.svg-inline--fa.fa-xl {\n  vertical-align: -0.25em;\n}\n.svg-inline--fa.fa-2xl {\n  vertical-align: -0.3125em;\n}\n.svg-inline--fa.fa-pull-left {\n  margin-right: var(--fa-pull-margin, 0.3em);\n  width: auto;\n}\n.svg-inline--fa.fa-pull-right {\n  margin-left: var(--fa-pull-margin, 0.3em);\n  width: auto;\n}\n.svg-inline--fa.fa-li {\n  width: var(--fa-li-width, 2em);\n  top: 0.25em;\n}\n.svg-inline--fa.fa-fw {\n  width: var(--fa-fw-width, 1.25em);\n}\n\n.fa-layers svg.svg-inline--fa {\n  bottom: 0;\n  left: 0;\n  margin: auto;\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n\n.fa-layers-counter, .fa-layers-text {\n  display: inline-block;\n  position: absolute;\n  text-align: center;\n}\n\n.fa-layers {\n  display: inline-block;\n  height: 1em;\n  position: relative;\n  text-align: center;\n  vertical-align: -0.125em;\n  width: 1em;\n}\n.fa-layers svg.svg-inline--fa {\n  -webkit-transform-origin: center center;\n          transform-origin: center center;\n}\n\n.fa-layers-text {\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  -webkit-transform-origin: center center;\n          transform-origin: center center;\n}\n\n.fa-layers-counter {\n  background-color: var(--fa-counter-background-color, #ff253a);\n  border-radius: var(--fa-counter-border-radius, 1em);\n  box-sizing: border-box;\n  color: var(--fa-inverse, #fff);\n  line-height: var(--fa-counter-line-height, 1);\n  max-width: var(--fa-counter-max-width, 5em);\n  min-width: var(--fa-counter-min-width, 1.5em);\n  overflow: hidden;\n  padding: var(--fa-counter-padding, 0.25em 0.5em);\n  right: var(--fa-right, 0);\n  text-overflow: ellipsis;\n  top: var(--fa-top, 0);\n  -webkit-transform: scale(var(--fa-counter-scale, 0.25));\n          transform: scale(var(--fa-counter-scale, 0.25));\n  -webkit-transform-origin: top right;\n          transform-origin: top right;\n}\n\n.fa-layers-bottom-right {\n  bottom: var(--fa-bottom, 0);\n  right: var(--fa-right, 0);\n  top: auto;\n  -webkit-transform: scale(var(--fa-layers-scale, 0.25));\n          transform: scale(var(--fa-layers-scale, 0.25));\n  -webkit-transform-origin: bottom right;\n          transform-origin: bottom right;\n}\n\n.fa-layers-bottom-left {\n  bottom: var(--fa-bottom, 0);\n  left: var(--fa-left, 0);\n  right: auto;\n  top: auto;\n  -webkit-transform: scale(var(--fa-layers-scale, 0.25));\n          transform: scale(var(--fa-layers-scale, 0.25));\n  -webkit-transform-origin: bottom left;\n          transform-origin: bottom left;\n}\n\n.fa-layers-top-right {\n  top: var(--fa-top, 0);\n  right: var(--fa-right, 0);\n  -webkit-transform: scale(var(--fa-layers-scale, 0.25));\n          transform: scale(var(--fa-layers-scale, 0.25));\n  -webkit-transform-origin: top right;\n          transform-origin: top right;\n}\n\n.fa-layers-top-left {\n  left: var(--fa-left, 0);\n  right: auto;\n  top: var(--fa-top, 0);\n  -webkit-transform: scale(var(--fa-layers-scale, 0.25));\n          transform: scale(var(--fa-layers-scale, 0.25));\n  -webkit-transform-origin: top left;\n          transform-origin: top left;\n}\n\n.fa-1x {\n  font-size: 1em;\n}\n\n.fa-2x {\n  font-size: 2em;\n}\n\n.fa-3x {\n  font-size: 3em;\n}\n\n.fa-4x {\n  font-size: 4em;\n}\n\n.fa-5x {\n  font-size: 5em;\n}\n\n.fa-6x {\n  font-size: 6em;\n}\n\n.fa-7x {\n  font-size: 7em;\n}\n\n.fa-8x {\n  font-size: 8em;\n}\n\n.fa-9x {\n  font-size: 9em;\n}\n\n.fa-10x {\n  font-size: 10em;\n}\n\n.fa-2xs {\n  font-size: 0.625em;\n  line-height: 0.1em;\n  vertical-align: 0.225em;\n}\n\n.fa-xs {\n  font-size: 0.75em;\n  line-height: 0.0833333337em;\n  vertical-align: 0.125em;\n}\n\n.fa-sm {\n  font-size: 0.875em;\n  line-height: 0.0714285718em;\n  vertical-align: 0.0535714295em;\n}\n\n.fa-lg {\n  font-size: 1.25em;\n  line-height: 0.05em;\n  vertical-align: -0.075em;\n}\n\n.fa-xl {\n  font-size: 1.5em;\n  line-height: 0.0416666682em;\n  vertical-align: -0.125em;\n}\n\n.fa-2xl {\n  font-size: 2em;\n  line-height: 0.03125em;\n  vertical-align: -0.1875em;\n}\n\n.fa-fw {\n  text-align: center;\n  width: 1.25em;\n}\n\n.fa-ul {\n  list-style-type: none;\n  margin-left: var(--fa-li-margin, 2.5em);\n  padding-left: 0;\n}\n.fa-ul > li {\n  position: relative;\n}\n\n.fa-li {\n  left: calc(var(--fa-li-width, 2em) * -1);\n  position: absolute;\n  text-align: center;\n  width: var(--fa-li-width, 2em);\n  line-height: inherit;\n}\n\n.fa-border {\n  border-color: var(--fa-border-color, #eee);\n  border-radius: var(--fa-border-radius, 0.1em);\n  border-style: var(--fa-border-style, solid);\n  border-width: var(--fa-border-width, 0.08em);\n  padding: var(--fa-border-padding, 0.2em 0.25em 0.15em);\n}\n\n.fa-pull-left {\n  float: left;\n  margin-right: var(--fa-pull-margin, 0.3em);\n}\n\n.fa-pull-right {\n  float: right;\n  margin-left: var(--fa-pull-margin, 0.3em);\n}\n\n.fa-beat {\n  -webkit-animation-name: fa-beat;\n          animation-name: fa-beat;\n  -webkit-animation-delay: var(--fa-animation-delay, 0);\n          animation-delay: var(--fa-animation-delay, 0);\n  -webkit-animation-direction: var(--fa-animation-direction, normal);\n          animation-direction: var(--fa-animation-direction, normal);\n  -webkit-animation-duration: var(--fa-animation-duration, 1s);\n          animation-duration: var(--fa-animation-duration, 1s);\n  -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);\n          animation-iteration-count: var(--fa-animation-iteration-count, infinite);\n  -webkit-animation-timing-function: var(--fa-animation-timing, ease-in-out);\n          animation-timing-function: var(--fa-animation-timing, ease-in-out);\n}\n\n.fa-bounce {\n  -webkit-animation-name: fa-bounce;\n          animation-name: fa-bounce;\n  -webkit-animation-delay: var(--fa-animation-delay, 0);\n          animation-delay: var(--fa-animation-delay, 0);\n  -webkit-animation-direction: var(--fa-animation-direction, normal);\n          animation-direction: var(--fa-animation-direction, normal);\n  -webkit-animation-duration: var(--fa-animation-duration, 1s);\n          animation-duration: var(--fa-animation-duration, 1s);\n  -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);\n          animation-iteration-count: var(--fa-animation-iteration-count, infinite);\n  -webkit-animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.28, 0.84, 0.42, 1));\n          animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.28, 0.84, 0.42, 1));\n}\n\n.fa-fade {\n  -webkit-animation-name: fa-fade;\n          animation-name: fa-fade;\n  -webkit-animation-delay: var(--fa-animation-delay, 0);\n          animation-delay: var(--fa-animation-delay, 0);\n  -webkit-animation-direction: var(--fa-animation-direction, normal);\n          animation-direction: var(--fa-animation-direction, normal);\n  -webkit-animation-duration: var(--fa-animation-duration, 1s);\n          animation-duration: var(--fa-animation-duration, 1s);\n  -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);\n          animation-iteration-count: var(--fa-animation-iteration-count, infinite);\n  -webkit-animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));\n          animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));\n}\n\n.fa-beat-fade {\n  -webkit-animation-name: fa-beat-fade;\n          animation-name: fa-beat-fade;\n  -webkit-animation-delay: var(--fa-animation-delay, 0);\n          animation-delay: var(--fa-animation-delay, 0);\n  -webkit-animation-direction: var(--fa-animation-direction, normal);\n          animation-direction: var(--fa-animation-direction, normal);\n  -webkit-animation-duration: var(--fa-animation-duration, 1s);\n          animation-duration: var(--fa-animation-duration, 1s);\n  -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);\n          animation-iteration-count: var(--fa-animation-iteration-count, infinite);\n  -webkit-animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));\n          animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));\n}\n\n.fa-flip {\n  -webkit-animation-name: fa-flip;\n          animation-name: fa-flip;\n  -webkit-animation-delay: var(--fa-animation-delay, 0);\n          animation-delay: var(--fa-animation-delay, 0);\n  -webkit-animation-direction: var(--fa-animation-direction, normal);\n          animation-direction: var(--fa-animation-direction, normal);\n  -webkit-animation-duration: var(--fa-animation-duration, 1s);\n          animation-duration: var(--fa-animation-duration, 1s);\n  -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);\n          animation-iteration-count: var(--fa-animation-iteration-count, infinite);\n  -webkit-animation-timing-function: var(--fa-animation-timing, ease-in-out);\n          animation-timing-function: var(--fa-animation-timing, ease-in-out);\n}\n\n.fa-shake {\n  -webkit-animation-name: fa-shake;\n          animation-name: fa-shake;\n  -webkit-animation-delay: var(--fa-animation-delay, 0);\n          animation-delay: var(--fa-animation-delay, 0);\n  -webkit-animation-direction: var(--fa-animation-direction, normal);\n          animation-direction: var(--fa-animation-direction, normal);\n  -webkit-animation-duration: var(--fa-animation-duration, 1s);\n          animation-duration: var(--fa-animation-duration, 1s);\n  -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);\n          animation-iteration-count: var(--fa-animation-iteration-count, infinite);\n  -webkit-animation-timing-function: var(--fa-animation-timing, linear);\n          animation-timing-function: var(--fa-animation-timing, linear);\n}\n\n.fa-spin {\n  -webkit-animation-name: fa-spin;\n          animation-name: fa-spin;\n  -webkit-animation-delay: var(--fa-animation-delay, 0);\n          animation-delay: var(--fa-animation-delay, 0);\n  -webkit-animation-direction: var(--fa-animation-direction, normal);\n          animation-direction: var(--fa-animation-direction, normal);\n  -webkit-animation-duration: var(--fa-animation-duration, 2s);\n          animation-duration: var(--fa-animation-duration, 2s);\n  -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);\n          animation-iteration-count: var(--fa-animation-iteration-count, infinite);\n  -webkit-animation-timing-function: var(--fa-animation-timing, linear);\n          animation-timing-function: var(--fa-animation-timing, linear);\n}\n\n.fa-spin-reverse {\n  --fa-animation-direction: reverse;\n}\n\n.fa-pulse,\n.fa-spin-pulse {\n  -webkit-animation-name: fa-spin;\n          animation-name: fa-spin;\n  -webkit-animation-direction: var(--fa-animation-direction, normal);\n          animation-direction: var(--fa-animation-direction, normal);\n  -webkit-animation-duration: var(--fa-animation-duration, 1s);\n          animation-duration: var(--fa-animation-duration, 1s);\n  -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);\n          animation-iteration-count: var(--fa-animation-iteration-count, infinite);\n  -webkit-animation-timing-function: var(--fa-animation-timing, steps(8));\n          animation-timing-function: var(--fa-animation-timing, steps(8));\n}\n\n@media (prefers-reduced-motion: reduce) {\n  .fa-beat,\n.fa-bounce,\n.fa-fade,\n.fa-beat-fade,\n.fa-flip,\n.fa-pulse,\n.fa-shake,\n.fa-spin,\n.fa-spin-pulse {\n    -webkit-animation-delay: -1ms;\n            animation-delay: -1ms;\n    -webkit-animation-duration: 1ms;\n            animation-duration: 1ms;\n    -webkit-animation-iteration-count: 1;\n            animation-iteration-count: 1;\n    transition-delay: 0s;\n    transition-duration: 0s;\n  }\n}\n@-webkit-keyframes fa-beat {\n  0%, 90% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  45% {\n    -webkit-transform: scale(var(--fa-beat-scale, 1.25));\n            transform: scale(var(--fa-beat-scale, 1.25));\n  }\n}\n@keyframes fa-beat {\n  0%, 90% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  45% {\n    -webkit-transform: scale(var(--fa-beat-scale, 1.25));\n            transform: scale(var(--fa-beat-scale, 1.25));\n  }\n}\n@-webkit-keyframes fa-bounce {\n  0% {\n    -webkit-transform: scale(1, 1) translateY(0);\n            transform: scale(1, 1) translateY(0);\n  }\n  10% {\n    -webkit-transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9)) translateY(0);\n            transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9)) translateY(0);\n  }\n  30% {\n    -webkit-transform: scale(var(--fa-bounce-jump-scale-x, 0.9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -0.5em));\n            transform: scale(var(--fa-bounce-jump-scale-x, 0.9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -0.5em));\n  }\n  50% {\n    -webkit-transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95)) translateY(0);\n            transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95)) translateY(0);\n  }\n  57% {\n    -webkit-transform: scale(1, 1) translateY(var(--fa-bounce-rebound, -0.125em));\n            transform: scale(1, 1) translateY(var(--fa-bounce-rebound, -0.125em));\n  }\n  64% {\n    -webkit-transform: scale(1, 1) translateY(0);\n            transform: scale(1, 1) translateY(0);\n  }\n  100% {\n    -webkit-transform: scale(1, 1) translateY(0);\n            transform: scale(1, 1) translateY(0);\n  }\n}\n@keyframes fa-bounce {\n  0% {\n    -webkit-transform: scale(1, 1) translateY(0);\n            transform: scale(1, 1) translateY(0);\n  }\n  10% {\n    -webkit-transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9)) translateY(0);\n            transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9)) translateY(0);\n  }\n  30% {\n    -webkit-transform: scale(var(--fa-bounce-jump-scale-x, 0.9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -0.5em));\n            transform: scale(var(--fa-bounce-jump-scale-x, 0.9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -0.5em));\n  }\n  50% {\n    -webkit-transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95)) translateY(0);\n            transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95)) translateY(0);\n  }\n  57% {\n    -webkit-transform: scale(1, 1) translateY(var(--fa-bounce-rebound, -0.125em));\n            transform: scale(1, 1) translateY(var(--fa-bounce-rebound, -0.125em));\n  }\n  64% {\n    -webkit-transform: scale(1, 1) translateY(0);\n            transform: scale(1, 1) translateY(0);\n  }\n  100% {\n    -webkit-transform: scale(1, 1) translateY(0);\n            transform: scale(1, 1) translateY(0);\n  }\n}\n@-webkit-keyframes fa-fade {\n  50% {\n    opacity: var(--fa-fade-opacity, 0.4);\n  }\n}\n@keyframes fa-fade {\n  50% {\n    opacity: var(--fa-fade-opacity, 0.4);\n  }\n}\n@-webkit-keyframes fa-beat-fade {\n  0%, 100% {\n    opacity: var(--fa-beat-fade-opacity, 0.4);\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(var(--fa-beat-fade-scale, 1.125));\n            transform: scale(var(--fa-beat-fade-scale, 1.125));\n  }\n}\n@keyframes fa-beat-fade {\n  0%, 100% {\n    opacity: var(--fa-beat-fade-opacity, 0.4);\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n  50% {\n    opacity: 1;\n    -webkit-transform: scale(var(--fa-beat-fade-scale, 1.125));\n            transform: scale(var(--fa-beat-fade-scale, 1.125));\n  }\n}\n@-webkit-keyframes fa-flip {\n  50% {\n    -webkit-transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));\n            transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));\n  }\n}\n@keyframes fa-flip {\n  50% {\n    -webkit-transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));\n            transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));\n  }\n}\n@-webkit-keyframes fa-shake {\n  0% {\n    -webkit-transform: rotate(-15deg);\n            transform: rotate(-15deg);\n  }\n  4% {\n    -webkit-transform: rotate(15deg);\n            transform: rotate(15deg);\n  }\n  8%, 24% {\n    -webkit-transform: rotate(-18deg);\n            transform: rotate(-18deg);\n  }\n  12%, 28% {\n    -webkit-transform: rotate(18deg);\n            transform: rotate(18deg);\n  }\n  16% {\n    -webkit-transform: rotate(-22deg);\n            transform: rotate(-22deg);\n  }\n  20% {\n    -webkit-transform: rotate(22deg);\n            transform: rotate(22deg);\n  }\n  32% {\n    -webkit-transform: rotate(-12deg);\n            transform: rotate(-12deg);\n  }\n  36% {\n    -webkit-transform: rotate(12deg);\n            transform: rotate(12deg);\n  }\n  40%, 100% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n  }\n}\n@keyframes fa-shake {\n  0% {\n    -webkit-transform: rotate(-15deg);\n            transform: rotate(-15deg);\n  }\n  4% {\n    -webkit-transform: rotate(15deg);\n            transform: rotate(15deg);\n  }\n  8%, 24% {\n    -webkit-transform: rotate(-18deg);\n            transform: rotate(-18deg);\n  }\n  12%, 28% {\n    -webkit-transform: rotate(18deg);\n            transform: rotate(18deg);\n  }\n  16% {\n    -webkit-transform: rotate(-22deg);\n            transform: rotate(-22deg);\n  }\n  20% {\n    -webkit-transform: rotate(22deg);\n            transform: rotate(22deg);\n  }\n  32% {\n    -webkit-transform: rotate(-12deg);\n            transform: rotate(-12deg);\n  }\n  36% {\n    -webkit-transform: rotate(12deg);\n            transform: rotate(12deg);\n  }\n  40%, 100% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n  }\n}\n@-webkit-keyframes fa-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n@keyframes fa-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n.fa-rotate-90 {\n  -webkit-transform: rotate(90deg);\n          transform: rotate(90deg);\n}\n\n.fa-rotate-180 {\n  -webkit-transform: rotate(180deg);\n          transform: rotate(180deg);\n}\n\n.fa-rotate-270 {\n  -webkit-transform: rotate(270deg);\n          transform: rotate(270deg);\n}\n\n.fa-flip-horizontal {\n  -webkit-transform: scale(-1, 1);\n          transform: scale(-1, 1);\n}\n\n.fa-flip-vertical {\n  -webkit-transform: scale(1, -1);\n          transform: scale(1, -1);\n}\n\n.fa-flip-both,\n.fa-flip-horizontal.fa-flip-vertical {\n  -webkit-transform: scale(-1, -1);\n          transform: scale(-1, -1);\n}\n\n.fa-rotate-by {\n  -webkit-transform: rotate(var(--fa-rotate-angle, none));\n          transform: rotate(var(--fa-rotate-angle, none));\n}\n\n.fa-stack {\n  display: inline-block;\n  vertical-align: middle;\n  height: 2em;\n  position: relative;\n  width: 2.5em;\n}\n\n.fa-stack-1x,\n.fa-stack-2x {\n  bottom: 0;\n  left: 0;\n  margin: auto;\n  position: absolute;\n  right: 0;\n  top: 0;\n  z-index: var(--fa-stack-z-index, auto);\n}\n\n.svg-inline--fa.fa-stack-1x {\n  height: 1em;\n  width: 1.25em;\n}\n.svg-inline--fa.fa-stack-2x {\n  height: 2em;\n  width: 2.5em;\n}\n\n.fa-inverse {\n  color: var(--fa-inverse, #fff);\n}\n\n.sr-only,\n.fa-sr-only {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  padding: 0;\n  margin: -1px;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  white-space: nowrap;\n  border-width: 0;\n}\n\n.sr-only-focusable:not(:focus),\n.fa-sr-only-focusable:not(:focus) {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  padding: 0;\n  margin: -1px;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  white-space: nowrap;\n  border-width: 0;\n}\n\n.svg-inline--fa .fa-primary {\n  fill: var(--fa-primary-color, currentColor);\n  opacity: var(--fa-primary-opacity, 1);\n}\n\n.svg-inline--fa .fa-secondary {\n  fill: var(--fa-secondary-color, currentColor);\n  opacity: var(--fa-secondary-opacity, 0.4);\n}\n\n.svg-inline--fa.fa-swap-opacity .fa-primary {\n  opacity: var(--fa-secondary-opacity, 0.4);\n}\n\n.svg-inline--fa.fa-swap-opacity .fa-secondary {\n  opacity: var(--fa-primary-opacity, 1);\n}\n\n.svg-inline--fa mask .fa-primary,\n.svg-inline--fa mask .fa-secondary {\n  fill: black;\n}\n\n.fad.fa-inverse,\n.fa-duotone.fa-inverse {\n  color: var(--fa-inverse, #fff);\n}';
+  function css() {
+    var dfp = DEFAULT_FAMILY_PREFIX;
+    var drc = DEFAULT_REPLACEMENT_CLASS;
+    var fp = config.familyPrefix;
+    var rc = config.replacementClass;
+    var s2 = baseStyles;
+    if (fp !== dfp || rc !== drc) {
+      var dPatt = new RegExp("\\.".concat(dfp, "\\-"), "g");
+      var customPropPatt = new RegExp("\\--".concat(dfp, "\\-"), "g");
+      var rPatt = new RegExp("\\.".concat(drc), "g");
+      s2 = s2.replace(dPatt, ".".concat(fp, "-")).replace(customPropPatt, "--".concat(fp, "-")).replace(rPatt, ".".concat(rc));
+    }
+    return s2;
+  }
+  var _cssInserted = false;
+  function ensureCss() {
+    if (config.autoAddCss && !_cssInserted) {
+      insertCss(css());
+      _cssInserted = true;
     }
   }
-  function makeIconMasking(_ref2) {
-    var children = _ref2.children, attributes = _ref2.attributes, main = _ref2.main, mask = _ref2.mask, explicitMaskId = _ref2.maskId, transform2 = _ref2.transform;
-    var mainWidth = main.width, mainPath = main.icon;
-    var maskWidth = mask.width, maskPath = mask.icon;
-    var trans = transformForSvg({
-      transform: transform2,
-      containerWidth: maskWidth,
-      iconWidth: mainWidth
-    });
-    var maskRect = {
-      tag: "rect",
-      attributes: _objectSpread({}, ALL_SPACE, {
-        fill: "white"
-      })
-    };
-    var maskInnerGroupChildrenMixin = mainPath.children ? {
-      children: mainPath.children.map(fillBlack)
-    } : {};
-    var maskInnerGroup = {
-      tag: "g",
-      attributes: _objectSpread({}, trans.inner),
-      children: [fillBlack(_objectSpread({
-        tag: mainPath.tag,
-        attributes: _objectSpread({}, mainPath.attributes, trans.path)
-      }, maskInnerGroupChildrenMixin))]
-    };
-    var maskOuterGroup = {
-      tag: "g",
-      attributes: _objectSpread({}, trans.outer),
-      children: [maskInnerGroup]
-    };
-    var maskId = "mask-".concat(explicitMaskId || nextUniqueId());
-    var clipId = "clip-".concat(explicitMaskId || nextUniqueId());
-    var maskTag = {
-      tag: "mask",
-      attributes: _objectSpread({}, ALL_SPACE, {
-        id: maskId,
-        maskUnits: "userSpaceOnUse",
-        maskContentUnits: "userSpaceOnUse"
-      }),
-      children: [maskRect, maskOuterGroup]
-    };
-    var defs = {
-      tag: "defs",
-      children: [{
-        tag: "clipPath",
-        attributes: {
-          id: clipId
+  var InjectCSS = {
+    mixout: function mixout() {
+      return {
+        dom: {
+          css,
+          insertCss: ensureCss
+        }
+      };
+    },
+    hooks: function hooks() {
+      return {
+        beforeDOMElementCreation: function beforeDOMElementCreation() {
+          ensureCss();
         },
-        children: deGroup(maskPath)
-      }, maskTag]
-    };
-    children.push(defs, {
-      tag: "rect",
-      attributes: _objectSpread({
-        fill: "currentColor",
-        "clip-path": "url(#".concat(clipId, ")"),
-        mask: "url(#".concat(maskId, ")")
-      }, ALL_SPACE)
+        beforeI2svg: function beforeI2svg() {
+          ensureCss();
+        }
+      };
+    }
+  };
+  var w2 = WINDOW || {};
+  if (!w2[NAMESPACE_IDENTIFIER])
+    w2[NAMESPACE_IDENTIFIER] = {};
+  if (!w2[NAMESPACE_IDENTIFIER].styles)
+    w2[NAMESPACE_IDENTIFIER].styles = {};
+  if (!w2[NAMESPACE_IDENTIFIER].hooks)
+    w2[NAMESPACE_IDENTIFIER].hooks = {};
+  if (!w2[NAMESPACE_IDENTIFIER].shims)
+    w2[NAMESPACE_IDENTIFIER].shims = [];
+  var namespace = w2[NAMESPACE_IDENTIFIER];
+  var functions = [];
+  var listener = function listener2() {
+    DOCUMENT.removeEventListener("DOMContentLoaded", listener2);
+    loaded = 1;
+    functions.map(function(fn) {
+      return fn();
     });
-    return {
-      children,
-      attributes
+  };
+  var loaded = false;
+  if (IS_DOM) {
+    loaded = (DOCUMENT.documentElement.doScroll ? /^loaded|^c/ : /^loaded|^i|^c/).test(DOCUMENT.readyState);
+    if (!loaded)
+      DOCUMENT.addEventListener("DOMContentLoaded", listener);
+  }
+  function domready(fn) {
+    if (!IS_DOM)
+      return;
+    loaded ? setTimeout(fn, 0) : functions.push(fn);
+  }
+  function toHtml(abstractNodes) {
+    var tag = abstractNodes.tag, _abstractNodes$attrib = abstractNodes.attributes, attributes = _abstractNodes$attrib === void 0 ? {} : _abstractNodes$attrib, _abstractNodes$childr = abstractNodes.children, children = _abstractNodes$childr === void 0 ? [] : _abstractNodes$childr;
+    if (typeof abstractNodes === "string") {
+      return htmlEscape(abstractNodes);
+    } else {
+      return "<".concat(tag, " ").concat(joinAttributes(attributes), ">").concat(children.map(toHtml).join(""), "</").concat(tag, ">");
+    }
+  }
+  function iconFromMapping(mapping, prefix, iconName) {
+    if (mapping && mapping[prefix] && mapping[prefix][iconName]) {
+      return {
+        prefix,
+        iconName,
+        icon: mapping[prefix][iconName]
+      };
+    }
+  }
+  var bindInternal4 = function bindInternal42(func, thisContext) {
+    return function(a2, b2, c2, d3) {
+      return func.call(thisContext, a2, b2, c2, d3);
+    };
+  };
+  var reduce = function fastReduceObject(subject, fn, initialValue, thisContext) {
+    var keys3 = Object.keys(subject), length = keys3.length, iterator = thisContext !== void 0 ? bindInternal4(fn, thisContext) : fn, i2, key, result;
+    if (initialValue === void 0) {
+      i2 = 1;
+      result = subject[keys3[0]];
+    } else {
+      i2 = 0;
+      result = initialValue;
+    }
+    for (; i2 < length; i2++) {
+      key = keys3[i2];
+      result = iterator(result, subject[key], key, subject);
+    }
+    return result;
+  };
+  function ucs2decode(string) {
+    var output = [];
+    var counter2 = 0;
+    var length = string.length;
+    while (counter2 < length) {
+      var value = string.charCodeAt(counter2++);
+      if (value >= 55296 && value <= 56319 && counter2 < length) {
+        var extra = string.charCodeAt(counter2++);
+        if ((extra & 64512) == 56320) {
+          output.push(((value & 1023) << 10) + (extra & 1023) + 65536);
+        } else {
+          output.push(value);
+          counter2--;
+        }
+      } else {
+        output.push(value);
+      }
+    }
+    return output;
+  }
+  function toHex(unicode) {
+    var decoded = ucs2decode(unicode);
+    return decoded.length === 1 ? decoded[0].toString(16) : null;
+  }
+  function codePointAt(string, index) {
+    var size = string.length;
+    var first = string.charCodeAt(index);
+    var second;
+    if (first >= 55296 && first <= 56319 && size > index + 1) {
+      second = string.charCodeAt(index + 1);
+      if (second >= 56320 && second <= 57343) {
+        return (first - 55296) * 1024 + second - 56320 + 65536;
+      }
+    }
+    return first;
+  }
+  function normalizeIcons(icons) {
+    return Object.keys(icons).reduce(function(acc, iconName) {
+      var icon3 = icons[iconName];
+      var expanded = !!icon3.icon;
+      if (expanded) {
+        acc[icon3.iconName] = icon3.icon;
+      } else {
+        acc[iconName] = icon3;
+      }
+      return acc;
+    }, {});
+  }
+  function defineIcons(prefix, icons) {
+    var params = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
+    var _params$skipHooks = params.skipHooks, skipHooks = _params$skipHooks === void 0 ? false : _params$skipHooks;
+    var normalized = normalizeIcons(icons);
+    if (typeof namespace.hooks.addPack === "function" && !skipHooks) {
+      namespace.hooks.addPack(prefix, normalizeIcons(icons));
+    } else {
+      namespace.styles[prefix] = _objectSpread2(_objectSpread2({}, namespace.styles[prefix] || {}), normalized);
+    }
+    if (prefix === "fas") {
+      defineIcons("fa", icons);
+    }
+  }
+  var styles = namespace.styles;
+  var shims = namespace.shims;
+  var LONG_STYLE = Object.values(PREFIX_TO_LONG_STYLE);
+  var _defaultUsablePrefix = null;
+  var _byUnicode = {};
+  var _byLigature = {};
+  var _byOldName = {};
+  var _byOldUnicode = {};
+  var _byAlias = {};
+  var PREFIXES = Object.keys(PREFIX_TO_STYLE);
+  function isReserved(name) {
+    return ~RESERVED_CLASSES.indexOf(name);
+  }
+  function getIconName(familyPrefix, cls) {
+    var parts = cls.split("-");
+    var prefix = parts[0];
+    var iconName = parts.slice(1).join("-");
+    if (prefix === familyPrefix && iconName !== "" && !isReserved(iconName)) {
+      return iconName;
+    } else {
+      return null;
+    }
+  }
+  var build = function build2() {
+    var lookup = function lookup2(reducer) {
+      return reduce(styles, function(o2, style, prefix) {
+        o2[prefix] = reduce(style, reducer, {});
+        return o2;
+      }, {});
+    };
+    _byUnicode = lookup(function(acc, icon3, iconName) {
+      if (icon3[3]) {
+        acc[icon3[3]] = iconName;
+      }
+      if (icon3[2]) {
+        var aliases = icon3[2].filter(function(a2) {
+          return typeof a2 === "number";
+        });
+        aliases.forEach(function(alias) {
+          acc[alias.toString(16)] = iconName;
+        });
+      }
+      return acc;
+    });
+    _byLigature = lookup(function(acc, icon3, iconName) {
+      acc[iconName] = iconName;
+      if (icon3[2]) {
+        var aliases = icon3[2].filter(function(a2) {
+          return typeof a2 === "string";
+        });
+        aliases.forEach(function(alias) {
+          acc[alias] = iconName;
+        });
+      }
+      return acc;
+    });
+    _byAlias = lookup(function(acc, icon3, iconName) {
+      var aliases = icon3[2];
+      acc[iconName] = iconName;
+      aliases.forEach(function(alias) {
+        acc[alias] = iconName;
+      });
+      return acc;
+    });
+    var hasRegular = "far" in styles || config.autoFetchSvg;
+    var shimLookups = reduce(shims, function(acc, shim) {
+      var maybeNameMaybeUnicode = shim[0];
+      var prefix = shim[1];
+      var iconName = shim[2];
+      if (prefix === "far" && !hasRegular) {
+        prefix = "fas";
+      }
+      if (typeof maybeNameMaybeUnicode === "string") {
+        acc.names[maybeNameMaybeUnicode] = {
+          prefix,
+          iconName
+        };
+      }
+      if (typeof maybeNameMaybeUnicode === "number") {
+        acc.unicodes[maybeNameMaybeUnicode.toString(16)] = {
+          prefix,
+          iconName
+        };
+      }
+      return acc;
+    }, {
+      names: {},
+      unicodes: {}
+    });
+    _byOldName = shimLookups.names;
+    _byOldUnicode = shimLookups.unicodes;
+    _defaultUsablePrefix = getCanonicalPrefix(config.styleDefault);
+  };
+  onChange(function(c2) {
+    _defaultUsablePrefix = getCanonicalPrefix(c2.styleDefault);
+  });
+  build();
+  function byUnicode(prefix, unicode) {
+    return (_byUnicode[prefix] || {})[unicode];
+  }
+  function byLigature(prefix, ligature) {
+    return (_byLigature[prefix] || {})[ligature];
+  }
+  function byAlias(prefix, alias) {
+    return (_byAlias[prefix] || {})[alias];
+  }
+  function byOldName(name) {
+    return _byOldName[name] || {
+      prefix: null,
+      iconName: null
     };
   }
-  function makeIconStandard(_ref2) {
-    var children = _ref2.children, attributes = _ref2.attributes, main = _ref2.main, transform2 = _ref2.transform, styles2 = _ref2.styles;
-    var styleString = joinStyles(styles2);
-    if (styleString.length > 0) {
-      attributes["style"] = styleString;
-    }
-    if (transformIsMeaningful(transform2)) {
-      var trans = transformForSvg({
-        transform: transform2,
-        containerWidth: main.width,
-        iconWidth: main.width
-      });
-      children.push({
-        tag: "g",
-        attributes: _objectSpread({}, trans.outer),
-        children: [{
-          tag: "g",
-          attributes: _objectSpread({}, trans.inner),
-          children: [{
-            tag: main.icon.tag,
-            children: main.icon.children,
-            attributes: _objectSpread({}, main.icon.attributes, trans.path)
-          }]
-        }]
-      });
-    } else {
-      children.push(main.icon);
-    }
-    return {
-      children,
-      attributes
+  function byOldUnicode(unicode) {
+    var oldUnicode = _byOldUnicode[unicode];
+    var newUnicode = byUnicode("fas", unicode);
+    return oldUnicode || (newUnicode ? {
+      prefix: "fas",
+      iconName: newUnicode
+    } : null) || {
+      prefix: null,
+      iconName: null
     };
+  }
+  function getDefaultUsablePrefix() {
+    return _defaultUsablePrefix;
+  }
+  var emptyCanonicalIcon = function emptyCanonicalIcon2() {
+    return {
+      prefix: null,
+      iconName: null,
+      rest: []
+    };
+  };
+  function getCanonicalPrefix(styleOrPrefix) {
+    var style = PREFIX_TO_STYLE[styleOrPrefix];
+    var prefix = STYLE_TO_PREFIX[styleOrPrefix] || STYLE_TO_PREFIX[style];
+    var defined = styleOrPrefix in namespace.styles ? styleOrPrefix : null;
+    return prefix || defined || null;
+  }
+  function getCanonicalIcon(values) {
+    var params = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+    var _params$skipLookups = params.skipLookups, skipLookups = _params$skipLookups === void 0 ? false : _params$skipLookups;
+    var givenPrefix = null;
+    var canonical = values.reduce(function(acc, cls) {
+      var iconName = getIconName(config.familyPrefix, cls);
+      if (styles[cls]) {
+        cls = LONG_STYLE.includes(cls) ? LONG_STYLE_TO_PREFIX[cls] : cls;
+        givenPrefix = cls;
+        acc.prefix = cls;
+      } else if (PREFIXES.indexOf(cls) > -1) {
+        givenPrefix = cls;
+        acc.prefix = getCanonicalPrefix(cls);
+      } else if (iconName) {
+        acc.iconName = iconName;
+      } else if (cls !== config.replacementClass) {
+        acc.rest.push(cls);
+      }
+      if (!skipLookups && acc.prefix && acc.iconName) {
+        var shim = givenPrefix === "fa" ? byOldName(acc.iconName) : {};
+        var aliasIconName = byAlias(acc.prefix, acc.iconName);
+        if (shim.prefix) {
+          givenPrefix = null;
+        }
+        acc.iconName = shim.iconName || aliasIconName || acc.iconName;
+        acc.prefix = shim.prefix || acc.prefix;
+        if (acc.prefix === "far" && !styles["far"] && styles["fas"] && !config.autoFetchSvg) {
+          acc.prefix = "fas";
+        }
+      }
+      return acc;
+    }, emptyCanonicalIcon());
+    if (canonical.prefix === "fa" || givenPrefix === "fa") {
+      canonical.prefix = getDefaultUsablePrefix() || "fas";
+    }
+    return canonical;
+  }
+  var Library = /* @__PURE__ */ function() {
+    function Library2() {
+      _classCallCheck(this, Library2);
+      this.definitions = {};
+    }
+    _createClass(Library2, [{
+      key: "add",
+      value: function add() {
+        var _this = this;
+        for (var _len = arguments.length, definitions = new Array(_len), _key = 0; _key < _len; _key++) {
+          definitions[_key] = arguments[_key];
+        }
+        var additions = definitions.reduce(this._pullDefinitions, {});
+        Object.keys(additions).forEach(function(key) {
+          _this.definitions[key] = _objectSpread2(_objectSpread2({}, _this.definitions[key] || {}), additions[key]);
+          defineIcons(key, additions[key]);
+          var longPrefix = PREFIX_TO_LONG_STYLE[key];
+          if (longPrefix)
+            defineIcons(longPrefix, additions[key]);
+          build();
+        });
+      }
+    }, {
+      key: "reset",
+      value: function reset() {
+        this.definitions = {};
+      }
+    }, {
+      key: "_pullDefinitions",
+      value: function _pullDefinitions(additions, definition) {
+        var normalized = definition.prefix && definition.iconName && definition.icon ? {
+          0: definition
+        } : definition;
+        Object.keys(normalized).map(function(key) {
+          var _normalized$key = normalized[key], prefix = _normalized$key.prefix, iconName = _normalized$key.iconName, icon3 = _normalized$key.icon;
+          var aliases = icon3[2];
+          if (!additions[prefix])
+            additions[prefix] = {};
+          if (aliases.length > 0) {
+            aliases.forEach(function(alias) {
+              if (typeof alias === "string") {
+                additions[prefix][alias] = icon3;
+              }
+            });
+          }
+          additions[prefix][iconName] = icon3;
+        });
+        return additions;
+      }
+    }]);
+    return Library2;
+  }();
+  var _plugins = [];
+  var _hooks = {};
+  var providers = {};
+  var defaultProviderKeys = Object.keys(providers);
+  function registerPlugins(nextPlugins, _ref2) {
+    var obj = _ref2.mixoutsTo;
+    _plugins = nextPlugins;
+    _hooks = {};
+    Object.keys(providers).forEach(function(k2) {
+      if (defaultProviderKeys.indexOf(k2) === -1) {
+        delete providers[k2];
+      }
+    });
+    _plugins.forEach(function(plugin) {
+      var mixout8 = plugin.mixout ? plugin.mixout() : {};
+      Object.keys(mixout8).forEach(function(tk) {
+        if (typeof mixout8[tk] === "function") {
+          obj[tk] = mixout8[tk];
+        }
+        if (_typeof(mixout8[tk]) === "object") {
+          Object.keys(mixout8[tk]).forEach(function(sk) {
+            if (!obj[tk]) {
+              obj[tk] = {};
+            }
+            obj[tk][sk] = mixout8[tk][sk];
+          });
+        }
+      });
+      if (plugin.hooks) {
+        var hooks8 = plugin.hooks();
+        Object.keys(hooks8).forEach(function(hook) {
+          if (!_hooks[hook]) {
+            _hooks[hook] = [];
+          }
+          _hooks[hook].push(hooks8[hook]);
+        });
+      }
+      if (plugin.provides) {
+        plugin.provides(providers);
+      }
+    });
+    return obj;
+  }
+  function chainHooks(hook, accumulator) {
+    for (var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+      args[_key - 2] = arguments[_key];
+    }
+    var hookFns = _hooks[hook] || [];
+    hookFns.forEach(function(hookFn) {
+      accumulator = hookFn.apply(null, [accumulator].concat(args));
+    });
+    return accumulator;
+  }
+  function callHooks(hook) {
+    for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+      args[_key2 - 1] = arguments[_key2];
+    }
+    var hookFns = _hooks[hook] || [];
+    hookFns.forEach(function(hookFn) {
+      hookFn.apply(null, args);
+    });
+    return void 0;
+  }
+  function callProvided() {
+    var hook = arguments[0];
+    var args = Array.prototype.slice.call(arguments, 1);
+    return providers[hook] ? providers[hook].apply(null, args) : void 0;
+  }
+  function findIconDefinition(iconLookup) {
+    if (iconLookup.prefix === "fa") {
+      iconLookup.prefix = "fas";
+    }
+    var iconName = iconLookup.iconName;
+    var prefix = iconLookup.prefix || getDefaultUsablePrefix();
+    if (!iconName)
+      return;
+    iconName = byAlias(prefix, iconName) || iconName;
+    return iconFromMapping(library.definitions, prefix, iconName) || iconFromMapping(namespace.styles, prefix, iconName);
+  }
+  var library = new Library();
+  var noAuto = function noAuto2() {
+    config.autoReplaceSvg = false;
+    config.observeMutations = false;
+    callHooks("noAuto");
+  };
+  var dom = {
+    i2svg: function i2svg() {
+      var params = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
+      if (IS_DOM) {
+        callHooks("beforeI2svg", params);
+        callProvided("pseudoElements2svg", params);
+        return callProvided("i2svg", params);
+      } else {
+        return Promise.reject("Operation requires a DOM of some kind.");
+      }
+    },
+    watch: function watch() {
+      var params = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
+      var autoReplaceSvgRoot = params.autoReplaceSvgRoot;
+      if (config.autoReplaceSvg === false) {
+        config.autoReplaceSvg = true;
+      }
+      config.observeMutations = true;
+      domready(function() {
+        autoReplace({
+          autoReplaceSvgRoot
+        });
+        callHooks("watch", params);
+      });
+    }
+  };
+  var parse = {
+    icon: function icon(_icon) {
+      if (_icon === null) {
+        return null;
+      }
+      if (_typeof(_icon) === "object" && _icon.prefix && _icon.iconName) {
+        return {
+          prefix: _icon.prefix,
+          iconName: byAlias(_icon.prefix, _icon.iconName) || _icon.iconName
+        };
+      }
+      if (Array.isArray(_icon) && _icon.length === 2) {
+        var iconName = _icon[1].indexOf("fa-") === 0 ? _icon[1].slice(3) : _icon[1];
+        var prefix = getCanonicalPrefix(_icon[0]);
+        return {
+          prefix,
+          iconName: byAlias(prefix, iconName) || iconName
+        };
+      }
+      if (typeof _icon === "string" && (_icon.indexOf("".concat(config.familyPrefix, "-")) > -1 || _icon.match(ICON_SELECTION_SYNTAX_PATTERN))) {
+        var canonicalIcon = getCanonicalIcon(_icon.split(" "), {
+          skipLookups: true
+        });
+        return {
+          prefix: canonicalIcon.prefix || getDefaultUsablePrefix(),
+          iconName: byAlias(canonicalIcon.prefix, canonicalIcon.iconName) || canonicalIcon.iconName
+        };
+      }
+      if (typeof _icon === "string") {
+        var _prefix = getDefaultUsablePrefix();
+        return {
+          prefix: _prefix,
+          iconName: byAlias(_prefix, _icon) || _icon
+        };
+      }
+    }
+  };
+  var api = {
+    noAuto,
+    config,
+    dom,
+    parse,
+    library,
+    findIconDefinition,
+    toHtml
+  };
+  var autoReplace = function autoReplace2() {
+    var params = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
+    var _params$autoReplaceSv = params.autoReplaceSvgRoot, autoReplaceSvgRoot = _params$autoReplaceSv === void 0 ? DOCUMENT : _params$autoReplaceSv;
+    if ((Object.keys(namespace.styles).length > 0 || config.autoFetchSvg) && IS_DOM && config.autoReplaceSvg)
+      api.dom.i2svg({
+        node: autoReplaceSvgRoot
+      });
+  };
+  function domVariants(val, abstractCreator) {
+    Object.defineProperty(val, "abstract", {
+      get: abstractCreator
+    });
+    Object.defineProperty(val, "html", {
+      get: function get3() {
+        return val.abstract.map(function(a2) {
+          return toHtml(a2);
+        });
+      }
+    });
+    Object.defineProperty(val, "node", {
+      get: function get3() {
+        if (!IS_DOM)
+          return;
+        var container = DOCUMENT.createElement("div");
+        container.innerHTML = val.html;
+        return container.children;
+      }
+    });
+    return val;
   }
   function asIcon(_ref2) {
-    var children = _ref2.children, main = _ref2.main, mask = _ref2.mask, attributes = _ref2.attributes, styles2 = _ref2.styles, transform2 = _ref2.transform;
-    if (transformIsMeaningful(transform2) && main.found && !mask.found) {
+    var children = _ref2.children, main = _ref2.main, mask = _ref2.mask, attributes = _ref2.attributes, styles2 = _ref2.styles, transform = _ref2.transform;
+    if (transformIsMeaningful(transform) && main.found && !mask.found) {
       var width = main.width, height = main.height;
       var offset = {
         x: width / height / 2,
         y: 0.5
       };
-      attributes["style"] = joinStyles(_objectSpread({}, styles2, {
-        "transform-origin": "".concat(offset.x + transform2.x / 16, "em ").concat(offset.y + transform2.y / 16, "em")
+      attributes["style"] = joinStyles(_objectSpread2(_objectSpread2({}, styles2), {}, {
+        "transform-origin": "".concat(offset.x + transform.x / 16, "em ").concat(offset.y + transform.y / 16, "em")
       }));
     }
     return [{
@@ -67409,7 +57660,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       },
       children: [{
         tag: "symbol",
-        attributes: _objectSpread({}, attributes, {
+        attributes: _objectSpread2(_objectSpread2({}, attributes), {}, {
           id: id2
         }),
         children
@@ -67417,18 +57668,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }];
   }
   function makeInlineSvgAbstract(params) {
-    var _params$icons = params.icons, main = _params$icons.main, mask = _params$icons.mask, prefix = params.prefix, iconName = params.iconName, transform2 = params.transform, symbol = params.symbol, title = params.title, maskId = params.maskId, titleId = params.titleId, extra = params.extra, _params$watchable = params.watchable, watchable = _params$watchable === void 0 ? false : _params$watchable;
+    var _params$icons = params.icons, main = _params$icons.main, mask = _params$icons.mask, prefix = params.prefix, iconName = params.iconName, transform = params.transform, symbol = params.symbol, title = params.title, maskId = params.maskId, titleId = params.titleId, extra = params.extra, _params$watchable = params.watchable, watchable = _params$watchable === void 0 ? false : _params$watchable;
     var _ref2 = mask.found ? mask : main, width = _ref2.width, height = _ref2.height;
     var isUploadedIcon = prefix === "fak";
-    var widthClass = isUploadedIcon ? "" : "fa-w-".concat(Math.ceil(width / height * 16));
-    var attrClass = [config.replacementClass, iconName ? "".concat(config.familyPrefix, "-").concat(iconName) : "", widthClass].filter(function(c2) {
+    var attrClass = [config.replacementClass, iconName ? "".concat(config.familyPrefix, "-").concat(iconName) : ""].filter(function(c2) {
       return extra.classes.indexOf(c2) === -1;
     }).filter(function(c2) {
       return c2 !== "" || !!c2;
     }).concat(extra.classes).join(" ");
     var content = {
       children: [],
-      attributes: _objectSpread({}, extra.attributes, {
+      attributes: _objectSpread2(_objectSpread2({}, extra.attributes), {}, {
         "data-prefix": prefix,
         "data-icon": iconName,
         "class": attrClass,
@@ -67443,7 +57693,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     if (watchable) {
       content.attributes[DATA_FA_I2SVG] = "";
     }
-    if (title)
+    if (title) {
       content.children.push({
         tag: "title",
         attributes: {
@@ -67451,17 +57701,25 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         },
         children: [title]
       });
-    var args = _objectSpread({}, content, {
+      delete content.attributes.title;
+    }
+    var args = _objectSpread2(_objectSpread2({}, content), {}, {
       prefix,
       iconName,
       main,
       mask,
       maskId,
-      transform: transform2,
+      transform,
       symbol,
-      styles: _objectSpread({}, uploadedIconWidthStyle, extra.styles)
+      styles: _objectSpread2(_objectSpread2({}, uploadedIconWidthStyle), extra.styles)
     });
-    var _ref22 = mask.found && main.found ? makeIconMasking(args) : makeIconStandard(args), children = _ref22.children, attributes = _ref22.attributes;
+    var _ref22 = mask.found && main.found ? callProvided("generateAbstractMask", args) || {
+      children: [],
+      attributes: {}
+    } : callProvided("generateAbstractIcon", args) || {
+      children: [],
+      attributes: {}
+    }, children = _ref22.children, attributes = _ref22.attributes;
     args.children = children;
     args.attributes = attributes;
     if (symbol) {
@@ -67470,244 +57728,80 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       return asIcon(args);
     }
   }
-  var noop$1 = function noop5() {
-  };
-  var p = config.measurePerformance && PERFORMANCE && PERFORMANCE.mark && PERFORMANCE.measure ? PERFORMANCE : {
-    mark: noop$1,
-    measure: noop$1
-  };
-  var bindInternal4 = function bindInternal42(func, thisContext) {
-    return function(a2, b2, c2, d2) {
-      return func.call(thisContext, a2, b2, c2, d2);
-    };
-  };
-  var reduce = function fastReduceObject(subject, fn, initialValue, thisContext) {
-    var keys3 = Object.keys(subject), length = keys3.length, iterator = thisContext !== void 0 ? bindInternal4(fn, thisContext) : fn, i2, key, result;
-    if (initialValue === void 0) {
-      i2 = 1;
-      result = subject[keys3[0]];
-    } else {
-      i2 = 0;
-      result = initialValue;
-    }
-    for (; i2 < length; i2++) {
-      key = keys3[i2];
-      result = iterator(result, subject[key], key, subject);
-    }
-    return result;
-  };
-  function defineIcons(prefix, icons) {
-    var params = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
-    var _params$skipHooks = params.skipHooks, skipHooks = _params$skipHooks === void 0 ? false : _params$skipHooks;
-    var normalized = Object.keys(icons).reduce(function(acc, iconName) {
-      var icon2 = icons[iconName];
-      var expanded = !!icon2.icon;
-      if (expanded) {
-        acc[icon2.iconName] = icon2.icon;
-      } else {
-        acc[iconName] = icon2;
-      }
-      return acc;
-    }, {});
-    if (typeof namespace.hooks.addPack === "function" && !skipHooks) {
-      namespace.hooks.addPack(prefix, normalized);
-    } else {
-      namespace.styles[prefix] = _objectSpread({}, namespace.styles[prefix] || {}, normalized);
-    }
-    if (prefix === "fas") {
-      defineIcons("fa", icons);
-    }
-  }
-  var styles = namespace.styles;
-  var shims = namespace.shims;
-  var _byUnicode = {};
-  var _byLigature = {};
-  var _byOldName = {};
-  var build = function build2() {
-    var lookup = function lookup2(reducer) {
-      return reduce(styles, function(o2, style, prefix) {
-        o2[prefix] = reduce(style, reducer, {});
-        return o2;
-      }, {});
-    };
-    _byUnicode = lookup(function(acc, icon2, iconName) {
-      if (icon2[3]) {
-        acc[icon2[3]] = iconName;
-      }
-      return acc;
+  function makeLayersTextAbstract(params) {
+    var content = params.content, width = params.width, height = params.height, transform = params.transform, title = params.title, extra = params.extra, _params$watchable2 = params.watchable, watchable = _params$watchable2 === void 0 ? false : _params$watchable2;
+    var attributes = _objectSpread2(_objectSpread2(_objectSpread2({}, extra.attributes), title ? {
+      "title": title
+    } : {}), {}, {
+      "class": extra.classes.join(" ")
     });
-    _byLigature = lookup(function(acc, icon2, iconName) {
-      var ligatures = icon2[2];
-      acc[iconName] = iconName;
-      ligatures.forEach(function(ligature) {
-        acc[ligature] = iconName;
+    if (watchable) {
+      attributes[DATA_FA_I2SVG] = "";
+    }
+    var styles2 = _objectSpread2({}, extra.styles);
+    if (transformIsMeaningful(transform)) {
+      styles2["transform"] = transformForCss({
+        transform,
+        startCentered: true,
+        width,
+        height
       });
-      return acc;
+      styles2["-webkit-transform"] = styles2["transform"];
+    }
+    var styleString = joinStyles(styles2);
+    if (styleString.length > 0) {
+      attributes["style"] = styleString;
+    }
+    var val = [];
+    val.push({
+      tag: "span",
+      attributes,
+      children: [content]
     });
-    var hasRegular = "far" in styles;
-    _byOldName = reduce(shims, function(acc, shim) {
-      var oldName = shim[0];
-      var prefix = shim[1];
-      var iconName = shim[2];
-      if (prefix === "far" && !hasRegular) {
-        prefix = "fas";
-      }
-      acc[oldName] = {
-        prefix,
-        iconName
-      };
-      return acc;
-    }, {});
-  };
-  build();
+    if (title) {
+      val.push({
+        tag: "span",
+        attributes: {
+          class: "sr-only"
+        },
+        children: [title]
+      });
+    }
+    return val;
+  }
+  function makeLayersCounterAbstract(params) {
+    var content = params.content, title = params.title, extra = params.extra;
+    var attributes = _objectSpread2(_objectSpread2(_objectSpread2({}, extra.attributes), title ? {
+      "title": title
+    } : {}), {}, {
+      "class": extra.classes.join(" ")
+    });
+    var styleString = joinStyles(extra.styles);
+    if (styleString.length > 0) {
+      attributes["style"] = styleString;
+    }
+    var val = [];
+    val.push({
+      tag: "span",
+      attributes,
+      children: [content]
+    });
+    if (title) {
+      val.push({
+        tag: "span",
+        attributes: {
+          class: "sr-only"
+        },
+        children: [title]
+      });
+    }
+    return val;
+  }
   var styles$1 = namespace.styles;
-  function iconFromMapping(mapping, prefix, iconName) {
-    if (mapping && mapping[prefix] && mapping[prefix][iconName]) {
-      return {
-        prefix,
-        iconName,
-        icon: mapping[prefix][iconName]
-      };
-    }
-  }
-  function toHtml(abstractNodes) {
-    var tag = abstractNodes.tag, _abstractNodes$attrib = abstractNodes.attributes, attributes = _abstractNodes$attrib === void 0 ? {} : _abstractNodes$attrib, _abstractNodes$childr = abstractNodes.children, children = _abstractNodes$childr === void 0 ? [] : _abstractNodes$childr;
-    if (typeof abstractNodes === "string") {
-      return htmlEscape(abstractNodes);
-    } else {
-      return "<".concat(tag, " ").concat(joinAttributes(attributes), ">").concat(children.map(toHtml).join(""), "</").concat(tag, ">");
-    }
-  }
-  var parseTransformString = function parseTransformString2(transformString) {
-    var transform2 = {
-      size: 16,
-      x: 0,
-      y: 0,
-      flipX: false,
-      flipY: false,
-      rotate: 0
-    };
-    if (!transformString) {
-      return transform2;
-    } else {
-      return transformString.toLowerCase().split(" ").reduce(function(acc, n2) {
-        var parts = n2.toLowerCase().split("-");
-        var first = parts[0];
-        var rest = parts.slice(1).join("-");
-        if (first && rest === "h") {
-          acc.flipX = true;
-          return acc;
-        }
-        if (first && rest === "v") {
-          acc.flipY = true;
-          return acc;
-        }
-        rest = parseFloat(rest);
-        if (isNaN(rest)) {
-          return acc;
-        }
-        switch (first) {
-          case "grow":
-            acc.size = acc.size + rest;
-            break;
-          case "shrink":
-            acc.size = acc.size - rest;
-            break;
-          case "left":
-            acc.x = acc.x - rest;
-            break;
-          case "right":
-            acc.x = acc.x + rest;
-            break;
-          case "up":
-            acc.y = acc.y - rest;
-            break;
-          case "down":
-            acc.y = acc.y + rest;
-            break;
-          case "rotate":
-            acc.rotate = acc.rotate + rest;
-            break;
-        }
-        return acc;
-      }, transform2);
-    }
-  };
-  function MissingIcon(error) {
-    this.name = "MissingIcon";
-    this.message = error || "Icon unavailable";
-    this.stack = new Error().stack;
-  }
-  MissingIcon.prototype = Object.create(Error.prototype);
-  MissingIcon.prototype.constructor = MissingIcon;
-  var FILL = {
-    fill: "currentColor"
-  };
-  var ANIMATION_BASE = {
-    attributeType: "XML",
-    repeatCount: "indefinite",
-    dur: "2s"
-  };
-  var RING = {
-    tag: "path",
-    attributes: _objectSpread({}, FILL, {
-      d: "M156.5,447.7l-12.6,29.5c-18.7-9.5-35.9-21.2-51.5-34.9l22.7-22.7C127.6,430.5,141.5,440,156.5,447.7z M40.6,272H8.5 c1.4,21.2,5.4,41.7,11.7,61.1L50,321.2C45.1,305.5,41.8,289,40.6,272z M40.6,240c1.4-18.8,5.2-37,11.1-54.1l-29.5-12.6 C14.7,194.3,10,216.7,8.5,240H40.6z M64.3,156.5c7.8-14.9,17.2-28.8,28.1-41.5L69.7,92.3c-13.7,15.6-25.5,32.8-34.9,51.5 L64.3,156.5z M397,419.6c-13.9,12-29.4,22.3-46.1,30.4l11.9,29.8c20.7-9.9,39.8-22.6,56.9-37.6L397,419.6z M115,92.4 c13.9-12,29.4-22.3,46.1-30.4l-11.9-29.8c-20.7,9.9-39.8,22.6-56.8,37.6L115,92.4z M447.7,355.5c-7.8,14.9-17.2,28.8-28.1,41.5 l22.7,22.7c13.7-15.6,25.5-32.9,34.9-51.5L447.7,355.5z M471.4,272c-1.4,18.8-5.2,37-11.1,54.1l29.5,12.6 c7.5-21.1,12.2-43.5,13.6-66.8H471.4z M321.2,462c-15.7,5-32.2,8.2-49.2,9.4v32.1c21.2-1.4,41.7-5.4,61.1-11.7L321.2,462z M240,471.4c-18.8-1.4-37-5.2-54.1-11.1l-12.6,29.5c21.1,7.5,43.5,12.2,66.8,13.6V471.4z M462,190.8c5,15.7,8.2,32.2,9.4,49.2h32.1 c-1.4-21.2-5.4-41.7-11.7-61.1L462,190.8z M92.4,397c-12-13.9-22.3-29.4-30.4-46.1l-29.8,11.9c9.9,20.7,22.6,39.8,37.6,56.9 L92.4,397z M272,40.6c18.8,1.4,36.9,5.2,54.1,11.1l12.6-29.5C317.7,14.7,295.3,10,272,8.5V40.6z M190.8,50 c15.7-5,32.2-8.2,49.2-9.4V8.5c-21.2,1.4-41.7,5.4-61.1,11.7L190.8,50z M442.3,92.3L419.6,115c12,13.9,22.3,29.4,30.5,46.1 l29.8-11.9C470,128.5,457.3,109.4,442.3,92.3z M397,92.4l22.7-22.7c-15.6-13.7-32.8-25.5-51.5-34.9l-12.6,29.5 C370.4,72.1,384.4,81.5,397,92.4z"
-    })
-  };
-  var OPACITY_ANIMATE = _objectSpread({}, ANIMATION_BASE, {
-    attributeName: "opacity"
-  });
-  var DOT = {
-    tag: "circle",
-    attributes: _objectSpread({}, FILL, {
-      cx: "256",
-      cy: "364",
-      r: "28"
-    }),
-    children: [{
-      tag: "animate",
-      attributes: _objectSpread({}, ANIMATION_BASE, {
-        attributeName: "r",
-        values: "28;14;28;28;14;28;"
-      })
-    }, {
-      tag: "animate",
-      attributes: _objectSpread({}, OPACITY_ANIMATE, {
-        values: "1;0;1;1;0;1;"
-      })
-    }]
-  };
-  var QUESTION = {
-    tag: "path",
-    attributes: _objectSpread({}, FILL, {
-      opacity: "1",
-      d: "M263.7,312h-16c-6.6,0-12-5.4-12-12c0-71,77.4-63.9,77.4-107.8c0-20-17.8-40.2-57.4-40.2c-29.1,0-44.3,9.6-59.2,28.7 c-3.9,5-11.1,6-16.2,2.4l-13.1-9.2c-5.6-3.9-6.9-11.8-2.6-17.2c21.2-27.2,46.4-44.7,91.2-44.7c52.3,0,97.4,29.8,97.4,80.2 c0,67.6-77.4,63.5-77.4,107.8C275.7,306.6,270.3,312,263.7,312z"
-    }),
-    children: [{
-      tag: "animate",
-      attributes: _objectSpread({}, OPACITY_ANIMATE, {
-        values: "1;0;0;0;0;1;"
-      })
-    }]
-  };
-  var EXCLAMATION = {
-    tag: "path",
-    attributes: _objectSpread({}, FILL, {
-      opacity: "0",
-      d: "M232.5,134.5l7,168c0.3,6.4,5.6,11.5,12,11.5h9c6.4,0,11.7-5.1,12-11.5l7-168c0.3-6.8-5.2-12.5-12-12.5h-23 C237.7,122,232.2,127.7,232.5,134.5z"
-    }),
-    children: [{
-      tag: "animate",
-      attributes: _objectSpread({}, OPACITY_ANIMATE, {
-        values: "0;0;1;1;0;0;"
-      })
-    }]
-  };
-  var styles$2 = namespace.styles;
-  function asFoundIcon(icon2) {
-    var width = icon2[0];
-    var height = icon2[1];
-    var _icon$slice = icon2.slice(4), _icon$slice2 = _slicedToArray(_icon$slice, 1), vectorData = _icon$slice2[0];
+  function asFoundIcon(icon3) {
+    var width = icon3[0];
+    var height = icon3[1];
+    var _icon$slice = icon3.slice(4), _icon$slice2 = _slicedToArray(_icon$slice, 1), vectorData = _icon$slice2[0];
     var element = null;
     if (Array.isArray(vectorData)) {
       element = {
@@ -67747,96 +57841,424 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       icon: element
     };
   }
-  var styles$3 = namespace.styles;
-  var baseStyles = 'svg:not(:root).svg-inline--fa {\n  overflow: visible;\n}\n\n.svg-inline--fa {\n  display: inline-block;\n  font-size: inherit;\n  height: 1em;\n  overflow: visible;\n  vertical-align: -0.125em;\n}\n.svg-inline--fa.fa-lg {\n  vertical-align: -0.225em;\n}\n.svg-inline--fa.fa-w-1 {\n  width: 0.0625em;\n}\n.svg-inline--fa.fa-w-2 {\n  width: 0.125em;\n}\n.svg-inline--fa.fa-w-3 {\n  width: 0.1875em;\n}\n.svg-inline--fa.fa-w-4 {\n  width: 0.25em;\n}\n.svg-inline--fa.fa-w-5 {\n  width: 0.3125em;\n}\n.svg-inline--fa.fa-w-6 {\n  width: 0.375em;\n}\n.svg-inline--fa.fa-w-7 {\n  width: 0.4375em;\n}\n.svg-inline--fa.fa-w-8 {\n  width: 0.5em;\n}\n.svg-inline--fa.fa-w-9 {\n  width: 0.5625em;\n}\n.svg-inline--fa.fa-w-10 {\n  width: 0.625em;\n}\n.svg-inline--fa.fa-w-11 {\n  width: 0.6875em;\n}\n.svg-inline--fa.fa-w-12 {\n  width: 0.75em;\n}\n.svg-inline--fa.fa-w-13 {\n  width: 0.8125em;\n}\n.svg-inline--fa.fa-w-14 {\n  width: 0.875em;\n}\n.svg-inline--fa.fa-w-15 {\n  width: 0.9375em;\n}\n.svg-inline--fa.fa-w-16 {\n  width: 1em;\n}\n.svg-inline--fa.fa-w-17 {\n  width: 1.0625em;\n}\n.svg-inline--fa.fa-w-18 {\n  width: 1.125em;\n}\n.svg-inline--fa.fa-w-19 {\n  width: 1.1875em;\n}\n.svg-inline--fa.fa-w-20 {\n  width: 1.25em;\n}\n.svg-inline--fa.fa-pull-left {\n  margin-right: 0.3em;\n  width: auto;\n}\n.svg-inline--fa.fa-pull-right {\n  margin-left: 0.3em;\n  width: auto;\n}\n.svg-inline--fa.fa-border {\n  height: 1.5em;\n}\n.svg-inline--fa.fa-li {\n  width: 2em;\n}\n.svg-inline--fa.fa-fw {\n  width: 1.25em;\n}\n\n.fa-layers svg.svg-inline--fa {\n  bottom: 0;\n  left: 0;\n  margin: auto;\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n\n.fa-layers {\n  display: inline-block;\n  height: 1em;\n  position: relative;\n  text-align: center;\n  vertical-align: -0.125em;\n  width: 1em;\n}\n.fa-layers svg.svg-inline--fa {\n  -webkit-transform-origin: center center;\n          transform-origin: center center;\n}\n\n.fa-layers-counter, .fa-layers-text {\n  display: inline-block;\n  position: absolute;\n  text-align: center;\n}\n\n.fa-layers-text {\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  -webkit-transform-origin: center center;\n          transform-origin: center center;\n}\n\n.fa-layers-counter {\n  background-color: #ff253a;\n  border-radius: 1em;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  color: #fff;\n  height: 1.5em;\n  line-height: 1;\n  max-width: 5em;\n  min-width: 1.5em;\n  overflow: hidden;\n  padding: 0.25em;\n  right: 0;\n  text-overflow: ellipsis;\n  top: 0;\n  -webkit-transform: scale(0.25);\n          transform: scale(0.25);\n  -webkit-transform-origin: top right;\n          transform-origin: top right;\n}\n\n.fa-layers-bottom-right {\n  bottom: 0;\n  right: 0;\n  top: auto;\n  -webkit-transform: scale(0.25);\n          transform: scale(0.25);\n  -webkit-transform-origin: bottom right;\n          transform-origin: bottom right;\n}\n\n.fa-layers-bottom-left {\n  bottom: 0;\n  left: 0;\n  right: auto;\n  top: auto;\n  -webkit-transform: scale(0.25);\n          transform: scale(0.25);\n  -webkit-transform-origin: bottom left;\n          transform-origin: bottom left;\n}\n\n.fa-layers-top-right {\n  right: 0;\n  top: 0;\n  -webkit-transform: scale(0.25);\n          transform: scale(0.25);\n  -webkit-transform-origin: top right;\n          transform-origin: top right;\n}\n\n.fa-layers-top-left {\n  left: 0;\n  right: auto;\n  top: 0;\n  -webkit-transform: scale(0.25);\n          transform: scale(0.25);\n  -webkit-transform-origin: top left;\n          transform-origin: top left;\n}\n\n.fa-lg {\n  font-size: 1.3333333333em;\n  line-height: 0.75em;\n  vertical-align: -0.0667em;\n}\n\n.fa-xs {\n  font-size: 0.75em;\n}\n\n.fa-sm {\n  font-size: 0.875em;\n}\n\n.fa-1x {\n  font-size: 1em;\n}\n\n.fa-2x {\n  font-size: 2em;\n}\n\n.fa-3x {\n  font-size: 3em;\n}\n\n.fa-4x {\n  font-size: 4em;\n}\n\n.fa-5x {\n  font-size: 5em;\n}\n\n.fa-6x {\n  font-size: 6em;\n}\n\n.fa-7x {\n  font-size: 7em;\n}\n\n.fa-8x {\n  font-size: 8em;\n}\n\n.fa-9x {\n  font-size: 9em;\n}\n\n.fa-10x {\n  font-size: 10em;\n}\n\n.fa-fw {\n  text-align: center;\n  width: 1.25em;\n}\n\n.fa-ul {\n  list-style-type: none;\n  margin-left: 2.5em;\n  padding-left: 0;\n}\n.fa-ul > li {\n  position: relative;\n}\n\n.fa-li {\n  left: -2em;\n  position: absolute;\n  text-align: center;\n  width: 2em;\n  line-height: inherit;\n}\n\n.fa-border {\n  border: solid 0.08em #eee;\n  border-radius: 0.1em;\n  padding: 0.2em 0.25em 0.15em;\n}\n\n.fa-pull-left {\n  float: left;\n}\n\n.fa-pull-right {\n  float: right;\n}\n\n.fa.fa-pull-left,\n.fas.fa-pull-left,\n.far.fa-pull-left,\n.fal.fa-pull-left,\n.fab.fa-pull-left {\n  margin-right: 0.3em;\n}\n.fa.fa-pull-right,\n.fas.fa-pull-right,\n.far.fa-pull-right,\n.fal.fa-pull-right,\n.fab.fa-pull-right {\n  margin-left: 0.3em;\n}\n\n.fa-spin {\n  -webkit-animation: fa-spin 2s infinite linear;\n          animation: fa-spin 2s infinite linear;\n}\n\n.fa-pulse {\n  -webkit-animation: fa-spin 1s infinite steps(8);\n          animation: fa-spin 1s infinite steps(8);\n}\n\n@-webkit-keyframes fa-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n\n@keyframes fa-spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n  }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n  }\n}\n.fa-rotate-90 {\n  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";\n  -webkit-transform: rotate(90deg);\n          transform: rotate(90deg);\n}\n\n.fa-rotate-180 {\n  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";\n  -webkit-transform: rotate(180deg);\n          transform: rotate(180deg);\n}\n\n.fa-rotate-270 {\n  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";\n  -webkit-transform: rotate(270deg);\n          transform: rotate(270deg);\n}\n\n.fa-flip-horizontal {\n  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";\n  -webkit-transform: scale(-1, 1);\n          transform: scale(-1, 1);\n}\n\n.fa-flip-vertical {\n  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";\n  -webkit-transform: scale(1, -1);\n          transform: scale(1, -1);\n}\n\n.fa-flip-both, .fa-flip-horizontal.fa-flip-vertical {\n  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";\n  -webkit-transform: scale(-1, -1);\n          transform: scale(-1, -1);\n}\n\n:root .fa-rotate-90,\n:root .fa-rotate-180,\n:root .fa-rotate-270,\n:root .fa-flip-horizontal,\n:root .fa-flip-vertical,\n:root .fa-flip-both {\n  -webkit-filter: none;\n          filter: none;\n}\n\n.fa-stack {\n  display: inline-block;\n  height: 2em;\n  position: relative;\n  width: 2.5em;\n}\n\n.fa-stack-1x,\n.fa-stack-2x {\n  bottom: 0;\n  left: 0;\n  margin: auto;\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n\n.svg-inline--fa.fa-stack-1x {\n  height: 1em;\n  width: 1.25em;\n}\n.svg-inline--fa.fa-stack-2x {\n  height: 2em;\n  width: 2.5em;\n}\n\n.fa-inverse {\n  color: #fff;\n}\n\n.sr-only {\n  border: 0;\n  clip: rect(0, 0, 0, 0);\n  height: 1px;\n  margin: -1px;\n  overflow: hidden;\n  padding: 0;\n  position: absolute;\n  width: 1px;\n}\n\n.sr-only-focusable:active, .sr-only-focusable:focus {\n  clip: auto;\n  height: auto;\n  margin: 0;\n  overflow: visible;\n  position: static;\n  width: auto;\n}\n\n.svg-inline--fa .fa-primary {\n  fill: var(--fa-primary-color, currentColor);\n  opacity: 1;\n  opacity: var(--fa-primary-opacity, 1);\n}\n\n.svg-inline--fa .fa-secondary {\n  fill: var(--fa-secondary-color, currentColor);\n  opacity: 0.4;\n  opacity: var(--fa-secondary-opacity, 0.4);\n}\n\n.svg-inline--fa.fa-swap-opacity .fa-primary {\n  opacity: 0.4;\n  opacity: var(--fa-secondary-opacity, 0.4);\n}\n\n.svg-inline--fa.fa-swap-opacity .fa-secondary {\n  opacity: 1;\n  opacity: var(--fa-primary-opacity, 1);\n}\n\n.svg-inline--fa mask .fa-primary,\n.svg-inline--fa mask .fa-secondary {\n  fill: black;\n}\n\n.fad.fa-inverse {\n  color: #fff;\n}';
-  function css() {
-    var dfp = DEFAULT_FAMILY_PREFIX;
-    var drc = DEFAULT_REPLACEMENT_CLASS;
-    var fp = config.familyPrefix;
-    var rc = config.replacementClass;
-    var s2 = baseStyles;
-    if (fp !== dfp || rc !== drc) {
-      var dPatt = new RegExp("\\.".concat(dfp, "\\-"), "g");
-      var customPropPatt = new RegExp("\\--".concat(dfp, "\\-"), "g");
-      var rPatt = new RegExp("\\.".concat(drc), "g");
-      s2 = s2.replace(dPatt, ".".concat(fp, "-")).replace(customPropPatt, "--".concat(fp, "-")).replace(rPatt, ".".concat(rc));
+  var missingIconResolutionMixin = {
+    found: false,
+    width: 512,
+    height: 512
+  };
+  function maybeNotifyMissing(iconName, prefix) {
+    if (!PRODUCTION && !config.showMissingIcons && iconName) {
+      console.error('Icon with name "'.concat(iconName, '" and prefix "').concat(prefix, '" is missing.'));
     }
-    return s2;
   }
-  var Library = /* @__PURE__ */ function() {
-    function Library2() {
-      _classCallCheck(this, Library2);
-      this.definitions = {};
+  function findIcon(iconName, prefix) {
+    var givenPrefix = prefix;
+    if (prefix === "fa" && config.styleDefault !== null) {
+      prefix = getDefaultUsablePrefix();
     }
-    _createClass(Library2, [{
-      key: "add",
-      value: function add() {
-        var _this = this;
-        for (var _len = arguments.length, definitions = new Array(_len), _key = 0; _key < _len; _key++) {
-          definitions[_key] = arguments[_key];
+    return new Promise(function(resolve, reject) {
+      var val = {
+        found: false,
+        width: 512,
+        height: 512,
+        icon: callProvided("missingIconAbstract") || {}
+      };
+      if (givenPrefix === "fa") {
+        var shim = byOldName(iconName) || {};
+        iconName = shim.iconName || iconName;
+        prefix = shim.prefix || prefix;
+      }
+      if (iconName && prefix && styles$1[prefix] && styles$1[prefix][iconName]) {
+        var icon3 = styles$1[prefix][iconName];
+        return resolve(asFoundIcon(icon3));
+      }
+      maybeNotifyMissing(iconName, prefix);
+      resolve(_objectSpread2(_objectSpread2({}, missingIconResolutionMixin), {}, {
+        icon: config.showMissingIcons && iconName ? callProvided("missingIconAbstract") || {} : {}
+      }));
+    });
+  }
+  var noop$1 = function noop4() {
+  };
+  var p = config.measurePerformance && PERFORMANCE && PERFORMANCE.mark && PERFORMANCE.measure ? PERFORMANCE : {
+    mark: noop$1,
+    measure: noop$1
+  };
+  var preamble = 'FA "6.0.0"';
+  var begin = function begin2(name) {
+    p.mark("".concat(preamble, " ").concat(name, " begins"));
+    return function() {
+      return end(name);
+    };
+  };
+  var end = function end2(name) {
+    p.mark("".concat(preamble, " ").concat(name, " ends"));
+    p.measure("".concat(preamble, " ").concat(name), "".concat(preamble, " ").concat(name, " begins"), "".concat(preamble, " ").concat(name, " ends"));
+  };
+  var perf = {
+    begin,
+    end
+  };
+  var noop$2 = function noop5() {
+  };
+  function isWatched(node) {
+    var i2svg2 = node.getAttribute ? node.getAttribute(DATA_FA_I2SVG) : null;
+    return typeof i2svg2 === "string";
+  }
+  function hasPrefixAndIcon(node) {
+    var prefix = node.getAttribute ? node.getAttribute(DATA_PREFIX) : null;
+    var icon3 = node.getAttribute ? node.getAttribute(DATA_ICON) : null;
+    return prefix && icon3;
+  }
+  function hasBeenReplaced(node) {
+    return node && node.classList && node.classList.contains && node.classList.contains(config.replacementClass);
+  }
+  function getMutator() {
+    if (config.autoReplaceSvg === true) {
+      return mutators.replace;
+    }
+    var mutator = mutators[config.autoReplaceSvg];
+    return mutator || mutators.replace;
+  }
+  function createElementNS(tag) {
+    return DOCUMENT.createElementNS("http://www.w3.org/2000/svg", tag);
+  }
+  function createElement(tag) {
+    return DOCUMENT.createElement(tag);
+  }
+  function convertSVG(abstractObj) {
+    var params = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+    var _params$ceFn = params.ceFn, ceFn = _params$ceFn === void 0 ? abstractObj.tag === "svg" ? createElementNS : createElement : _params$ceFn;
+    if (typeof abstractObj === "string") {
+      return DOCUMENT.createTextNode(abstractObj);
+    }
+    var tag = ceFn(abstractObj.tag);
+    Object.keys(abstractObj.attributes || []).forEach(function(key) {
+      tag.setAttribute(key, abstractObj.attributes[key]);
+    });
+    var children = abstractObj.children || [];
+    children.forEach(function(child) {
+      tag.appendChild(convertSVG(child, {
+        ceFn
+      }));
+    });
+    return tag;
+  }
+  function nodeAsComment(node) {
+    var comment = " ".concat(node.outerHTML, " ");
+    comment = "".concat(comment, "Font Awesome fontawesome.com ");
+    return comment;
+  }
+  var mutators = {
+    replace: function replace(mutation) {
+      var node = mutation[0];
+      if (node.parentNode) {
+        mutation[1].forEach(function(abstract) {
+          node.parentNode.insertBefore(convertSVG(abstract), node);
+        });
+        if (node.getAttribute(DATA_FA_I2SVG) === null && config.keepOriginalSource) {
+          var comment = DOCUMENT.createComment(nodeAsComment(node));
+          node.parentNode.replaceChild(comment, node);
+        } else {
+          node.remove();
         }
-        var additions = definitions.reduce(this._pullDefinitions, {});
-        Object.keys(additions).forEach(function(key) {
-          _this.definitions[key] = _objectSpread({}, _this.definitions[key] || {}, additions[key]);
-          defineIcons(key, additions[key]);
-          build();
+      }
+    },
+    nest: function nest(mutation) {
+      var node = mutation[0];
+      var abstract = mutation[1];
+      if (~classArray(node).indexOf(config.replacementClass)) {
+        return mutators.replace(mutation);
+      }
+      var forSvg = new RegExp("".concat(config.familyPrefix, "-.*"));
+      delete abstract[0].attributes.id;
+      if (abstract[0].attributes.class) {
+        var splitClasses = abstract[0].attributes.class.split(" ").reduce(function(acc, cls) {
+          if (cls === config.replacementClass || cls.match(forSvg)) {
+            acc.toSvg.push(cls);
+          } else {
+            acc.toNode.push(cls);
+          }
+          return acc;
+        }, {
+          toNode: [],
+          toSvg: []
         });
+        abstract[0].attributes.class = splitClasses.toSvg.join(" ");
+        if (splitClasses.toNode.length === 0) {
+          node.removeAttribute("class");
+        } else {
+          node.setAttribute("class", splitClasses.toNode.join(" "));
+        }
       }
-    }, {
-      key: "reset",
-      value: function reset() {
-        this.definitions = {};
+      var newInnerHTML = abstract.map(function(a2) {
+        return toHtml(a2);
+      }).join("\n");
+      node.setAttribute(DATA_FA_I2SVG, "");
+      node.innerHTML = newInnerHTML;
+    }
+  };
+  function performOperationSync(op) {
+    op();
+  }
+  function perform(mutations, callback) {
+    var callbackFunction = typeof callback === "function" ? callback : noop$2;
+    if (mutations.length === 0) {
+      callbackFunction();
+    } else {
+      var frame = performOperationSync;
+      if (config.mutateApproach === MUTATION_APPROACH_ASYNC) {
+        frame = WINDOW.requestAnimationFrame || performOperationSync;
       }
-    }, {
-      key: "_pullDefinitions",
-      value: function _pullDefinitions(additions, definition) {
-        var normalized = definition.prefix && definition.iconName && definition.icon ? {
-          0: definition
-        } : definition;
-        Object.keys(normalized).map(function(key) {
-          var _normalized$key = normalized[key], prefix = _normalized$key.prefix, iconName = _normalized$key.iconName, icon2 = _normalized$key.icon;
-          if (!additions[prefix])
-            additions[prefix] = {};
-          additions[prefix][iconName] = icon2;
-        });
-        return additions;
-      }
-    }]);
-    return Library2;
-  }();
-  function ensureCss() {
-    if (config.autoAddCss && !_cssInserted) {
-      insertCss(css());
-      _cssInserted = true;
+      frame(function() {
+        var mutator = getMutator();
+        var mark = perf.begin("mutate");
+        mutations.map(mutator);
+        mark();
+        callbackFunction();
+      });
     }
   }
-  function apiObject(val, abstractCreator) {
-    Object.defineProperty(val, "abstract", {
-      get: abstractCreator
+  var disabled = false;
+  function disableObservation() {
+    disabled = true;
+  }
+  function enableObservation() {
+    disabled = false;
+  }
+  var mo = null;
+  function observe(options) {
+    if (!MUTATION_OBSERVER) {
+      return;
+    }
+    if (!config.observeMutations) {
+      return;
+    }
+    var _options$treeCallback = options.treeCallback, treeCallback = _options$treeCallback === void 0 ? noop$2 : _options$treeCallback, _options$nodeCallback = options.nodeCallback, nodeCallback = _options$nodeCallback === void 0 ? noop$2 : _options$nodeCallback, _options$pseudoElemen = options.pseudoElementsCallback, pseudoElementsCallback = _options$pseudoElemen === void 0 ? noop$2 : _options$pseudoElemen, _options$observeMutat = options.observeMutationsRoot, observeMutationsRoot = _options$observeMutat === void 0 ? DOCUMENT : _options$observeMutat;
+    mo = new MUTATION_OBSERVER(function(objects) {
+      if (disabled)
+        return;
+      var defaultPrefix = getDefaultUsablePrefix();
+      toArray(objects).forEach(function(mutationRecord) {
+        if (mutationRecord.type === "childList" && mutationRecord.addedNodes.length > 0 && !isWatched(mutationRecord.addedNodes[0])) {
+          if (config.searchPseudoElements) {
+            pseudoElementsCallback(mutationRecord.target);
+          }
+          treeCallback(mutationRecord.target);
+        }
+        if (mutationRecord.type === "attributes" && mutationRecord.target.parentNode && config.searchPseudoElements) {
+          pseudoElementsCallback(mutationRecord.target.parentNode);
+        }
+        if (mutationRecord.type === "attributes" && isWatched(mutationRecord.target) && ~ATTRIBUTES_WATCHED_FOR_MUTATION.indexOf(mutationRecord.attributeName)) {
+          if (mutationRecord.attributeName === "class" && hasPrefixAndIcon(mutationRecord.target)) {
+            var _getCanonicalIcon = getCanonicalIcon(classArray(mutationRecord.target)), prefix = _getCanonicalIcon.prefix, iconName = _getCanonicalIcon.iconName;
+            mutationRecord.target.setAttribute(DATA_PREFIX, prefix || defaultPrefix);
+            if (iconName)
+              mutationRecord.target.setAttribute(DATA_ICON, iconName);
+          } else if (hasBeenReplaced(mutationRecord.target)) {
+            nodeCallback(mutationRecord.target);
+          }
+        }
+      });
     });
-    Object.defineProperty(val, "html", {
-      get: function get3() {
-        return val.abstract.map(function(a2) {
-          return toHtml(a2);
-        });
-      }
+    if (!IS_DOM)
+      return;
+    mo.observe(observeMutationsRoot, {
+      childList: true,
+      attributes: true,
+      characterData: true,
+      subtree: true
     });
-    Object.defineProperty(val, "node", {
-      get: function get3() {
-        if (!IS_DOM)
-          return;
-        var container = DOCUMENT.createElement("div");
-        container.innerHTML = val.html;
-        return container.children;
-      }
-    });
+  }
+  function disconnect() {
+    if (!mo)
+      return;
+    mo.disconnect();
+  }
+  function styleParser(node) {
+    var style = node.getAttribute("style");
+    var val = [];
+    if (style) {
+      val = style.split(";").reduce(function(acc, style2) {
+        var styles2 = style2.split(":");
+        var prop = styles2[0];
+        var value = styles2.slice(1);
+        if (prop && value.length > 0) {
+          acc[prop] = value.join(":").trim();
+        }
+        return acc;
+      }, {});
+    }
     return val;
   }
-  function findIconDefinition(iconLookup) {
-    var _iconLookup$prefix = iconLookup.prefix, prefix = _iconLookup$prefix === void 0 ? "fa" : _iconLookup$prefix, iconName = iconLookup.iconName;
-    if (!iconName)
-      return;
-    return iconFromMapping(library.definitions, prefix, iconName) || iconFromMapping(namespace.styles, prefix, iconName);
+  function classParser(node) {
+    var existingPrefix = node.getAttribute("data-prefix");
+    var existingIconName = node.getAttribute("data-icon");
+    var innerText = node.innerText !== void 0 ? node.innerText.trim() : "";
+    var val = getCanonicalIcon(classArray(node));
+    if (!val.prefix) {
+      val.prefix = getDefaultUsablePrefix();
+    }
+    if (existingPrefix && existingIconName) {
+      val.prefix = existingPrefix;
+      val.iconName = existingIconName;
+    }
+    if (val.iconName && val.prefix) {
+      return val;
+    }
+    if (val.prefix && innerText.length > 0) {
+      val.iconName = byLigature(val.prefix, node.innerText) || byUnicode(val.prefix, toHex(node.innerText));
+    }
+    return val;
+  }
+  function attributesParser(node) {
+    var extraAttributes = toArray(node.attributes).reduce(function(acc, attr) {
+      if (acc.name !== "class" && acc.name !== "style") {
+        acc[attr.name] = attr.value;
+      }
+      return acc;
+    }, {});
+    var title = node.getAttribute("title");
+    var titleId = node.getAttribute("data-fa-title-id");
+    if (config.autoA11y) {
+      if (title) {
+        extraAttributes["aria-labelledby"] = "".concat(config.replacementClass, "-title-").concat(titleId || nextUniqueId());
+      } else {
+        extraAttributes["aria-hidden"] = "true";
+        extraAttributes["focusable"] = "false";
+      }
+    }
+    return extraAttributes;
+  }
+  function blankMeta() {
+    return {
+      iconName: null,
+      title: null,
+      titleId: null,
+      prefix: null,
+      transform: meaninglessTransform,
+      symbol: false,
+      mask: {
+        iconName: null,
+        prefix: null,
+        rest: []
+      },
+      maskId: null,
+      extra: {
+        classes: [],
+        styles: {},
+        attributes: {}
+      }
+    };
+  }
+  function parseMeta(node) {
+    var parser = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {
+      styleParser: true
+    };
+    var _classParser = classParser(node), iconName = _classParser.iconName, prefix = _classParser.prefix, extraClasses = _classParser.rest;
+    var extraAttributes = attributesParser(node);
+    var pluginMeta = chainHooks("parseNodeAttributes", {}, node);
+    var extraStyles = parser.styleParser ? styleParser(node) : [];
+    return _objectSpread2({
+      iconName,
+      title: node.getAttribute("title"),
+      titleId: node.getAttribute("data-fa-title-id"),
+      prefix,
+      transform: meaninglessTransform,
+      mask: {
+        iconName: null,
+        prefix: null,
+        rest: []
+      },
+      maskId: null,
+      symbol: false,
+      extra: {
+        classes: extraClasses,
+        styles: extraStyles,
+        attributes: extraAttributes
+      }
+    }, pluginMeta);
+  }
+  var styles$2 = namespace.styles;
+  function generateMutation(node) {
+    var nodeMeta = config.autoReplaceSvg === "nest" ? parseMeta(node, {
+      styleParser: false
+    }) : parseMeta(node);
+    if (~nodeMeta.extra.classes.indexOf(LAYERS_TEXT_CLASSNAME)) {
+      return callProvided("generateLayersText", node, nodeMeta);
+    } else {
+      return callProvided("generateSvgReplacementMutation", node, nodeMeta);
+    }
+  }
+  function onTree(root) {
+    var callback = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : null;
+    if (!IS_DOM)
+      return Promise.resolve();
+    var htmlClassList = DOCUMENT.documentElement.classList;
+    var hclAdd = function hclAdd2(suffix) {
+      return htmlClassList.add("".concat(HTML_CLASS_I2SVG_BASE_CLASS, "-").concat(suffix));
+    };
+    var hclRemove = function hclRemove2(suffix) {
+      return htmlClassList.remove("".concat(HTML_CLASS_I2SVG_BASE_CLASS, "-").concat(suffix));
+    };
+    var prefixes = config.autoFetchSvg ? Object.keys(PREFIX_TO_STYLE) : Object.keys(styles$2);
+    var prefixesDomQuery = [".".concat(LAYERS_TEXT_CLASSNAME, ":not([").concat(DATA_FA_I2SVG, "])")].concat(prefixes.map(function(p2) {
+      return ".".concat(p2, ":not([").concat(DATA_FA_I2SVG, "])");
+    })).join(", ");
+    if (prefixesDomQuery.length === 0) {
+      return Promise.resolve();
+    }
+    var candidates = [];
+    try {
+      candidates = toArray(root.querySelectorAll(prefixesDomQuery));
+    } catch (e2) {
+    }
+    if (candidates.length > 0) {
+      hclAdd("pending");
+      hclRemove("complete");
+    } else {
+      return Promise.resolve();
+    }
+    var mark = perf.begin("onTree");
+    var mutations = candidates.reduce(function(acc, node) {
+      try {
+        var mutation = generateMutation(node);
+        if (mutation) {
+          acc.push(mutation);
+        }
+      } catch (e2) {
+        if (!PRODUCTION) {
+          if (e2.name === "MissingIcon") {
+            console.error(e2);
+          }
+        }
+      }
+      return acc;
+    }, []);
+    return new Promise(function(resolve, reject) {
+      Promise.all(mutations).then(function(resolvedMutations) {
+        perform(resolvedMutations, function() {
+          hclAdd("active");
+          hclAdd("complete");
+          hclRemove("pending");
+          if (typeof callback === "function")
+            callback();
+          mark();
+          resolve();
+        });
+      }).catch(function(e2) {
+        mark();
+        reject(e2);
+      });
+    });
+  }
+  function onNode(node) {
+    var callback = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : null;
+    generateMutation(node).then(function(mutation) {
+      if (mutation) {
+        perform([mutation], callback);
+      }
+    });
   }
   function resolveIcons(next) {
     return function(maybeIconDefinition) {
@@ -67846,28 +58268,24 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       if (mask) {
         mask = (mask || {}).icon ? mask : findIconDefinition(mask || {});
       }
-      return next(iconDefinition, _objectSpread({}, params, {
+      return next(iconDefinition, _objectSpread2(_objectSpread2({}, params), {}, {
         mask
       }));
     };
   }
-  var library = new Library();
-  var _cssInserted = false;
-  var parse = {
-    transform: function transform(transformString) {
-      return parseTransformString(transformString);
-    }
-  };
-  var icon = resolveIcons(function(iconDefinition) {
+  var render = function render2(iconDefinition) {
     var params = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-    var _params$transform = params.transform, transform2 = _params$transform === void 0 ? meaninglessTransform : _params$transform, _params$symbol = params.symbol, symbol = _params$symbol === void 0 ? false : _params$symbol, _params$mask = params.mask, mask = _params$mask === void 0 ? null : _params$mask, _params$maskId = params.maskId, maskId = _params$maskId === void 0 ? null : _params$maskId, _params$title = params.title, title = _params$title === void 0 ? null : _params$title, _params$titleId = params.titleId, titleId = _params$titleId === void 0 ? null : _params$titleId, _params$classes = params.classes, classes = _params$classes === void 0 ? [] : _params$classes, _params$attributes = params.attributes, attributes = _params$attributes === void 0 ? {} : _params$attributes, _params$styles = params.styles, styles2 = _params$styles === void 0 ? {} : _params$styles;
+    var _params$transform = params.transform, transform = _params$transform === void 0 ? meaninglessTransform : _params$transform, _params$symbol = params.symbol, symbol = _params$symbol === void 0 ? false : _params$symbol, _params$mask = params.mask, mask = _params$mask === void 0 ? null : _params$mask, _params$maskId = params.maskId, maskId = _params$maskId === void 0 ? null : _params$maskId, _params$title = params.title, title = _params$title === void 0 ? null : _params$title, _params$titleId = params.titleId, titleId = _params$titleId === void 0 ? null : _params$titleId, _params$classes = params.classes, classes = _params$classes === void 0 ? [] : _params$classes, _params$attributes = params.attributes, attributes = _params$attributes === void 0 ? {} : _params$attributes, _params$styles = params.styles, styles2 = _params$styles === void 0 ? {} : _params$styles;
     if (!iconDefinition)
       return;
-    var prefix = iconDefinition.prefix, iconName = iconDefinition.iconName, icon2 = iconDefinition.icon;
-    return apiObject(_objectSpread({
+    var prefix = iconDefinition.prefix, iconName = iconDefinition.iconName, icon3 = iconDefinition.icon;
+    return domVariants(_objectSpread2({
       type: "icon"
     }, iconDefinition), function() {
-      ensureCss();
+      callHooks("beforeDOMElementCreation", {
+        iconDefinition,
+        params
+      });
       if (config.autoA11y) {
         if (title) {
           attributes["aria-labelledby"] = "".concat(config.replacementClass, "-title-").concat(titleId || nextUniqueId());
@@ -67878,7 +58296,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       }
       return makeInlineSvgAbstract({
         icons: {
-          main: asFoundIcon(icon2),
+          main: asFoundIcon(icon3),
           mask: mask ? asFoundIcon(mask.icon) : {
             found: false,
             width: null,
@@ -67888,7 +58306,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         },
         prefix,
         iconName,
-        transform: _objectSpread({}, meaninglessTransform, transform2),
+        transform: _objectSpread2(_objectSpread2({}, meaninglessTransform), transform),
         symbol,
         title,
         maskId,
@@ -67900,12 +58318,681 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }
       });
     });
+  };
+  var ReplaceElements = {
+    mixout: function mixout2() {
+      return {
+        icon: resolveIcons(render)
+      };
+    },
+    hooks: function hooks2() {
+      return {
+        mutationObserverCallbacks: function mutationObserverCallbacks(accumulator) {
+          accumulator.treeCallback = onTree;
+          accumulator.nodeCallback = onNode;
+          return accumulator;
+        }
+      };
+    },
+    provides: function provides(providers$$1) {
+      providers$$1.i2svg = function(params) {
+        var _params$node = params.node, node = _params$node === void 0 ? DOCUMENT : _params$node, _params$callback = params.callback, callback = _params$callback === void 0 ? function() {
+        } : _params$callback;
+        return onTree(node, callback);
+      };
+      providers$$1.generateSvgReplacementMutation = function(node, nodeMeta) {
+        var iconName = nodeMeta.iconName, title = nodeMeta.title, titleId = nodeMeta.titleId, prefix = nodeMeta.prefix, transform = nodeMeta.transform, symbol = nodeMeta.symbol, mask = nodeMeta.mask, maskId = nodeMeta.maskId, extra = nodeMeta.extra;
+        return new Promise(function(resolve, reject) {
+          Promise.all([findIcon(iconName, prefix), mask.iconName ? findIcon(mask.iconName, mask.prefix) : Promise.resolve({
+            found: false,
+            width: 512,
+            height: 512,
+            icon: {}
+          })]).then(function(_ref2) {
+            var _ref22 = _slicedToArray(_ref2, 2), main = _ref22[0], mask2 = _ref22[1];
+            resolve([node, makeInlineSvgAbstract({
+              icons: {
+                main,
+                mask: mask2
+              },
+              prefix,
+              iconName,
+              transform,
+              symbol,
+              maskId,
+              title,
+              titleId,
+              extra,
+              watchable: true
+            })]);
+          }).catch(reject);
+        });
+      };
+      providers$$1.generateAbstractIcon = function(_ref3) {
+        var children = _ref3.children, attributes = _ref3.attributes, main = _ref3.main, transform = _ref3.transform, styles2 = _ref3.styles;
+        var styleString = joinStyles(styles2);
+        if (styleString.length > 0) {
+          attributes["style"] = styleString;
+        }
+        var nextChild;
+        if (transformIsMeaningful(transform)) {
+          nextChild = callProvided("generateAbstractTransformGrouping", {
+            main,
+            transform,
+            containerWidth: main.width,
+            iconWidth: main.width
+          });
+        }
+        children.push(nextChild || main.icon);
+        return {
+          children,
+          attributes
+        };
+      };
+    }
+  };
+  var Layers = {
+    mixout: function mixout3() {
+      return {
+        layer: function layer2(assembler) {
+          var params = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+          var _params$classes = params.classes, classes = _params$classes === void 0 ? [] : _params$classes;
+          return domVariants({
+            type: "layer"
+          }, function() {
+            callHooks("beforeDOMElementCreation", {
+              assembler,
+              params
+            });
+            var children = [];
+            assembler(function(args) {
+              Array.isArray(args) ? args.map(function(a2) {
+                children = children.concat(a2.abstract);
+              }) : children = children.concat(args.abstract);
+            });
+            return [{
+              tag: "span",
+              attributes: {
+                class: ["".concat(config.familyPrefix, "-layers")].concat(_toConsumableArray(classes)).join(" ")
+              },
+              children
+            }];
+          });
+        }
+      };
+    }
+  };
+  var LayersCounter = {
+    mixout: function mixout4() {
+      return {
+        counter: function counter2(content) {
+          var params = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+          var _params$title = params.title, title = _params$title === void 0 ? null : _params$title, _params$classes = params.classes, classes = _params$classes === void 0 ? [] : _params$classes, _params$attributes = params.attributes, attributes = _params$attributes === void 0 ? {} : _params$attributes, _params$styles = params.styles, styles2 = _params$styles === void 0 ? {} : _params$styles;
+          return domVariants({
+            type: "counter",
+            content
+          }, function() {
+            callHooks("beforeDOMElementCreation", {
+              content,
+              params
+            });
+            return makeLayersCounterAbstract({
+              content: content.toString(),
+              title,
+              extra: {
+                attributes,
+                styles: styles2,
+                classes: ["".concat(config.familyPrefix, "-layers-counter")].concat(_toConsumableArray(classes))
+              }
+            });
+          });
+        }
+      };
+    }
+  };
+  var LayersText = {
+    mixout: function mixout5() {
+      return {
+        text: function text2(content) {
+          var params = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+          var _params$transform = params.transform, transform = _params$transform === void 0 ? meaninglessTransform : _params$transform, _params$title = params.title, title = _params$title === void 0 ? null : _params$title, _params$classes = params.classes, classes = _params$classes === void 0 ? [] : _params$classes, _params$attributes = params.attributes, attributes = _params$attributes === void 0 ? {} : _params$attributes, _params$styles = params.styles, styles2 = _params$styles === void 0 ? {} : _params$styles;
+          return domVariants({
+            type: "text",
+            content
+          }, function() {
+            callHooks("beforeDOMElementCreation", {
+              content,
+              params
+            });
+            return makeLayersTextAbstract({
+              content,
+              transform: _objectSpread2(_objectSpread2({}, meaninglessTransform), transform),
+              title,
+              extra: {
+                attributes,
+                styles: styles2,
+                classes: ["".concat(config.familyPrefix, "-layers-text")].concat(_toConsumableArray(classes))
+              }
+            });
+          });
+        }
+      };
+    },
+    provides: function provides2(providers$$1) {
+      providers$$1.generateLayersText = function(node, nodeMeta) {
+        var title = nodeMeta.title, transform = nodeMeta.transform, extra = nodeMeta.extra;
+        var width = null;
+        var height = null;
+        if (IS_IE) {
+          var computedFontSize = parseInt(getComputedStyle(node).fontSize, 10);
+          var boundingClientRect = node.getBoundingClientRect();
+          width = boundingClientRect.width / computedFontSize;
+          height = boundingClientRect.height / computedFontSize;
+        }
+        if (config.autoA11y && !title) {
+          extra.attributes["aria-hidden"] = "true";
+        }
+        return Promise.resolve([node, makeLayersTextAbstract({
+          content: node.innerHTML,
+          width,
+          height,
+          transform,
+          title,
+          extra,
+          watchable: true
+        })]);
+      };
+    }
+  };
+  var CLEAN_CONTENT_PATTERN = new RegExp('"', "ug");
+  var SECONDARY_UNICODE_RANGE = [1105920, 1112319];
+  function hexValueFromContent(content) {
+    var cleaned = content.replace(CLEAN_CONTENT_PATTERN, "");
+    var codePoint = codePointAt(cleaned, 0);
+    var isPrependTen = codePoint >= SECONDARY_UNICODE_RANGE[0] && codePoint <= SECONDARY_UNICODE_RANGE[1];
+    var isDoubled = cleaned.length === 2 ? cleaned[0] === cleaned[1] : false;
+    return {
+      value: isDoubled ? toHex(cleaned[0]) : toHex(cleaned),
+      isSecondary: isPrependTen || isDoubled
+    };
+  }
+  function replaceForPosition(node, position) {
+    var pendingAttribute = "".concat(DATA_FA_PSEUDO_ELEMENT_PENDING).concat(position.replace(":", "-"));
+    return new Promise(function(resolve, reject) {
+      if (node.getAttribute(pendingAttribute) !== null) {
+        return resolve();
+      }
+      var children = toArray(node.children);
+      var alreadyProcessedPseudoElement = children.filter(function(c2) {
+        return c2.getAttribute(DATA_FA_PSEUDO_ELEMENT) === position;
+      })[0];
+      var styles2 = WINDOW.getComputedStyle(node, position);
+      var fontFamily = styles2.getPropertyValue("font-family").match(FONT_FAMILY_PATTERN);
+      var fontWeight = styles2.getPropertyValue("font-weight");
+      var content = styles2.getPropertyValue("content");
+      if (alreadyProcessedPseudoElement && !fontFamily) {
+        node.removeChild(alreadyProcessedPseudoElement);
+        return resolve();
+      } else if (fontFamily && content !== "none" && content !== "") {
+        var _content = styles2.getPropertyValue("content");
+        var prefix = ~["Solid", "Regular", "Light", "Thin", "Duotone", "Brands", "Kit"].indexOf(fontFamily[2]) ? STYLE_TO_PREFIX[fontFamily[2].toLowerCase()] : FONT_WEIGHT_TO_PREFIX[fontWeight];
+        var _hexValueFromContent = hexValueFromContent(_content), hexValue = _hexValueFromContent.value, isSecondary = _hexValueFromContent.isSecondary;
+        var isV4 = fontFamily[0].startsWith("FontAwesome");
+        var iconName = byUnicode(prefix, hexValue);
+        var iconIdentifier = iconName;
+        if (isV4) {
+          var iconName4 = byOldUnicode(hexValue);
+          if (iconName4.iconName && iconName4.prefix) {
+            iconName = iconName4.iconName;
+            prefix = iconName4.prefix;
+          }
+        }
+        if (iconName && !isSecondary && (!alreadyProcessedPseudoElement || alreadyProcessedPseudoElement.getAttribute(DATA_PREFIX) !== prefix || alreadyProcessedPseudoElement.getAttribute(DATA_ICON) !== iconIdentifier)) {
+          node.setAttribute(pendingAttribute, iconIdentifier);
+          if (alreadyProcessedPseudoElement) {
+            node.removeChild(alreadyProcessedPseudoElement);
+          }
+          var meta = blankMeta();
+          var extra = meta.extra;
+          extra.attributes[DATA_FA_PSEUDO_ELEMENT] = position;
+          findIcon(iconName, prefix).then(function(main) {
+            var abstract = makeInlineSvgAbstract(_objectSpread2(_objectSpread2({}, meta), {}, {
+              icons: {
+                main,
+                mask: emptyCanonicalIcon()
+              },
+              prefix,
+              iconName: iconIdentifier,
+              extra,
+              watchable: true
+            }));
+            var element = DOCUMENT.createElement("svg");
+            if (position === "::before") {
+              node.insertBefore(element, node.firstChild);
+            } else {
+              node.appendChild(element);
+            }
+            element.outerHTML = abstract.map(function(a2) {
+              return toHtml(a2);
+            }).join("\n");
+            node.removeAttribute(pendingAttribute);
+            resolve();
+          }).catch(reject);
+        } else {
+          resolve();
+        }
+      } else {
+        resolve();
+      }
+    });
+  }
+  function replace2(node) {
+    return Promise.all([replaceForPosition(node, "::before"), replaceForPosition(node, "::after")]);
+  }
+  function processable(node) {
+    return node.parentNode !== document.head && !~TAGNAMES_TO_SKIP_FOR_PSEUDOELEMENTS.indexOf(node.tagName.toUpperCase()) && !node.getAttribute(DATA_FA_PSEUDO_ELEMENT) && (!node.parentNode || node.parentNode.tagName !== "svg");
+  }
+  function searchPseudoElements(root) {
+    if (!IS_DOM)
+      return;
+    return new Promise(function(resolve, reject) {
+      var operations = toArray(root.querySelectorAll("*")).filter(processable).map(replace2);
+      var end3 = perf.begin("searchPseudoElements");
+      disableObservation();
+      Promise.all(operations).then(function() {
+        end3();
+        enableObservation();
+        resolve();
+      }).catch(function() {
+        end3();
+        enableObservation();
+        reject();
+      });
+    });
+  }
+  var PseudoElements = {
+    hooks: function hooks3() {
+      return {
+        mutationObserverCallbacks: function mutationObserverCallbacks(accumulator) {
+          accumulator.pseudoElementsCallback = searchPseudoElements;
+          return accumulator;
+        }
+      };
+    },
+    provides: function provides3(providers$$1) {
+      providers$$1.pseudoElements2svg = function(params) {
+        var _params$node = params.node, node = _params$node === void 0 ? DOCUMENT : _params$node;
+        if (config.searchPseudoElements) {
+          searchPseudoElements(node);
+        }
+      };
+    }
+  };
+  var _unwatched = false;
+  var MutationObserver$1 = {
+    mixout: function mixout6() {
+      return {
+        dom: {
+          unwatch: function unwatch() {
+            disableObservation();
+            _unwatched = true;
+          }
+        }
+      };
+    },
+    hooks: function hooks4() {
+      return {
+        bootstrap: function bootstrap() {
+          observe(chainHooks("mutationObserverCallbacks", {}));
+        },
+        noAuto: function noAuto3() {
+          disconnect();
+        },
+        watch: function watch2(params) {
+          var observeMutationsRoot = params.observeMutationsRoot;
+          if (_unwatched) {
+            enableObservation();
+          } else {
+            observe(chainHooks("mutationObserverCallbacks", {
+              observeMutationsRoot
+            }));
+          }
+        }
+      };
+    }
+  };
+  var parseTransformString = function parseTransformString2(transformString) {
+    var transform = {
+      size: 16,
+      x: 0,
+      y: 0,
+      flipX: false,
+      flipY: false,
+      rotate: 0
+    };
+    return transformString.toLowerCase().split(" ").reduce(function(acc, n2) {
+      var parts = n2.toLowerCase().split("-");
+      var first = parts[0];
+      var rest = parts.slice(1).join("-");
+      if (first && rest === "h") {
+        acc.flipX = true;
+        return acc;
+      }
+      if (first && rest === "v") {
+        acc.flipY = true;
+        return acc;
+      }
+      rest = parseFloat(rest);
+      if (isNaN(rest)) {
+        return acc;
+      }
+      switch (first) {
+        case "grow":
+          acc.size = acc.size + rest;
+          break;
+        case "shrink":
+          acc.size = acc.size - rest;
+          break;
+        case "left":
+          acc.x = acc.x - rest;
+          break;
+        case "right":
+          acc.x = acc.x + rest;
+          break;
+        case "up":
+          acc.y = acc.y - rest;
+          break;
+        case "down":
+          acc.y = acc.y + rest;
+          break;
+        case "rotate":
+          acc.rotate = acc.rotate + rest;
+          break;
+      }
+      return acc;
+    }, transform);
+  };
+  var PowerTransforms = {
+    mixout: function mixout7() {
+      return {
+        parse: {
+          transform: function transform(transformString) {
+            return parseTransformString(transformString);
+          }
+        }
+      };
+    },
+    hooks: function hooks5() {
+      return {
+        parseNodeAttributes: function parseNodeAttributes(accumulator, node) {
+          var transformString = node.getAttribute("data-fa-transform");
+          if (transformString) {
+            accumulator.transform = parseTransformString(transformString);
+          }
+          return accumulator;
+        }
+      };
+    },
+    provides: function provides4(providers2) {
+      providers2.generateAbstractTransformGrouping = function(_ref2) {
+        var main = _ref2.main, transform = _ref2.transform, containerWidth = _ref2.containerWidth, iconWidth = _ref2.iconWidth;
+        var outer = {
+          transform: "translate(".concat(containerWidth / 2, " 256)")
+        };
+        var innerTranslate = "translate(".concat(transform.x * 32, ", ").concat(transform.y * 32, ") ");
+        var innerScale = "scale(".concat(transform.size / 16 * (transform.flipX ? -1 : 1), ", ").concat(transform.size / 16 * (transform.flipY ? -1 : 1), ") ");
+        var innerRotate = "rotate(".concat(transform.rotate, " 0 0)");
+        var inner = {
+          transform: "".concat(innerTranslate, " ").concat(innerScale, " ").concat(innerRotate)
+        };
+        var path = {
+          transform: "translate(".concat(iconWidth / 2 * -1, " -256)")
+        };
+        var operations = {
+          outer,
+          inner,
+          path
+        };
+        return {
+          tag: "g",
+          attributes: _objectSpread2({}, operations.outer),
+          children: [{
+            tag: "g",
+            attributes: _objectSpread2({}, operations.inner),
+            children: [{
+              tag: main.icon.tag,
+              children: main.icon.children,
+              attributes: _objectSpread2(_objectSpread2({}, main.icon.attributes), operations.path)
+            }]
+          }]
+        };
+      };
+    }
+  };
+  var ALL_SPACE = {
+    x: 0,
+    y: 0,
+    width: "100%",
+    height: "100%"
+  };
+  function fillBlack(abstract) {
+    var force = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : true;
+    if (abstract.attributes && (abstract.attributes.fill || force)) {
+      abstract.attributes.fill = "black";
+    }
+    return abstract;
+  }
+  function deGroup(abstract) {
+    if (abstract.tag === "g") {
+      return abstract.children;
+    } else {
+      return [abstract];
+    }
+  }
+  var Masks = {
+    hooks: function hooks6() {
+      return {
+        parseNodeAttributes: function parseNodeAttributes(accumulator, node) {
+          var maskData = node.getAttribute("data-fa-mask");
+          var mask = !maskData ? emptyCanonicalIcon() : getCanonicalIcon(maskData.split(" ").map(function(i2) {
+            return i2.trim();
+          }));
+          if (!mask.prefix) {
+            mask.prefix = getDefaultUsablePrefix();
+          }
+          accumulator.mask = mask;
+          accumulator.maskId = node.getAttribute("data-fa-mask-id");
+          return accumulator;
+        }
+      };
+    },
+    provides: function provides5(providers2) {
+      providers2.generateAbstractMask = function(_ref2) {
+        var children = _ref2.children, attributes = _ref2.attributes, main = _ref2.main, mask = _ref2.mask, explicitMaskId = _ref2.maskId, transform = _ref2.transform;
+        var mainWidth = main.width, mainPath = main.icon;
+        var maskWidth = mask.width, maskPath = mask.icon;
+        var trans = transformForSvg({
+          transform,
+          containerWidth: maskWidth,
+          iconWidth: mainWidth
+        });
+        var maskRect = {
+          tag: "rect",
+          attributes: _objectSpread2(_objectSpread2({}, ALL_SPACE), {}, {
+            fill: "white"
+          })
+        };
+        var maskInnerGroupChildrenMixin = mainPath.children ? {
+          children: mainPath.children.map(fillBlack)
+        } : {};
+        var maskInnerGroup = {
+          tag: "g",
+          attributes: _objectSpread2({}, trans.inner),
+          children: [fillBlack(_objectSpread2({
+            tag: mainPath.tag,
+            attributes: _objectSpread2(_objectSpread2({}, mainPath.attributes), trans.path)
+          }, maskInnerGroupChildrenMixin))]
+        };
+        var maskOuterGroup = {
+          tag: "g",
+          attributes: _objectSpread2({}, trans.outer),
+          children: [maskInnerGroup]
+        };
+        var maskId = "mask-".concat(explicitMaskId || nextUniqueId());
+        var clipId = "clip-".concat(explicitMaskId || nextUniqueId());
+        var maskTag = {
+          tag: "mask",
+          attributes: _objectSpread2(_objectSpread2({}, ALL_SPACE), {}, {
+            id: maskId,
+            maskUnits: "userSpaceOnUse",
+            maskContentUnits: "userSpaceOnUse"
+          }),
+          children: [maskRect, maskOuterGroup]
+        };
+        var defs = {
+          tag: "defs",
+          children: [{
+            tag: "clipPath",
+            attributes: {
+              id: clipId
+            },
+            children: deGroup(maskPath)
+          }, maskTag]
+        };
+        children.push(defs, {
+          tag: "rect",
+          attributes: _objectSpread2({
+            fill: "currentColor",
+            "clip-path": "url(#".concat(clipId, ")"),
+            mask: "url(#".concat(maskId, ")")
+          }, ALL_SPACE)
+        });
+        return {
+          children,
+          attributes
+        };
+      };
+    }
+  };
+  var MissingIconIndicator = {
+    provides: function provides6(providers2) {
+      var reduceMotion = false;
+      if (WINDOW.matchMedia) {
+        reduceMotion = WINDOW.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      }
+      providers2.missingIconAbstract = function() {
+        var gChildren = [];
+        var FILL = {
+          fill: "currentColor"
+        };
+        var ANIMATION_BASE = {
+          attributeType: "XML",
+          repeatCount: "indefinite",
+          dur: "2s"
+        };
+        gChildren.push({
+          tag: "path",
+          attributes: _objectSpread2(_objectSpread2({}, FILL), {}, {
+            d: "M156.5,447.7l-12.6,29.5c-18.7-9.5-35.9-21.2-51.5-34.9l22.7-22.7C127.6,430.5,141.5,440,156.5,447.7z M40.6,272H8.5 c1.4,21.2,5.4,41.7,11.7,61.1L50,321.2C45.1,305.5,41.8,289,40.6,272z M40.6,240c1.4-18.8,5.2-37,11.1-54.1l-29.5-12.6 C14.7,194.3,10,216.7,8.5,240H40.6z M64.3,156.5c7.8-14.9,17.2-28.8,28.1-41.5L69.7,92.3c-13.7,15.6-25.5,32.8-34.9,51.5 L64.3,156.5z M397,419.6c-13.9,12-29.4,22.3-46.1,30.4l11.9,29.8c20.7-9.9,39.8-22.6,56.9-37.6L397,419.6z M115,92.4 c13.9-12,29.4-22.3,46.1-30.4l-11.9-29.8c-20.7,9.9-39.8,22.6-56.8,37.6L115,92.4z M447.7,355.5c-7.8,14.9-17.2,28.8-28.1,41.5 l22.7,22.7c13.7-15.6,25.5-32.9,34.9-51.5L447.7,355.5z M471.4,272c-1.4,18.8-5.2,37-11.1,54.1l29.5,12.6 c7.5-21.1,12.2-43.5,13.6-66.8H471.4z M321.2,462c-15.7,5-32.2,8.2-49.2,9.4v32.1c21.2-1.4,41.7-5.4,61.1-11.7L321.2,462z M240,471.4c-18.8-1.4-37-5.2-54.1-11.1l-12.6,29.5c21.1,7.5,43.5,12.2,66.8,13.6V471.4z M462,190.8c5,15.7,8.2,32.2,9.4,49.2h32.1 c-1.4-21.2-5.4-41.7-11.7-61.1L462,190.8z M92.4,397c-12-13.9-22.3-29.4-30.4-46.1l-29.8,11.9c9.9,20.7,22.6,39.8,37.6,56.9 L92.4,397z M272,40.6c18.8,1.4,36.9,5.2,54.1,11.1l12.6-29.5C317.7,14.7,295.3,10,272,8.5V40.6z M190.8,50 c15.7-5,32.2-8.2,49.2-9.4V8.5c-21.2,1.4-41.7,5.4-61.1,11.7L190.8,50z M442.3,92.3L419.6,115c12,13.9,22.3,29.4,30.5,46.1 l29.8-11.9C470,128.5,457.3,109.4,442.3,92.3z M397,92.4l22.7-22.7c-15.6-13.7-32.8-25.5-51.5-34.9l-12.6,29.5 C370.4,72.1,384.4,81.5,397,92.4z"
+          })
+        });
+        var OPACITY_ANIMATE = _objectSpread2(_objectSpread2({}, ANIMATION_BASE), {}, {
+          attributeName: "opacity"
+        });
+        var dot = {
+          tag: "circle",
+          attributes: _objectSpread2(_objectSpread2({}, FILL), {}, {
+            cx: "256",
+            cy: "364",
+            r: "28"
+          }),
+          children: []
+        };
+        if (!reduceMotion) {
+          dot.children.push({
+            tag: "animate",
+            attributes: _objectSpread2(_objectSpread2({}, ANIMATION_BASE), {}, {
+              attributeName: "r",
+              values: "28;14;28;28;14;28;"
+            })
+          }, {
+            tag: "animate",
+            attributes: _objectSpread2(_objectSpread2({}, OPACITY_ANIMATE), {}, {
+              values: "1;0;1;1;0;1;"
+            })
+          });
+        }
+        gChildren.push(dot);
+        gChildren.push({
+          tag: "path",
+          attributes: _objectSpread2(_objectSpread2({}, FILL), {}, {
+            opacity: "1",
+            d: "M263.7,312h-16c-6.6,0-12-5.4-12-12c0-71,77.4-63.9,77.4-107.8c0-20-17.8-40.2-57.4-40.2c-29.1,0-44.3,9.6-59.2,28.7 c-3.9,5-11.1,6-16.2,2.4l-13.1-9.2c-5.6-3.9-6.9-11.8-2.6-17.2c21.2-27.2,46.4-44.7,91.2-44.7c52.3,0,97.4,29.8,97.4,80.2 c0,67.6-77.4,63.5-77.4,107.8C275.7,306.6,270.3,312,263.7,312z"
+          }),
+          children: reduceMotion ? [] : [{
+            tag: "animate",
+            attributes: _objectSpread2(_objectSpread2({}, OPACITY_ANIMATE), {}, {
+              values: "1;0;0;0;0;1;"
+            })
+          }]
+        });
+        if (!reduceMotion) {
+          gChildren.push({
+            tag: "path",
+            attributes: _objectSpread2(_objectSpread2({}, FILL), {}, {
+              opacity: "0",
+              d: "M232.5,134.5l7,168c0.3,6.4,5.6,11.5,12,11.5h9c6.4,0,11.7-5.1,12-11.5l7-168c0.3-6.8-5.2-12.5-12-12.5h-23 C237.7,122,232.2,127.7,232.5,134.5z"
+            }),
+            children: [{
+              tag: "animate",
+              attributes: _objectSpread2(_objectSpread2({}, OPACITY_ANIMATE), {}, {
+                values: "0;0;1;1;0;0;"
+              })
+            }]
+          });
+        }
+        return {
+          tag: "g",
+          attributes: {
+            "class": "missing"
+          },
+          children: gChildren
+        };
+      };
+    }
+  };
+  var SvgSymbols = {
+    hooks: function hooks7() {
+      return {
+        parseNodeAttributes: function parseNodeAttributes(accumulator, node) {
+          var symbolData = node.getAttribute("data-fa-symbol");
+          var symbol = symbolData === null ? false : symbolData === "" ? true : symbolData;
+          accumulator["symbol"] = symbol;
+          return accumulator;
+        }
+      };
+    }
+  };
+  var plugins = [InjectCSS, ReplaceElements, Layers, LayersCounter, LayersText, PseudoElements, MutationObserver$1, PowerTransforms, Masks, MissingIconIndicator, SvgSymbols];
+  registerPlugins(plugins, {
+    mixoutsTo: api
   });
+  var noAuto$1 = api.noAuto;
+  var config$1 = api.config;
+  var library$1 = api.library;
+  var dom$1 = api.dom;
+  var parse$1 = api.parse;
+  var findIconDefinition$1 = api.findIconDefinition;
+  var toHtml$1 = api.toHtml;
+  var icon2 = api.icon;
+  var layer = api.layer;
+  var text = api.text;
+  var counter = api.counter;
 
   // node_modules/@fortawesome/react-fontawesome/index.es.js
   var import_prop_types = __toESM(require_prop_types());
   var import_react6 = __toESM(require_react());
-  function ownKeys(object, enumerableOnly) {
+  function ownKeys2(object, enumerableOnly) {
     var keys3 = Object.keys(object);
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
@@ -67915,12 +59002,12 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
     return keys3;
   }
-  function _objectSpread2(target) {
+  function _objectSpread22(target) {
     for (var i2 = 1; i2 < arguments.length; i2++) {
       var source = null != arguments[i2] ? arguments[i2] : {};
-      i2 % 2 ? ownKeys(Object(source), true).forEach(function(key) {
+      i2 % 2 ? ownKeys2(Object(source), true).forEach(function(key) {
         _defineProperty2(target, key, source[key]);
-      }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+      }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys2(Object(source)).forEach(function(key) {
         Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
       });
     }
@@ -67979,38 +59066,38 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
     return target;
   }
-  function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+  function _toConsumableArray2(arr) {
+    return _arrayWithoutHoles2(arr) || _iterableToArray2(arr) || _unsupportedIterableToArray2(arr) || _nonIterableSpread2();
   }
-  function _arrayWithoutHoles(arr) {
+  function _arrayWithoutHoles2(arr) {
     if (Array.isArray(arr))
-      return _arrayLikeToArray(arr);
+      return _arrayLikeToArray2(arr);
   }
-  function _iterableToArray(iter) {
+  function _iterableToArray2(iter) {
     if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null)
       return Array.from(iter);
   }
-  function _unsupportedIterableToArray(o2, minLen) {
+  function _unsupportedIterableToArray2(o2, minLen) {
     if (!o2)
       return;
     if (typeof o2 === "string")
-      return _arrayLikeToArray(o2, minLen);
+      return _arrayLikeToArray2(o2, minLen);
     var n2 = Object.prototype.toString.call(o2).slice(8, -1);
     if (n2 === "Object" && o2.constructor)
       n2 = o2.constructor.name;
     if (n2 === "Map" || n2 === "Set")
       return Array.from(o2);
     if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
-      return _arrayLikeToArray(o2, minLen);
+      return _arrayLikeToArray2(o2, minLen);
   }
-  function _arrayLikeToArray(arr, len) {
+  function _arrayLikeToArray2(arr, len) {
     if (len == null || len > arr.length)
       len = arr.length;
     for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++)
       arr2[i2] = arr[i2];
     return arr2;
   }
-  function _nonIterableSpread() {
+  function _nonIterableSpread2() {
     throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
   function classList(props) {
@@ -68071,13 +59158,13 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       return acc;
     }, {});
   }
-  function convert(createElement2, element) {
+  function convert(createElement3, element) {
     var extraProps = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
     if (typeof element === "string") {
       return element;
     }
     var children = (element.children || []).map(function(child) {
-      return convert(createElement2, child);
+      return convert(createElement3, child);
     });
     var mixins = Object.keys(element.attributes || {}).reduce(function(acc, key) {
       var val = element.attributes[key];
@@ -68101,8 +59188,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       attrs: {}
     });
     var _extraProps$style = extraProps.style, existingStyle = _extraProps$style === void 0 ? {} : _extraProps$style, remaining = _objectWithoutProperties(extraProps, _excluded$1);
-    mixins.attrs["style"] = _objectSpread2(_objectSpread2({}, mixins.attrs["style"]), existingStyle);
-    return createElement2.apply(void 0, [element.tag, _objectSpread2(_objectSpread2({}, mixins.attrs), remaining)].concat(_toConsumableArray(children)));
+    mixins.attrs["style"] = _objectSpread22(_objectSpread22({}, mixins.attrs["style"]), existingStyle);
+    return createElement3.apply(void 0, [element.tag, _objectSpread22(_objectSpread22({}, mixins.attrs), remaining)].concat(_toConsumableArray2(children)));
   }
   var PRODUCTION2 = false;
   try {
@@ -68115,29 +59202,29 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       (_console = console).error.apply(_console, arguments);
     }
   }
-  function normalizeIconArgs(icon2) {
-    if (icon2 && _typeof2(icon2) === "object" && icon2.prefix && icon2.iconName && icon2.icon) {
-      return icon2;
+  function normalizeIconArgs(icon3) {
+    if (icon3 && _typeof2(icon3) === "object" && icon3.prefix && icon3.iconName && icon3.icon) {
+      return icon3;
     }
-    if (parse.icon) {
-      return parse.icon(icon2);
+    if (parse$1.icon) {
+      return parse$1.icon(icon3);
     }
-    if (icon2 === null) {
+    if (icon3 === null) {
       return null;
     }
-    if (icon2 && _typeof2(icon2) === "object" && icon2.prefix && icon2.iconName) {
-      return icon2;
+    if (icon3 && _typeof2(icon3) === "object" && icon3.prefix && icon3.iconName) {
+      return icon3;
     }
-    if (Array.isArray(icon2) && icon2.length === 2) {
+    if (Array.isArray(icon3) && icon3.length === 2) {
       return {
-        prefix: icon2[0],
-        iconName: icon2[1]
+        prefix: icon3[0],
+        iconName: icon3[1]
       };
     }
-    if (typeof icon2 === "string") {
+    if (typeof icon3 === "string") {
       return {
         prefix: "fas",
-        iconName: icon2
+        iconName: icon3
       };
     }
   }
@@ -68149,10 +59236,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     var forwardedRef = _ref2.forwardedRef, props = _objectWithoutProperties(_ref2, _excluded);
     var iconArgs = props.icon, maskArgs = props.mask, symbol = props.symbol, className = props.className, title = props.title, titleId = props.titleId, maskId = props.maskId;
     var iconLookup = normalizeIconArgs(iconArgs);
-    var classes = objectWithKey("classes", [].concat(_toConsumableArray(classList(props)), _toConsumableArray(className.split(" "))));
-    var transform2 = objectWithKey("transform", typeof props.transform === "string" ? parse.transform(props.transform) : props.transform);
+    var classes = objectWithKey("classes", [].concat(_toConsumableArray2(classList(props)), _toConsumableArray2(className.split(" "))));
+    var transform = objectWithKey("transform", typeof props.transform === "string" ? parse$1.transform(props.transform) : props.transform);
     var mask = objectWithKey("mask", normalizeIconArgs(maskArgs));
-    var renderedIcon = icon(iconLookup, _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, classes), transform2), mask), {}, {
+    var renderedIcon = icon2(iconLookup, _objectSpread22(_objectSpread22(_objectSpread22(_objectSpread22({}, classes), transform), mask), {}, {
       symbol,
       title,
       titleId,
@@ -68391,15 +59478,15 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         this.isTouch = !ev.isTrusted;
         if (this.mainPressed) {
           const { x: x2, y: y2, width, height } = this.getCanvasBounds();
-          const calcX = (0, import_lodash6.clamp)(ev.x - x2, 0, width);
-          const calcY = (0, import_lodash6.clamp)(ev.y - y2, 0, height);
+          const calcX = (0, import_lodash5.clamp)(ev.x - x2, 0, width);
+          const calcY = (0, import_lodash5.clamp)(ev.y - y2, 0, height);
           const v2 = Math.round(this.state.colour.hsv.v * this.palette.SV_MAX);
           const rgb = this.palette.getColourAt(calcX, calcY, v2);
           this.setNewColor(rgb);
           this.emitColour(true);
         } else if (this.sidePressed) {
           const { y: y2, height } = this.getCanvasSideBounds();
-          const calcY = (0, import_lodash6.clamp)(ev.y - y2, 0, height);
+          const calcY = (0, import_lodash5.clamp)(ev.y - y2, 0, height);
           const hsv = this.state.colour.hsv;
           const h = hsv.h;
           const s2 = hsv.s * this.palette.SV_MAX;
@@ -68856,7 +59943,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       if (!this.state.colourPicker) {
         return null;
       }
-      const onChange = (ev) => {
+      const onChange2 = (ev) => {
         const colour = ev.hex;
         const input = colour;
         this.setState({ colour, input });
@@ -68870,7 +59957,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         {
           ref: this.refColourPicker,
           palette: this.props.palette,
-          onChange,
+          onChange: onChange2,
           onClose: onExit
         }
       ));
@@ -68879,7 +59966,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       if (!this.props.renderInput)
         return null;
       const readOnly = this.props.mode === "read";
-      const onChange = (ev) => {
+      const onChange2 = (ev) => {
         if (this.props.mode === "read") {
           return;
         }
@@ -68907,7 +59994,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           type: "text",
           maxLength: 7,
           value: this.state.input,
-          onChange,
+          onChange: onChange2,
           readOnly
         }
       );
@@ -69089,8 +60176,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         this.setState({ delay: this.props.ledPattern.delay });
       }
     }
-    fontAwesome(icon2, onClick, style) {
-      return /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement(Button3, { onClick, style }, /* @__PURE__ */ import_react9.default.createElement(FontAwesomeIcon, { icon: icon2 })));
+    fontAwesome(icon3, onClick, style) {
+      return /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement(Button3, { onClick, style }, /* @__PURE__ */ import_react9.default.createElement(FontAwesomeIcon, { icon: icon3 })));
     }
     isTouch(ev) {
       return !!ev.touches;
@@ -69281,7 +60368,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }
         try {
           const s2 = this.patternAnimator.state;
-          this.props.als.lightSocket.clientSocket.emit("rgb-set", s2.r, s2.g, s2.b);
+          this.props.als.lightSocket.clientSocket.clientHandle.send(
+            0 /* RGBSet */,
+            new BinaryBuffer(3).setUint8(s2.r).setUint8(s2.g).setUint8(s2.b).getBuffer()
+          );
         } catch (error) {
           Logger.error("Socket sent", error);
         }
@@ -69307,10 +60397,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         this.ctx.font = " bold 15px arial";
         const MAX_RGB2 = 255;
         this.ctx.fillStyle = `${rgb2hex(MAX_RGB2 - s2.r, MAX_RGB2 - s2.g, MAX_RGB2 - s2.b)}`;
-        const text = `${p2.patternExecutionTime} / ${p2.totalTime}`;
-        this.ctx.fillText(text, 0, 12);
-        const text2 = `[${p2.index + 1}/${p2.frames}] ${p2.indexTime} / ${p2.nextIndexTime}`;
-        this.ctx.fillText(text2, 0, 25);
+        const text2 = `${p2.patternExecutionTime} / ${p2.totalTime}`;
+        this.ctx.fillText(text2, 0, 12);
+        const text22 = `[${p2.index + 1}/${p2.frames}] ${p2.indexTime} / ${p2.nextIndexTime}`;
+        this.ctx.fillText(text22, 0, 25);
         this.live();
         this.frame = requestAnimationFrame(this.draw);
       };
@@ -69621,491 +60711,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   };
 
   // src/client/Components/CustomTab/ScheduleBuilder.tsx
-  var import_react18 = __toESM(require_react());
-
-  // src/client/Components/DatePicker/DateAndTimePicker.tsx
-  var import_react13 = __toESM(require_react());
-
-  // src/client/Components/DatePicker/DatePicker.tsx
-  var import_react11 = __toESM(require_react());
-  var import_lodash7 = __toESM(require_lodash());
-  var Div7 = styled_components_browser_esm_default.div`
-    width: 200px;
-    align-items: center;
-    text-align: center;
-    background-color: transparent;
-    td {
-        cursor: pointer;
-        border: 1px solid transparent;
-        border-radius: 2px;
-        button {
-            color: white;
-            transition: color 0.25s;
-        }
-    }
-`;
-  var Caption = styled_components_browser_esm_default.div`
-    width: 90%;
-    padding: 2px 0 0 10px;
-    display: flex;
-`;
-  var ArrowButtons = styled_components_browser_esm_default.div`
-    margin-left: auto;
-    button {
-        background-color: transparent;
-        color: gray;
-        outline: none;
-        border: none;
-        margin: 2px;
-        transition: color 0.25;
-        :hover {
-            color: white;
-        }
-    }
-`;
-  var Time = styled_components_browser_esm_default.div`
-    display: inline;
-`;
-  var Button5 = styled_components_browser_esm_default.button`
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    outline: none;
-`;
-  var Input3 = styled_components_browser_esm_default.input`
-    outline: none;
-    display: inline;
-    width: 30px;
-    font-size: 20px;
-    padding: 2px;
-    margin: 2px;
-    color: white;
-    background: transparent;
-    border: none;
-`;
-  var DatePicker = class extends import_react11.default.Component {
-    constructor(props) {
-      super(props);
-      this.DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      this.MONTHS = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-      ];
-      this.ref = import_react11.default.createRef();
-      this.invalidDate = (/* @__PURE__ */ new Date("")).toString();
-      this.BORDER_SIZE = 2;
-      this.destroyed = false;
-      const date = /* @__PURE__ */ new Date();
-      const render = true;
-      const day = props.date.day || date.getDate();
-      const dayName = this.DAYS[date.getDay()];
-      const month = props.date.month || date.getMonth() + 1;
-      const year = props.date.year || date.getFullYear();
-      this.state = { render, dayName, day, month, year };
-    }
-    componentDidMount() {
-    }
-    componentWillUnmount() {
-      this.destroyed = true;
-    }
-    getMonthDays(month, year) {
-      const days = [];
-      const MAX_DAYs = 31;
-      const monthNumber = (/* @__PURE__ */ new Date(`${month}-15-${year}`)).getMonth();
-      for (let i2 = 1; i2 <= MAX_DAYs; i2++) {
-        const date = /* @__PURE__ */ new Date(`${month}-${i2}-${year}`);
-        if (this.invalidDate === date.toString() || date.getMonth() !== monthNumber) {
-          break;
-        }
-        days.push(this.DAYS[date.getDay()]);
-      }
-      return days;
-    }
-    getMonthTable(month, year) {
-      const daysOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-      const days = this.getMonthDays(month, year);
-      let daysIndex = 0;
-      const iterations = daysOrder.length * 6;
-      const grid = [];
-      let start = -1;
-      let end = -1;
-      for (let i2 = 0; i2 < iterations; i2++) {
-        const day = daysOrder[i2 % daysOrder.length];
-        if (day === days[daysIndex]) {
-          const index = daysIndex + 1;
-          const obj = { active: true, day: index, dayName: day, month, year };
-          if (daysIndex === 0) {
-            start = i2;
-          }
-          grid.push(obj);
-          end = i2;
-          daysIndex++;
-        } else {
-          grid.push({ active: false, day: -1, month, year, dayName: "Monday" });
-        }
-      }
-      let monthDiff = month - 1;
-      let yearDiff = year;
-      if (monthDiff === 0) {
-        monthDiff = 12;
-        yearDiff -= 1;
-      }
-      const preDays = this.getMonthDays(monthDiff, yearDiff);
-      start--;
-      for (let i2 = preDays.length; i2 > 0; i2--) {
-        if (grid[start]) {
-          grid[start].day = i2;
-          grid[start].month = monthDiff;
-          grid[start].year = yearDiff;
-          const d2 = /* @__PURE__ */ new Date(`${monthDiff}-${i2}-${yearDiff}`);
-          grid[start].dayName = this.DAYS[d2.getDay()];
-          start--;
-        } else {
-          break;
-        }
-      }
-      monthDiff = month + 1;
-      yearDiff = year;
-      if (monthDiff === 13) {
-        monthDiff = 1;
-        yearDiff += 1;
-      }
-      end++;
-      let count = 1;
-      for (let i2 = end; i2 < grid.length; i2++) {
-        grid[i2].day = count;
-        grid[i2].month = monthDiff;
-        grid[i2].year = yearDiff;
-        const d2 = /* @__PURE__ */ new Date(`${monthDiff}-${count}-${yearDiff}`);
-        grid[i2].dayName = this.DAYS[d2.getDay()];
-        count++;
-      }
-      return grid;
-    }
-    calendarDayToDate(calendarDay) {
-      const { month, day, year } = calendarDay;
-      return /* @__PURE__ */ new Date(`${month}-${day}-${year}`);
-    }
-    onDateClick(calendarDay) {
-      const { month, year, day } = calendarDay;
-      this.props.onChange(day, month, year, `${month}-${day}-${year}`);
-      this.setState({ month, year, day });
-    }
-    getRD(week) {
-      return week.map((e2, j2) => {
-        const style = {};
-        const styleButton = {};
-        if (e2.day === this.state.day && e2.month === this.state.month) {
-          style.border = "1px solid white";
-        }
-        if (!e2.active) {
-          styleButton.color = "#7f7f7f";
-        }
-        return /* @__PURE__ */ import_react11.default.createElement("td", { key: j2, style }, /* @__PURE__ */ import_react11.default.createElement(Button5, { style: styleButton, onClick: () => this.onDateClick(e2) }, e2.day));
-      });
-    }
-    getTR(calendarDays) {
-      return calendarDays.map((week, i2) => {
-        return /* @__PURE__ */ import_react11.default.createElement("tr", { key: i2 }, this.getRD(week));
-      });
-    }
-    correctDate(day, month, year) {
-      if (month === 13) {
-        month = 1;
-        year++;
-      }
-      if (month === 0) {
-        month = 12;
-        year--;
-      }
-      const isDayValid = (d2) => {
-        return !(this.invalidDate === d2.toString() || month === 2 && (d2.getMonth() === 0 || d2.getMonth() === 2));
-      };
-      const date = /* @__PURE__ */ new Date(`${month}-${day}-${year}`);
-      if (!isDayValid(date)) {
-        day = 29;
-        const date2 = /* @__PURE__ */ new Date(`${month}-${day}-${year}`);
-        if (!isDayValid(date2)) {
-          day = 28;
-        }
-      }
-      return { month, year, day };
-    }
-    changeMonth(incitementDiscernment) {
-      const { month, year, day } = this.state;
-      let m2 = month;
-      if (incitementDiscernment === 1) {
-        m2++;
-      } else if (incitementDiscernment === -1) {
-        m2--;
-      }
-      const date = this.correctDate(day, m2, year);
-      this.setState({ month: date.month, year: date.year, day: date.day });
-    }
-    getFontAwesomeArrows(icon2, onClick) {
-      return /* @__PURE__ */ import_react11.default.createElement("button", { onClick }, /* @__PURE__ */ import_react11.default.createElement(FontAwesomeIcon, { icon: icon2 }));
-    }
-    get renderTable() {
-      const date = (0, import_lodash7.chunk)(this.getMonthTable(this.state.month, this.state.year), this.DAYS.length);
-      return /* @__PURE__ */ import_react11.default.createElement("div", null, /* @__PURE__ */ import_react11.default.createElement(Caption, null, /* @__PURE__ */ import_react11.default.createElement("span", null, this.state.year, " ", this.MONTHS[this.state.month - 1]), /* @__PURE__ */ import_react11.default.createElement(ArrowButtons, null, this.getFontAwesomeArrows(faArrowUp, () => this.changeMonth(-1)), this.getFontAwesomeArrows(faArrowDown, () => this.changeMonth(1)))), /* @__PURE__ */ import_react11.default.createElement("table", null, /* @__PURE__ */ import_react11.default.createElement("thead", null, /* @__PURE__ */ import_react11.default.createElement("tr", null, /* @__PURE__ */ import_react11.default.createElement("th", null, "Mo"), /* @__PURE__ */ import_react11.default.createElement("th", null, "Tu"), /* @__PURE__ */ import_react11.default.createElement("th", null, "We"), /* @__PURE__ */ import_react11.default.createElement("th", null, "Th"), /* @__PURE__ */ import_react11.default.createElement("th", null, "Fr"), /* @__PURE__ */ import_react11.default.createElement("th", null, "Sa"), /* @__PURE__ */ import_react11.default.createElement("th", null, "Su"))), /* @__PURE__ */ import_react11.default.createElement("tbody", null, this.getTR(date))));
-    }
-    render() {
-      return /* @__PURE__ */ import_react11.default.createElement(Div7, { ref: this.ref }, this.renderTable);
-    }
-  };
-
-  // src/client/Components/DatePicker/TimePicker.tsx
-  var import_react12 = __toESM(require_react());
-  var import_lodash8 = __toESM(require_lodash());
-  var Div8 = styled_components_browser_esm_default.div`
-    width: 150px;
-    align-items: center;
-    text-align: center;
-    background-color: transparent;
-`;
-  var Time2 = styled_components_browser_esm_default.div`
-    display: inline;
-`;
-  var SelectableInput = styled_components_browser_esm_default.div`
-    &::hover {
-        border: 1px solid green;
-    }
-`;
-  var Input4 = styled_components_browser_esm_default.input`
-    outline: none;
-    display: inline;
-    width: 30px;
-    font-size: 20px;
-    padding: 2px;
-    margin: 2px;
-    color: white;
-    background: transparent;
-    border: none;
-`;
-  var TimePicker = class extends import_react12.default.Component {
-    constructor(props) {
-      super(props);
-      this.BORDER_SIZE = 2;
-      this.destroyed = false;
-      this.borderStyle = { border: `${this.BORDER_SIZE}px solid white` };
-      this.clickOnDiv = false;
-      this.ref = import_react12.default.createRef();
-      this.lastChangeTime = "";
-      this.onFocus = (ev) => {
-        if (this.ref.current && this.ref.current.contains(ev.target)) {
-          this.clickOnDiv = true;
-        }
-      };
-      this.onBlur = (ev) => {
-        const force = typeof ev === "boolean" ? ev : false;
-        if (this.destroyed || this.clickOnDiv) {
-          this.clickOnDiv = false;
-          return;
-        }
-        this.setState({ editingHours: false, editingMinutes: false, editingSeconds: false, render: false });
-        requestAnimationFrame(() => {
-          if (this.destroyed) {
-            return;
-          }
-          this.setState({ render: true });
-          let can = false;
-          if (ev instanceof MouseEvent || ev instanceof TouchEvent) {
-            can = !(ev.target instanceof HTMLInputElement);
-          }
-        });
-      };
-      this.toNumber = (value, min2, max2) => {
-        value = value.toString().replace(/\D/g, "");
-        return (0, import_lodash8.clamp)(toInt(value), min2, max2);
-      };
-      this.getInputStyle = (active) => {
-        const style = { border: `${this.BORDER_SIZE}px solid transparent` };
-        if (active) {
-          style.border = this.borderStyle.border;
-        }
-        return style;
-      };
-      const hours = toInt(props.hours);
-      const minutes = toInt(props.minutes);
-      const seconds = toInt(props.seconds);
-      const editingHours = false;
-      const editingMinutes = false;
-      const editingSeconds = false;
-      const render = true;
-      this.lastChangeTime = `${this.displayNumber(hours)}:${this.displayNumber(minutes)}:${this.displayNumber(
-        seconds
-      )}`;
-      this.state = { editingHours, editingMinutes, editingSeconds, render };
-    }
-    componentDidMount() {
-      window.addEventListener("mouseup", this.onBlur);
-      window.addEventListener("touchend", this.onBlur);
-      window.addEventListener("mousedown", this.onFocus);
-      window.addEventListener("touchstart", this.onFocus);
-    }
-    componentWillUnmount() {
-      this.destroyed = true;
-      window.removeEventListener("mouseup", this.onBlur);
-      window.removeEventListener("touchend", this.onBlur);
-      window.removeEventListener("mousedown", this.onFocus);
-      window.removeEventListener("touchstart", this.onFocus);
-    }
-    displayNumber(number) {
-      number = typeof number === "number" ? Math.round(number).toString() : number;
-      return number.length === 1 ? `0${number}` : number;
-    }
-    get secondsInput() {
-      const editingSeconds = this.state.editingSeconds;
-      return /* @__PURE__ */ import_react12.default.createElement(
-        Input4,
-        {
-          style: this.getInputStyle(editingSeconds),
-          onClick: () => this.setState({ editingSeconds: true }),
-          value: editingSeconds ? this.props.seconds : this.displayNumber(this.props.seconds),
-          onKeyDown: (ev) => ev.key.toLowerCase() === "enter" && this.onBlur(true),
-          onChange: (ev) => this.props.onSecondChange(this.toNumber(ev.target.value, 0, 59))
-        }
-      );
-    }
-    get minuteInput() {
-      const editingMinutes = this.state.editingMinutes;
-      return /* @__PURE__ */ import_react12.default.createElement(
-        Input4,
-        {
-          style: this.getInputStyle(editingMinutes),
-          onClick: () => this.setState({ editingMinutes: true }),
-          value: editingMinutes ? this.props.minutes : this.displayNumber(this.props.minutes),
-          onKeyDown: (ev) => ev.key.toLowerCase() === "enter" && this.onBlur(true),
-          onChange: (ev) => this.props.onMinuteChange(this.toNumber(ev.target.value, 0, 59))
-        }
-      );
-    }
-    get hourInput() {
-      const editingHours = this.state.editingHours;
-      return /* @__PURE__ */ import_react12.default.createElement(
-        Input4,
-        {
-          style: this.getInputStyle(editingHours),
-          onClick: () => this.setState({ editingHours: true }),
-          value: editingHours ? this.props.hours : this.displayNumber(this.props.hours),
-          onKeyDown: (ev) => ev.key.toLowerCase() === "enter" && this.onBlur(),
-          onChange: (ev) => this.props.onHourChange(this.toNumber(ev.target.value, 0, 23))
-        }
-      );
-    }
-    render() {
-      const render = this.state.render ? /* @__PURE__ */ import_react12.default.createElement("div", null, this.hourInput, ":", this.minuteInput, ":", this.secondsInput) : null;
-      return /* @__PURE__ */ import_react12.default.createElement(Div8, { ref: this.ref }, render);
-    }
-  };
-
-  // src/client/Components/DatePicker/DateAndTimePicker.tsx
-  var Div9 = styled_components_browser_esm_default.div`
-    background-color: rgb(42, 42, 42);
-    display: inline-block;
-    padding: 2px;
-    margin: 2px;
-    border-radius: 2px;
-`;
-  var DateAndTimePricker = class extends import_react13.default.Component {
-    constructor(props) {
-      super(props);
-      this.date = /* @__PURE__ */ new Date();
-      this.onSomethingChange = () => {
-        setTimeout(() => {
-          this.updateDate(this.state);
-          this.props.onDateChange(this.date);
-        });
-      };
-      this.onDateChange = (day, month, year, _date) => {
-        this.date.setMonth(month - 1);
-        this.date.setFullYear(year);
-        this.date.setDate(day);
-        this.updateState(this.date);
-        this.onSomethingChange();
-      };
-      this.onHourChange = (hours) => {
-        this.setState({ hours });
-        this.onSomethingChange();
-      };
-      this.onMinuteChange = (minutes) => {
-        this.setState({ minutes });
-        this.onSomethingChange();
-      };
-      this.onSecondsChange = (seconds) => {
-        this.setState({ seconds });
-        this.onSomethingChange();
-      };
-      const date = /* @__PURE__ */ new Date();
-      this.state = {
-        seconds: 0,
-        minutes: 0,
-        hours: 0,
-        day: 0,
-        month: 0,
-        year: 0
-      };
-    }
-    componentDidMount() {
-      this.date = this.props.date;
-      this.updateState(this.date);
-    }
-    get dateTruncated() {
-      const d2 = this.date;
-      const day = d2.getDate();
-      const month = d2.getMonth() + 1;
-      const year = d2.getFullYear();
-      return { day, month, year };
-    }
-    updateState(date) {
-      const seconds = date.getSeconds();
-      const minutes = date.getMinutes();
-      const hours = date.getHours();
-      const day = date.getDate();
-      const month = date.getMonth();
-      const year = date.getFullYear();
-      this.setState({ seconds, minutes, hours, day, month, year });
-    }
-    updateDate(date) {
-      const { seconds, minutes, hours, day, month, year } = date;
-      this.date.setSeconds(seconds);
-      this.date.setMinutes(minutes);
-      this.date.setHours(hours);
-      this.date.setDate(day);
-      this.date.setMonth(month);
-      this.date.setFullYear(year);
-    }
-    render() {
-      return /* @__PURE__ */ import_react13.default.createElement(Div9, null, /* @__PURE__ */ import_react13.default.createElement(
-        TimePicker,
-        {
-          hours: this.state.hours,
-          minutes: this.state.minutes,
-          seconds: this.state.seconds,
-          onHourChange: this.onHourChange,
-          onMinuteChange: this.onMinuteChange,
-          onSecondChange: this.onSecondsChange
-        }
-      ), /* @__PURE__ */ import_react13.default.createElement(DatePicker, { date: this.dateTruncated, onChange: this.onDateChange }));
-    }
-  };
-
-  // src/client/Components/DayScheduleBuilder/DayScheduleBuilder.tsx
-  var import_lodash9 = __toESM(require_lodash());
   var import_react16 = __toESM(require_react());
 
+  // src/client/Components/DayScheduleBuilder/DayScheduleBuilder.tsx
+  var import_lodash6 = __toESM(require_lodash());
+  var import_react14 = __toESM(require_react());
+
   // src/client/styles.ts
-  var Button6 = styled_components_browser_esm_default.button`
+  var Button5 = styled_components_browser_esm_default.button`
     user-select: none;
     background-color: rgb(42, 42, 42);
     color: white;
@@ -70126,14 +60739,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
 `;
 
   // src/client/Components/CustomTab/ScheduleItem.tsx
-  var import_react15 = __toESM(require_react());
+  var import_react13 = __toESM(require_react());
 
   // src/client/Components/CustomTab/PatternPreview.tsx
-  var import_react14 = __toESM(require_react());
-  var PatternPreview = class extends import_react14.default.Component {
+  var import_react11 = __toESM(require_react());
+  var PatternPreview = class extends import_react11.default.Component {
     constructor(props) {
       super(props);
-      this.ref = import_react14.default.createRef();
+      this.ref = import_react11.default.createRef();
       this.patternAnimator = new PatternAnimator();
       this.isEnabled = true;
       this.draw = () => {
@@ -70167,7 +60780,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       return this.ref.current;
     }
     render() {
-      return /* @__PURE__ */ import_react14.default.createElement(
+      return /* @__PURE__ */ import_react11.default.createElement(
         "canvas",
         {
           ref: this.ref,
@@ -70187,12 +60800,113 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
   };
 
+  // src/client/Components/Time/Time.tsx
+  var import_react12 = __toESM(require_react());
+  var Input3 = styled_components_browser_esm_default.input`
+    user-select: none;
+    background-color: rgb(42, 42, 42);
+    color: white;
+    font-size: 20px;
+    padding: 2px;
+    margin: 2px;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    transition: background-color 0.25s, color 0.25s;
+
+    :hover {
+        background-color: rgb(52, 52, 52);
+    }
+
+    :disabled {
+        color: rgb(128, 128, 128);
+        background-color: rgb(16, 16, 16);
+    }
+`;
+  var TimePickerSecond = class extends import_react12.default.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      };
+    }
+    componentDidMount() {
+      this.parseTime();
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+      if (prevProps.time !== this.props.time) {
+        this.parseTime();
+      }
+    }
+    parseTime() {
+      const [hours, minutes, seconds] = this.props.time.split(":").map((e2) => parseInt(e2, 10));
+      this.setState({
+        hours,
+        minutes,
+        seconds
+      });
+    }
+    update(state) {
+      const str = `${state.hours.toString().padStart(2, "0")}:${state.minutes.toString().padStart(2, "0")}:${state.seconds.toString().padStart(2, "0")}`;
+      this.props.onChange(str);
+    }
+    render() {
+      return /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement(
+        Input3,
+        {
+          type: "number",
+          id: "hours",
+          name: "hours",
+          min: "0",
+          max: "23",
+          value: this.state.hours,
+          onChange: (event) => {
+            const value = parseInt(event.target.value, 10) || 0;
+            this.setState({ hours: value });
+            this.update({ ...this.state, hours: value });
+          }
+        }
+      ), /* @__PURE__ */ import_react12.default.createElement(
+        Input3,
+        {
+          type: "number",
+          id: "minutes",
+          name: "minutes",
+          min: "0",
+          max: "59",
+          value: this.state.minutes,
+          onChange: (event) => {
+            const value = parseInt(event.target.value, 10) || 0;
+            this.setState({ minutes: value });
+            this.update({ ...this.state, minutes: value });
+          }
+        }
+      ), /* @__PURE__ */ import_react12.default.createElement(
+        Input3,
+        {
+          type: "number",
+          id: "seconds",
+          name: "seconds",
+          min: "0",
+          max: "59",
+          value: this.state.seconds,
+          onChange: (event) => {
+            const value = parseInt(event.target.value, 10) || 0;
+            this.setState({ seconds: value });
+            this.update({ ...this.state, seconds: value });
+          }
+        }
+      ));
+    }
+  };
+
   // src/client/Components/CustomTab/ScheduleItem.tsx
-  var import_react_time_picker = __toESM(require_entry());
-  var Div10 = styled_components_browser_esm_default.div`
+  var Div7 = styled_components_browser_esm_default.div`
     display: flex;
 `;
-  var Button7 = styled_components_browser_esm_default.button`
+  var Button6 = styled_components_browser_esm_default.button`
     user-select: none;
     background-color: rgb(42, 42, 42);
     color: white;
@@ -70211,7 +60925,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         background-color: rgb(16, 16, 16);
     }
 `;
-  var ScheduleHourDescriptor = class extends import_react15.default.Component {
+  var ScheduleHourDescriptor = class extends import_react13.default.Component {
     constructor(props) {
       super(props);
       this.state = {};
@@ -70224,22 +60938,22 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
     get descriptor() {
       if (this.props.descriptor.type === "RGB") {
-        const onChange = (event, colour) => {
+        const onChange2 = (event, colour) => {
           if (event === "change") {
             this.props.onDataChange(this.props.descriptor.type, hex2rgb(colour));
           }
         };
-        return /* @__PURE__ */ import_react15.default.createElement(
+        return /* @__PURE__ */ import_react13.default.createElement(
           ColourSetter,
           {
             mode: "set",
             colourRGB: this.props.descriptor.data,
             palette: this.props.palette,
-            onChange
+            onChange: onChange2
           }
         );
       } else if (this.props.descriptor.type === "Pattern") {
-        const onChange = (ev) => {
+        const onChange2 = (ev) => {
           const newPattern = ev.target.value;
           const pattern = this.props.als.patternService.patterns.find((p2) => p2.name === newPattern);
           if (pattern) {
@@ -70247,60 +60961,56 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           }
         };
         const ledPattern = this.props.descriptor.data;
-        return /* @__PURE__ */ import_react15.default.createElement("div", null, /* @__PURE__ */ import_react15.default.createElement("select", { name: "pattern-select", value: ledPattern.name, onChange }, this.props.als.patternService.patterns.map((m2, i2) => {
-          return /* @__PURE__ */ import_react15.default.createElement("option", { key: i2, value: m2.name }, m2.name);
-        })), /* @__PURE__ */ import_react15.default.createElement(PatternPreview, { ledPattern, width: 20, height: 20 }));
+        return /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("select", { name: "pattern-select", value: ledPattern.name, onChange: onChange2 }, this.props.als.patternService.patterns.map((m2, i2) => {
+          return /* @__PURE__ */ import_react13.default.createElement("option", { key: i2, value: m2.name }, m2.name);
+        })), /* @__PURE__ */ import_react13.default.createElement(PatternPreview, { ledPattern, width: 20, height: 20 }));
       }
-      return /* @__PURE__ */ import_react15.default.createElement("div", null, "Unknown");
+      return /* @__PURE__ */ import_react13.default.createElement("div", null, "Unknown");
     }
     get typeSelector() {
-      const onChange = (ev) => {
+      const onChange2 = (ev) => {
         this.props.onTypeChange(ev.target.value);
       };
-      return /* @__PURE__ */ import_react15.default.createElement("select", { name: "typeSelect", value: this.props.descriptor.type, onChange }, SCHEDULE_TYPE.map((m2, i2) => {
-        return /* @__PURE__ */ import_react15.default.createElement("option", { key: i2, value: m2 }, m2);
+      return /* @__PURE__ */ import_react13.default.createElement("select", { name: "typeSelect", value: this.props.descriptor.type, onChange: onChange2 }, SCHEDULE_TYPE.map((m2, i2) => {
+        return /* @__PURE__ */ import_react13.default.createElement("option", { key: i2, value: m2 }, m2);
       }));
     }
     get timePickers() {
-      const onChange = (time, start) => {
+      const onChange2 = (time, start) => {
         const split3 = this.props.time.split("-");
         const newTime = start ? `${time}-${split3[1]}` : `${split3[0]}-${time}`;
         this.props.onTimeChange(this.props.time, newTime);
       };
       const split2 = this.props.time.split("-");
-      return /* @__PURE__ */ import_react15.default.createElement(import_react15.default.Fragment, null, /* @__PURE__ */ import_react15.default.createElement("span", null, "Start:"), /* @__PURE__ */ import_react15.default.createElement(
-        import_react_time_picker.default,
+      return /* @__PURE__ */ import_react13.default.createElement(import_react13.default.Fragment, null, /* @__PURE__ */ import_react13.default.createElement("span", null, "Start:"), /* @__PURE__ */ import_react13.default.createElement(
+        TimePickerSecond,
         {
-          className: "time-picker",
-          value: split2[0],
-          onChange: (ev) => onChange(ev, true),
-          maxDetail: "second",
-          disableClock: true,
-          clearIcon: null
+          time: split2[0],
+          onChange: (ev) => {
+            onChange2(ev, true);
+          }
         }
-      ), /* @__PURE__ */ import_react15.default.createElement("span", null, "End:"), /* @__PURE__ */ import_react15.default.createElement(
-        import_react_time_picker.default,
+      ), /* @__PURE__ */ import_react13.default.createElement("span", null, "End:"), /* @__PURE__ */ import_react13.default.createElement(
+        TimePickerSecond,
         {
-          className: "time-picker",
-          value: split2[1],
-          onChange: (ev) => onChange(ev, false),
-          maxDetail: "second",
-          disableClock: true,
-          clearIcon: null
+          time: split2[1],
+          onChange: (ev) => {
+            onChange2(ev, false);
+          }
         }
       ));
     }
     render() {
-      return /* @__PURE__ */ import_react15.default.createElement(Div10, null, this.timePickers, this.typeSelector, this.descriptor, /* @__PURE__ */ import_react15.default.createElement(Button7, { onClick: () => this.props.onRemove() }, "Delete"));
+      return /* @__PURE__ */ import_react13.default.createElement(Div7, null, this.timePickers, this.typeSelector, this.descriptor, /* @__PURE__ */ import_react13.default.createElement(Button6, { onClick: () => this.props.onRemove() }, "Delete"));
     }
   };
 
   // src/client/Components/DayScheduleBuilder/DayScheduleBuilder.tsx
   var copiedData = [];
-  var DayScheduleBuilder = class extends import_react16.default.Component {
+  var DayScheduleBuilder = class extends import_react14.default.Component {
     constructor(props) {
       super(props);
-      this.debounceSortAndCorrect = (0, import_lodash9.debounce)(() => {
+      this.debounceSortAndCorrect = (0, import_lodash6.debounce)(() => {
         const state = { ...this.state };
         this.sort(state);
         this.correct(state);
@@ -70366,7 +61076,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           time: this.getRandomTime(),
           data: {
             type: "RGB",
-            data: { r: (0, import_lodash9.random)(0, 255), g: (0, import_lodash9.random)(0, 255), b: (0, import_lodash9.random)(0, 255) }
+            data: { r: (0, import_lodash6.random)(0, 255), g: (0, import_lodash6.random)(0, 255), b: (0, import_lodash6.random)(0, 255) }
           }
         });
         this.sort(state, false);
@@ -70411,7 +61121,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       this.setState({ canPaste: !!copiedData.length });
     }
     getRandomTime() {
-      const r2 = import_lodash9.random;
+      const r2 = import_lodash6.random;
       return `${r2(0, 23)}:${r2(10, 59)}:${r2(10, 59)}-${r2(0, 23)}:${r2(10, 59)}:${r2(10, 59)}`;
     }
     onTimeChange(hourDate, time) {
@@ -70454,7 +61164,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
     get schedule() {
       return this.state.daySchedule.map((s2, i2) => {
-        return /* @__PURE__ */ import_react16.default.createElement(
+        return /* @__PURE__ */ import_react14.default.createElement(
           ScheduleHourDescriptor,
           {
             key: i2,
@@ -70471,15 +61181,12 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       });
     }
     render() {
-      return /* @__PURE__ */ import_react16.default.createElement("div", null, this.schedule, /* @__PURE__ */ import_react16.default.createElement(Button6, { onClick: this.onAdd }, "Add"), this.state.daySchedule.length ? /* @__PURE__ */ import_react16.default.createElement(Button6, { onClick: this.onCopy }, "Copy") : null, this.state.canPaste ? /* @__PURE__ */ import_react16.default.createElement(Button6, { onClick: this.onPaste }, " Paste ") : null);
+      return /* @__PURE__ */ import_react14.default.createElement("div", null, this.schedule, /* @__PURE__ */ import_react14.default.createElement(Button5, { onClick: this.onAdd }, "Add"), this.state.daySchedule.length ? /* @__PURE__ */ import_react14.default.createElement(Button5, { onClick: this.onCopy }, "Copy") : null, this.state.canPaste ? /* @__PURE__ */ import_react14.default.createElement(Button5, { onClick: this.onPaste }, " Paste ") : null);
     }
   };
 
-  // src/client/Components/CustomTab/ScheduleBuilder.tsx
-  var import_react_date_picker = __toESM(require_entry2());
-
   // node_modules/react-tooltip/dist/index.es.js
-  var import_react17 = __toESM(require_react());
+  var import_react15 = __toESM(require_react());
   var import_prop_types2 = __toESM(require_prop_types());
 
   // node_modules/react-tooltip/node_modules/uuid/dist/esm-browser/rng.js
@@ -70536,7 +61243,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
     return keys3;
   }
-  function _objectSpread22(target) {
+  function _objectSpread23(target) {
     for (var i2 = 1; i2 < arguments.length; i2++) {
       var source = null != arguments[i2] ? arguments[i2] : {};
       i2 % 2 ? ownKeys$2(Object(source), true).forEach(function(key) {
@@ -70671,20 +61378,20 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       return _possibleConstructorReturn(this, result);
     };
   }
-  function _unsupportedIterableToArray2(o2, minLen) {
+  function _unsupportedIterableToArray3(o2, minLen) {
     if (!o2)
       return;
     if (typeof o2 === "string")
-      return _arrayLikeToArray2(o2, minLen);
+      return _arrayLikeToArray3(o2, minLen);
     var n2 = Object.prototype.toString.call(o2).slice(8, -1);
     if (n2 === "Object" && o2.constructor)
       n2 = o2.constructor.name;
     if (n2 === "Map" || n2 === "Set")
       return Array.from(o2);
     if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
-      return _arrayLikeToArray2(o2, minLen);
+      return _arrayLikeToArray3(o2, minLen);
   }
-  function _arrayLikeToArray2(arr, len) {
+  function _arrayLikeToArray3(arr, len) {
     if (len == null || len > arr.length)
       len = arr.length;
     for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++)
@@ -70694,7 +61401,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   function _createForOfIteratorHelper(o2, allowArrayLike) {
     var it = typeof Symbol !== "undefined" && o2[Symbol.iterator] || o2["@@iterator"];
     if (!it) {
-      if (Array.isArray(o2) || (it = _unsupportedIterableToArray2(o2)) || allowArrayLike && o2 && typeof o2.length === "number") {
+      if (Array.isArray(o2) || (it = _unsupportedIterableToArray3(o2)) || allowArrayLike && o2 && typeof o2.length === "number") {
         if (it)
           o2 = it;
         var i2 = 0;
@@ -70936,8 +61643,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   };
   var aCallable$1 = aCallable$2;
   var isNullOrUndefined = isNullOrUndefined$2;
-  var getMethod$1 = function(V2, P2) {
-    var func = V2[P2];
+  var getMethod$1 = function(V2, P) {
+    var func = V2[P];
     return isNullOrUndefined(func) ? void 0 : aCallable$1(func);
   };
   var call$2 = functionCall;
@@ -71061,9 +61768,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   };
   var DESCRIPTORS$7 = descriptors;
   var fails$4 = fails$9;
-  var createElement = documentCreateElement$1;
+  var createElement2 = documentCreateElement$1;
   var ie8DomDefine = !DESCRIPTORS$7 && !fails$4(function() {
-    return Object.defineProperty(createElement("div"), "a", {
+    return Object.defineProperty(createElement2("div"), "a", {
       get: function() {
         return 7;
       }
@@ -71078,16 +61785,16 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var hasOwn$5 = hasOwnProperty_1;
   var IE8_DOM_DEFINE$1 = ie8DomDefine;
   var $getOwnPropertyDescriptor$1 = Object.getOwnPropertyDescriptor;
-  objectGetOwnPropertyDescriptor.f = DESCRIPTORS$6 ? $getOwnPropertyDescriptor$1 : function getOwnPropertyDescriptor(O2, P2) {
+  objectGetOwnPropertyDescriptor.f = DESCRIPTORS$6 ? $getOwnPropertyDescriptor$1 : function getOwnPropertyDescriptor(O2, P) {
     O2 = toIndexedObject$3(O2);
-    P2 = toPropertyKey$1(P2);
+    P = toPropertyKey$1(P);
     if (IE8_DOM_DEFINE$1)
       try {
-        return $getOwnPropertyDescriptor$1(O2, P2);
+        return $getOwnPropertyDescriptor$1(O2, P);
       } catch (error) {
       }
-    if (hasOwn$5(O2, P2))
-      return createPropertyDescriptor$1(!call(propertyIsEnumerableModule.f, O2, P2), O2[P2]);
+    if (hasOwn$5(O2, P))
+      return createPropertyDescriptor$1(!call(propertyIsEnumerableModule.f, O2, P), O2[P]);
   };
   var objectDefineProperty = {};
   var DESCRIPTORS$5 = descriptors;
@@ -71118,14 +61825,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var ENUMERABLE = "enumerable";
   var CONFIGURABLE$1 = "configurable";
   var WRITABLE = "writable";
-  objectDefineProperty.f = DESCRIPTORS$4 ? V8_PROTOTYPE_DEFINE_BUG$1 ? function defineProperty(O2, P2, Attributes) {
+  objectDefineProperty.f = DESCRIPTORS$4 ? V8_PROTOTYPE_DEFINE_BUG$1 ? function defineProperty(O2, P, Attributes) {
     anObject$3(O2);
-    P2 = toPropertyKey(P2);
+    P = toPropertyKey(P);
     anObject$3(Attributes);
-    if (typeof O2 === "function" && P2 === "prototype" && "value" in Attributes && WRITABLE in Attributes && !Attributes[WRITABLE]) {
-      var current = $getOwnPropertyDescriptor(O2, P2);
+    if (typeof O2 === "function" && P === "prototype" && "value" in Attributes && WRITABLE in Attributes && !Attributes[WRITABLE]) {
+      var current = $getOwnPropertyDescriptor(O2, P);
       if (current && current[WRITABLE]) {
-        O2[P2] = Attributes.value;
+        O2[P] = Attributes.value;
         Attributes = {
           configurable: CONFIGURABLE$1 in Attributes ? Attributes[CONFIGURABLE$1] : current[CONFIGURABLE$1],
           enumerable: ENUMERABLE in Attributes ? Attributes[ENUMERABLE] : current[ENUMERABLE],
@@ -71133,20 +61840,20 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         };
       }
     }
-    return $defineProperty(O2, P2, Attributes);
-  } : $defineProperty : function defineProperty2(O2, P2, Attributes) {
+    return $defineProperty(O2, P, Attributes);
+  } : $defineProperty : function defineProperty2(O2, P, Attributes) {
     anObject$3(O2);
-    P2 = toPropertyKey(P2);
+    P = toPropertyKey(P);
     anObject$3(Attributes);
     if (IE8_DOM_DEFINE)
       try {
-        return $defineProperty(O2, P2, Attributes);
+        return $defineProperty(O2, P, Attributes);
       } catch (error) {
       }
     if ("get" in Attributes || "set" in Attributes)
       throw $TypeError("Accessors not supported");
     if ("value" in Attributes)
-      O2[P2] = Attributes.value;
+      O2[P] = Attributes.value;
     return O2;
   };
   var DESCRIPTORS$3 = descriptors;
@@ -71449,17 +62156,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var getOwnPropertySymbolsModule = objectGetOwnPropertySymbols;
   var anObject$2 = anObject$4;
   var concat = uncurryThis$3([].concat);
-  var ownKeys$1 = getBuiltIn$2("Reflect", "ownKeys") || function ownKeys2(it) {
+  var ownKeys$1 = getBuiltIn$2("Reflect", "ownKeys") || function ownKeys3(it) {
     var keys3 = getOwnPropertyNamesModule.f(anObject$2(it));
     var getOwnPropertySymbols = getOwnPropertySymbolsModule.f;
     return getOwnPropertySymbols ? concat(keys3, getOwnPropertySymbols(it)) : keys3;
   };
   var hasOwn2 = hasOwnProperty_1;
-  var ownKeys3 = ownKeys$1;
+  var ownKeys4 = ownKeys$1;
   var getOwnPropertyDescriptorModule = objectGetOwnPropertyDescriptor;
   var definePropertyModule$1 = objectDefineProperty;
   var copyConstructorProperties$1 = function(target, source, exceptions) {
-    var keys3 = ownKeys3(source);
+    var keys3 = ownKeys4(source);
     var defineProperty4 = definePropertyModule$1.f;
     var getOwnPropertyDescriptor3 = getOwnPropertyDescriptorModule.f;
     for (var i2 = 0; i2 < keys3.length; i2++) {
@@ -71568,7 +62275,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var inspectSource = inspectSource$2;
   var noop6 = function() {
   };
-  var empty = [];
+  var empty2 = [];
   var construct = getBuiltIn$1("Reflect", "construct");
   var constructorRegExp = /^\s*(?:class|function)\b/;
   var exec = uncurryThis$1(constructorRegExp.exec);
@@ -71577,7 +62284,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     if (!isCallable(argument))
       return false;
     try {
-      construct(noop6, empty, argument);
+      construct(noop6, empty2, argument);
       return true;
     } catch (error) {
       return false;
@@ -72184,9 +62891,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       var _iterator = _createForOfIteratorHelper(allPlaces), _step;
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done; ) {
-          var d2 = _step.value;
-          if (placeIsInside[d2])
-            return d2;
+          var d3 = _step.value;
+          if (placeIsInside[d3])
+            return d3;
         }
       } catch (err) {
         _iterator.e(err);
@@ -72355,11 +63062,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     if (!multiline || multiline === "false" || !regexp.test(tip)) {
       return tip;
     }
-    return tip.split(regexp).map(function(d2, i2) {
-      return /* @__PURE__ */ import_react17.default.createElement("span", {
+    return tip.split(regexp).map(function(d3, i2) {
+      return /* @__PURE__ */ import_react15.default.createElement("span", {
         key: i2,
         className: "multi-line"
-      }, d2);
+      }, d3);
     });
   }
   function parseAria(props) {
@@ -72423,7 +63130,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
   };
   function getDefaultPopupColors(type) {
-    return defaultColors[type] ? _objectSpread22({}, defaultColors[type]) : void 0;
+    return defaultColors[type] ? _objectSpread23({}, defaultColors[type]) : void 0;
   }
   var DEFAULT_PADDING = "8px 21px";
   var DEFAULT_RADIUS = {
@@ -73014,7 +63721,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       }
     }, {
       key: "render",
-      value: function render() {
+      value: function render3() {
         var _this9 = this;
         var _this$state3 = this.state, extraClass = _this$state3.extraClass, html2 = _this$state3.html, ariaProps = _this$state3.ariaProps, disable = _this$state3.disable, uuid = _this$state3.uuid;
         var content = this.getTooltipContent();
@@ -73030,7 +63737,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         var wrapperClassName = [tooltipClass, extraClass].filter(Boolean).join(" ");
         if (html2) {
           var htmlContent = "".concat(content).concat(style ? '\n<style aria-hidden="true">'.concat(style, "</style>") : "");
-          return /* @__PURE__ */ import_react17.default.createElement(Wrapper, _extends({
+          return /* @__PURE__ */ import_react15.default.createElement(Wrapper, _extends({
             className: "".concat(wrapperClassName),
             id: this.props.id || uuid,
             ref: function ref(_ref2) {
@@ -73043,7 +63750,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             }
           }));
         } else {
-          return /* @__PURE__ */ import_react17.default.createElement(Wrapper, _extends({
+          return /* @__PURE__ */ import_react15.default.createElement(Wrapper, _extends({
             className: "".concat(wrapperClassName),
             id: this.props.id || uuid
           }, ariaProps, {
@@ -73051,7 +63758,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               return _this9.tooltipRef = _ref2;
             },
             "data-id": "tooltip"
-          }), style && /* @__PURE__ */ import_react17.default.createElement("style", {
+          }), style && /* @__PURE__ */ import_react15.default.createElement("style", {
             dangerouslySetInnerHTML: {
               __html: style
             },
@@ -73117,13 +63824,13 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         if (!isChanged) {
           return null;
         }
-        return _objectSpread22(_objectSpread22({}, prevState), {}, {
+        return _objectSpread23(_objectSpread23({}, prevState), {}, {
           ariaProps: newAriaProps
         });
       }
     }]);
     return ReactTooltip2;
-  }(import_react17.default.Component), _defineProperty3(_class2, "defaultProps", {
+  }(import_react15.default.Component), _defineProperty3(_class2, "defaultProps", {
     insecure: true,
     resizeHide: true,
     wrapper: "div",
@@ -73150,6 +63857,37 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         background-color: rgb(16, 16, 16);
     }
 `;
+  var InlineBlock = styled_components_browser_esm_default.div`
+    display: inline-block;
+`;
+  var Flex = styled_components_browser_esm_default.div`
+    display: flex;
+`;
+  var FlexColumn = styled_components_browser_esm_default.div`
+    display: flex;
+    flex-direction: column;
+`;
+  var DateInput = styled_components_browser_esm_default.input`
+    user-select: none;
+    background-color: rgb(42, 42, 42);
+    color: white;
+    font-size: 20px;
+    padding: 2px;
+    margin: 2px;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    transition: background-color 0.25s, color 0.25s;
+
+    :hover {
+        background-color: rgb(52, 52, 52);
+    }
+
+    :disabled {
+        color: rgb(128, 128, 128);
+        background-color: rgb(16, 16, 16);
+    }
+`;
   var Space = styled_components_browser_esm_default.div`
     width: 20px;
     display: inline-block;
@@ -73157,15 +63895,20 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var Inline = styled_components_browser_esm_default.div`
     display: inline-block;
 `;
+  var Margin = styled_components_browser_esm_default.div`
+    margin: 2px;
+`;
   var CustomDate = styled_components_browser_esm_default.div`
     position: absolute;
 `;
-  var ScheduleBuilder = class extends import_react18.default.Component {
+  var ScheduleBuilder = class extends import_react16.default.Component {
     constructor(props) {
       super(props);
-      this.canvasRef = import_react18.default.createRef();
+      this.canvasRef = import_react16.default.createRef();
       this.canvasHeight = 50;
       this.canvasWidth = 50;
+      this.last = Date.now();
+      this.time = 0;
       this.onSaveStateChange = (saved) => {
         this.setState({ saved });
       };
@@ -73183,6 +63926,18 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         this.scheduler.loadSchedule(s2);
       };
       this.draw = () => {
+        const nowMs = Date.now();
+        const ms = nowMs - this.last;
+        this.last = nowMs;
+        this.time += ms;
+        if (this.time > SECOND && this.state.customDate) {
+          const then = this.state.customDate;
+          then.setSeconds((/* @__PURE__ */ new Date()).getSeconds());
+          const time = then.getTime() + this.time;
+          const clone = new Date(time);
+          this.setState({ time: clone.toLocaleString(), customDate: clone });
+          this.time = 0;
+        }
         const { width, height } = this.canvas.getBoundingClientRect();
         const { r: r2, g: g2, b: b2 } = this.scheduler.state;
         this.ctx.fillStyle = rgb2hex(r2, g2, b2);
@@ -73191,9 +63946,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       };
       this.onAddCustomDate = () => {
         this.setState({ addNewCustom: /* @__PURE__ */ new Date() });
-      };
-      this.setCustomDate = () => {
-        this.setState({ customDate: this.state.customDate ? void 0 : this.scheduler.getDate() });
       };
       this.onDescriptionChange = (dayDescription) => {
         const description = this.s.getFullSchedule();
@@ -73232,7 +63984,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       cancelAnimationFrame(this.frame);
       this.s.off("update", this.onScheduleUpdate);
       this.s.off("on-save-change", this.onSaveStateChange);
-      this.scheduler.destroy();
+      if (this.scheduler) {
+        this.scheduler.destroy();
+      }
     }
     get canvas() {
       return this.canvasRef.current;
@@ -73240,14 +63994,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     get days() {
       const description = this.props.als.scheduleService.getFullSchedule();
       if (!description) {
-        return /* @__PURE__ */ import_react18.default.createElement("span", null, "Loading....");
+        return /* @__PURE__ */ import_react16.default.createElement("span", null, "Loading....");
       }
       const onSelect = (selected) => {
         this.setState({ selected });
       };
-      return /* @__PURE__ */ import_react18.default.createElement("div", null, DAY_NAMES.map((m2, i2) => {
-        return /* @__PURE__ */ import_react18.default.createElement(DayButton, { key: i2, onClick: () => onSelect(m2), disabled: this.state.selected === m2 }, m2);
-      }), /* @__PURE__ */ import_react18.default.createElement(DayButton, { onClick: () => onSelect("Custom"), disabled: this.state.selected === "Custom" }, "Custom"));
+      return /* @__PURE__ */ import_react16.default.createElement("div", null, DAY_NAMES.map((m2, i2) => {
+        return /* @__PURE__ */ import_react16.default.createElement(DayButton, { key: i2, onClick: () => onSelect(m2), disabled: this.state.selected === m2 }, m2);
+      }), /* @__PURE__ */ import_react16.default.createElement(DayButton, { onClick: () => onSelect("Custom"), disabled: this.state.selected === "Custom" }, "Custom"));
     }
     get daySchedule() {
       const description = this.s.getFullSchedule();
@@ -73258,19 +64012,33 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       }
       return description[selected];
     }
+    toDateString(date) {
+      const year = date.getFullYear();
+      const month = `${date.getMonth() + 1}`.padStart(2, "0");
+      const day = `${date.getDate()}`.padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
     renderNewCustomDatePicker() {
       if (!this.state.addNewCustom) {
-        return /* @__PURE__ */ import_react18.default.createElement(DayButton, { onClick: this.onAddCustomDate }, "Add date");
+        return /* @__PURE__ */ import_react16.default.createElement(DayButton, { onClick: this.onAddCustomDate }, "Add date");
       }
-      return /* @__PURE__ */ import_react18.default.createElement(import_react18.default.Fragment, null, /* @__PURE__ */ import_react18.default.createElement(
-        import_react_date_picker.default,
+      return /* @__PURE__ */ import_react16.default.createElement(import_react16.default.Fragment, null, /* @__PURE__ */ import_react16.default.createElement(
+        DateInput,
         {
-          className: "date-picker",
-          value: this.state.addNewCustom,
-          onChange: (date) => this.setState({ addNewCustom: date })
+          type: "date",
+          value: this.state.addNewCustom ? this.toDateString(this.state.addNewCustom) : void 0,
+          onChange: (ev) => {
+            const value = ev.target.value;
+            if (value) {
+              console.log(value);
+              this.setState({ addNewCustom: new Date(value) });
+            } else {
+              this.setState({ addNewCustom: void 0 });
+            }
+          }
         }
-      ), /* @__PURE__ */ import_react18.default.createElement(
-        Button6,
+      ), /* @__PURE__ */ import_react16.default.createElement(
+        Button5,
         {
           onClick: () => {
             const state = { ...this.state };
@@ -73286,8 +64054,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           }
         },
         "Add date"
-      ), /* @__PURE__ */ import_react18.default.createElement(
-        Button6,
+      ), /* @__PURE__ */ import_react16.default.createElement(
+        Button5,
         {
           onClick: () => {
             this.setState({ addNewCustom: void 0 });
@@ -73304,12 +64072,12 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         const times = Object.keys(description.custom);
         times.sort((a2, b2) => new Date(a2) > new Date(b2) ? 1 : -1);
         const dayDescription = custom ? this.daySchedule : null;
-        return /* @__PURE__ */ import_react18.default.createElement(import_react18.default.Fragment, null, times.map((t2, i2) => {
+        return /* @__PURE__ */ import_react16.default.createElement(import_react16.default.Fragment, null, times.map((t2, i2) => {
           const m2 = new Date(t2);
           const check2 = /* @__PURE__ */ new Date();
           check2.setDate(check2.getDate() - 1);
           const expired = m2 < check2;
-          return /* @__PURE__ */ import_react18.default.createElement(Inline, { key: i2 }, /* @__PURE__ */ import_react18.default.createElement(
+          return /* @__PURE__ */ import_react16.default.createElement(Inline, { key: i2 }, /* @__PURE__ */ import_react16.default.createElement(
             DayButton,
             {
               "data-tip": expired ? "This date already happened" : "",
@@ -73318,8 +64086,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               disabled: this.state.customSelected === t2
             },
             m2.toLocaleDateString()
-          ), /* @__PURE__ */ import_react18.default.createElement(ReactTooltip, { place: "top", type: "info", effect: "solid" }));
-        }), /* @__PURE__ */ import_react18.default.createElement(Space, null), this.state.customSelected ? /* @__PURE__ */ import_react18.default.createElement(
+          ), /* @__PURE__ */ import_react16.default.createElement(ReactTooltip, { place: "top", type: "info", effect: "solid" }));
+        }), /* @__PURE__ */ import_react16.default.createElement(Space, null), this.state.customSelected ? /* @__PURE__ */ import_react16.default.createElement(
           DayButton,
           {
             onClick: () => {
@@ -73332,7 +64100,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           "Remove (",
           this.state.customSelected,
           ")"
-        ) : null, this.renderNewCustomDatePicker(), dayDescription ? /* @__PURE__ */ import_react18.default.createElement(
+        ) : null, this.renderNewCustomDatePicker(), dayDescription ? /* @__PURE__ */ import_react16.default.createElement(
           DayScheduleBuilder,
           {
             dayDescription: this.daySchedule,
@@ -73342,7 +64110,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           }
         ) : null);
       }
-      return /* @__PURE__ */ import_react18.default.createElement(
+      return /* @__PURE__ */ import_react16.default.createElement(
         DayScheduleBuilder,
         {
           dayDescription: this.daySchedule,
@@ -73355,25 +64123,33 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     get s() {
       return this.props.als.scheduleService;
     }
-    get customDatePicker() {
-      if (!this.state.customDate) {
-        return null;
+    displayTime() {
+      if (this.state.customDate && this.state.time) {
+        return /* @__PURE__ */ import_react16.default.createElement(Margin, null, this.state.time);
       }
-      const e2 = (date) => {
-        this.scheduler.getDate = () => {
-          return date;
-        };
-        this.setState({ customDate: date });
-      };
-      return /* @__PURE__ */ import_react18.default.createElement(CustomDate, null, /* @__PURE__ */ import_react18.default.createElement(DateAndTimePricker, { onDateChange: e2, date: this.state.customDate }));
+      return null;
     }
     render() {
-      return /* @__PURE__ */ import_react18.default.createElement("div", null, /* @__PURE__ */ import_react18.default.createElement("h1", null, "Schedule builder"), /* @__PURE__ */ import_react18.default.createElement("canvas", { ref: this.canvasRef, width: this.canvasWidth, height: this.canvasHeight }), this.customDatePicker, /* @__PURE__ */ import_react18.default.createElement(Button6, { onClick: this.setCustomDate }, this.state.customDate ? "Hide" : "Set custom date"), /* @__PURE__ */ import_react18.default.createElement(Button6, { className: this.state.saved ? "" : "warning-button", onClick: this.onSave }, "Save"), " ", this.state.saved ? null : "You have unsaved schedule", this.days, this.renderDaySchedule());
+      return /* @__PURE__ */ import_react16.default.createElement("div", null, /* @__PURE__ */ import_react16.default.createElement("h1", null, "Schedule builder"), /* @__PURE__ */ import_react16.default.createElement(Flex, null, /* @__PURE__ */ import_react16.default.createElement("canvas", { ref: this.canvasRef, width: this.canvasWidth, height: this.canvasHeight }), /* @__PURE__ */ import_react16.default.createElement(InlineBlock, null, /* @__PURE__ */ import_react16.default.createElement(Flex, null, /* @__PURE__ */ import_react16.default.createElement(FlexColumn, null, this.displayTime(), /* @__PURE__ */ import_react16.default.createElement(
+        DateInput,
+        {
+          type: "datetime-local",
+          onChange: (data2) => {
+            const value = data2.nativeEvent.target.value;
+            if (value) {
+              const date = new Date(value);
+              this.setState({ customDate: date });
+            } else {
+              this.setState({ customDate: void 0 });
+            }
+          }
+        }
+      )), /* @__PURE__ */ import_react16.default.createElement(Button5, { className: this.state.saved ? "" : "warning-button", onClick: this.onSave }, "Save"), this.state.saved ? null : "You have unsaved schedule"))), this.days, this.renderDaySchedule());
     }
   };
 
   // src/client/Components/CustomTab/DoorSensor.tsx
-  var import_react19 = __toESM(require_react());
+  var import_react17 = __toESM(require_react());
   var Warper2 = styled_components_browser_esm_default.div`
     width: 100%;
 `;
@@ -73398,13 +64174,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
 `;
   var daysName = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  var DoorSensor = class extends import_react19.default.Component {
+  var DoorSensor = class extends import_react17.default.Component {
     constructor(props) {
       super(props);
       this.destroyed = false;
       this.refresh = async () => {
         try {
-          const result = await this.props.als.lightSocket.emitPromiseIfPossible("get-door-log");
+          const buffer = await this.props.als.lightSocket.emitPromiseIfPossible(6 /* DoorLog */);
+          const result = JSON.parse(buffer.getUtf8String());
           if (!this.destroyed) {
             this.setState({ doorLog: result });
           }
@@ -73416,7 +64193,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         const confirmation = confirm("Are you sure you want to clear all door logs?");
         if (confirmation) {
           try {
-            await this.props.als.lightSocket.emitPromiseIfPossible("clear-door-log");
+            await this.props.als.lightSocket.emitPromiseIfPossible(7 /* DoorClear */);
             if (!this.destroyed) {
               this.setState({ doorLog: {} });
             }
@@ -73444,7 +64221,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       const doorLog = this.state.doorLog;
       const keys3 = Object.keys(doorLog);
       if (!keys3.length) {
-        return /* @__PURE__ */ import_react19.default.createElement("h5", null, "No door logs yet");
+        return /* @__PURE__ */ import_react17.default.createElement("h5", null, "No door logs yet");
       }
       let max2 = 0;
       keys3.sort((a2, b2) => {
@@ -73458,10 +64235,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           max2 = number;
         }
       }
-      return /* @__PURE__ */ import_react19.default.createElement(Table, null, /* @__PURE__ */ import_react19.default.createElement("thead", null, /* @__PURE__ */ import_react19.default.createElement("tr", null, /* @__PURE__ */ import_react19.default.createElement("th", null, "Date"), /* @__PURE__ */ import_react19.default.createElement("th", null, "Count"), /* @__PURE__ */ import_react19.default.createElement("th", null, "Representation"))), /* @__PURE__ */ import_react19.default.createElement("tbody", null, keys3.map((v2, i2) => {
+      return /* @__PURE__ */ import_react17.default.createElement(Table, null, /* @__PURE__ */ import_react17.default.createElement("thead", null, /* @__PURE__ */ import_react17.default.createElement("tr", null, /* @__PURE__ */ import_react17.default.createElement("th", null, "Date"), /* @__PURE__ */ import_react17.default.createElement("th", null, "Count"), /* @__PURE__ */ import_react17.default.createElement("th", null, "Representation"))), /* @__PURE__ */ import_react17.default.createElement("tbody", null, keys3.map((v2, i2) => {
         const date = new Date(v2);
         const value = doorLog[v2];
-        return /* @__PURE__ */ import_react19.default.createElement("tr", { key: i2 }, /* @__PURE__ */ import_react19.default.createElement("th", null, date.toLocaleDateString(), " ", daysName[date.getDay()]), /* @__PURE__ */ import_react19.default.createElement("th", null, value), /* @__PURE__ */ import_react19.default.createElement("th", null, /* @__PURE__ */ import_react19.default.createElement(
+        return /* @__PURE__ */ import_react17.default.createElement("tr", { key: i2 }, /* @__PURE__ */ import_react17.default.createElement("th", null, date.toLocaleDateString(), " ", daysName[date.getDay()]), /* @__PURE__ */ import_react17.default.createElement("th", null, value), /* @__PURE__ */ import_react17.default.createElement("th", null, /* @__PURE__ */ import_react17.default.createElement(
           TableDiv,
           {
             style: {
@@ -73472,7 +64249,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       })));
     }
     render() {
-      return /* @__PURE__ */ import_react19.default.createElement(Warper2, null, /* @__PURE__ */ import_react19.default.createElement("h1", null, "Door sensor"), /* @__PURE__ */ import_react19.default.createElement(Button6, { onClick: this.refresh }, "Refresh"), /* @__PURE__ */ import_react19.default.createElement(Button6, { onClick: this.onClear }, "Clear"), this.renderTable());
+      return /* @__PURE__ */ import_react17.default.createElement(Warper2, null, /* @__PURE__ */ import_react17.default.createElement("h1", null, "Door sensor"), /* @__PURE__ */ import_react17.default.createElement(Button5, { onClick: this.refresh }, "Refresh"), /* @__PURE__ */ import_react17.default.createElement(Button5, { onClick: this.onClear }, "Clear"), this.renderTable());
     }
   };
 
@@ -73480,7 +64257,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var Warper3 = styled_components_browser_esm_default.div`
     overflow: auto;
 `;
-  var Div11 = styled_components_browser_esm_default.div`
+  var Div8 = styled_components_browser_esm_default.div`
     width: calc(100% - 10px);
     margin: 5px;
     display: flex;
@@ -73498,33 +64275,45 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         font-size: 20pt;
     }
 `;
-  var Button8 = styled_components_browser_esm_default.button`
+  var Button7 = styled_components_browser_esm_default.button`
     user-select: none;
     background-color: rgb(42, 42, 42);
     color: white;
     font-size: 20px;
     padding: 2px;
     margin: 2px;
-    border-radius: 4px;
     border: none;
     outline: none;
     transition: background-color 0.25s, color 0.25s;
     :hover {
         background-color: rgb(52, 52, 52);
     }
-    :disabled {
-        color: rgb(128, 128, 128);
-        background-color: rgb(16, 16, 16);
+`;
+  var ButtonActive = styled_components_browser_esm_default.button`
+    user-select: none;
+    font-size: 20px;
+    padding: 2px;
+    margin: 2px;
+    border: none;
+    outline: none;
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    transition: background-color 0.25s, color 0.25s;
+    :hover {
+        background-color: rgb(52, 52, 52);
     }
 `;
-  var AutoPilotTab = class extends import_react20.default.Component {
+  var AutoPilotTab = class extends import_react18.default.Component {
     constructor(props) {
       super(props);
       this.onModeUpdate = (mode) => {
         this.setState({ mode });
       };
       this.changeMode = (mode, on) => {
-        this.props.als.lightSocket.emitPromiseIfPossible("mode-set", mode);
+        this.props.als.lightSocket.emitPromiseIfPossible(
+          2 /* ModeSet */,
+          quickBuffer(on ? mode : 0 /* Manual */)
+        );
       };
       this.state = {
         tabState: 1 /* Schedule */,
@@ -73540,52 +64329,36 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     renderTabs() {
       switch (this.state.tabState) {
         case 3 /* Door */:
-          return /* @__PURE__ */ import_react20.default.createElement(DoorSensor, { als: this.props.als });
+          return /* @__PURE__ */ import_react18.default.createElement(DoorSensor, { als: this.props.als });
         case 2 /* Pattern */:
-          return /* @__PURE__ */ import_react20.default.createElement(PatternBuilder, { palette: this.props.palette, als: this.props.als });
+          return /* @__PURE__ */ import_react18.default.createElement(PatternBuilder, { palette: this.props.palette, als: this.props.als });
         case 1 /* Schedule */:
-          return /* @__PURE__ */ import_react20.default.createElement(ScheduleBuilder, { palette: this.props.palette, als: this.props.als });
+          return /* @__PURE__ */ import_react18.default.createElement(ScheduleBuilder, { palette: this.props.palette, als: this.props.als });
         default:
           break;
       }
     }
+    renderButton(state, name) {
+      const active = this.state.tabState === state;
+      const Btn2 = active ? ButtonActive : Button7;
+      return /* @__PURE__ */ import_react18.default.createElement(Btn2, { onClick: () => this.setState({ tabState: state }) }, name);
+    }
     render() {
-      return /* @__PURE__ */ import_react20.default.createElement(Warper3, null, /* @__PURE__ */ import_react20.default.createElement(
+      return /* @__PURE__ */ import_react18.default.createElement(Warper3, null, /* @__PURE__ */ import_react18.default.createElement(
         CheckBox,
         {
           text: "Auto Pilot",
-          enabled: this.state.mode === "AutoPilot",
+          enabled: this.state.mode === 3 /* AutoPilot */,
           onChange: (on) => {
-            this.changeMode("AutoPilot", on);
+            this.changeMode(3 /* AutoPilot */, on);
           }
         }
-      ), /* @__PURE__ */ import_react20.default.createElement(DivTab, null, /* @__PURE__ */ import_react20.default.createElement(
-        Button8,
-        {
-          onClick: () => this.setState({ tabState: 2 /* Pattern */ }),
-          disabled: this.state.tabState === 2 /* Pattern */
-        },
-        "Schedule builder"
-      ), /* @__PURE__ */ import_react20.default.createElement(
-        Button8,
-        {
-          onClick: () => this.setState({ tabState: 1 /* Schedule */ }),
-          disabled: this.state.tabState === 1 /* Schedule */
-        },
-        "Pattern builder"
-      ), this.props.als.lightSocket.doorSensorConnected ? /* @__PURE__ */ import_react20.default.createElement(import_react20.default.Fragment, null, /* @__PURE__ */ import_react20.default.createElement(
-        Button8,
-        {
-          onClick: () => this.setState({ tabState: 3 /* Door */ }),
-          disabled: this.state.tabState === 3 /* Door */
-        },
-        "Door sensor"
-      )) : null), /* @__PURE__ */ import_react20.default.createElement(Div11, null, this.renderTabs()));
+      ), /* @__PURE__ */ import_react18.default.createElement(DivTab, null, this.renderButton(2 /* Pattern */, "Pattern Builder"), this.renderButton(1 /* Schedule */, "Schedule Builder"), this.props.als.lightSocket.doorSensorConnected ? /* @__PURE__ */ import_react18.default.createElement(import_react18.default.Fragment, null, this.renderButton(3 /* Door */, "Door Sensor")) : null), /* @__PURE__ */ import_react18.default.createElement(Div8, null, this.renderTabs()));
     }
   };
 
   // src/client/Components/Tabs/Camera.tsx
-  var import_react21 = __toESM(require_react());
+  var import_react19 = __toESM(require_react());
   var import_react_loading2 = __toESM(require_react_loading());
   var import_moment2 = __toESM(require_moment());
   var Container = styled_components_browser_esm_default.div`
@@ -73606,7 +64379,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     padding: 5px;
     border: none;
 `;
-  var CameraTab = class extends import_react21.default.Component {
+  var CameraTab = class extends import_react19.default.Component {
     constructor(props) {
       super(props);
       this.loaded = /* @__PURE__ */ new Map();
@@ -73614,7 +64387,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       this.preload = async (img) => {
         if (img) {
           if (img.token) {
-            const id2 = this.props.als.lightSocket.socket.id;
             const urls = this.loading.get(img.date);
             if (urls) {
               urls.push((url) => {
@@ -73630,7 +64402,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             const lArray = [];
             this.loading.set(img.date, lArray);
             try {
-              const actualUrl = `./webcam/${id2}/${img.token}`;
+              const actualUrl = `./webcam/${img.token}`;
               const data2 = await fetch(actualUrl);
               if (!data2.ok || data2.status >= 400) {
                 throw new Error("Invalidated image");
@@ -73664,9 +64436,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       this.updateImages = async () => {
         this.loaded.clear();
         this.loading.clear();
-        const data2 = await this.props.als.lightSocket.emitPromiseIfPossible(
-          "get-cam-data"
-        );
+        const buffer = await this.props.als.lightSocket.emitPromiseIfPossible(8 /* CamGet */);
+        const data2 = JSON.parse(buffer.getUtf8String());
+        console.log(data2);
         data2.images = data2.images.filter((i2) => !data2.doorOpens.some((e2) => e2.name === i2.name));
         data2.images.sort((a2, b2) => parseInt(a2.date, 10) > parseInt(b2.date, 10) ? 1 : -1);
         data2.doorOpens.sort((a2, b2) => parseInt(a2.date, 10) > parseInt(b2.date, 10) ? 1 : -1);
@@ -73682,7 +64454,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           takingImage: true
         });
         try {
-          const ok = await this.props.als.lightSocket.emitPromiseIfPossible("take-cam-image");
+          const buffer = await this.props.als.lightSocket.emitPromiseIfPossible(9 /* CamTake */);
+          const ok = buffer.getBool();
           if (ok) {
             this.updateImages();
           }
@@ -73697,14 +64470,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         takingImage: false
       };
     }
-    drawTextImage(text, x2 = 50, y2 = 50) {
+    drawTextImage(text2, x2 = 50, y2 = 50) {
       const canvas = document.createElement("canvas");
       canvas.width = canvas.height = 250;
       const ctx = canvas.getContext("2d");
       ctx.fillStyle = "#000000";
       ctx.fillRect(0, 0, 250, 250);
       ctx.fillStyle = "#FFFFFF";
-      ctx.fillText(text, x2, y2);
+      ctx.fillText(text2, x2, y2);
       return new Promise((r2) => {
         canvas.toBlob(async (blob) => {
           r2(URL.createObjectURL(blob));
@@ -73714,52 +64487,58 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     async componentDidMount() {
       this.loadingPlaceHolder = await this.drawTextImage("loading");
       this.updateImages();
-      this.props.als.lightSocket.socket.on("door-image-available", this.updateImages);
+      this.props.als.lightSocket.clientSocket.clientHandle.on(
+        4 /* DoorImageAvailable */,
+        this.updateImages
+      );
     }
     componentWillUnmount() {
-      this.props.als.lightSocket.socket.off("door-image-available", this.updateImages);
+      this.props.als.lightSocket.clientSocket.clientHandle.off(
+        4 /* DoorImageAvailable */,
+        this.updateImages
+      );
     }
     renderImage(image, suffix) {
-      return /* @__PURE__ */ import_react21.default.createElement("div", null, /* @__PURE__ */ import_react21.default.createElement(Overlay, null, suffix, " ", (0, import_moment2.default)(image.date).format("DD/MM/YYYY HH:mm:ss")), /* @__PURE__ */ import_react21.default.createElement(Img, { src: `${image.cachedBlobUrl || this.loadingPlaceHolder}`, alt: image.name }));
+      return /* @__PURE__ */ import_react19.default.createElement("div", null, /* @__PURE__ */ import_react19.default.createElement(Overlay, null, suffix, " ", (0, import_moment2.default)(image.date).format("DD/MM/YYYY HH:mm:ss")), /* @__PURE__ */ import_react19.default.createElement(Img, { src: `${image.cachedBlobUrl || this.loadingPlaceHolder}`, alt: image.name }));
     }
     renderLastImage() {
       if (this.state.data.lastImage) {
-        return /* @__PURE__ */ import_react21.default.createElement("div", null, /* @__PURE__ */ import_react21.default.createElement("h1", null, "Last image"), this.renderImage(this.state.data.lastImage, ""));
+        return /* @__PURE__ */ import_react19.default.createElement("div", null, /* @__PURE__ */ import_react19.default.createElement("h1", null, "Last image"), this.renderImage(this.state.data.lastImage, ""));
       }
       return null;
     }
     renderDoorImages() {
       if (this.state.data.doorOpens.length) {
-        return /* @__PURE__ */ import_react21.default.createElement("div", null, /* @__PURE__ */ import_react21.default.createElement("h1", null, "Door images"), this.state.data.doorOpens.map((img, i2) => /* @__PURE__ */ import_react21.default.createElement("div", { key: i2 }, this.renderImage(img, "Door"))));
+        return /* @__PURE__ */ import_react19.default.createElement("div", null, /* @__PURE__ */ import_react19.default.createElement("h1", null, "Door images"), this.state.data.doorOpens.map((img, i2) => /* @__PURE__ */ import_react19.default.createElement("div", { key: i2 }, this.renderImage(img, "Door"))));
       }
       return null;
     }
     renderOtherImages() {
       if (this.state.data.images.length) {
-        return /* @__PURE__ */ import_react21.default.createElement("div", null, /* @__PURE__ */ import_react21.default.createElement("h1", null, "Other images"), this.state.data.images.map((img, i2) => /* @__PURE__ */ import_react21.default.createElement("div", { key: i2 }, this.renderImage(img, "Other"))));
+        return /* @__PURE__ */ import_react19.default.createElement("div", null, /* @__PURE__ */ import_react19.default.createElement("h1", null, "Other images"), this.state.data.images.map((img, i2) => /* @__PURE__ */ import_react19.default.createElement("div", { key: i2 }, this.renderImage(img, "Other"))));
       }
       return null;
     }
     renderDoors() {
       if (this.state.data.lastImage) {
-        return /* @__PURE__ */ import_react21.default.createElement("div", null, /* @__PURE__ */ import_react21.default.createElement("h1", null, "Last image"), this.renderImage(this.state.data.lastImage, ""));
+        return /* @__PURE__ */ import_react19.default.createElement("div", null, /* @__PURE__ */ import_react19.default.createElement("h1", null, "Last image"), this.renderImage(this.state.data.lastImage, ""));
       }
       return null;
     }
     render() {
       if (!this.state.data) {
-        return /* @__PURE__ */ import_react21.default.createElement(import_react_loading2.default, { className: "m-2", type: "bars", color: "#ffffff", height: 50, width: 50 });
+        return /* @__PURE__ */ import_react19.default.createElement(import_react_loading2.default, { className: "m-2", type: "bars", color: "#ffffff", height: 50, width: 50 });
       }
-      return /* @__PURE__ */ import_react21.default.createElement(Container, null, /* @__PURE__ */ import_react21.default.createElement(Btn, { onClick: this.takeImage, disabled: this.state.takingImage }, "Take image"), this.renderLastImage(), this.renderDoorImages(), this.renderOtherImages());
+      return /* @__PURE__ */ import_react19.default.createElement(Container, null, /* @__PURE__ */ import_react19.default.createElement(Button7, { onClick: this.takeImage, disabled: this.state.takingImage }, "Take image"), this.renderLastImage(), this.renderDoorImages(), this.renderOtherImages());
     }
   };
 
   // src/client/Components/Tabs/Device.tsx
-  var import_react22 = __toESM(require_react());
+  var import_react20 = __toESM(require_react());
   var import_prettysize = __toESM(require_prettysize());
   var import_react_loading3 = __toESM(require_react_loading());
   var import_moment3 = __toESM(require_moment());
-  var Div12 = styled_components_browser_esm_default.div`
+  var Div9 = styled_components_browser_esm_default.div`
     padding: 4pt;
     overflow: auto;
 
@@ -73789,17 +64568,18 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     width: 100%;
     border: 1px solid white;
 `;
-  var DeviceTab = class extends import_react22.default.Component {
+  var DeviceTab = class extends import_react20.default.Component {
     constructor(props) {
       super(props);
-      this.cpu = import_react22.default.createRef();
-      this.temperature = import_react22.default.createRef();
+      this.cpu = import_react20.default.createRef();
+      this.temperature = import_react20.default.createRef();
       this.destroyed = false;
       this.update = async () => {
-        const serverInfo = await this.props.als.lightSocket.emitPromiseIfPossible("device-info");
+        const serverInfoBuffer = await this.props.als.lightSocket.emitPromiseIfPossible(10 /* DeviceInfo */);
         if (this.destroyed) {
           return;
         }
+        const serverInfo = JSON.parse(serverInfoBuffer.getUtf8String());
         this.setState({ serverInfo });
         const cpuRect = this.cpu.current.getBoundingClientRect();
         this.cpu.current.width = cpuRect.width;
@@ -73856,40 +64636,40 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
     renderConnectedDevices() {
       return clientKeys.map((c2, i2) => {
-        return /* @__PURE__ */ import_react22.default.createElement("li", { key: i2 }, c2, ": ", this.state.serverInfo.socketInfo[c2], " ");
+        return /* @__PURE__ */ import_react20.default.createElement("li", { key: i2 }, c2, ": ", this.state.serverInfo.socketInfo[c2], " ");
       });
     }
     renderSunsetSunrise() {
       const sunsetSunrise = this.state.serverInfo.sunsetSunrise;
       if (this.state.serverInfo.sunsetSunrise) {
-        return /* @__PURE__ */ import_react22.default.createElement("div", null, /* @__PURE__ */ import_react22.default.createElement("div", null, /* @__PURE__ */ import_react22.default.createElement("b", null, "Sunrise:"), " ", sunsetSunrise.sunrise), /* @__PURE__ */ import_react22.default.createElement("div", null, /* @__PURE__ */ import_react22.default.createElement("b", null, "Sunset:"), " ", sunsetSunrise.sunset), /* @__PURE__ */ import_react22.default.createElement("div", null, /* @__PURE__ */ import_react22.default.createElement("b", null, "Solar noon:"), " ", sunsetSunrise.solar_noon), /* @__PURE__ */ import_react22.default.createElement("div", null, /* @__PURE__ */ import_react22.default.createElement("b", null, "Day length:"), " ", sunsetSunrise.day_length), /* @__PURE__ */ import_react22.default.createElement("div", null, /* @__PURE__ */ import_react22.default.createElement("b", null, "Civil twilight begin:"), " ", sunsetSunrise.civil_twilight_begin), /* @__PURE__ */ import_react22.default.createElement("div", null, /* @__PURE__ */ import_react22.default.createElement("b", null, "Civil twilight end:"), " ", sunsetSunrise.civil_twilight_end), /* @__PURE__ */ import_react22.default.createElement("div", null, /* @__PURE__ */ import_react22.default.createElement("b", null, "Nautical twilight begin:"), " ", sunsetSunrise.nautical_twilight_begin), /* @__PURE__ */ import_react22.default.createElement("div", null, /* @__PURE__ */ import_react22.default.createElement("b", null, "Nautical twilight end:"), " ", sunsetSunrise.nautical_twilight_end), /* @__PURE__ */ import_react22.default.createElement("div", null, /* @__PURE__ */ import_react22.default.createElement("b", null, "Astronomical twilight begin:"), " ", sunsetSunrise.astronomical_twilight_begin), /* @__PURE__ */ import_react22.default.createElement("div", null, /* @__PURE__ */ import_react22.default.createElement("b", null, "Astronomical twilight end:"), " ", sunsetSunrise.astronomical_twilight_end));
+        return /* @__PURE__ */ import_react20.default.createElement("div", null, /* @__PURE__ */ import_react20.default.createElement("div", null, /* @__PURE__ */ import_react20.default.createElement("b", null, "Sunrise:"), " ", sunsetSunrise.sunrise), /* @__PURE__ */ import_react20.default.createElement("div", null, /* @__PURE__ */ import_react20.default.createElement("b", null, "Sunset:"), " ", sunsetSunrise.sunset), /* @__PURE__ */ import_react20.default.createElement("div", null, /* @__PURE__ */ import_react20.default.createElement("b", null, "Solar noon:"), " ", sunsetSunrise.solar_noon), /* @__PURE__ */ import_react20.default.createElement("div", null, /* @__PURE__ */ import_react20.default.createElement("b", null, "Day length:"), " ", sunsetSunrise.day_length), /* @__PURE__ */ import_react20.default.createElement("div", null, /* @__PURE__ */ import_react20.default.createElement("b", null, "Civil twilight begin:"), " ", sunsetSunrise.civil_twilight_begin), /* @__PURE__ */ import_react20.default.createElement("div", null, /* @__PURE__ */ import_react20.default.createElement("b", null, "Civil twilight end:"), " ", sunsetSunrise.civil_twilight_end), /* @__PURE__ */ import_react20.default.createElement("div", null, /* @__PURE__ */ import_react20.default.createElement("b", null, "Nautical twilight begin:"), " ", sunsetSunrise.nautical_twilight_begin), /* @__PURE__ */ import_react20.default.createElement("div", null, /* @__PURE__ */ import_react20.default.createElement("b", null, "Nautical twilight end:"), " ", sunsetSunrise.nautical_twilight_end), /* @__PURE__ */ import_react20.default.createElement("div", null, /* @__PURE__ */ import_react20.default.createElement("b", null, "Astronomical twilight begin:"), " ", sunsetSunrise.astronomical_twilight_begin), /* @__PURE__ */ import_react20.default.createElement("div", null, /* @__PURE__ */ import_react20.default.createElement("b", null, "Astronomical twilight end:"), " ", sunsetSunrise.astronomical_twilight_end));
       }
       return null;
     }
     renderTime() {
-      return /* @__PURE__ */ import_react22.default.createElement("div", null, /* @__PURE__ */ import_react22.default.createElement("b", null, "Server time:"), " ", this.state.serverInfo.time, this.renderSunsetSunrise());
+      return /* @__PURE__ */ import_react20.default.createElement("div", null, /* @__PURE__ */ import_react20.default.createElement("b", null, "Server time:"), " ", this.state.serverInfo.time, this.renderSunsetSunrise());
     }
     render() {
       if (!this.state.serverInfo) {
-        return /* @__PURE__ */ import_react22.default.createElement(import_react_loading3.default, { className: "m-2", type: "bars", color: "#ffffff", height: 50, width: 50 });
+        return /* @__PURE__ */ import_react20.default.createElement(import_react_loading3.default, { className: "m-2", type: "bars", color: "#ffffff", height: 50, width: 50 });
       }
       const data2 = this.state.serverInfo;
-      return /* @__PURE__ */ import_react22.default.createElement(Div12, { className: "m-2" }, /* @__PURE__ */ import_react22.default.createElement(CanvasDiv, null, /* @__PURE__ */ import_react22.default.createElement(Canvas3, { ref: this.cpu }), /* @__PURE__ */ import_react22.default.createElement(Canvas3, { ref: this.temperature })), /* @__PURE__ */ import_react22.default.createElement(Div12, { className: "m-2 p-2 border border-terminal" }, "Time", this.renderTime()), /* @__PURE__ */ import_react22.default.createElement(Div12, { className: "m-2 p-2 border border-terminal" }, "Websocket data", /* @__PURE__ */ import_react22.default.createElement("ul", null, this.renderConnectedDevices())), /* @__PURE__ */ import_react22.default.createElement(Div12, { className: "m-2 p-2 border border-terminal" }, /* @__PURE__ */ import_react22.default.createElement(Div12, null, "Arch: ", data2?.arch), /* @__PURE__ */ import_react22.default.createElement(Div12, null, "CPU Usage", /* @__PURE__ */ import_react22.default.createElement("ul", null, /* @__PURE__ */ import_react22.default.createElement("li", null, "User: ", (0, import_moment3.default)(Date.now() - data2?.cpuUsage?.user / 100).fromNow(true)), /* @__PURE__ */ import_react22.default.createElement("li", null, "System: ", (0, import_moment3.default)(Date.now() - data2?.cpuUsage?.system / 100).fromNow(true)))), /* @__PURE__ */ import_react22.default.createElement(Div12, null, "Memory Usage", /* @__PURE__ */ import_react22.default.createElement("ul", null, /* @__PURE__ */ import_react22.default.createElement("li", null, "CPU: ", Math.round(data2.cpuUsageHistory[data2.cpuUsageHistory.length - 1]), "%"), /* @__PURE__ */ import_react22.default.createElement("li", null, "Temperature: ", this.temperatureDisplay))), /* @__PURE__ */ import_react22.default.createElement(Div12, null, "Memory Usage", /* @__PURE__ */ import_react22.default.createElement("ul", null, /* @__PURE__ */ import_react22.default.createElement("li", null, "External: ", (0, import_prettysize.default)(data2?.memoryUsage?.external)), /* @__PURE__ */ import_react22.default.createElement("li", null, "HeapTotal: ", (0, import_prettysize.default)(data2?.memoryUsage?.heapTotal)), /* @__PURE__ */ import_react22.default.createElement("li", null, "HeapUsed: ", (0, import_prettysize.default)(data2?.memoryUsage?.heapUsed)), /* @__PURE__ */ import_react22.default.createElement("li", null, "Rss: ", (0, import_prettysize.default)(data2?.memoryUsage?.rss)))), /* @__PURE__ */ import_react22.default.createElement(Div12, null, "Uptime: ", (0, import_moment3.default)(Date.now() - data2.uptime).fromNow(true)), /* @__PURE__ */ import_react22.default.createElement(Div12, null, "Node version: ", data2?.version)), /* @__PURE__ */ import_react22.default.createElement(Div12, { className: "m-2 p-2 border border-terminal" }, /* @__PURE__ */ import_react22.default.createElement(Div12, null, /* @__PURE__ */ import_react22.default.createElement("b", null, "Operation System")), /* @__PURE__ */ import_react22.default.createElement(Div12, null, "Platform: ", data2.os.platform), /* @__PURE__ */ import_react22.default.createElement(Div12, null, "Release: ", data2.os.release), /* @__PURE__ */ import_react22.default.createElement(Div12, null, "Total memory: ", (0, import_prettysize.default)(data2.os.totalmem)), /* @__PURE__ */ import_react22.default.createElement(Div12, null, "Uptime: ", (0, import_moment3.default)(Date.now() - data2.os.uptime).fromNow(true)), /* @__PURE__ */ import_react22.default.createElement(Div12, null, "User info:", /* @__PURE__ */ import_react22.default.createElement("ul", null, /* @__PURE__ */ import_react22.default.createElement("li", null, "username: ", data2.os.userInfo.username), /* @__PURE__ */ import_react22.default.createElement("li", null, "Homedir: ", data2.os.userInfo.homedir), /* @__PURE__ */ import_react22.default.createElement("li", null, "Shell: ", data2.os.userInfo.shell), /* @__PURE__ */ import_react22.default.createElement("li", null, "GID: ", data2.os.userInfo.gid), /* @__PURE__ */ import_react22.default.createElement("li", null, "UID: ", data2.os.userInfo.uid))), /* @__PURE__ */ import_react22.default.createElement(Div12, { className: "border border-terminal" }, /* @__PURE__ */ import_react22.default.createElement(Div12, { className: "m-2" }, "CPUS(", data2.os.cpus.length, "):"), /* @__PURE__ */ import_react22.default.createElement(Div12, null, /* @__PURE__ */ import_react22.default.createElement("ul", null, data2.os.cpus.map((e2, i2) => {
-        return /* @__PURE__ */ import_react22.default.createElement(Div12, { className: "card-body", style: { display: "inline-block" }, key: i2 }, /* @__PURE__ */ import_react22.default.createElement("span", null, e2.model), /* @__PURE__ */ import_react22.default.createElement(Div12, null, /* @__PURE__ */ import_react22.default.createElement("ul", null, /* @__PURE__ */ import_react22.default.createElement("li", null, "speed: ", Math.round(e2.speed / 1e3), " Ghz"), /* @__PURE__ */ import_react22.default.createElement("li", null, "sys: ", (0, import_moment3.default)(Date.now() - e2.times.sys).fromNow(true)), /* @__PURE__ */ import_react22.default.createElement("li", null, "user: ", (0, import_moment3.default)(Date.now() - e2.times.user).fromNow(true)), /* @__PURE__ */ import_react22.default.createElement("li", null, "nice: ", (0, import_moment3.default)(Date.now() - e2.times.nice).fromNow(true)), /* @__PURE__ */ import_react22.default.createElement("li", null, "irq: ", (0, import_moment3.default)(Date.now() - e2.times.irq).fromNow(true)), /* @__PURE__ */ import_react22.default.createElement("li", null, "idle: ", (0, import_moment3.default)(Date.now() - e2.times.idle).fromNow(true)))));
+      return /* @__PURE__ */ import_react20.default.createElement(Div9, { className: "m-2" }, /* @__PURE__ */ import_react20.default.createElement(CanvasDiv, null, /* @__PURE__ */ import_react20.default.createElement(Canvas3, { ref: this.cpu }), /* @__PURE__ */ import_react20.default.createElement(Canvas3, { ref: this.temperature })), /* @__PURE__ */ import_react20.default.createElement(Div9, { className: "m-2 p-2 border border-terminal" }, "Time", this.renderTime()), /* @__PURE__ */ import_react20.default.createElement(Div9, { className: "m-2 p-2 border border-terminal" }, "Websocket data", /* @__PURE__ */ import_react20.default.createElement("ul", null, this.renderConnectedDevices())), /* @__PURE__ */ import_react20.default.createElement(Div9, { className: "m-2 p-2 border border-terminal" }, /* @__PURE__ */ import_react20.default.createElement(Div9, null, "Arch: ", data2?.arch), /* @__PURE__ */ import_react20.default.createElement(Div9, null, "CPU Usage", /* @__PURE__ */ import_react20.default.createElement("ul", null, /* @__PURE__ */ import_react20.default.createElement("li", null, "User: ", (0, import_moment3.default)(Date.now() - data2?.cpuUsage?.user / 100).fromNow(true)), /* @__PURE__ */ import_react20.default.createElement("li", null, "System: ", (0, import_moment3.default)(Date.now() - data2?.cpuUsage?.system / 100).fromNow(true)))), /* @__PURE__ */ import_react20.default.createElement(Div9, null, "Memory Usage", /* @__PURE__ */ import_react20.default.createElement("ul", null, /* @__PURE__ */ import_react20.default.createElement("li", null, "CPU: ", Math.round(data2.cpuUsageHistory[data2.cpuUsageHistory.length - 1]), "%"), /* @__PURE__ */ import_react20.default.createElement("li", null, "Temperature: ", this.temperatureDisplay))), /* @__PURE__ */ import_react20.default.createElement(Div9, null, "Memory Usage", /* @__PURE__ */ import_react20.default.createElement("ul", null, /* @__PURE__ */ import_react20.default.createElement("li", null, "External: ", (0, import_prettysize.default)(data2?.memoryUsage?.external)), /* @__PURE__ */ import_react20.default.createElement("li", null, "HeapTotal: ", (0, import_prettysize.default)(data2?.memoryUsage?.heapTotal)), /* @__PURE__ */ import_react20.default.createElement("li", null, "HeapUsed: ", (0, import_prettysize.default)(data2?.memoryUsage?.heapUsed)), /* @__PURE__ */ import_react20.default.createElement("li", null, "Rss: ", (0, import_prettysize.default)(data2?.memoryUsage?.rss)))), /* @__PURE__ */ import_react20.default.createElement(Div9, null, "Uptime: ", (0, import_moment3.default)(Date.now() - data2.uptime).fromNow(true)), /* @__PURE__ */ import_react20.default.createElement(Div9, null, "Node version: ", data2?.version)), /* @__PURE__ */ import_react20.default.createElement(Div9, { className: "m-2 p-2 border border-terminal" }, /* @__PURE__ */ import_react20.default.createElement(Div9, null, /* @__PURE__ */ import_react20.default.createElement("b", null, "Operation System")), /* @__PURE__ */ import_react20.default.createElement(Div9, null, "Platform: ", data2.os.platform), /* @__PURE__ */ import_react20.default.createElement(Div9, null, "Release: ", data2.os.release), /* @__PURE__ */ import_react20.default.createElement(Div9, null, "Total memory: ", (0, import_prettysize.default)(data2.os.totalmem)), /* @__PURE__ */ import_react20.default.createElement(Div9, null, "Uptime: ", (0, import_moment3.default)(Date.now() - data2.os.uptime).fromNow(true)), /* @__PURE__ */ import_react20.default.createElement(Div9, null, "User info:", /* @__PURE__ */ import_react20.default.createElement("ul", null, /* @__PURE__ */ import_react20.default.createElement("li", null, "username: ", data2.os.userInfo.username), /* @__PURE__ */ import_react20.default.createElement("li", null, "Homedir: ", data2.os.userInfo.homedir), /* @__PURE__ */ import_react20.default.createElement("li", null, "Shell: ", data2.os.userInfo.shell), /* @__PURE__ */ import_react20.default.createElement("li", null, "GID: ", data2.os.userInfo.gid), /* @__PURE__ */ import_react20.default.createElement("li", null, "UID: ", data2.os.userInfo.uid))), /* @__PURE__ */ import_react20.default.createElement(Div9, { className: "border border-terminal" }, /* @__PURE__ */ import_react20.default.createElement(Div9, { className: "m-2" }, "CPUS(", data2.os.cpus.length, "):"), /* @__PURE__ */ import_react20.default.createElement(Div9, null, /* @__PURE__ */ import_react20.default.createElement("ul", null, data2.os.cpus.map((e2, i2) => {
+        return /* @__PURE__ */ import_react20.default.createElement(Div9, { className: "card-body", style: { display: "inline-block" }, key: i2 }, /* @__PURE__ */ import_react20.default.createElement("span", null, e2.model), /* @__PURE__ */ import_react20.default.createElement(Div9, null, /* @__PURE__ */ import_react20.default.createElement("ul", null, /* @__PURE__ */ import_react20.default.createElement("li", null, "speed: ", Math.round(e2.speed / 1e3), " Ghz"), /* @__PURE__ */ import_react20.default.createElement("li", null, "sys: ", (0, import_moment3.default)(Date.now() - e2.times.sys).fromNow(true)), /* @__PURE__ */ import_react20.default.createElement("li", null, "user: ", (0, import_moment3.default)(Date.now() - e2.times.user).fromNow(true)), /* @__PURE__ */ import_react20.default.createElement("li", null, "nice: ", (0, import_moment3.default)(Date.now() - e2.times.nice).fromNow(true)), /* @__PURE__ */ import_react20.default.createElement("li", null, "irq: ", (0, import_moment3.default)(Date.now() - e2.times.irq).fromNow(true)), /* @__PURE__ */ import_react20.default.createElement("li", null, "idle: ", (0, import_moment3.default)(Date.now() - e2.times.idle).fromNow(true)))));
       }))))));
     }
   };
 
   // src/client/Components/Tabs/MagicHome.tsx
-  var import_react23 = __toESM(require_react());
-  var Div13 = styled_components_browser_esm_default.div`
+  var import_react21 = __toESM(require_react());
+  var Div10 = styled_components_browser_esm_default.div`
     width: 100%;
     display: flex;
 `;
   var WidthExtend = styled_components_browser_esm_default.div`
     width: 100%;
 `;
-  var MagicTab = class extends import_react23.default.Component {
+  var MagicTab = class extends import_react21.default.Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -73903,16 +64683,16 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       this.setState({ blockedIps, ips });
     }
     render() {
-      return /* @__PURE__ */ import_react23.default.createElement(import_react23.default.Fragment, null, /* @__PURE__ */ import_react23.default.createElement("h1", null, "Magic home beta"), "Led servers", this.state.ips.map((e2, i2) => {
-        return /* @__PURE__ */ import_react23.default.createElement("div", { key: i2 }, " ", e2);
+      return /* @__PURE__ */ import_react21.default.createElement(import_react21.default.Fragment, null, /* @__PURE__ */ import_react21.default.createElement("h1", null, "Magic home beta"), "Led servers", this.state.ips.map((e2, i2) => {
+        return /* @__PURE__ */ import_react21.default.createElement("div", { key: i2 }, " ", e2);
       }), "Blocked IPS:", this.state.blockedIps.map((e2, i2) => {
-        return /* @__PURE__ */ import_react23.default.createElement("div", { key: i2 }, e2);
+        return /* @__PURE__ */ import_react21.default.createElement("div", { key: i2 }, e2);
       }));
     }
   };
 
   // src/client/Components/Tabs/Manual.tsx
-  var import_react24 = __toESM(require_react());
+  var import_react22 = __toESM(require_react());
 
   // src/client/Utils/Utils.ts
   function isVertical() {
@@ -73920,7 +64700,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   }
 
   // src/client/Components/Tabs/Manual.tsx
-  var Div14 = styled_components_browser_esm_default.div`
+  var Div11 = styled_components_browser_esm_default.div`
     margin: 10px;
 `;
   var CheckBoxDiv = styled_components_browser_esm_default.div`
@@ -73932,20 +64712,21 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var Warper4 = styled_components_browser_esm_default.div`
     overflow: auto;
 `;
-  var ManualTab = class extends import_react24.default.Component {
+  var ManualTab = class extends import_react22.default.Component {
     constructor(props) {
       super(props);
       this.DEFAULT_COLOR_HEX = "FF0000";
       this.BROWSER_KEY = "last-colour";
       this.onModeUpdate = (mode) => {
+        console.error("mode change", mode);
         this.setState({ mode });
+        this.forceUpdate();
       };
       this.changeMode = (mode, on) => {
-        if (on) {
-          this.props.als.lightSocket.emitPromiseIfPossible("mode-set", mode);
-        } else {
-          this.props.als.lightSocket.emitPromiseIfPossible("mode-set", "AutoPilot");
-        }
+        this.props.als.lightSocket.emitIfPossible(
+          2 /* ModeSet */,
+          quickBuffer(on ? mode : 3 /* AutoPilot */)
+        );
       };
       this.resize = () => {
         this.setState({ vertical: isVertical() });
@@ -73953,9 +64734,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       this.onChange = (colour) => {
         BrowserStorage.setString(this.BROWSER_KEY, colour.hex);
         const ls = this.props.als.lightSocket;
-        if (ls.authenticated) {
-          const { r: red2, g: green, b: blue } = colour.rgb;
-          ls.clientSocket.emit("rgb-set", red2, green, blue);
+        if (ls.connected) {
+          ls.setColor(colour.rgb.r, colour.rgb.g, colour.rgb.b);
         }
       };
       this.state = {
@@ -73973,34 +64753,34 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       this.props.als.lightSocket.off("mode-update", this.onModeUpdate);
     }
     render() {
-      return /* @__PURE__ */ import_react24.default.createElement(Warper4, null, /* @__PURE__ */ import_react24.default.createElement(ReactTooltip, { place: "top", type: "info", effect: "solid" }), /* @__PURE__ */ import_react24.default.createElement(CheckBoxFlex, null, /* @__PURE__ */ import_react24.default.createElement(CheckBoxDiv, { "data-tip": "LEDs will keep its state as long as this page is open then it will fall back to autopilot" }, /* @__PURE__ */ import_react24.default.createElement(
+      return /* @__PURE__ */ import_react22.default.createElement(Warper4, null, /* @__PURE__ */ import_react22.default.createElement(ReactTooltip, { place: "top", type: "info", effect: "solid" }), /* @__PURE__ */ import_react22.default.createElement(CheckBoxFlex, null, /* @__PURE__ */ import_react22.default.createElement(CheckBoxDiv, { "data-tip": "LEDs will keep its state as long as this page is open then it will fall back to autopilot" }, /* @__PURE__ */ import_react22.default.createElement(
         CheckBox,
         {
           text: "Manual",
-          enabled: this.state.mode === "Manual",
+          enabled: this.state.mode === 0 /* Manual */,
           onChange: (on) => {
-            this.changeMode("Manual", on);
+            this.changeMode(0 /* Manual */, on);
           }
         }
-      )), /* @__PURE__ */ import_react24.default.createElement(CheckBoxDiv, { "data-tip": "LEDs will keep its state even when this page is closed. Can still be overwritten by door switch" }, /* @__PURE__ */ import_react24.default.createElement(
+      )), /* @__PURE__ */ import_react22.default.createElement(CheckBoxDiv, { "data-tip": "LEDs will keep its state even when this page is closed. Can still be overwritten by door switch" }, /* @__PURE__ */ import_react22.default.createElement(
         CheckBox,
         {
           text: "Manual Force",
-          enabled: this.state.mode === "ManualForce",
+          enabled: this.state.mode === 1 /* ManualForce */,
           onChange: (on) => {
-            this.changeMode("ManualForce", on);
+            this.changeMode(1 /* ManualForce */, on);
           }
         }
-      )), /* @__PURE__ */ import_react24.default.createElement(CheckBoxDiv, { "data-tip": "LEDs will keep its state no matter what. Even door switch can't overwrite this" }, /* @__PURE__ */ import_react24.default.createElement(
+      )), /* @__PURE__ */ import_react22.default.createElement(CheckBoxDiv, { "data-tip": "LEDs will keep its state no matter what. Even door switch can't overwrite this" }, /* @__PURE__ */ import_react22.default.createElement(
         CheckBox,
         {
           text: "Manual Locked",
-          enabled: this.state.mode === "ManualLocked",
+          enabled: this.state.mode === 2 /* ManualLocked */,
           onChange: (on) => {
-            this.changeMode("ManualLocked", on);
+            this.changeMode(2 /* ManualLocked */, on);
           }
         }
-      ))), /* @__PURE__ */ import_react24.default.createElement(Div14, { style: { textAlign: this.state.vertical ? "center" : "left" } }, /* @__PURE__ */ import_react24.default.createElement(
+      ))), /* @__PURE__ */ import_react22.default.createElement(Div11, { style: { textAlign: this.state.vertical ? "center" : "left" } }, /* @__PURE__ */ import_react22.default.createElement(
         ColourPicker,
         {
           palette: this.props.palette,
@@ -74013,28 +64793,28 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   };
 
   // src/client/Components/Tabs/Tabs.tsx
-  var Tab2 = class extends import_react25.default.Component {
+  var Tab2 = class extends import_react23.default.Component {
     render() {
       const tab = this.props.tab;
       switch (tab) {
         case "Device":
-          return /* @__PURE__ */ import_react25.default.createElement(DeviceTab, { als: this.props.als });
+          return /* @__PURE__ */ import_react23.default.createElement(DeviceTab, { als: this.props.als });
         case "AutoPilot":
-          return /* @__PURE__ */ import_react25.default.createElement(AutoPilotTab, { als: this.props.als, palette: this.props.palette });
+          return /* @__PURE__ */ import_react23.default.createElement(AutoPilotTab, { als: this.props.als, palette: this.props.palette });
         case "Audio":
-          return /* @__PURE__ */ import_react25.default.createElement(AudioTab, { als: this.props.als });
+          return /* @__PURE__ */ import_react23.default.createElement(AudioTab, { als: this.props.als });
         case "MagicHome":
-          return /* @__PURE__ */ import_react25.default.createElement(MagicTab, { als: this.props.als });
+          return /* @__PURE__ */ import_react23.default.createElement(MagicTab, { als: this.props.als });
         case "Camera":
-          return /* @__PURE__ */ import_react25.default.createElement(CameraTab, { als: this.props.als });
+          return /* @__PURE__ */ import_react23.default.createElement(CameraTab, { als: this.props.als });
         default:
-          return /* @__PURE__ */ import_react25.default.createElement(ManualTab, { als: this.props.als, palette: this.props.palette });
+          return /* @__PURE__ */ import_react23.default.createElement(ManualTab, { als: this.props.als, palette: this.props.palette });
       }
     }
   };
 
   // src/client/Components/ColourTitle/ColourTitle.tsx
-  var import_react26 = __toESM(require_react());
+  var import_react24 = __toESM(require_react());
   var H1 = styled_components_browser_esm_default.h1`
     display: inline-block;
 `;
@@ -74043,29 +64823,32 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     border: 2px solid black;
     border-radius: 5px;
 `;
-  var ColourTitle = class extends import_react26.default.Component {
+  var ColourTitle = class extends import_react24.default.Component {
     constructor() {
       super(...arguments);
-      this.title = "Light controller";
-      this.ref = import_react26.default.createRef();
+      this.title = "LumiFlex";
+      this.ref = import_react24.default.createRef();
       this.canvasSize = 25;
       this.destroyed = false;
       this.onSocketConnect = async () => {
         const lightSocket = this.props.als.lightSocket;
         try {
-          const mode = await lightSocket.emitPromiseIfPossible("mode-get");
-          const rgb = await lightSocket.emitPromiseIfPossible("rgb-status");
+          const modeBuffer = await lightSocket.emitPromiseIfPossible(3 /* ModeGet */);
+          const rgb = await lightSocket.emitPromiseIfPossible(1 /* RGBGet */);
           if (this.destroyed) {
             return;
           }
-          this.onModeUpdate(mode);
-          this.onRGBUpdate(rgb);
+          this.onModeUpdate(modeBuffer.getUint8());
+          const r2 = rgb.getUint8();
+          const g2 = rgb.getUint8();
+          const b2 = rgb.getUint8();
+          this.onRGBUpdate({ r: r2, g: g2, b: b2 });
         } catch (error) {
           Logger.debug("Socket error", error);
         }
       };
       this.onModeUpdate = (mode) => {
-        document.title = `${this.title} (${mode})`;
+        document.title = `${this.title} (${modeToString(mode)})`;
       };
       this.onRGBUpdate = (rgb) => {
         if (this.destroyed)
@@ -74086,10 +64869,13 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     async componentDidMount() {
       const lightSocket = this.props.als.lightSocket;
       this.crx = this.canvas.getContext("2d");
+      lightSocket.on("rgb-update", this.onRGBUpdate);
+      lightSocket.on("mode-update", this.onModeUpdate);
       this.favIconReference = document.createElement("link");
       document.head.append(this.favIconReference);
       this.favIconReference.rel = "shortcut icon";
-      if (this.props.als.lightSocket.clientSocket.connected) {
+      const connected = this.props.als.lightSocket.clientSocket.connected;
+      if (connected) {
         this.onSocketConnect();
       } else {
         this.props.als.lightSocket.clientSocket.clientHandle.on(251 /* Connect */, this.onSocketConnect);
@@ -74103,7 +64889,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       return this.ref.current;
     }
     render() {
-      return /* @__PURE__ */ import_react26.default.createElement("div", null, /* @__PURE__ */ import_react26.default.createElement(Canvas4, { ref: this.ref, height: this.canvasSize, width: this.canvasSize }), /* @__PURE__ */ import_react26.default.createElement(H1, null, "Light Controller"));
+      return /* @__PURE__ */ import_react24.default.createElement("div", null, /* @__PURE__ */ import_react24.default.createElement(Canvas4, { ref: this.ref, height: this.canvasSize, width: this.canvasSize }), /* @__PURE__ */ import_react24.default.createElement(H1, null, "LumiFlex"));
     }
   };
 
@@ -74146,8 +64932,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       }
     }
     next() {
-      return new Promise((resolve2) => {
-        requestAnimationFrame(resolve2);
+      return new Promise((resolve) => {
+        requestAnimationFrame(resolve);
       });
     }
     getSideColour(h, s2, v2) {
@@ -74227,8 +65013,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   };
 
   // src/client/Components/Toaster/Toaster.tsx
-  var import_react27 = __toESM(require_react());
-  var Div15 = styled_components_browser_esm_default.div`
+  var import_react25 = __toESM(require_react());
+  var Div12 = styled_components_browser_esm_default.div`
     pointer-events: none;
     touch-action: none;
     position: fixed;
@@ -74255,7 +65041,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         white-space: pre;
     }
 `;
-  var Toaster = class extends import_react27.default.Component {
+  var Toaster = class extends import_react25.default.Component {
     constructor(props) {
       super(props);
       this.SHOW_TIME = SECOND * 10;
@@ -74340,7 +65126,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         } else {
           style.transform = "scaleX(1)";
         }
-        return /* @__PURE__ */ import_react27.default.createElement(Toast, { key: index, style }, /* @__PURE__ */ import_react27.default.createElement("h2", null, socketError.log.title), /* @__PURE__ */ import_react27.default.createElement("span", null, socketError.log.description || ""));
+        return /* @__PURE__ */ import_react25.default.createElement(Toast, { key: index, style }, /* @__PURE__ */ import_react25.default.createElement("h2", null, socketError.log.title), /* @__PURE__ */ import_react25.default.createElement("span", null, socketError.log.description || ""));
       };
       this.state = {
         socketErrors: []
@@ -74363,12 +65149,12 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       pushUniqToArray(this.timeouts, number);
     }
     render() {
-      return /* @__PURE__ */ import_react27.default.createElement(Div15, null, this.state.socketErrors.map(this.getToast));
+      return /* @__PURE__ */ import_react25.default.createElement(Div12, null, this.state.socketErrors.map(this.getToast));
     }
   };
 
   // src/client/App.tsx
-  var Button9 = styled_components_browser_esm_default.button`
+  var Button8 = styled_components_browser_esm_default.button`
     display: block;
     background-color: rgb(32, 32, 32);
     color: white;
@@ -74389,7 +65175,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     padding: 5px;
     outline: none;
 `;
-  var Input5 = styled_components_browser_esm_default.input`
+  var Input4 = styled_components_browser_esm_default.input`
     background-color: rgb(8, 8, 8);
     height: 20px;
     align-items: center;
@@ -74398,7 +65184,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     border-radius: 5px;
     border: 1px solid rgb(64, 64, 64);
 `;
-  var App = class extends import_react28.default.Component {
+  var App = class extends import_react26.default.Component {
     constructor(props) {
       super(props);
       this.activeTabKey = "active-tab";
@@ -74459,13 +65245,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       this.audioLightSystem.lightSocket.off("disconnect", this.update);
     }
     get renderContent() {
-      return /* @__PURE__ */ import_react28.default.createElement(import_react28.default.Fragment, null, /* @__PURE__ */ import_react28.default.createElement(NavigationBar, { als: this.audioLightSystem, tab: this.state.tab, onChange: this.onTabChange }), /* @__PURE__ */ import_react28.default.createElement(Tab2, { tab: this.state.tab, als: this.audioLightSystem, palette: this.preGenerateColourPickerPalette }));
+      return /* @__PURE__ */ import_react26.default.createElement(import_react26.default.Fragment, null, /* @__PURE__ */ import_react26.default.createElement(NavigationBar, { als: this.audioLightSystem, tab: this.state.tab, onChange: this.onTabChange }), /* @__PURE__ */ import_react26.default.createElement(Tab2, { tab: this.state.tab, als: this.audioLightSystem, palette: this.preGenerateColourPickerPalette }));
     }
     get socketWindow() {
-      const soc = this.audioLightSystem.lightSocket;
-      if (soc.socket && !soc.socket.connected) {
-        return /* @__PURE__ */ import_react28.default.createElement(Authenticate, null, /* @__PURE__ */ import_react28.default.createElement("h1", null, "Not connected"));
-      }
       const auth = async () => {
         this.setState({ error: "" });
         try {
@@ -74475,8 +65257,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           this.setState({ error: error.message });
         }
       };
-      return /* @__PURE__ */ import_react28.default.createElement(Authenticate, null, /* @__PURE__ */ import_react28.default.createElement("h2", null, "Password"), /* @__PURE__ */ import_react28.default.createElement(
-        Input5,
+      return /* @__PURE__ */ import_react26.default.createElement(Authenticate, null, /* @__PURE__ */ import_react26.default.createElement("h2", null, "Password"), /* @__PURE__ */ import_react26.default.createElement(
+        Input4,
         {
           type: "password",
           value: this.state.password,
@@ -74487,17 +65269,16 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             }
           }
         }
-      ), /* @__PURE__ */ import_react28.default.createElement(Button9, { onClick: auth }, "Authenticate"), /* @__PURE__ */ import_react28.default.createElement("span", null, this.state.error));
+      ), /* @__PURE__ */ import_react26.default.createElement(Button8, { onClick: auth }, "Connect"), /* @__PURE__ */ import_react26.default.createElement("span", null, this.state.error));
     }
     render() {
       const soc = this.audioLightSystem.lightSocket;
-      const authenticated = soc.authenticated && soc.socket.connected;
-      return /* @__PURE__ */ import_react28.default.createElement(import_react28.default.Fragment, null, /* @__PURE__ */ import_react28.default.createElement(ColourTitle, { als: this.audioLightSystem }), authenticated ? this.renderContent : this.socketWindow, /* @__PURE__ */ import_react28.default.createElement(Toaster, { als: this.audioLightSystem }));
+      return /* @__PURE__ */ import_react26.default.createElement(import_react26.default.Fragment, null, /* @__PURE__ */ import_react26.default.createElement(ColourTitle, { als: this.audioLightSystem }), soc.socket.connected ? this.renderContent : this.socketWindow, /* @__PURE__ */ import_react26.default.createElement(Toaster, { als: this.audioLightSystem }));
     }
   };
 
   // src/client/index.tsx
-  import_react_dom.default.render(/* @__PURE__ */ import_react29.default.createElement(App, null), document.getElementById("app"));
+  import_react_dom.default.render(/* @__PURE__ */ import_react27.default.createElement(App, null), document.getElementById("app"));
 })();
 /*! Bundled license information:
 
@@ -74590,17 +65371,6 @@ lodash/dist/lodash.js:
    *)
 
 react-is/cjs/react-is.development.js:
-  (**
-   * @license React
-   * react-is.development.js
-   *
-   * Copyright (c) Facebook, Inc. and its affiliates.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   *)
-
-react-is/cjs/react-is.development.js:
   (** @license React v16.13.1
    * react-is.development.js
    *
@@ -74628,16 +65398,6 @@ react-loading/dist/react-loading.js:
    * react.development.js
    *
    * Copyright (c) 2013-present, Facebook, Inc.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   *)
-
-react-is/cjs/react-is.development.js:
-  (** @license React v16.13.1
-   * react-is.development.js
-   *
-   * Copyright (c) Facebook, Inc. and its affiliates.
    *
    * This source code is licensed under the MIT license found in the
    * LICENSE file in the root directory of this source tree.
@@ -74698,8 +65458,9 @@ chroma-js/chroma.js:
 
 @fortawesome/fontawesome-svg-core/index.es.js:
   (*!
-   * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
+   * Font Awesome Free 6.0.0 by @fontawesome - https://fontawesome.com
    * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+   * Copyright 2022 Fonticons, Inc.
    *)
 
 @fortawesome/free-solid-svg-icons/index.es.js:

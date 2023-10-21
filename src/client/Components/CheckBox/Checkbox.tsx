@@ -4,6 +4,7 @@ import styled from "styled-components";
 const Warper = styled.div`
     display: inline-block;
     margin: 5px;
+    cursor: pointer;
 `;
 
 const Bar = styled.div`

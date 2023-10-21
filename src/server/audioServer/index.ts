@@ -28,7 +28,7 @@ async function checkForServer() {
 
 async function connectToSocket() {
     await initStorage();
-    await saveSettings();
+    await saveSettings(false);
     Logger.debug("Connecting to socket");
     const socket = io(connectionUrl, {
         timeout: 50000,
@@ -38,17 +38,15 @@ async function connectToSocket() {
         } as SocketAuth,
     });
     const client = new ClientSocket();
-    client.setSocket(socket);
-
     let auth = true;
 
     socket.on("connection-login", (data: LoginData) => {
-        if(data.status === "ok") {
+        if (data.status === "ok") {
             auth = true;
         } else {
             auth = false;
-            if(data.message) {
-                console.error(data.message)
+            if (data.message) {
+                console.error(data.message);
             }
         }
     });

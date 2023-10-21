@@ -4,6 +4,8 @@ import ReactLoading from "react-loading";
 import { RawImageLocation } from "../../../shared/interfaces";
 import moment from "moment";
 import styled from "styled-components";
+import { ClientMessagesRaw, ServerMessagesRaw } from "../../../shared/Messages";
+import { Button } from "./AutoPilot";
 
 const Container = styled.div`
     margin: 10px;
@@ -60,7 +62,6 @@ export class CameraTab extends React.Component<CameraTabProps, CameraTabState> {
     preload = async (img?: RawImageLocationEx) => {
         if (img) {
             if (img.token) {
-                const id = this.props.als.lightSocket.socket.id;
                 const urls = this.loading.get(img.date);
                 if (urls) {
                     urls.push(url => {
@@ -78,7 +79,7 @@ export class CameraTab extends React.Component<CameraTabProps, CameraTabState> {
                 this.loading.set(img.date, lArray);
 
                 try {
-                    const actualUrl = `./webcam/${id}/${img.token}`;
+                    const actualUrl = `./webcam/${img.token}`;
                     const data = await fetch(actualUrl);
                     if (!data.ok || data.status >= 400) {
                         throw new Error("Invalidated image");
@@ -127,20 +128,25 @@ export class CameraTab extends React.Component<CameraTabProps, CameraTabState> {
     async componentDidMount() {
         this.loadingPlaceHolder = await this.drawTextImage("loading");
         this.updateImages();
-        this.props.als.lightSocket.socket.on("door-image-available", this.updateImages);
+        this.props.als.lightSocket.clientSocket.clientHandle.on(
+            ClientMessagesRaw.DoorImageAvailable,
+            this.updateImages,
+        );
     }
 
     componentWillUnmount() {
-        this.props.als.lightSocket.socket.off("door-image-available", this.updateImages);
+        this.props.als.lightSocket.clientSocket.clientHandle.off(
+            ClientMessagesRaw.DoorImageAvailable,
+            this.updateImages,
+        );
     }
 
     updateImages = async () => {
         this.loaded.clear();
         this.loading.clear();
-        const data = await this.props.als.lightSocket.emitPromiseIfPossible<CameraImageLocation, void[]>(
-            "get-cam-data",
-        );
-
+        const buffer = await this.props.als.lightSocket.emitPromiseIfPossible(ServerMessagesRaw.CamGet);
+        const data = JSON.parse(buffer.getUtf8String()) as CameraImageLocation;
+        console.log(data);
         data.images = data.images.filter(i => !data.doorOpens.some(e => e.name === i.name));
 
         data.images.sort((a, b) => (parseInt(a.date, 10) > parseInt(b.date, 10) ? 1 : -1));
@@ -219,7 +225,8 @@ export class CameraTab extends React.Component<CameraTabProps, CameraTabState> {
             takingImage: true,
         });
         try {
-            const ok = await this.props.als.lightSocket.emitPromiseIfPossible<boolean, void[]>("take-cam-image");
+            const buffer = await this.props.als.lightSocket.emitPromiseIfPossible(ServerMessagesRaw.CamTake);
+            const ok = buffer.getBool();
             if (ok) {
                 this.updateImages();
             }
@@ -238,9 +245,9 @@ export class CameraTab extends React.Component<CameraTabProps, CameraTabState> {
 
         return (
             <Container>
-                <Btn onClick={this.takeImage} disabled={this.state.takingImage}>
+                <Button onClick={this.takeImage} disabled={this.state.takingImage}>
                     Take image
-                </Btn>
+                </Button>
                 {this.renderLastImage()}
                 {this.renderDoorImages()}
                 {this.renderOtherImages()}

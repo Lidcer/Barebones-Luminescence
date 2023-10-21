@@ -5,6 +5,7 @@ import { clientKeys, ServerInfo } from "../../../shared/interfaces";
 import pretty from "prettysize";
 import ReactLoading from "react-loading";
 import moment from "moment";
+import { ServerMessagesRaw } from "../../../shared/Messages";
 
 const Div = styled.div`
     padding: 4pt;
@@ -69,10 +70,11 @@ export class DeviceTab extends React.Component<DeviceTabProps, DeviceTabState> {
     }
 
     update = async () => {
-        const serverInfo = await this.props.als.lightSocket.emitPromiseIfPossible<ServerInfo, []>("device-info");
+        const serverInfoBuffer = await this.props.als.lightSocket.emitPromiseIfPossible(ServerMessagesRaw.DeviceInfo);
         if (this.destroyed) {
             return;
         }
+        const serverInfo = JSON.parse(serverInfoBuffer.getUtf8String());
         this.setState({ serverInfo });
 
         const cpuRect = this.cpu.current.getBoundingClientRect();

@@ -1,8 +1,9 @@
 import { Server, ServerWebSocket } from "bun";
-import { Emitter, EventEmitter } from "../../shared/eventEmitter"; 
+import { Emitter, EventEmitter } from "../../shared/eventEmitter";
 import { ServerMessagesRaw, SpecialEvents } from "../../shared/Messages";
 import * as ipAddr from "ipaddr.js";
-import wcmatch from 'wildcard-match'
+import wcmatch from "wildcard-match";
+import { BinaryBuffer } from "../../shared/messages/BinaryBuffer";
 
 //const isMatch = wcmatch('src/**/*.?s')
 export enum WSEvent {
@@ -11,13 +12,13 @@ export enum WSEvent {
     Disconnect,
 }
 
-
 const empty = {};
 
 interface WSData {
+    url: string;
     headers: {
         [key: string]: string;
-    }
+    };
 }
 
 export type WS = ServerWebSocket<WSData>;
@@ -36,11 +37,11 @@ interface ResponseMerge {
     create: (body?: BodyInit, init?: ResponseInit) => Response;
 }
 
-type N = void | null | undefined
+type N = void | null | undefined;
 type Handler = (request: RequestObject, response: ResponseMerge) => Response | Promise<Response> | N | Promise<N>;
-export type BunServer = ReturnType<typeof createServer>; 
+export type BunServer = ReturnType<typeof createServer>;
 
-interface EndpointDefenition {
+interface EndpointDefinition {
     url: string;
     paramsParser: KeyIndex[];
     match: (str: string) => boolean;
@@ -53,10 +54,7 @@ interface KeyIndex {
 }
 
 export function getRemoteAddress(request: Request, server: Server) {
-    const exist =  [
-        server.requestIP(request).address,
-        "::ffff:127.0.0.1"
-    ].find(i => i) as string;
+    const exist = [server.requestIP(request).address, "::ffff:127.0.0.1"].find(i => i) as string;
     return ipAddr.process(exist).toString();
 }
 
@@ -66,56 +64,75 @@ export function getIP(request: Request, server: Server) {
 
 function urlToQuery(url: URL) {
     const obj = {};
-    url.searchParams.forEach((v,k) => obj[k] = v);
-    return obj
+    url.searchParams.forEach((v, k) => (obj[k] = v));
+    return obj;
 }
 
 function urlToParam(url: URL, keyValue: KeyIndex[]) {
-    const pathname = url.pathname.split("/").filter(e => e)
+    const pathname = url.pathname.split("/").filter(e => e);
     const obj = {};
-    for (const { index,key } of keyValue) {
+    for (const { index, key } of keyValue) {
         obj[key] = pathname[index];
     }
-    return obj
+    return obj;
 }
 
 export function createServer(port: number) {
-    const endpoints: EndpointDefenition[] = [];
-    const sockets = new Map<ServerWebSocket<WSData>, Socket>()
-    const socketEmitter = new SocketEmitter(); 
+    const endpoints: EndpointDefinition[] = [];
+    const sockets = new Map<WS, Socket>();
+    const socketEmitter = new SocketEmitter();
+    let updateRequest: WSData;
     Bun.serve({
         port,
         fetch: async (request, server) => {
-            const success = server.upgrade(request);
-            if (success) {
-                console.log(request);
+            const upgrade =
+                request.headers.get("Upgrade") === "websocket" || request.headers.get("upgrade") === "websocket";
+
+            if (upgrade) {
+                const headers = {};
+                Array.from(request.headers).forEach(e => (headers[e[0]] = e[1]));
+                updateRequest = {
+                    url: request.url,
+                    headers,
+                };
+                const success = server.upgrade(request);
+                if (!success) {
+                    Logger.error("Websocket upgrade failed");
+                }
                 return undefined;
             }
 
             const url = new URL(request.url);
-            
-            const cleanedUrl = url.pathname.split("/").filter(e => e).join('/');
+
+            const cleanedUrl = url.pathname
+                .split("/")
+                .filter(e => e)
+                .join("/");
             const req: RequestObject = {
                 originalRequest: request,
                 server,
                 params: empty,
                 query: urlToQuery(url),
-                ip: getRemoteAddress(request, server)
-            }
+                ip: getRemoteAddress(request, server),
+            };
             const resMer: ResponseMerge = {
                 headers: {},
                 create: (body, init) => {
-                    return new Response(body, {...init,
+                    return new Response(body, {
+                        ...init,
                         status: resMer.status ?? init.status,
                         statusText: resMer.statusText ?? init.statusText,
-                        headers: {...init.headers, ...resMer.headers}})
-                }
-                
-            }
+                        headers: { ...init.headers, ...resMer.headers },
+                    });
+                },
+            };
             for (const endpoint of endpoints) {
                 if ((endpoint.method === "use" || endpoint.method === endpoint.method) && endpoint.match(cleanedUrl)) {
-                    const res = await endpoint.handler({...req, params: urlToParam(url, endpoint.paramsParser)}, resMer);
-                    
+                    const res = await endpoint.handler(
+                        { ...req, params: urlToParam(url, endpoint.paramsParser) },
+                        resMer,
+                    );
+
                     if (res) {
                         return res;
                     } else if (endpoint.method === endpoint.method) {
@@ -127,9 +144,13 @@ export function createServer(port: number) {
         },
         websocket: {
             open(ws: WS) {
-                ws.data = {
-                    headers:{}
+                if (!updateRequest) {
+                    Logger.warn("Update request missing");
+                    ws.close();
+                    return;
                 }
+                ws.data = updateRequest;
+                updateRequest = undefined;
                 const socket = new Socket(ws);
                 sockets.set(ws, socket);
                 socketEmitter.emit(WSEvent.Connect, socket);
@@ -140,32 +161,35 @@ export function createServer(port: number) {
                 } else {
                     const socket = sockets.get(ws);
                     if (socket) {
-                        const u8Arr = new Uint8Array(message.buffer);
-                        socket.emit(WSEvent.Message, socket, u8Arr);
+                        const buffer = new BinaryBuffer(new Uint8Array(message.buffer));
+                        socket.emit(WSEvent.Message, buffer, socket);
                     }
                 }
             },
             close(ws, code, reason) {
+                Logger.debug("Socket closed", code, reason);
                 const socket = sockets.get(ws);
                 if (socket) {
-                    socket._destory(code, reason);
+                    socket._destroy(code, reason);
+                    socket.emit(WSEvent.Disconnect, socket);
                 }
                 sockets.delete(ws);
+                socketEmitter.emit(WSEvent.Disconnect, socket);
             },
-        }
+        },
     });
 
     Logger.info(`Listening on ${port}`);
     const addMethod = (method: string, url: string, handler: Handler) => {
         const split = url.split("/").filter(e => e);
-        const cleanedUrl = split.join('/');
-        const params = cleanedUrl.match(/(:\w*-*\d*)/g)
+        const cleanedUrl = split.join("/");
+        const params = cleanedUrl.match(/(:\w*-*\d*)/g);
         let match = cleanedUrl;
-        let paramsParser: KeyIndex[] = []
+        const paramsParser: KeyIndex[] = [];
         if (params) {
             for (const param of params) {
-                paramsParser.push({key: param.substring(1), index: split.indexOf(param)}),
-                match = match.replace(param, "*");
+                paramsParser.push({ key: param.substring(1), index: split.indexOf(param) }),
+                    (match = match.replace(param, "*"));
             }
         }
 
@@ -174,9 +198,9 @@ export function createServer(port: number) {
             paramsParser,
             match: wcmatch(match),
             method,
-            url
+            url,
         });
-    }
+    };
 
     return {
         use: (handler: Handler) => {
@@ -188,9 +212,9 @@ export function createServer(port: number) {
         post: (url: string, handler: Handler) => {
             addMethod("post", url, handler);
         },
-        socketEmitter
-    }
-} 
+        socketEmitter,
+    };
+}
 
 export class SocketEmitter extends EventEmitter {
     on(key: WSEvent.Connect, cb: (ws: Socket) => void): void;
@@ -206,20 +230,19 @@ export class SocketEmitter extends EventEmitter {
     off(key: WSEvent, cb: any) {
         super.off(key, cb);
     }
-    
+
     emit(key: WSEvent.Connect, ws: Socket): number;
     emit(key: WSEvent.Disconnect, ws: Socket): number;
     emit(key: WSEvent.Message, ws: Socket, message: Uint8Array): number;
     emit(key: WSEvent, ...args: any[]) {
         return super.emit(key, ...args);
     }
- }
-
+}
 
 export class Socket extends EventEmitter {
     private _destroyed = false;
     constructor(public ws: WS) {
-       super();
+        super();
     }
     on(key: WSEvent, handle: Emitter) {
         super.on(key, handle);
@@ -230,12 +253,12 @@ export class Socket extends EventEmitter {
     emit(key: WSEvent, ...args: any[]) {
         return super.emit(key, ...args);
     }
-    disonnect(code?: number, reason?: string) {
+    disconnect(code?: number, reason?: string) {
         if (!this._destroyed) {
             this.ws.close(code, reason);
         }
     }
-    _destory(code: number, reason: string) {
+    _destroy(code: number, reason: string) {
         this._destroyed = true;
     }
     send(u8Array: Uint8Array) {
@@ -245,4 +268,3 @@ export class Socket extends EventEmitter {
         return !this._destroyed;
     }
 }
-

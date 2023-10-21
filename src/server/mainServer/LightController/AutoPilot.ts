@@ -1,5 +1,8 @@
-import { LedPattern, SchedulerDescriptionVague } from "../../../shared/interfaces";
+import { LedPattern } from "../../../shared/interfaces";
+import { ClientMessagesRaw, ServerMessagesRaw } from "../../../shared/Messages";
+import { BinaryBuffer, utf8StringLen } from "../../../shared/messages/BinaryBuffer";
 import { convertSchedulerDescription, Scheduler } from "../../../shared/Scheduler";
+import { quickBuffer } from "../../../shared/utils";
 import { saveSettings, settings } from "../main/storage";
 import { WebSocket } from "../socket/Websocket";
 
@@ -11,40 +14,47 @@ export class AutoPilot {
         this._patterns = settings.patterns;
         this._scheduler = new Scheduler(s);
 
-        websocket.onPromise("patterns-get", async client => {
+        websocket.onPromise(ServerMessagesRaw.PatternGet, async (_, client) => {
             client.validateAuthentication();
-            return this.patterns;
+            return quickBuffer(this.patterns);
         });
-        websocket.onPromise<void, [LedPattern[]]>("patterns-set", async (client, patterns) => {
+        websocket.onPromise(ServerMessagesRaw.PatternSet, async (buffer, client) => {
             client.validateAuthentication();
+            const patterns = JSON.parse(buffer.getUtf8String());
             if (Array.isArray(patterns)) {
                 this._patterns = patterns.filter(
                     o => Array.isArray(o.ledPattern) && typeof o.name === "string" && o.name,
                 );
                 settings.patterns = this._patterns;
-                await saveSettings();
-                websocket.broadcast("patterns-update", this._patterns);
+                await saveSettings(true);
+                const json = JSON.stringify(this._patterns);
+                const retrieveBuffer = new BinaryBuffer(utf8StringLen(json)).setUtf8String(json).getBuffer();
+                websocket.broadcast(ClientMessagesRaw.PatternUpdate, retrieveBuffer);
+                return retrieveBuffer;
             } else {
                 throw new Error("Pattern are not in array");
             }
         });
-        websocket.onPromise<SchedulerDescriptionVague, []>("schedule-get", async client => {
+        websocket.onPromise(ServerMessagesRaw.ScheduleGet, async (_, client) => {
             client.validateAuthentication();
-            return settings.schedule;
+            const json = JSON.stringify(settings.schedule);
+            return new BinaryBuffer(utf8StringLen(json)).setUtf8String(json).getBuffer();
         });
-        websocket.onPromise<SchedulerDescriptionVague, [SchedulerDescriptionVague]>(
-            "schedule-set",
-            async (client, schedule) => {
-                client.validateAuthentication();
-                const s = convertSchedulerDescription(schedule, settings.patterns);
-                this._scheduler.loadSchedule(s);
-                settings.schedule = schedule;
-                await saveSettings();
-                websocket.broadcast("schedule-update", settings.schedule);
-                websocket.broadcastLog("info", "Schedule has been changed");
-                return settings.schedule;
-            },
-        );
+        websocket.onPromise(ServerMessagesRaw.ScheduleSet, async (buffer, client) => {
+            const raw = buffer.getUtf8String();
+            const schedule = JSON.parse(raw);
+            client.validateAuthentication();
+            const s = convertSchedulerDescription(schedule, settings.patterns);
+            this._scheduler.loadSchedule(s);
+            settings.schedule = schedule;
+            await saveSettings(true);
+
+            const json = JSON.stringify(settings.schedule);
+            const retrieveBuffer = new BinaryBuffer(utf8StringLen(json)).setUtf8String(json).getBuffer();
+            websocket.broadcast(ClientMessagesRaw.ScheduleUpdate, retrieveBuffer);
+            websocket.broadcastLog("info", "Schedule has been changed");
+            return retrieveBuffer;
+        });
     }
 
     updateScheduler() {

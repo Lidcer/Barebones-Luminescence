@@ -7,7 +7,7 @@ import { AudioAnalyser } from "../../../shared/audioAnalyser";
 import { AutoPilot } from "./AutoPilot";
 import { Lights } from "./Devices/Controller";
 import { increaseDoor, saveSettings, settings } from "../main/storage";
-import { sleep } from "../../../shared/utils";
+import { quickBuffer, sleep } from "../../../shared/utils";
 import { isPastMidnight, dateMerger } from "../../../shared/timeUtils";
 import { DoorLog } from "../main/doorLog";
 import { getSunsetSunriseData } from "./SunsetSunrise";
@@ -76,7 +76,9 @@ export function setupLightHandler(
             case ControllerMode.ManualLocked:
                 const diff = lightMode !== mode;
                 lastMode = settings.controllerMode = lightMode = mode;
-                websocket.broadcast(ClientMessagesRaw.ModeUpdate, new BinaryBuffer(1).setUint8(lightMode).getBuffer());
+                if (diff) {
+                    websocket.broadcast(ClientMessagesRaw.ModeUpdate, quickBuffer(lightMode));
+                }
 
                 if (doorFrameLoop) {
                     clearTimeout(doorFrameLoop);
@@ -85,7 +87,7 @@ export function setupLightHandler(
                 de.cancel();
 
                 if (diff) {
-                    await saveSettings();
+                    await saveSettings(false);
                 }
                 return;
             default:
@@ -93,7 +95,7 @@ export function setupLightHandler(
         }
     };
 
-    websocket.on(ServerMessagesRaw.RGBSet, (client, buffer) => {
+    websocket.on(ServerMessagesRaw.RGBSet, (buffer, client) => {
         client.validateAuthentication();
         if (userClients.includes(client.clientType)) {
             if (lastMode !== ControllerMode.ManualForce && lastMode !== ControllerMode.ManualLocked) {
@@ -103,23 +105,24 @@ export function setupLightHandler(
             setMode(ControllerMode.AudioRaw);
         }
         RGB.r = clamp(buffer.getUint8(), 0, 255);
-        RGB.b = clamp(buffer.getUint8(), 0, 255);
         RGB.g = clamp(buffer.getUint8(), 0, 255);
+        RGB.b = clamp(buffer.getUint8(), 0, 255);
     });
 
-    websocket.onPromise<void, [ControllerMode]>(ServerMessagesRaw.ModeSet, async (client, buffer) => {
+    websocket.onPromise(ServerMessagesRaw.ModeSet, async (buffer, client) => {
         client.validateAuthentication();
-        setMode(buffer.getUint8());
+        const mode = buffer.getUint8();
+        setMode(mode);
         return new Uint8Array(0);
     });
-    websocket.onPromise<ControllerMode, []>(ServerMessagesRaw.ModeGet, async client => {
+    websocket.onPromise(ServerMessagesRaw.ModeGet, async (_, client) => {
         client.validateAuthentication();
         const arr = new Uint8Array(1);
         arr[0] = lightMode;
         return arr;
     });
 
-    websocket.onPromise<RGB, []>(ServerMessagesRaw.RGBGet, async client => {
+    websocket.onPromise(ServerMessagesRaw.RGBGet, async (_, client) => {
         client.validateAuthentication();
         const buffer = new BinaryBuffer(3);
         buffer.setUint8(RGB.r);
@@ -129,7 +132,12 @@ export function setupLightHandler(
     });
 
     websocket.onSocketEvent("all-clients-disconnected", () => {
-        const blockMods: ControllerMode[] = [ControllerMode.ManualForce, ControllerMode.ManualLocked, ControllerMode.AudioRaw, ControllerMode.Audio];
+        const blockMods: ControllerMode[] = [
+            ControllerMode.ManualForce,
+            ControllerMode.ManualLocked,
+            ControllerMode.AudioRaw,
+            ControllerMode.Audio,
+        ];
         if (!blockMods.includes(lightMode)) {
             setMode(ControllerMode.AutoPilot);
         }
@@ -188,19 +196,23 @@ export function setupLightHandler(
 
         const dateEnd = Date.now();
         const diff = dateEnd - now;
+
         if (diff > SERVER_FPS) {
             Logger.debug("Server is lagging!");
             timeout = setTimeout(tick, 0);
         } else {
-            const next = lightMode === ControllerMode.Audio || lightMode === ControllerMode.AudioRaw ? 0 : SERVER_FPS - diff;
+            const next =
+                lightMode === ControllerMode.Audio || lightMode === ControllerMode.AudioRaw ? 0 : SERVER_FPS - diff;
             timeout = setTimeout(tick, next);
         }
     };
 
     const updateModeAndLight = (rgb?: RGB) => {
-        websocket.broadcast(ClientMessagesRaw.ModeUpdate, new BinaryBuffer(1).setUint8(lightMode).getBuffer());
-        rgb = rgb || RGB
-        websocket.broadcast(ClientMessagesRaw.RGBUpdate, new BinaryBuffer(3).setUint8(RGB.r).setUint8(RGB.g).setUint8(RGB.b).getBuffer());
+        rgb = rgb || RGB;
+        websocket.broadcast(
+            ClientMessagesRaw.RGBUpdate,
+            new BinaryBuffer(3).setUint8(RGB.r).setUint8(RGB.g).setUint8(RGB.b).getBuffer(),
+        );
     };
 
     let lastDoorState = false;
@@ -291,7 +303,7 @@ export function setupLightHandler(
         await light.setRGB(RGB.r, RGB.g, RGB.b);
         tick();
     };
-    if (light.connected) {
+    if (light.connected || DEV) {
         onConnect();
     }
     light.on("connect", () => {

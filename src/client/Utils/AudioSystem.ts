@@ -64,11 +64,11 @@ export class AudioLightSystem {
         //this._audioAnalyser.update();
         this.eventEmitter.emit("audioUpdate", { leftBuffer, rightBuffer, mergedBuffer, rgbBuffer });
     };
-    private _raiseNotificationBin = (client, binary: BinaryBuffer) => {
+    private _raiseNotificationBin = (binary: BinaryBuffer) => {
         const type = binary.getUtf8String() as any;
         const str = binary.getUtf8String();
         const des = binary.getUtf8String();
-        const log: Log = { title: str, type, description:des };
+        const log: Log = { title: str, type, description: des };
         this._raiseNotification(log);
     };
     private _raiseNotification = (log: Log) => {

@@ -1,7 +1,6 @@
 export type Emitter = (...args: any[]) => void;
 
 export class EventEmitter {
-
     private map = new Map<any, Emitter[]>();
 
     on(key: any, handler: Emitter) {
@@ -9,10 +8,11 @@ export class EventEmitter {
         if (data.indexOf(handler) === -1) {
             data.push(handler);
         }
+        this.map.set(key, data);
     }
     off(key: any, handler: Emitter) {
         const data = this.map.get(key) || [];
-        const index = data.indexOf(handler)
+        const index = data.indexOf(handler);
         if (index !== -1) {
             data.splice(index, 1);
         }
@@ -33,9 +33,7 @@ export class EventEmitter {
     }
 }
 
-
 export class EventEmitterSingle {
-
     private map = new Map<any, Emitter>();
 
     on(key: any, handler: Emitter) {
@@ -52,6 +50,6 @@ export class EventEmitterSingle {
         if (data) {
             return data(...args);
         }
-        throw new Error(`Function ${key} not reistered`);
+        throw new Error(`Single function ${key} not registered`);
     }
 }

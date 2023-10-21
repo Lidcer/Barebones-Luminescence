@@ -3,23 +3,25 @@ import { Client } from "./client";
 import { Logger } from "../../../shared/logger";
 import { ClientType, Log } from "../../../shared/interfaces";
 import { EventEmitter } from "events";
-import { userClients } from "../../../shared/constants";
-import { BunServer, WSEvent  } from "../../sharedFiles/bun-server";
+import { MINUTE, userClients } from "../../../shared/constants";
+import { BunServer, WSEvent } from "../../sharedFiles/bun-server";
 import { ClientMessagesRaw, ServerMessagesRaw, SpecialEvents } from "../../../shared/Messages";
 import { SocketData, SocketRaw } from "../../../shared/messages/messageHandle";
 import { BinaryBuffer, utf8StringLen } from "../../../shared/messages/BinaryBuffer";
+import { Cache } from "../../../shared/cache";
+import { randomBytes } from "crypto";
 
-type WebsocketCallback = (client: Client, buffer: SocketData) => void;
-type WebsocketCallbackPromise = (client: Client, buffer: SocketData) => Promise<SocketRaw>;
+type WebsocketCallback = (buffer: SocketData, client: Client) => void;
+type WebsocketCallbackPromise = (buffer: SocketData, client: Client) => Promise<SocketRaw>;
 
 export class WebSocket {
     private event = new EventEmitter();
     private clients: Client[] = [];
     private callbacks = new Map<ServerMessagesRaw, WebsocketCallback[]>();
     private promiseCallback = new Map<ServerMessagesRaw, WebsocketCallbackPromise>();
+    private tokens = new Cache<string, string>(MINUTE);
 
     constructor(private server?: BunServer) {
-
         process.on("uncaughtException", err => {
             console.error("uncaughtException", err);
             this.broadcastLog("error", err);
@@ -51,32 +53,51 @@ export class WebSocket {
                     break;
             }
         });
-        this.server.socketEmitter.on(WSEvent.Connect, (c) => {
-            const client = new Client(c);
-            if (!client.auth()) {
-                return;
-            }
-            this.clients.push(client);
-            Logger.log("[WebSocket]", "connected", this.getSocketInfo());
+        this.server.socketEmitter.on(WSEvent.Connect, c => {
+            try {
+                const client = new Client(c, token => {
+                    const data = this.tokens.get(token);
+                    this.tokens.delete(token);
+                    return data as any;
+                });
+                this.clients.push(client);
 
-
-            const methods = Array.from(this.callbacks);
-            for (const [methodName, arr] of methods) {
-                for (const method of arr) {
-                    client.serverMessageHandler.on(methodName, method);
+                const methods = Array.from(this.callbacks);
+                for (const [methodName, arr] of methods) {
+                    for (const method of arr) {
+                        client.serverMessageHandler.on(methodName, method);
+                    }
                 }
-            }
 
-            client.serverMessageHandler.on(SpecialEvents.Disconnect, () => {
-                removeFromArray(this.clients, client);
-                Logger.log("[WebSocket]", "disconnected", this.getSocketInfo());
-                const allowedClients: ClientType[] = ["android-app", "android-app-background", "browser-client"];
-                const clients = this.clients.filter(c => allowedClients.includes(c.clientType));
-                if (!clients.length) {
-                    this.event.emit("all-clients-disconnected");
+                const promiseMethods = Array.from(this.promiseCallback);
+                for (const [methodName, fn] of promiseMethods) {
+                    client.serverMessageHandler.onPromise(methodName, fn);
                 }
-            });
+
+                client.serverMessageHandler.on(SpecialEvents.Disconnect, () => {
+                    removeFromArray(this.clients, client);
+                    Logger.log("[WebSocket]", "disconnected", this.getSocketInfo());
+                    const allowedClients: ClientType[] = ["android-app", "android-app-background", "browser-client"];
+                    const clients = this.clients.filter(c => allowedClients.includes(c.clientType));
+                    if (!clients.length) {
+                        this.event.emit("all-clients-disconnected");
+                    }
+                });
+                Logger.log("[WebSocket]", "connected", this.getSocketInfo());
+            } catch (error) {
+                c.ws.close(4000, error.message);
+            }
         });
+    }
+
+    generateToken(clientType: string) {
+        while (true) {
+            const id = randomBytes(8).toString("hex");
+            if (!this.tokens.get(id)) {
+                this.tokens.set(id, clientType);
+                return id;
+            }
+        }
     }
     private getSocketInfo() {
         const ap = this.clients.filter(e => e.clientType === "android-app").length;
@@ -100,20 +121,20 @@ export class WebSocket {
 
     broadcast(type: ClientMessagesRaw, buffer: SocketRaw) {
         if (this.clients.length) {
-            const binaryBuffer = new BinaryBuffer(buffer.byteLength + 1 + 4)
+            const binaryBuffer = new BinaryBuffer(buffer.byteLength + 1);
             binaryBuffer.setUint8(type);
-            binaryBuffer.setU8Arr(buffer);
-            const raw = binaryBuffer.getU8Arr();
+            binaryBuffer.setBytes(buffer);
+            const raw = binaryBuffer.getBuffer();
 
             for (const client of this.clients) {
                 if (userClients.includes(client.clientType)) {
-                    client.socket.ws.sendBinary(raw);
+                    client.socket.send(raw);
                 }
             }
         }
     }
 
-    on(value: ServerMessagesRaw, callback: (client: Client, buffer: SocketData) => void | Promise<void>) {
+    on(value: ServerMessagesRaw, callback: (buffer: SocketData, client: Client) => void | Promise<void>) {
         const callbackFunction = this.callbacks.get(value) || [];
         pushUniqToArray(callbackFunction, callback);
         for (const client of this.clients) {
@@ -121,7 +142,7 @@ export class WebSocket {
         }
         this.callbacks.set(value, callbackFunction);
     }
-    off(value: ServerMessagesRaw, callback: (client: Client, buffer: SocketData) => void) {
+    off(value: ServerMessagesRaw, callback: (buffer: SocketData, client: Client) => void) {
         const callbackFunction = this.callbacks.get(value) || [];
         removeFromArray(callbackFunction, callback);
         for (const client of this.clients) {
@@ -131,7 +152,7 @@ export class WebSocket {
         this.callbacks.set(value, callbackFunction);
     }
 
-    onPromise<A, T extends any[]>(value: ServerMessagesRaw, callback: (client: Client, buffer: SocketData) => Promise<SocketRaw>) {
+    onPromise(value: ServerMessagesRaw, callback: (buffer: SocketData, client: Client) => Promise<SocketRaw>) {
         if (!(callback instanceof (async () => {}).constructor)) {
             const err = new Error("Promise callback expected");
             this.broadcastLog("fatal", err);
@@ -170,7 +191,9 @@ export class WebSocket {
                 des = description;
             }
 
-            const binary = new BinaryBuffer(1 + utf8StringLen(type) + utf8StringLen(str) + utf8StringLen(description));
+            des = des ?? "";
+
+            const binary = new BinaryBuffer(1 + utf8StringLen(type) + utf8StringLen(str) + utf8StringLen(des));
             binary.setUint8(ClientMessagesRaw.SocketLog);
             binary.setUtf8String(type);
             binary.setUtf8String(str);
@@ -178,7 +201,7 @@ export class WebSocket {
             const raw = binary.getBuffer();
             for (const client of this.clients) {
                 if (client.clientType === "browser-client") {
-                    client.socket.ws.sendBinary(raw);
+                    client.socket.send(raw);
                 }
             }
         }

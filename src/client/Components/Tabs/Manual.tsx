@@ -8,6 +8,9 @@ import { isVertical } from "../../Utils/Utils";
 import { CheckBox } from "../CheckBox/Checkbox";
 import { ControllerMode } from "../../../shared/interfaces";
 import ReactTooltip from "react-tooltip";
+import { BinaryBuffer } from "../../../shared/messages/BinaryBuffer";
+import { ServerMessagesRaw } from "../../../shared/Messages";
+import { quickBuffer } from "../../../shared/utils";
 
 const Div = styled.div`
     margin: 10px;
@@ -55,17 +58,17 @@ export class ManualTab extends React.Component<ManualTabProps, ManualTabState> {
         window.removeEventListener("resize", this.resize);
         this.props.als.lightSocket.off("mode-update", this.onModeUpdate);
     }
-
     onModeUpdate = (mode: ControllerMode) => {
+        console.error("mode change", mode);
         this.setState({ mode });
+        this.forceUpdate();
     };
 
     changeMode = (mode: ControllerMode, on: boolean) => {
-        if (on) {
-            this.props.als.lightSocket.emitPromiseIfPossible("mode-set", mode);
-        } else {
-            this.props.als.lightSocket.emitPromiseIfPossible("mode-set", "AutoPilot");
-        }
+        this.props.als.lightSocket.emitIfPossible(
+            ServerMessagesRaw.ModeSet,
+            quickBuffer(on ? mode : ControllerMode.AutoPilot),
+        );
     };
 
     resize = () => {
@@ -75,9 +78,8 @@ export class ManualTab extends React.Component<ManualTabProps, ManualTabState> {
     onChange = (colour: Colour) => {
         BrowserStorage.setString(this.BROWSER_KEY, colour.hex);
         const ls = this.props.als.lightSocket;
-        if (ls.authenticated) {
-            const { r: red, g: green, b: blue } = colour.rgb;
-            ls.clientSocket.emit("rgb-set", red, green, blue);
+        if (ls.connected) {
+            ls.setColor(colour.rgb.r, colour.rgb.g, colour.rgb.b);
         }
     };
 
@@ -90,27 +92,27 @@ export class ManualTab extends React.Component<ManualTabProps, ManualTabState> {
                     <CheckBoxDiv data-tip='LEDs will keep its state as long as this page is open then it will fall back to autopilot'>
                         <CheckBox
                             text='Manual'
-                            enabled={this.state.mode === "Manual"}
+                            enabled={this.state.mode === ControllerMode.Manual}
                             onChange={on => {
-                                this.changeMode("Manual", on);
+                                this.changeMode(ControllerMode.Manual, on);
                             }}
                         />
                     </CheckBoxDiv>
                     <CheckBoxDiv data-tip='LEDs will keep its state even when this page is closed. Can still be overwritten by door switch'>
                         <CheckBox
                             text='Manual Force'
-                            enabled={this.state.mode === "ManualForce"}
+                            enabled={this.state.mode === ControllerMode.ManualForce}
                             onChange={on => {
-                                this.changeMode("ManualForce", on);
+                                this.changeMode(ControllerMode.ManualForce, on);
                             }}
                         />
                     </CheckBoxDiv>
                     <CheckBoxDiv data-tip="LEDs will keep its state no matter what. Even door switch can't overwrite this">
                         <CheckBox
                             text='Manual Locked'
-                            enabled={this.state.mode === "ManualLocked"}
+                            enabled={this.state.mode === ControllerMode.ManualLocked}
                             onChange={on => {
-                                this.changeMode("ManualLocked", on);
+                                this.changeMode(ControllerMode.ManualLocked, on);
                             }}
                         />
                     </CheckBoxDiv>

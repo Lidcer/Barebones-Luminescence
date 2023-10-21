@@ -6,9 +6,9 @@ import { AudioLightSystem } from "../../Utils/AudioSystem";
 import { PreGenerateColourPickerPalette } from "../ColourPicker/ColourPickerDataImages";
 import { ColourSetter, OnChangeEventType } from "../ColourSetter/ColourSetter";
 import { PatternPreview } from "./PatternPreview";
-import { parseTime, TimeParser, TIME_SEPARATOR, TIME_SPLITTER } from "../../../shared/Scheduler";
+import { TimeParser } from "../../../shared/Scheduler";
 import styled from "styled-components";
-import TimePicker, { TimePickerValue } from "react-time-picker";
+import { TimePickerSecond } from "../Time/Time";
 
 const Div = styled.div`
     display: flex;
@@ -119,32 +119,27 @@ export class ScheduleHourDescriptor extends React.Component<ScheduleItemProps, S
     }
 
     get timePickers() {
-        const onChange = (time: TimePickerValue, start: boolean) => {
+        const onChange = (time: string, start: boolean) => {
             const split = this.props.time.split("-");
             const newTime = start ? `${time}-${split[1]}` : `${split[0]}-${time}`;
             this.props.onTimeChange(this.props.time, newTime);
         };
         const split = this.props.time.split("-");
-
         return (
             <>
                 <span>Start:</span>
-                <TimePicker
-                    className='time-picker'
-                    value={split[0]}
-                    onChange={ev => onChange(ev, true)}
-                    maxDetail='second'
-                    disableClock={true}
-                    clearIcon={null}
+                <TimePickerSecond
+                    time={split[0]}
+                    onChange={ev => {
+                        onChange(ev, true);
+                    }}
                 />
                 <span>End:</span>
-                <TimePicker
-                    className='time-picker'
-                    value={split[1]}
-                    onChange={ev => onChange(ev, false)}
-                    maxDetail='second'
-                    disableClock={true}
-                    clearIcon={null}
+                <TimePickerSecond
+                    time={split[1]}
+                    onChange={ev => {
+                        onChange(ev, false);
+                    }}
                 />
             </>
         );

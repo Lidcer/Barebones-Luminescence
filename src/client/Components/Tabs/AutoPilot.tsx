@@ -7,6 +7,8 @@ import { PreGenerateColourPickerPalette } from "../ColourPicker/ColourPickerData
 import { PatternBuilder } from "../CustomTab/PatternBuilder";
 import { ScheduleBuilder } from "../CustomTab/ScheduleBuilder";
 import { DoorSensor } from "../CustomTab/DoorSensor";
+import { ServerMessagesRaw } from "../../../shared/Messages";
+import { quickBuffer } from "../../../shared/utils";
 
 const Warper = styled.div`
     overflow: auto;
@@ -39,16 +41,26 @@ export const Button = styled.button`
     font-size: 20px;
     padding: 2px;
     margin: 2px;
-    border-radius: 4px;
     border: none;
     outline: none;
     transition: background-color 0.25s, color 0.25s;
     :hover {
         background-color: rgb(52, 52, 52);
     }
-    :disabled {
-        color: rgb(128, 128, 128);
-        background-color: rgb(16, 16, 16);
+`;
+
+export const ButtonActive = styled.button`
+    user-select: none;
+    font-size: 20px;
+    padding: 2px;
+    margin: 2px;
+    border: none;
+    outline: none;
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    transition: background-color 0.25s, color 0.25s;
+    :hover {
+        background-color: rgb(52, 52, 52);
     }
 `;
 
@@ -88,7 +100,10 @@ export class AutoPilotTab extends React.Component<AutoPilotProps, AutoPilotState
     };
 
     changeMode = (mode: ControllerMode, on: boolean) => {
-        this.props.als.lightSocket.emitPromiseIfPossible("mode-set", mode);
+        this.props.als.lightSocket.emitPromiseIfPossible(
+            ServerMessagesRaw.ModeSet,
+            quickBuffer(on ? mode : ControllerMode.Manual),
+        );
     };
 
     renderTabs() {
@@ -107,38 +122,27 @@ export class AutoPilotTab extends React.Component<AutoPilotProps, AutoPilotState
         }
     }
 
+    renderButton(state: TabState, name: string) {
+        const active = this.state.tabState === state;
+        const Btn = active ? ButtonActive : Button;
+        return <Btn onClick={() => this.setState({ tabState: state })}>{name}</Btn>;
+    }
+
     render() {
         return (
             <Warper>
                 <CheckBox
                     text='Auto Pilot'
-                    enabled={this.state.mode === "AutoPilot"}
+                    enabled={this.state.mode === ControllerMode.AutoPilot}
                     onChange={on => {
-                        this.changeMode("AutoPilot", on);
+                        this.changeMode(ControllerMode.AutoPilot, on);
                     }}
                 />
                 <DivTab>
-                    <Button
-                        onClick={() => this.setState({ tabState: TabState.Pattern })}
-                        disabled={this.state.tabState === TabState.Pattern}
-                    >
-                        Schedule builder
-                    </Button>
-                    <Button
-                        onClick={() => this.setState({ tabState: TabState.Schedule })}
-                        disabled={this.state.tabState === TabState.Schedule}
-                    >
-                        Pattern builder
-                    </Button>
+                    {this.renderButton(TabState.Pattern, "Pattern Builder")}
+                    {this.renderButton(TabState.Schedule, "Schedule Builder")}
                     {this.props.als.lightSocket.doorSensorConnected ? (
-                        <>
-                            <Button
-                                onClick={() => this.setState({ tabState: TabState.Door })}
-                                disabled={this.state.tabState === TabState.Door}
-                            >
-                                Door sensor
-                            </Button>
-                        </>
+                        <>{this.renderButton(TabState.Door, "Door Sensor")}</>
                     ) : null}
                 </DivTab>
 

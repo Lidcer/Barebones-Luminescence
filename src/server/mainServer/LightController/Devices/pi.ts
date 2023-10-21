@@ -1,6 +1,6 @@
 import { LightController } from "./Controller";
 import { RGB } from "../../../../shared/interfaces";
-import {  PASSWORD, PI_PORT } from "../../main/config";
+import { PI_PORT } from "../../main/config";
 import { StringifiedError } from "../../../sharedFiles/error";
 import { EventEmitter } from "events";
 
@@ -19,14 +19,21 @@ export class PIController implements LightController {
     private readonly connectionUrl = `http://localhost:${PI_PORT}`;
     private queueLimit = 10;
     private sendingData = false;
-    private socket: Socket;
     private queue: RGB[] = [];
     private eventEmitter = new EventEmitter();
     private _connected = false;
 
     constructor() {
         Logger.info("Starting connection");
-
+        const workerURL = new URL("../../../piServer/index.ts", import.meta.url).href;
+        const worker = new Worker(workerURL);
+        console.log(worker);
+        worker.postMessage([0, this.RED, this.GREEN, this.BLUE, this.DOOR_PIN]);
+        this.eventEmitter.emit("connect");
+        worker.addEventListener("message", event => {
+            const [level, tick] = event.data;
+            this.eventEmitter.emit("door", level, tick);
+        });
         // this.socket = io(this.connectionUrl, { auth: { token: PASSWORD } });
         // this.socket.on("connect", () => {
         //     this.socket.emit("init", this.RED, this.GREEN, this.BLUE, this.DOOR_PIN, (error: StringifiedError) => {

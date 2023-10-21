@@ -1,6 +1,7 @@
 import { AUDIO_SERVER, CAM_INSTALLED, IS_DEV, SERVER_PORT } from "./config";
 import { WebSocket } from "../socket/Websocket";
 import { pagesRouter } from "../../pageRouter";
+import { apiRouter } from "../../apiRouter";
 import { setupCommunicationToAudioServer } from "../socket/audioServer";
 import { setupLightHandler } from "../LightController/LightHandler";
 import { AudioProcessor } from "../../../shared/audioProcessor";
@@ -38,6 +39,7 @@ async function start() {
 
     const webSocket = new WebSocket(app);
     staticsRouter(app);
+    apiRouter(app, webSocket);
     pagesRouter(app, webSocket, imageTokenizer);
     const { getMode } = setupLightHandler(webSocket, lights, audioProcessor, doorLog);
     setupServerSocket(webSocket, lights, imageTokenizer, imageCapture, doorLog, getMode);

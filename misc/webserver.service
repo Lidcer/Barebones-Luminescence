@@ -1,14 +1,14 @@
 # example file 
 # change working directory to your needs
 [Unit]
-Description=LED web Server
+Description=LumiFlex
 
 [Service]
 Type=simple
-User=pi
+User=root
 WorkingDirectory=/home/pi/The-perfect-LED-controller
-# ExecStart=/usr/bin/local/npm run webserver:prod
-ExecStart=/usr/bin/npm run webserver:prod
+# ExecStart=/usr/bin/local/bun server.ts
+ExecStart=/usr/bin/bun server.ts
 Restart=on-failure
 
 [Install]

@@ -11,6 +11,8 @@ import { AudioLightSystem } from "../../Utils/AudioSystem";
 import { hex2rgb, rgb2hex } from "../../../shared/colour";
 import { Logger } from "../../../shared/logger";
 import { MODES } from "../../../shared/constants";
+import { ServerMessagesRaw } from "../../../shared/Messages";
+import { BinaryBuffer } from "../../../shared/messages/BinaryBuffer";
 
 const Div = styled.div`
     width: 370px;
@@ -191,7 +193,10 @@ export class PatternBuilder extends React.Component<PatternProps, PatternState> 
         }
         try {
             const s = this.patternAnimator.state;
-            this.props.als.lightSocket.clientSocket.emit("rgb-set", s.r, s.g, s.b);
+            this.props.als.lightSocket.clientSocket.clientHandle.send(
+                ServerMessagesRaw.RGBSet,
+                new BinaryBuffer(3).setUint8(s.r).setUint8(s.g).setUint8(s.b).getBuffer(),
+            );
         } catch (error) {
             Logger.error("Socket sent", error);
         }

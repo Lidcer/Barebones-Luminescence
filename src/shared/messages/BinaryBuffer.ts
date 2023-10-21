@@ -2,8 +2,9 @@ export class BinaryBuffer {
     private view: DataView;
     private _offset = 0;
     constructor(bufferOrSize: ArrayBuffer | Uint8Array | number = 32) {
-        const buf = typeof bufferOrSize === 'number' ? new ArrayBuffer(bufferOrSize) : bufferOrSize;
-        this.view = buf instanceof Uint8Array ? new DataView(buf.buffer, buf.byteOffset, buf.byteLength) : new DataView(buf);
+        const buf = typeof bufferOrSize === "number" ? new ArrayBuffer(bufferOrSize) : bufferOrSize;
+        this.view =
+            buf instanceof Uint8Array ? new DataView(buf.buffer, buf.byteOffset, buf.byteLength) : new DataView(buf);
     }
 
     // getters
@@ -65,7 +66,7 @@ export class BinaryBuffer {
     getFloatLE() {
         const float = this.view.getFloat32(this.offset, false);
         this.offset += 4;
-        return float ;
+        return float;
     }
     getFloatBe() {
         const float = this.view.getFloat32(this.offset, true);
@@ -97,7 +98,7 @@ export class BinaryBuffer {
     }
     getAsciiString() {
         const strLength = this.getLength();
-        let str = '';
+        let str = "";
         for (let i = 0; i < strLength; i++) {
             str += String.fromCharCode(this.getUint8());
         }
@@ -105,26 +106,31 @@ export class BinaryBuffer {
     }
     getUtf8String() {
         const strLength = this.getLength();
-        let str = '';
+        let str = "";
         let i = 0;
 
         while (i < strLength) {
             const byte = this.getUint8();
             if (byte < 0x80) {
                 str += String.fromCharCode(byte);
-            } else if (byte >= 0xC0 && byte < 0xE0) {
+            } else if (byte >= 0xc0 && byte < 0xe0) {
                 const secondByte = this.getUint8();
-                str += String.fromCharCode(((byte & 0x1F) << 6) | (secondByte & 0x3F));
-            } else if (byte >= 0xE0 && byte < 0xF0) {
+                str += String.fromCharCode(((byte & 0x1f) << 6) | (secondByte & 0x3f));
+            } else if (byte >= 0xe0 && byte < 0xf0) {
                 const secondByte = this.getUint8();
                 const thirdByte = this.getUint8();
-                str += String.fromCharCode(((byte & 0x0F) << 12) | ((secondByte & 0x3F) << 6) | (thirdByte & 0x3F));
-            } else if (byte >= 0xF0 && byte < 0xF8) {
+                str += String.fromCharCode(((byte & 0x0f) << 12) | ((secondByte & 0x3f) << 6) | (thirdByte & 0x3f));
+            } else if (byte >= 0xf0 && byte < 0xf8) {
                 const secondByte = this.getUint8();
                 const thirdByte = this.getUint8();
                 const fourthByte = this.getUint8();
-                const codePoint = (((byte & 0x07) << 18) | ((secondByte & 0x3F) << 12) | ((thirdByte & 0x3F) << 6) | (fourthByte & 0x3F)) - 0x10000;
-                str += String.fromCharCode(0xD800 | (codePoint >> 10), 0xDC00 | (codePoint & 0x3FF));
+                const codePoint =
+                    (((byte & 0x07) << 18) |
+                        ((secondByte & 0x3f) << 12) |
+                        ((thirdByte & 0x3f) << 6) |
+                        (fourthByte & 0x3f)) -
+                    0x10000;
+                str += String.fromCharCode(0xd800 | (codePoint >> 10), 0xdc00 | (codePoint & 0x3ff));
             }
             i++;
         }
@@ -221,10 +227,10 @@ export class BinaryBuffer {
         return this;
     }
     setLength(value: number) {
-        if (value < -1 || value > 0x7ffffffe) throw new Error('Invalid length value');
-    
+        if (value < -1 || value > 0x7ffffffe) throw new Error("Invalid length value");
+
         value++;
-    
+
         if (value === 0) {
             this.setUint8(0);
         } else {
@@ -235,22 +241,22 @@ export class BinaryBuffer {
                 value >>= 7;
             }
         }
-    
+
         return this;
     }
     setAsciiString(asciiString: string) {
         const strLength = asciiString.length;
         let asciiLength = 0;
-    
+
         for (let i = 0; i < strLength; i++) {
             const charCode = asciiString.charCodeAt(i);
             if (charCode <= 127) {
                 asciiLength++;
             }
         }
-    
+
         this.setLength(asciiLength);
-    
+
         for (let i = 0; i < strLength; i++) {
             const charCode = asciiString.charCodeAt(i);
             if (charCode <= 127) {
@@ -263,20 +269,20 @@ export class BinaryBuffer {
         this.setLength(strLength);
         for (let i = 0; i < strLength; i++) {
             const charCode = str.charCodeAt(i);
-            if (charCode <= 0x7F) {
+            if (charCode <= 0x7f) {
                 this.setUint8(charCode);
-            } else if (charCode <= 0x7FF) {
-                this.setUint8(0xC0 | (charCode >> 6));
-                this.setUint8(0x80 | (charCode & 0x3F));
-            } else if (charCode <= 0xFFFF) {
-                this.setUint8(0xE0 | (charCode >> 12));
-                this.setUint8(0x80 | ((charCode >> 6) & 0x3F));
-                this.setUint8(0x80 | (charCode & 0x3F));
-            } else if (charCode <= 0x10FFFF) {
-                this.setUint8(0xF0 | (charCode >> 18));
-                this.setUint8(0x80 | ((charCode >> 12) & 0x3F));
-                this.setUint8(0x80 | ((charCode >> 6) & 0x3F));
-                this.setUint8(0x80 | (charCode & 0x3F));
+            } else if (charCode <= 0x7ff) {
+                this.setUint8(0xc0 | (charCode >> 6));
+                this.setUint8(0x80 | (charCode & 0x3f));
+            } else if (charCode <= 0xffff) {
+                this.setUint8(0xe0 | (charCode >> 12));
+                this.setUint8(0x80 | ((charCode >> 6) & 0x3f));
+                this.setUint8(0x80 | (charCode & 0x3f));
+            } else if (charCode <= 0x10ffff) {
+                this.setUint8(0xf0 | (charCode >> 18));
+                this.setUint8(0x80 | ((charCode >> 12) & 0x3f));
+                this.setUint8(0x80 | ((charCode >> 6) & 0x3f));
+                this.setUint8(0x80 | (charCode & 0x3f));
             }
         }
         return this;
@@ -292,13 +298,13 @@ export class BinaryBuffer {
             if (v != null) {
                 this.view.setUint8(dst, v);
             } else {
-                throw new Error('value[src] is null');
+                throw new Error("value[src] is null");
             }
         }
         this.offset += value.byteLength;
         return this;
     }
-    setAny<T>(obj:T) {
+    setAny<T>(obj: T) {
         this.setUtf8String(JSON.stringify(obj));
         return this;
     }
@@ -316,18 +322,17 @@ export class BinaryBuffer {
                 u8Arr[i] = copy[i];
             }
             this.view = new DataView(u8Arr.buffer);
-            console.warn("Buffer resized")
+            console.warn("Buffer resized");
         }
     }
 
     getBuffer() {
         return new Uint8Array(this.view.buffer, this.view.byteOffset, this.offset);
     }
-    getRestOfTheBuferBuffer() {
-        return new Uint8Array(this.view.buffer.slice(this.offset), this.view.byteOffset, this.view.byteLength);
+    getRestOfTheBuffer() {
+        return new Uint8Array(this.view.buffer.slice(this.offset));
     }
 }
-
 
 export function utf8StringLen(str: string) {
     const strLength = str.length;
@@ -348,15 +353,34 @@ export function utf8StringLen(str: string) {
 
     for (let i = 0; i < strLength; i++) {
         const charCode = str.charCodeAt(i);
-        if (charCode <= 0x7F) {
+        if (charCode <= 0x7f) {
             len += 1;
-        } else if (charCode <= 0x7FF) {
+        } else if (charCode <= 0x7ff) {
             len += 2;
-        } else if (charCode <= 0xFFFF) {
+        } else if (charCode <= 0xffff) {
             len += 3;
-        } else if (charCode <= 0x10FFFF) {
+        } else if (charCode <= 0x10ffff) {
             len += 4;
         }
     }
     return len;
+}
+
+export function getLength(value: number) {
+    if (value < -1 || value > 0x7ffffffe) throw new Error("Invalid length value");
+
+    value++;
+    let i = 0;
+    if (value === 0) {
+        i++;
+    } else {
+        while (value > 0) {
+            let byte = value & 0x7f;
+            if (value > 0x7f) byte |= 0x80;
+            i++;
+            value >>= 7;
+        }
+    }
+
+    return i;
 }

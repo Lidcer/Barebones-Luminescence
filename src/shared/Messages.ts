@@ -1,6 +1,4 @@
 export enum ServerMessagesRaw {
-    Login,
-
     RGBSet,
     RGBGet,
     ModeSet,
@@ -13,15 +11,20 @@ export enum ServerMessagesRaw {
     CamTake,
     DeviceInfo,
 
-    AudioIsAudioServerConnected,
     AudioGetDevices,
     AudioPcm,
     AudioPcmReport,
     AudioActiveDevice,
     AudioAllDevices,
-    AudioAudioSettingsUpdate,
+    AudioSettingsUpdate,
+    AudioIsServerConnected,
     AudioIsInternalAudioProcessing,
     AudioApis,
+
+    PatternGet,
+    PatternSet,
+    ScheduleGet,
+    ScheduleSet,
 }
 
 export enum ClientMessagesRaw {
@@ -35,14 +38,17 @@ export enum ClientMessagesRaw {
 
     PCM,
 
-    
     AudioGetDevices,
     AudioActiveDevice,
     AudioAllDevices,
     AudioApis,
     AudioSettingsUpdate,
     AudioIsInternalAudioProcessing,
+    AudioServerConnected,
+    AudioServerDisconnected,
 
+    PatternUpdate,
+    ScheduleUpdate,
 }
 
 export enum SpecialEvents {
@@ -52,7 +58,7 @@ export enum SpecialEvents {
     PromiseResolve = 254,
     Promise = 255,
 }
- 
+
 export const ClientMessages = {
     ...ClientMessagesRaw,
     ...SpecialEvents,
@@ -62,5 +68,3 @@ export const ServerMessages = {
     ...ServerMessagesRaw,
     ...SpecialEvents,
 };
-
-

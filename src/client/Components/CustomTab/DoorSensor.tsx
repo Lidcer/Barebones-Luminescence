@@ -4,6 +4,7 @@ import { SECOND } from "../../../shared/constants";
 import { DayNames, DoorLogData } from "../../../shared/interfaces";
 import { Button } from "../../styles";
 import { AudioLightSystem } from "../../Utils/AudioSystem";
+import { ServerMessagesRaw } from "../../../shared/Messages";
 
 const Warper = styled.div`
     width: 100%;
@@ -63,7 +64,8 @@ export class DoorSensor extends React.Component<DoorSensorTabProps, DoorSensorTa
 
     refresh = async () => {
         try {
-            const result = await this.props.als.lightSocket.emitPromiseIfPossible<DoorLogData, []>("get-door-log");
+            const buffer = await this.props.als.lightSocket.emitPromiseIfPossible(ServerMessagesRaw.DoorLog);
+            const result = JSON.parse(buffer.getUtf8String());
             if (!this.destroyed) {
                 this.setState({ doorLog: result });
             }
@@ -76,7 +78,7 @@ export class DoorSensor extends React.Component<DoorSensorTabProps, DoorSensorTa
         const confirmation = confirm("Are you sure you want to clear all door logs?");
         if (confirmation) {
             try {
-                await this.props.als.lightSocket.emitPromiseIfPossible<void, []>("clear-door-log");
+                await this.props.als.lightSocket.emitPromiseIfPossible(ServerMessagesRaw.DoorClear);
                 if (!this.destroyed) {
                     this.setState({ doorLog: {} });
                 }

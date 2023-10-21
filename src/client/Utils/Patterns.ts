@@ -3,8 +3,10 @@ import { random, sample } from "lodash";
 import { MODES } from "../../shared/constants";
 import { LedPattern, LedPatternItem } from "../../shared/interfaces";
 import { Logger } from "../../shared/logger";
-import { cloneDeep, removeFromArray } from "../../shared/utils";
+import { cloneDeep, quickBuffer, removeFromArray } from "../../shared/utils";
 import { LightSocket } from "./Socket";
+import { ClientMessagesRaw, ServerMessagesRaw } from "../../shared/Messages";
+import { BinaryBuffer, utf8StringLen } from "../../shared/messages/BinaryBuffer";
 
 export class PatternService {
     private ledPattern: LedPattern[] = [];
@@ -12,7 +14,7 @@ export class PatternService {
     private eventEmitter = new EventEmitter();
 
     constructor(private lightSocket: LightSocket) {
-        //lightSocket.clientSocket.on("patterns-update", this.patternUpdate);
+        lightSocket.clientSocket.clientHandle.on(ClientMessagesRaw.PatternUpdate, this.patternUpdateBin);
     }
 
     async fetchPattern(force = false) {
@@ -20,8 +22,8 @@ export class PatternService {
             return this.ledPattern;
         }
         try {
-            const result = await this.lightSocket.emitPromiseIfPossible<LedPattern[], []>("patterns-get");
-            this.ledPattern = result;
+            const result = await this.lightSocket.emitPromiseIfPossible(ServerMessagesRaw.PatternGet);
+            this.ledPattern = JSON.parse(result.getUtf8String());
         } catch (error) {
             DEV && Logger.debug("Fetch pattern", error);
         }
@@ -37,13 +39,21 @@ export class PatternService {
         return this.eventEmitter.off(type, listener);
     }
 
+    patternUpdateBin = (buffer: BinaryBuffer) => {
+        this.patternUpdate(JSON.parse(buffer.getUtf8String()));
+    };
+
     patternUpdate = (ledPattern: LedPattern[]) => {
         this.ledPattern = ledPattern;
         this.eventEmitter.emit("update", this.ledPattern);
     };
 
     update() {
-        return this.lightSocket.emitPromiseIfPossible<any, [LedPattern[]]>("pattern-set", this.ledPattern);
+        const json = JSON.stringify(this.ledPattern);
+        return this.lightSocket.emitPromiseIfPossible(
+            ServerMessagesRaw.PatternSet,
+            new BinaryBuffer(utf8StringLen(json)).setUtf8String(json).getBuffer(),
+        );
     }
     get patterns() {
         return this.ledPattern;
@@ -59,7 +69,7 @@ export class PatternService {
     }
 
     async sendPatterns() {
-        await this.lightSocket.emitPromiseIfPossible<void, [LedPattern[]]>("patterns-set", this.ledPattern);
+        await this.lightSocket.emitPromiseIfPossible(ServerMessagesRaw.PatternSet, quickBuffer(this.ledPattern));
     }
 
     deletePattern(name: string) {

@@ -131,14 +131,14 @@ export class App extends React.Component<AppProps, AppState> {
     }
 
     get socketWindow() {
-        const soc = this.audioLightSystem.lightSocket;
-        if (soc.socket && !soc.socket.connected) {
-            return (
-                <Authenticate>
-                    <h1>Not connected</h1>
-                </Authenticate>
-            );
-        }
+        // const soc = this.audioLightSystem.lightSocket;
+        // if (soc.socket && !soc.socket.connected) {
+        //     return (
+        //         <Authenticate>
+        //             <h1>Not connected</h1>
+        //         </Authenticate>
+        //     );
+        // }
 
         const auth = async () => {
             this.setState({ error: "" });
@@ -163,7 +163,7 @@ export class App extends React.Component<AppProps, AppState> {
                         }
                     }}
                 />
-                <Button onClick={auth}>Authenticate</Button>
+                <Button onClick={auth}>Connect</Button>
                 <span>{this.state.error}</span>
             </Authenticate>
         );
@@ -171,11 +171,10 @@ export class App extends React.Component<AppProps, AppState> {
 
     render() {
         const soc = this.audioLightSystem.lightSocket;
-        const authenticated = soc.authenticated && soc.socket.connected;
         return (
             <>
                 <ColourTitle als={this.audioLightSystem} />
-                {authenticated ? this.renderContent : this.socketWindow}
+                {soc.socket.connected ? this.renderContent : this.socketWindow}
                 <Toaster als={this.audioLightSystem} />
             </>
         );

@@ -1,4 +1,4 @@
-import { array, cloneDeep, getDayString, removeFromArray } from "../../../shared/utils";
+import { array, cloneDeep, getDayString, quickBuffer, removeFromArray } from "../../../shared/utils";
 import { getStorage, setStorage, storageFolder } from "../../sharedFiles/settingsStore";
 import {
     CameraImageLocation,
@@ -65,11 +65,14 @@ export async function initStorage() {
     settings = result;
 }
 
-export async function saveSettings() {
+export async function saveSettings(emit: boolean) {
     await setStorage(fileName, settings);
     const json = JSON.stringify(settings);
-    if (socket) {
-        socket.broadcast(ClientMessagesRaw.SettingsUpdate, new BinaryBuffer(utf8StringLen(json)).setUtf8String(json).getBuffer());
+    if (socket && emit) {
+        socket.broadcast(
+            ClientMessagesRaw.SettingsUpdate,
+            new BinaryBuffer(utf8StringLen(json)).setUtf8String(json).getBuffer(),
+        );
     }
 }
 
@@ -85,53 +88,47 @@ export function setupServerSocket(
         return lights.getInstance() instanceof MagicHomeController;
     };
     socket = websocket;
-    websocket.onPromise<ServerSettings, []>(ServerMessagesRaw.Settings, async client => {
+    websocket.onPromise(ServerMessagesRaw.Settings, async (_, client) => {
         client.validateAuthentication();
-        const json = JSON.stringify(settings);
-
-        return new BinaryBuffer(utf8StringLen(json)).setUtf8String(json).getBuffer();
+        return quickBuffer(settings);
     });
-    websocket.onPromise<FetchableServerConfig, []>(ServerMessagesRaw.Config, async client => {
+    websocket.onPromise(ServerMessagesRaw.Config, async (_, client) => {
         client.validateAuthentication();
         const binary = new BinaryBuffer(4 + utf8StringLen(VERSION));
-        return binary.setUint8(getMode())
+        return binary
+            .setUint8(getMode())
             .setBool(DOOR_SENSOR)
             .setBool(CAM_INSTALLED)
             .setBool(isMagicHome())
             .setUtf8String(VERSION)
             .getBuffer();
     });
-    websocket.onPromise<DoorLogData, []>(ServerMessagesRaw.DoorLog, async client => {
+    websocket.onPromise(ServerMessagesRaw.DoorLog, async (_, client) => {
         client.validateAuthentication();
-        const logs = JSON.stringify(await readDoorLog());
-        
-        return new BinaryBuffer(utf8StringLen(logs)).setUtf8String(logs).getBuffer();
+        return quickBuffer(await readDoorLog());
     });
-    websocket.onPromise<void, []>(ServerMessagesRaw.DoorClear, async client => {
+    websocket.onPromise(ServerMessagesRaw.DoorClear, async (_, client) => {
         client.validateAuthentication();
         await clearDoorLog();
         return new Uint8Array();
     });
 
     if (CAM_INSTALLED) {
-        websocket.onPromise<CameraImageLocation, []>(ServerMessagesRaw.CamGet, async client => {
+        websocket.onPromise(ServerMessagesRaw.CamGet, async (_, client) => {
             client.validateAuthentication();
             const imagesS = await imageCapture.getImages();
             const doorOpens = doorLog.getDoorRawLogs(imageTokenizer);
             const images = imagesS.map(img => imageCapture.convertToRaw(img, imageTokenizer));
             const data = {
-                lastImage: imageCapture.last
-                    ? imageCapture.convertToRaw(imageCapture.last, imageTokenizer)
-                    : undefined,
+                lastImage: imageCapture.last ? imageCapture.convertToRaw(imageCapture.last, imageTokenizer) : undefined,
                 images,
                 doorOpens,
             };
 
-            const json = JSON.stringify(data);
-            return new BinaryBuffer(utf8StringLen(json)).setUtf8String(json).getBuffer();
+            return quickBuffer(data);
         });
 
-        websocket.onPromise<boolean, []>(ServerMessagesRaw.CamTake, async client => {
+        websocket.onPromise(ServerMessagesRaw.CamTake, async (_, client) => {
             client.validateAuthentication();
             try {
                 await imageCapture.capture(() => {});

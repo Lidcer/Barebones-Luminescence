@@ -54,7 +54,7 @@ if (!config.PASSWORD || !config.SECRET) {
 }
 
 // server
-const serverPort = process.env.PORT || config.SERVER_PORT || 5050;;
+const serverPort = process.env.PORT || config.SERVER_PORT || 5050;
 const SERVER_PORT = typeof serverPort === "string" ? parseInt(serverPort, 10) : serverPort;
 const WEBPACK_PORT = 8085; // For dev environment only
 const PASSWORD = config.PASSWORD;
@@ -82,41 +82,40 @@ function updateConfig() {
     fs.writeFileSync(configJsonPath, JSON.stringify(config, undefined, 1));
 }
 
-
 function watchFolder(folder: string, cb: () => void) {
     fs.readdir(folder, (err, files) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-  
-      files.forEach((file) => {
-        const filePath = `${folder}/${file}`;
-        fs.watch(filePath, (event, filename) => {
-          if (event === 'change') {
-            cb()
-          } else if (event === 'rename') {
-            cb()
-          }
-        });
-        if (fs.statSync(filePath).isDirectory()) {
-          watchFolder(filePath, cb);
+        if (err) {
+            console.error(err);
+            return;
         }
-      });
+
+        files.forEach(file => {
+            const filePath = `${folder}/${file}`;
+            fs.watch(filePath, (event, filename) => {
+                if (event === "change") {
+                    cb();
+                } else if (event === "rename") {
+                    cb();
+                }
+            });
+            if (fs.statSync(filePath).isDirectory()) {
+                watchFolder(filePath, cb);
+            }
+        });
     });
-  }
+}
 
 function buildClient() {
     esbuild.build({
-        entryPoints: ['./src/client/index.jsx'],
+        entryPoints: ["./src/client/index.jsx"],
         plugins: [],
         define: {
             DEV: JSON.stringify(true),
         },
         bundle: true,
-        outfile: './statics/bundle.js',
+        outfile: "./statics/bundle.js",
     });
-    Logger.debug("Client built")
+    Logger.debug("Client built");
 }
 
 if (DEV) {
@@ -125,8 +124,8 @@ if (DEV) {
         clearTimeout(timer);
         timer = setTimeout(() => {
             buildClient();
-        }, 1000)
-    }
+        }, 1000);
+    };
     watchFolder("./src/client", cb);
     watchFolder("./src/shared", cb);
     buildClient();

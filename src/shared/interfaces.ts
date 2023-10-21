@@ -1,4 +1,3 @@
-
 import * as os from "os";
 export enum ControllerMode {
     Manual,
@@ -11,19 +10,27 @@ export enum ControllerMode {
     Door,
 }
 
-function modeToString(mode:ControllerMode) {
- switch (mode) {
-    case ControllerMode.Manual: return 'manual'; 
-    case ControllerMode.ManualForce: return 'manualForce'; 
-    case ControllerMode.ManualLocked: return 'manualLocked'; 
-    case ControllerMode.AutoPilot: return 'autoPilot'; 
-    case ControllerMode.Pattern: return 'pattern'; 
-    case ControllerMode.Audio: return 'audio'; 
-    case ControllerMode.AudioRaw: return 'audioRaw'; 
-    case ControllerMode.Door: return 'door'; 
-    default:
-        break;
- }   
+export function modeToString(mode: ControllerMode) {
+    switch (mode) {
+        case ControllerMode.Manual:
+            return "Manual";
+        case ControllerMode.ManualForce:
+            return "Manual Force";
+        case ControllerMode.ManualLocked:
+            return "Manual Locked";
+        case ControllerMode.AutoPilot:
+            return "Auto Pilot";
+        case ControllerMode.Pattern:
+            return "Pattern";
+        case ControllerMode.Audio:
+            return "Audio";
+        case ControllerMode.AudioRaw:
+            return "Audio Raw";
+        case ControllerMode.Door:
+            return "Door";
+        default:
+            break;
+    }
 }
 
 export type DayNames = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
@@ -234,7 +241,6 @@ export interface TokenData {
     //id: string;
     path: string;
 }
-
 
 export interface Deffered<A = any> {
     promise: Promise<A>;
