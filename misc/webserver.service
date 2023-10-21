@@ -6,7 +6,7 @@ Description=LumiFlex
 [Service]
 Type=simple
 User=root
-WorkingDirectory=/home/pi/The-perfect-LED-controller
+WorkingDirectory=/home/pi/LumiFlex
 # ExecStart=/usr/bin/local/bun server.ts
 ExecStart=/usr/bin/bun server.ts
 Restart=on-failure
