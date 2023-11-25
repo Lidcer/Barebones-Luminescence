@@ -15,7 +15,7 @@ export class MagicHomeController implements LightController {
     private sending = false;
     private queue: Buffer[] = [];
     private destroyed = false;
-    private timeout: NodeJS.Timeout;
+    private timeout: Timer;
     private last = Date.now();
     private delay = 25;
     private scanning = false;
@@ -31,7 +31,7 @@ export class MagicHomeController implements LightController {
                 const ips = await this.ipScannerIPv4();
                 if (ips.length) {
                     settings.magicHome.ips = ips;
-                    await saveSettings();
+                    await saveSettings(true);
                     Logger.info("Magic home", `Found ${ips.length} devices`);
                     this.init(ips);
                 } else {
@@ -239,7 +239,7 @@ export class MagicHomeController implements LightController {
             let result = 0;
 
             // eslint-disable-next-line prefer-const
-            let interval: NodeJS.Timeout;
+            let interval: Timer;
             const destroy = setTimeout(() => {
                 Logger.debug("Socket broadcast", "Sending is taking too long!");
                 clearTimeout(destroy);

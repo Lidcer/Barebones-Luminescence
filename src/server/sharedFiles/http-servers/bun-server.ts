@@ -1,57 +1,22 @@
-import { Server, ServerWebSocket } from "bun";
-import { Emitter, EventEmitter } from "../../shared/eventEmitter";
-import { ServerMessagesRaw, SpecialEvents } from "../../shared/Messages";
+import { Server } from "bun";
 import * as ipAddr from "ipaddr.js";
 import wcmatch from "wildcard-match";
-import { BinaryBuffer } from "../../shared/messages/BinaryBuffer";
+import {
+    Socket,
+    WSBun,
+    WSEvent,
+    SocketEmitter,
+    EndpointDefinition,
+    WSData,
+    KeyIndex,
+    ResponseMerge,
+    empty,
+    Handler,
+    RequestObject,
+} from "./http-srv-utils";
+import { BinaryBuffer } from "../../../shared/messages/BinaryBuffer";
 
 //const isMatch = wcmatch('src/**/*.?s')
-export enum WSEvent {
-    Message,
-    Connect,
-    Disconnect,
-}
-
-const empty = {};
-
-interface WSData {
-    url: string;
-    headers: {
-        [key: string]: string;
-    };
-}
-
-export type WS = ServerWebSocket<WSData>;
-interface RequestObject {
-    originalRequest: Request;
-    server: Server;
-    params: any;
-    query: any;
-    ip: string;
-}
-
-interface ResponseMerge {
-    status?: number;
-    headers: HeadersInit;
-    statusText?: string;
-    create: (body?: BodyInit, init?: ResponseInit) => Response;
-}
-
-type N = void | null | undefined;
-type Handler = (request: RequestObject, response: ResponseMerge) => Response | Promise<Response> | N | Promise<N>;
-export type BunServer = ReturnType<typeof createServer>;
-
-interface EndpointDefinition {
-    url: string;
-    paramsParser: KeyIndex[];
-    match: (str: string) => boolean;
-    method: string;
-    handler: Handler;
-}
-interface KeyIndex {
-    key: string;
-    index: number;
-}
 
 export function getRemoteAddress(request: Request, server: Server) {
     const exist = [server.requestIP(request).address, "::ffff:127.0.0.1"].find(i => i) as string;
@@ -77,9 +42,9 @@ function urlToParam(url: URL, keyValue: KeyIndex[]) {
     return obj;
 }
 
-export function createServer(port: number) {
+export function createBunServer(port: number) {
     const endpoints: EndpointDefinition[] = [];
-    const sockets = new Map<WS, Socket>();
+    const sockets = new Map<WSBun, Socket>();
     const socketEmitter = new SocketEmitter();
     let updateRequest: WSData;
     Bun.serve({
@@ -108,9 +73,10 @@ export function createServer(port: number) {
                 .split("/")
                 .filter(e => e)
                 .join("/");
-            const req: RequestObject = {
+            const req: RequestObject<Request, Server> = {
                 originalRequest: request,
                 server,
+                json: request.json,
                 params: empty,
                 query: urlToQuery(url),
                 ip: getRemoteAddress(request, server),
@@ -143,7 +109,7 @@ export function createServer(port: number) {
             return new Response(`Cannot get ${request.url}`, { status: 500 });
         },
         websocket: {
-            open(ws: WS) {
+            open(ws: WSBun) {
                 if (!updateRequest) {
                     Logger.warn("Update request missing");
                     ws.close();
@@ -214,57 +180,4 @@ export function createServer(port: number) {
         },
         socketEmitter,
     };
-}
-
-export class SocketEmitter extends EventEmitter {
-    on(key: WSEvent.Connect, cb: (ws: Socket) => void): void;
-    on(key: WSEvent.Disconnect, cb: (ws: Socket) => void): void;
-    on(key: WSEvent.Message, cb: (ws: Socket, message: Uint8Array) => void): void;
-    on(key: WSEvent, cb: any) {
-        super.on(key, cb);
-    }
-
-    off(key: WSEvent.Connect, cb: (ws: Socket) => void): void;
-    off(key: WSEvent.Disconnect, cb: (ws: Socket) => void): void;
-    off(key: WSEvent.Message, cb: (ws: Socket, message: Uint8Array) => void): void;
-    off(key: WSEvent, cb: any) {
-        super.off(key, cb);
-    }
-
-    emit(key: WSEvent.Connect, ws: Socket): number;
-    emit(key: WSEvent.Disconnect, ws: Socket): number;
-    emit(key: WSEvent.Message, ws: Socket, message: Uint8Array): number;
-    emit(key: WSEvent, ...args: any[]) {
-        return super.emit(key, ...args);
-    }
-}
-
-export class Socket extends EventEmitter {
-    private _destroyed = false;
-    constructor(public ws: WS) {
-        super();
-    }
-    on(key: WSEvent, handle: Emitter) {
-        super.on(key, handle);
-    }
-    off(key: WSEvent, handle: Emitter) {
-        super.off(key, handle);
-    }
-    emit(key: WSEvent, ...args: any[]) {
-        return super.emit(key, ...args);
-    }
-    disconnect(code?: number, reason?: string) {
-        if (!this._destroyed) {
-            this.ws.close(code, reason);
-        }
-    }
-    _destroy(code: number, reason: string) {
-        this._destroyed = true;
-    }
-    send(u8Array: Uint8Array) {
-        return this.ws.sendBinary(u8Array);
-    }
-    get connected() {
-        return !this._destroyed;
-    }
 }

@@ -1,6 +1,9 @@
 import { default as isPi } from "detect-rpi";
 import { Gpio } from "pigpio";
 import { EventEmitter } from "events";
+import { parentPort } from "worker_threads";
+
+declare const self: any;
 
 let GpioObj: any;
 (() => {
@@ -94,10 +97,10 @@ const initialize = (red: number, green: number, blue: number, doorSwitchPin: num
         });
         doorSwitch.glitchFilter(1000);
         doorSwitch.on("alert", (level, tick) => {
-            self.postMessage([level, tick]);
+            parentPort.postMessage([level, tick]);
         });
     }
-    DEV && Logger.info("Pi server Loaded");
+    (global as any).DEV && Logger.info("Pi server Loaded");
 };
 function setRgb(red: number, green: number, blue: number) {
     if (lastRed !== red) {
@@ -114,17 +117,16 @@ function setRgb(red: number, green: number, blue: number) {
     }
 }
 
-self.onmessage = (event: MessageEvent) => {
-    switch (event.data[0]) {
+parentPort.addListener("message", (data: number[]) => {
+    switch (data[0]) {
         case 0:
-            initialize(event.data[1], event.data[2], event.data[3], event.data[4]);
+            initialize(data[1], data[2], data[3], data[4]);
             break;
         case 1:
-            setRgb(event.data[1], event.data[2], event.data[3]);
+            setRgb(data[1], data[2], data[3]);
             break;
     }
-    console.log(event.data.type);
-};
+});
 
 // socket.on("connection", (c: SocketIO.Socket) => {
 //     if (client) {

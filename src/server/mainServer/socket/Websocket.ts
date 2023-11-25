@@ -4,12 +4,12 @@ import { Logger } from "../../../shared/logger";
 import { ClientType, Log } from "../../../shared/interfaces";
 import { EventEmitter } from "events";
 import { MINUTE, userClients } from "../../../shared/constants";
-import { BunServer, WSEvent } from "../../sharedFiles/bun-server";
 import { ClientMessagesRaw, ServerMessagesRaw, SpecialEvents } from "../../../shared/Messages";
 import { SocketData, SocketRaw } from "../../../shared/messages/messageHandle";
 import { BinaryBuffer, utf8StringLen } from "../../../shared/messages/BinaryBuffer";
 import { Cache } from "../../../shared/cache";
 import { randomBytes } from "crypto";
+import { HttpServer, WSEvent } from "../../sharedFiles/http-servers/http-srv-utils";
 
 type WebsocketCallback = (buffer: SocketData, client: Client) => void;
 type WebsocketCallbackPromise = (buffer: SocketData, client: Client) => Promise<SocketRaw>;
@@ -21,7 +21,7 @@ export class WebSocket {
     private promiseCallback = new Map<ServerMessagesRaw, WebsocketCallbackPromise>();
     private tokens = new Cache<string, string>(MINUTE);
 
-    constructor(private server?: BunServer) {
+    constructor(private server?: HttpServer) {
         process.on("uncaughtException", err => {
             console.error("uncaughtException", err);
             this.broadcastLog("error", err);

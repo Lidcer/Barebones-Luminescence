@@ -1,8 +1,9 @@
 import { LightController } from "./Controller";
 import { RGB } from "../../../../shared/interfaces";
 import { PI_PORT } from "../../main/config";
-import { StringifiedError } from "../../../sharedFiles/error";
 import { EventEmitter } from "events";
+import { Worker } from "worker_threads";
+import path from "path";
 
 export interface WorkerData {
     type: "init" | "set-rgb" | "rgb-done";
@@ -22,18 +23,30 @@ export class PIController implements LightController {
     private queue: RGB[] = [];
     private eventEmitter = new EventEmitter();
     private _connected = false;
+    private worker: Worker;
 
     constructor() {
         Logger.info("Starting connection");
-        const workerURL = new URL("../../../piServer/index.ts", import.meta.url).href;
-        const worker = new Worker(workerURL);
-        console.log(worker);
-        worker.postMessage([0, this.RED, this.GREEN, this.BLUE, this.DOOR_PIN]);
+        // const bun = typeof require === "function" && require.prototype;
+        // if (bun) {
+        //     //@ts-ignore
+        //     //const workerURL = new URL("../../../piServer/index.ts", import.meta.url).href;
+        //     //this.worker = new Worker(workerURL);
+        // } else {
+        // }
+        const workerPath = path.join(process.cwd(), "dist", "server", "piServer", "index.js");
+        this.worker = new Worker(workerPath);
+        this.worker.postMessage([0, this.RED, this.GREEN, this.BLUE, this.DOOR_PIN]);
         this.eventEmitter.emit("connect");
-        worker.addEventListener("message", event => {
+        this.worker.on("message", event => {
             const [level, tick] = event.data;
             this.eventEmitter.emit("door", level, tick);
         });
+        this.tick();
+        // this.worker.addEventListener("message", event => {
+        //     const [level, tick] = event.data;
+        //     this.eventEmitter.emit("door", level, tick);
+        // });
         // this.socket = io(this.connectionUrl, { auth: { token: PASSWORD } });
         // this.socket.on("connect", () => {
         //     this.socket.emit("init", this.RED, this.GREEN, this.BLUE, this.DOOR_PIN, (error: StringifiedError) => {
@@ -94,7 +107,7 @@ export class PIController implements LightController {
         if (this.queue.length) {
             const { r, g, b } = this.queue.pop();
             try {
-                await this.setRgb(r, g, b);
+                this.worker.postMessage([1, r, g, b, this.DOOR_PIN]);
             } catch (error) {
                 Logger.error(error);
             }
@@ -102,19 +115,6 @@ export class PIController implements LightController {
         setTimeout(this.tick, 0);
     };
 
-    private setRgb(r: number, g: number, b: number) {
-        return new Promise<void>((resolve, reject) => {
-            this.socket.emit("set-rgb", r, g, b, (error?: StringifiedError) => {
-                if (error) {
-                    const actualError = new Error(error.message);
-                    actualError.stack = error.stack;
-                    reject(actualError);
-                } else {
-                    resolve();
-                }
-            });
-        });
-    }
     get connected() {
         return this._connected;
     }

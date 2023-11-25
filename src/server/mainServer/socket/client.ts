@@ -1,9 +1,9 @@
 import { ClientMessagesRaw, ServerMessagesRaw, SpecialEvents } from "../../../shared/Messages";
-import { MINUTE, userClients } from "../../../shared/constants";
+import { userClients } from "../../../shared/constants";
 import { ClientType } from "../../../shared/interfaces";
-import { Socket, WSEvent } from "../../sharedFiles/bun-server";
 import { noop } from "lodash";
 import { MessageHandleBase, SocketRaw, Handle } from "../../../shared/messages/messageHandle";
+import { Socket, WSEvent } from "../../sharedFiles/http-servers/http-srv-utils";
 
 export class Client {
     private type: ClientType = "unknown";
@@ -15,7 +15,7 @@ export class Client {
             throw new Error("Missing IP");
         }
 
-        const token = new URL(this.socket.ws.data.url).searchParams.get("t");
+        const token = new URL(this.socket.getData().url).searchParams.get("t");
 
         const clientType = this.getToken(token);
         if (!clientType) {
@@ -52,7 +52,7 @@ export class Client {
         return this.socket.ws;
     }
     get remoteAddress() {
-        return this.socket.ws.remoteAddress;
+        return (this.socket.ws as any).remoteAddress || "<Unknown>";
     }
     validateAuthentication() {
         if (userClients.includes(this.clientType) || this.clientType === "audio-server") {

@@ -3,12 +3,12 @@ import { Tokenizer } from "./mainServer/main/Tokenizer";
 import { WebSocket } from "./mainServer/socket/Websocket";
 import { TokenData } from "../shared/interfaces";
 import { HASH } from "../shared/constants";
-import { BunServer } from "./sharedFiles/bun-server";
 import { render } from "./sharedFiles/renderer";
 
 import fs from "fs";
+import { HttpServer } from "./sharedFiles/http-servers/http-srv-utils";
 
-export function pagesRouter(app: BunServer, socket: WebSocket, imageTokenizer: Tokenizer<TokenData>) {
+export function pagesRouter(app: HttpServer, socket: WebSocket, imageTokenizer: Tokenizer<TokenData>) {
     app.get(`/webcam/:token`, async (req, res) => {
         const token = req.params.token;
         const data = imageTokenizer.getData(token);

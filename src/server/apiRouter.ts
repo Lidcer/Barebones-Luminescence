@@ -1,10 +1,10 @@
 import { WebSocket } from "./mainServer/socket/Websocket";
-import { BunServer } from "./sharedFiles/bun-server";
 import { PASSWORD } from "./audioServer/config";
 import { clientKeys } from "../shared/interfaces";
 import { MINUTE } from "../shared/constants";
+import { HttpServer } from "./sharedFiles/http-servers/http-srv-utils";
 
-export function apiRouter(app: BunServer, socket: WebSocket) {
+export function apiRouter(app: HttpServer, socket: WebSocket) {
     const wrongPass = new Map<string, number>();
 
     setInterval(() => {
@@ -20,7 +20,7 @@ export function apiRouter(app: BunServer, socket: WebSocket) {
     };
 
     app.post(`/api/v1/request-token`, async (req, res) => {
-        const json = await req.originalRequest.json<{ password: string; clientType: string }>();
+        const json = await req.json<{ password: string; clientType: string }>();
         if (typeof json === "object" && clientKeys.includes(json.clientType as any)) {
             if (json.password === PASSWORD) {
                 return jsonResponse({ data: { token: socket.generateToken(json.clientType) } }, 200);

@@ -13,10 +13,11 @@ import { ImageCapture } from "./ImageCapture";
 import { DoorLog } from "./doorLog";
 import { Tokenizer } from "./Tokenizer";
 import { TokenData } from "../../../shared/interfaces";
-import { createServer } from "../../sharedFiles/bun-server";
+import { createBunServer } from "../../sharedFiles/http-servers/bun-server";
 import { staticsRouter } from "../../static-router";
+import { createUWSServer } from "../../sharedFiles/http-servers/uws-server";
 
-const app = createServer(SERVER_PORT);
+const app = typeof Bun === "undefined" ? createUWSServer(SERVER_PORT) : createBunServer(SERVER_PORT);
 
 // app.disable("x-powered-by");
 // app.set("view engine", "ejs");

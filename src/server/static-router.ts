@@ -1,8 +1,8 @@
 import path from "path";
-import { BunServer } from "./sharedFiles/bun-server";
 import fs from "fs";
+import { HttpServer } from "./sharedFiles/http-servers/http-srv-utils";
 
-export function staticsRouter(app: BunServer) {
+export function staticsRouter(app: HttpServer) {
     let scriptCache = "";
     const getScript = () => {
         if (!scriptCache || DEV) {
