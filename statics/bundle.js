@@ -62305,7 +62305,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       this.DEFAULT_COLOR_HEX = "FF0000";
       this.BROWSER_KEY = "last-colour";
       this.onModeUpdate = (mode) => {
-        console.error("mode change", mode);
         this.setState({ mode });
         this.forceUpdate();
       };

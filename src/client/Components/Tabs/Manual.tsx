@@ -59,7 +59,6 @@ export class ManualTab extends React.Component<ManualTabProps, ManualTabState> {
         this.props.als.lightSocket.off("mode-update", this.onModeUpdate);
     }
     onModeUpdate = (mode: ControllerMode) => {
-        console.error("mode change", mode);
         this.setState({ mode });
         this.forceUpdate();
     };

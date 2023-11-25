@@ -40,6 +40,7 @@ export function setupLightHandler(
     const audioAnalyser = new AudioAnalyser(audioProcessor);
 
     const de = debounce<(color: number[]) => void>(async (color: number[]) => {
+        console.log('runnning');
         if (doorFrameLoop) {
             clearInterval(doorFrameLoop);
             doorFrameLoop = undefined;
@@ -210,8 +211,11 @@ export function setupLightHandler(
     const updateModeAndLight = (rgb?: RGB) => {
         rgb = rgb || RGB;
         websocket.broadcast(
+            ClientMessagesRaw.ModeUpdate, quickBuffer(lightMode),
+        );
+        websocket.broadcast(
             ClientMessagesRaw.RGBUpdate,
-            new BinaryBuffer(3).setUint8(RGB.r).setUint8(RGB.g).setUint8(RGB.b).getBuffer(),
+            new BinaryBuffer(3).setUint8(rgb.r).setUint8(rgb.g).setUint8(rgb.b).getBuffer(),
         );
     };
 
@@ -263,7 +267,6 @@ export function setupLightHandler(
             }
         }
         lastDoorState = !!level;
-
         if (level) {
             increaseDoor();
             de.cancel();

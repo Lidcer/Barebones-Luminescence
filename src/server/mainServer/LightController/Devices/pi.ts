@@ -1,9 +1,10 @@
 import { LightController } from "./Controller";
 import { RGB } from "../../../../shared/interfaces";
-import { PI_PORT } from "../../main/config";
+import { PI_PORT, SECRET } from "../../main/config";
 import { EventEmitter } from "events";
-import { Worker } from "worker_threads";
+//import { Worker } from "worker_threads";
 import path from "path";
+import { WebSocket } from "ws";
 
 export interface WorkerData {
     type: "init" | "set-rgb" | "rgb-done";
@@ -23,10 +24,11 @@ export class PIController implements LightController {
     private queue: RGB[] = [];
     private eventEmitter = new EventEmitter();
     private _connected = false;
-    private worker: Worker;
+    private websocket: WebSocket | undefined;
 
     constructor() {
         Logger.info("Starting connection");
+        this.socketCreate();
         // const bun = typeof require === "function" && require.prototype;
         // if (bun) {
         //     //@ts-ignore
@@ -35,13 +37,13 @@ export class PIController implements LightController {
         // } else {
         // }
         const workerPath = path.join(process.cwd(), "dist", "server", "piServer", "index.js");
-        this.worker = new Worker(workerPath);
-        this.worker.postMessage([0, this.RED, this.GREEN, this.BLUE, this.DOOR_PIN]);
+        // this.worker = new Worker(workerPath);
+        // this.worker.postMessage([0, this.RED, this.GREEN, this.BLUE, this.DOOR_PIN]);
         this.eventEmitter.emit("connect");
-        this.worker.on("message", event => {
-            const [level, tick] = event.data;
-            this.eventEmitter.emit("door", level, tick);
-        });
+        // this.worker.on("message", event => {
+        //     const [level, tick] = event.data;
+        //     this.eventEmitter.emit("door", level, tick);
+        // });
         this.tick();
         // this.worker.addEventListener("message", event => {
         //     const [level, tick] = event.data;
@@ -69,6 +71,33 @@ export class PIController implements LightController {
         //         this.eventEmitter.emit("disconnect");
         //     });
         // });
+    }
+
+    socketCreate() {
+        return new Promise<void>(resolve => {
+            const websocket = new WebSocket(`ws://localhost:${PI_PORT}?secret=${SECRET}`); 
+            websocket.addEventListener("open", () => {
+                this.websocket = websocket;
+                websocket.send(new Uint8Array([0, this.RED, this.GREEN, this.BLUE, this.DOOR_PIN]));
+                resolve();
+                Logger.info("Connected to PI");
+            })
+            websocket.addEventListener("message", (message) => {
+                const buff = new Uint8Array(message.data as Buffer);
+                this.eventEmitter.emit("door", buff[0], buff[1]);
+            });
+    
+            websocket.addEventListener("error", error =>{
+                // if (DEV) {
+                //     console.error(error.);
+                // }
+            })
+    
+            websocket.addEventListener("close", () => {
+                this.websocket = undefined
+                this.socketCreate();
+            })
+        })
     }
 
     off(value: "disconnect", callback: () => void): void;
@@ -104,10 +133,10 @@ export class PIController implements LightController {
     }
 
     private tick = async () => {
-        if (this.queue.length) {
+        if (this.queue.length && this.websocket) {
             const { r, g, b } = this.queue.pop();
             try {
-                this.worker.postMessage([1, r, g, b, this.DOOR_PIN]);
+                this.websocket.send(new Uint8Array([1, r, g, b, this.DOOR_PIN]));
             } catch (error) {
                 Logger.error(error);
             }

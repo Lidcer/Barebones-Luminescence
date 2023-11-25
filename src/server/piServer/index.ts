@@ -1,9 +1,21 @@
 import { default as isPi } from "detect-rpi";
 import { Gpio } from "pigpio";
 import { EventEmitter } from "events";
-import { parentPort } from "worker_threads";
+import { App, WebSocket, DISABLED } from 'uWebSockets.js';
+import path from 'path';
+import fs from 'fs';
 
-declare const self: any;
+const webSockets: WebSocket<unknown>[] = [];
+
+interface IConfig {
+    PI_PORT: number,
+    SECRET: string,
+};
+
+const app = App();
+const configJsonPath = path.join(process.cwd(), "config.json");
+const rawConfigJson = fs.readFileSync(configJsonPath).toString();
+const config = JSON.parse(rawConfigJson) as IConfig;
 
 let GpioObj: any;
 (() => {
@@ -27,6 +39,11 @@ let GpioObj: any;
                         this.mockInput = this.mockInput ? 0 : 1;
                         this.event.emit("alert", this.mockInput, delta);
                         //setTimeout(() => e(), random(1000, 2000)); // random door open
+                    };
+                    //@ts-ignore
+                    (global as any).door = (value: number) => {
+                        this.mockInput = value;
+                        e();
                     };
                     e();
                 }
@@ -82,6 +99,8 @@ let lastRed = 0;
 let lastGreen = 0;
 let lastBlue = 0;
 
+
+
 const initialize = (red: number, green: number, blue: number, doorSwitchPin: number | undefined) => {
     if (initialized) return;
 
@@ -97,7 +116,9 @@ const initialize = (red: number, green: number, blue: number, doorSwitchPin: num
         });
         doorSwitch.glitchFilter(1000);
         doorSwitch.on("alert", (level, tick) => {
-            parentPort.postMessage([level, tick]);
+            for (const ws of webSockets) {
+                ws.send(new Uint8Array([level, tick]), true);
+            }
         });
     }
     (global as any).DEV && Logger.info("Pi server Loaded");
@@ -117,16 +138,67 @@ function setRgb(red: number, green: number, blue: number) {
     }
 }
 
-parentPort.addListener("message", (data: number[]) => {
-    switch (data[0]) {
+
+
+app.ws("/*", {
+    compression: DISABLED,
+    upgrade(res, req, context) {
+        const secret = new URLSearchParams(req.getQuery()).get("secret");
+        if (secret === config.SECRET) {
+            res.upgrade({},
+              req.getHeader('sec-websocket-key'),
+              req.getHeader('sec-websocket-protocol'),
+              req.getHeader('sec-websocket-extensions'),
+              context);
+        } else {
+            res.writeStatus("401");
+            res.end();
+        }
+    },
+    open(ws) {
+        webSockets.push(ws);
+        console.log("Connected");
+    },
+
+    message(ws, message) {
+        const data = new Uint8Array(message);
+        
+        switch (data[0]) {
         case 0:
             initialize(data[1], data[2], data[3], data[4]);
             break;
         case 1:
             setRgb(data[1], data[2], data[3]);
             break;
+        }
+    },
+    close(ws) {
+        const index = webSockets.indexOf(ws);
+        if (index !== -1) {
+            webSockets.splice(index, 1);
+        }
+        console.log("Disconnected");
     }
-});
+})
+
+app.listen(config.PI_PORT, token => {
+    if (token) {
+        console.log(`Listening to ${config.PI_PORT}`);
+    } else {
+        console.error("Failed to listen");
+    }
+})
+
+// parentPort.addListener("message", (data: number[]) => {
+//     switch (data[0]) {
+//         case 0:
+//             initialize(data[1], data[2], data[3], data[4]);
+//             break;
+//         case 1:
+//             setRgb(data[1], data[2], data[3]);
+//             break;
+//     }
+// });
 
 // socket.on("connection", (c: SocketIO.Socket) => {
 //     if (client) {
